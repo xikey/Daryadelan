@@ -1,0 +1,2 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('play-services-auth-16.0.1.aar'))

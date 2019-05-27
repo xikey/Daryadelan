@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Daryadelan</string>
+
+    <string name="title_activity_wellcome">WellcomeActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="mobile_number">شماره تلفن همراه</string>
+    <string name="personel_number">شماره پرسنلی</string>
+    <string name="send_sms">ارسال کد فعال سازی</string>
+    <string name="logged_in_before">قبلا ثبت نام نموده ام</string>
+    <string name="login_member">ورود کاربر</string>
+    <string name="guest">کاربر مهمان</string>
+    <string name="im_not_retired">بازنشسته نیستم</string>
+    <string name="login">ورود</string>
+    <string name="password">رمز عبور</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="wrapper_error">خطایی با این پیام رخ داده است: </string>
+    <string name="please_enter_variable">لطفا %1$s وارد نمایید</string>
+    <string name="is_not_valid_value">مقدار %1$s صحیح نیست</string>
+    <string name="action_settings">Settings</string>
+    <string name="cancel">بستن</string>
+    <string name="action_yes">بلی</string>
+    <string name="search">جستجو</string>
+
+
+
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary_light">#C5CAE9</color>
+    <color name="colorAccent">#FFC107</color>
+    <color name="primary_text_color">#212121</color>
+    <color name="secondary_text_color">#727272</color>
+    <color name="icons_color">#FFFFFF</color>
+    <color name="divider_color">#BDBDBD</color>
+    <color name="divider_secondary_color">#f0f0f0</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorGreenLight">#009688</color>
+    <color name="colorGreenDark">#00695C</color>
+    <color name="colorRed">#d50000</color>
+    <color name="mdtp_accent_color">#ff4081</color>
+    <color name="update_button">#cc424242</color>
+    <color name="complement_color">#3f51b5</color>
+    <color name="color_blue">#00BCD4</color>
+    <color name="cardBackGrayWhite">#fbfbfb</color>
+    <color name="cardBackGray">#f0f0f0</color>
+    <color name="colorGray">#eeeeee</color>
+    <color name="visitedCustomerCard">#FFF176</color>
+    <color name="colorViolet">#3F51B5</color>
+    <color name="colorlightRed">#ffcdd2</color>
+    <color name="colorPrice">#67bb6b</color>
+    <color name="colorAccent_alpha1">#10ff4081</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="transparent">#00000000</color>
+
+
+    <color name="coloraboutUs_top_selected">#788F9B</color>
+    <color name="coloraboutUs_top">#61747E</color>
+    <color name="coloraboutUs_foot">#616161</color>
+    <color name="coloraboutUs_foot_selected">#757575</color>
+
+</resources>
+
