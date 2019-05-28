@@ -26,7 +26,8 @@
     <string name="cancel">بستن</string>
     <string name="action_yes">بلی</string>
     <string name="search">جستجو</string>
-
-
-
+    <string name="apply_code">کد تایید</string>
+    <string name="retry">تلاش مجدد</string>
+    <string name="sms_validate">تایید شماره موبایل</string>
+    <string name="error_Verification_code">کد تایید نامعتبر!</string>
 </resources>

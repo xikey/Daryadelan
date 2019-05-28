@@ -1,6 +1,7 @@
 package daryadelan.sandogh.zikey.com.daryadelan;
 
 import android.Manifest;
+import android.app.DialogFragment;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +13,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -29,8 +32,14 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import daryadelan.sandogh.zikey.com.daryadelan.broadcasts.SMSBroadcastReceiver;
+import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
+import daryadelan.sandogh.zikey.com.daryadelan.model.User;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.DeviceHelper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
-import es.dmoral.toasty.Toasty;
 
 public class SigninActivity extends AppCompatActivity {
 
@@ -39,13 +48,20 @@ public class SigninActivity extends AppCompatActivity {
     GoogleApiClient apiClient;
     private SMSBroadcastReceiver SMSBroadcastReceiver;
     public final int PERMISSIONS_REQUEST_READ_SMS = 14;
+    public final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 16;
 
     private EditText txtUserName;
+    private EditText txtPersonelCode;
+
     private ImageView imgMySim;
 
     private LinearLayout lyLogin;
     private LinearLayout lyGuest;
     private RelativeLayout lyHeader;
+    private User personel;
+
+    private IUser userRepo;
+    private SMSvalidationDialog smSvalidationDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,30 +70,48 @@ public class SigninActivity extends AppCompatActivity {
 
         initViews();
         initListeners();
+        initRepo();
         hideKeyBoard();
         initApiClient();
         initBroadCast();
         requestGetMessagePermission();
+        requestReadPhoneStatePermission();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (SMSBroadcastReceiver != null)
+            SMSBroadcastReceiver.unRegisterBroadCast(getApplicationContext(), SMSBroadcastReceiver);
+        super.onDestroy();
+    }
+
+    private void initRepo() {
+        if (userRepo == null)
+            userRepo = new UserServerRepo();
     }
 
     private void initBroadCast() {
 
-//        if (smsBroadcastReceiver == null)
-//            smsBroadcastReceiver = new MySMSBroadcastReceiver(new MySMSBroadcastReceiver.setOnSmsReciever() {
-//                @Override
-//                public void onSmsReciever(String sms) {
-//
-//                    if (!TextUtils.isEmpty(sms))
-//                        Toasty.info(SigninActivity.this, sms).show();
-//                }
-//            });
 
         if (SMSBroadcastReceiver == null)
             SMSBroadcastReceiver = new SMSBroadcastReceiver(new SMSBroadcastReceiver.setOnSmsReciever() {
                 @Override
                 public void onSmsReciever(String sms) {
-                    if (!TextUtils.isEmpty(sms))
-                        Toasty.info(SigninActivity.this, "ZIKEY  " + sms).show();
+                    if (!TextUtils.isEmpty(sms) && personel != null) {
+                        try {
+                            String validateCode = "";
+                            validateCode += sms.replaceAll("[^0-9]", "");
+                            if (!TextUtils.isEmpty(validateCode)) {
+                                if (smSvalidationDialog != null) {
+                                    smSvalidationDialog.userInputDialog.setText(validateCode);
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
                 }
             });
     }
@@ -137,8 +171,28 @@ public class SigninActivity extends AppCompatActivity {
             txtSendSMS.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    new CustomDialogBuilder().showYesNOCustomAlert(SigninActivity.this, "ارسال اطلاعات", "مایل به ارسال اطلاعات میباشید؟", "ارسال", "انصراف", new CustomAlertDialog.OnActionClickListener() {
+                        @Override
+                        public void onClick(DialogFragment fragment) {
 
-                    MainActivity.start(SigninActivity.this);
+                            fragment.dismiss();
+                            sendSMS();
+
+                        }
+                    }, new CustomAlertDialog.OnCancelClickListener() {
+                        @Override
+                        public void onClickCancel(DialogFragment fragment) {
+
+                            fragment.dismiss();
+                        }
+
+                        @Override
+                        public void onClickOutside(DialogFragment fragment) {
+
+                            fragment.dismiss();
+                        }
+                    });
+
 
                 }
             });
@@ -172,6 +226,119 @@ public class SigninActivity extends AppCompatActivity {
         });
     }
 
+    private void sendSMS() {
+
+        if (TextUtils.isEmpty(txtUserName.getText())) {
+            new CustomDialogBuilder().showAlert(SigninActivity.this, "شماره موبایل وارد شده نادرست میباشد");
+            return;
+        }
+        if (TextUtils.isEmpty(txtPersonelCode.getText())) {
+            new CustomDialogBuilder().showAlert(SigninActivity.this, "شماره پرسنلی وارد شده نادرست میباشد");
+            return;
+        }
+
+        DeviceHelper deviceHelper = new DeviceHelper();
+        User user = new User();
+
+        user.setMobile(txtUserName.getText().toString());
+        user.setPersonalCode(Long.parseLong(txtPersonelCode.getText().toString()));
+
+        user.setMobileImei(deviceHelper.getMobileIMEI(getApplicationContext()));
+        user.setMobileDeviceBrand(deviceHelper.getDeviceName(getApplicationContext()));
+        user.setPersonType("baz");
+        user.setOsVersion(deviceHelper.getOSversion(getApplicationContext()));
+
+        if (TextUtils.isEmpty(user.getMobileImei())) {
+            new CustomDialogBuilder().showAlert(SigninActivity.this, "گوشی هوشمند نامعتبر!\nدر صورتی که از شبیه ساز یا دستگاه نامعتبر استفاده نمایید، امکان ورود به نرم افزار نخواهد بود!");
+            return;
+        }
+        if (TextUtils.isEmpty(user.getMobileDeviceBrand())) {
+            new CustomDialogBuilder().showAlert(SigninActivity.this, "گوشی هوشمند نامعتبر!\nدر صورتی که از شبیه ساز یا دستگاه نامعتبر استفاده نمایید، امکان ورود به نرم افزار نخواهد بود!");
+            return;
+        }
+        if (TextUtils.isEmpty(user.getOsVersion())) {
+            new CustomDialogBuilder().showAlert(SigninActivity.this, "گوشی هوشمند نامعتبر!\nدر صورتی که از شبیه ساز یا دستگاه نامعتبر استفاده نمایید، امکان ورود به نرم افزار نخواهد بود!");
+            return;
+        }
+
+        userRepo.personCheck(getApplicationContext(), user, new IRepoCallBack<User>() {
+            @Override
+            public void onAnswer(User answer) {
+
+                if (answer.getResultId() != 0) {
+                    return;
+                }
+                personel = user;
+                String tmp = "کد ارسالی به شماره موبایل " + user.getMobile() + " را وارد نمایید ";
+                smSvalidationDialog = SMSvalidationDialog.Show(SigninActivity.this, getString(R.string.sms_validate), tmp, "تایید", "انصراف", new SMSvalidationDialog.OnActionClickListener() {
+                    @Override
+                    public void onClick(DialogFragment fragment, String input) {
+                        if (TextUtils.isEmpty(input)) {
+                            new CustomDialogBuilder().showAlert(SigninActivity.this, getString(R.string.error_Verification_code));
+                            return;
+                        }
+                        fragment.dismiss();
+                        checkActivateCodeValitaton();
+
+                    }
+                }, new SMSvalidationDialog.OnCancelClickListener() {
+                    @Override
+                    public void onClickCancel(DialogFragment fragment, String input, boolean isPleaseWait) {
+
+                        if (!isPleaseWait) {
+                            fragment.dismiss();
+                            sendSMS();
+
+                        } else
+                            fragment.dismiss();
+
+                    }
+
+                    @Override
+                    public void onClickOutside(DialogFragment fragment, String input) {
+                        fragment.dismiss();
+                    }
+                }, new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        if (!TextUtils.isEmpty(s.toString())) {
+                            personel.setActiveCode(s.toString());
+                        }
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                new CustomDialogBuilder().showAlert(SigninActivity.this, error.toString());
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
+
+
+    }
+
 
     public static void start(Context context) {
         Intent starter = new Intent(context, SigninActivity.class);
@@ -182,6 +349,7 @@ public class SigninActivity extends AppCompatActivity {
 
         txtSendSMS = (TextView) findViewById(R.id.txtSendSMS);
         txtUserName = (EditText) findViewById(R.id.txtUserName);
+        txtPersonelCode = (EditText) findViewById(R.id.txtPersonelCode);
         imgMySim = (ImageView) findViewById(R.id.imgMySim);
         lyHeader = (RelativeLayout) findViewById(R.id.lyHeader);
 
@@ -288,6 +456,32 @@ public class SigninActivity extends AppCompatActivity {
 
     }
 
+
+    private void requestReadPhoneStatePermission() {
+
+        int permission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_PHONE_STATE);
+
+
+        if (permission == 0)
+            return;
+
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_PHONE_STATE)) {
+
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_PHONE_STATE},
+                        PERMISSIONS_REQUEST_READ_PHONE_STATE);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_PHONE_STATE},
+                        PERMISSIONS_REQUEST_READ_PHONE_STATE);
+            }
+        }
+
+    }
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
 
@@ -315,5 +509,49 @@ public class SigninActivity extends AppCompatActivity {
 
     }
 
+    private void checkActivateCodeValitaton() {
+        if (userRepo == null)
+            return;
+
+        if (TextUtils.isEmpty(personel.getActiveCode())) {
+            new CustomDialogBuilder().showAlert(SigninActivity.this, "کد فعال سازی نامعتبر میباشد");
+            return;
+        }
+
+        userRepo.checkSMSisValidate(getApplicationContext(), personel, new IRepoCallBack<User>() {
+            @Override
+            public void onAnswer(User answer) {
+
+                if (answer.getResultId() != 0) {
+                    new CustomDialogBuilder().showAlert(SigninActivity.this, "کد فعال سازی نامعتبر میباشد");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(answer.getStrData())){
+                    new CustomDialogBuilder().showAlert(SigninActivity.this, "کد فعال سازی نامعتبر میباشد");
+                    return;
+                }
+
+
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                new CustomDialogBuilder().showAlert(SigninActivity.this, error.toString());
+                return;
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
+
+    }
 
 }

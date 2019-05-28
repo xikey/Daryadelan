@@ -1,24 +1,29 @@
 package daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper;
 
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public abstract class ServerWrapper {
-
+public class ServerWrapper {
 
     @SerializedName("ResultId")
-    private int isSuccess = 0;
+    @Expose
+    private int ResultId = -1;
     @SerializedName("StrData")
-    private String StrData ;
+    @Expose
+    private String StrData;
     @SerializedName("Message")
-    private String message = null;
+    @Expose
+    private String Messagee = null;
 
-    public int getIsSuccess() {
-        return isSuccess;
+
+
+    public int getResultId() {
+        return ResultId;
     }
 
-    public void setIsSuccess(int isSuccess) {
-        this.isSuccess = isSuccess;
+    public void setResultId(int resultId) {
+        this.ResultId = resultId;
     }
 
     public String getStrData() {
@@ -29,14 +34,16 @@ public abstract class ServerWrapper {
         StrData = strData;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMessagee() {
+        return Messagee;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessagee(String messagee) {
+        this.Messagee = messagee;
     }
 
+    public ServerWrapper() {
 
+    }
 
 }

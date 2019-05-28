@@ -33,8 +33,7 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
                 String smsBody = smsMessage.getMessageBody().toString();
                 String address = smsMessage.getOriginatingAddress();
 
-                smsMessageStr += "SMS From: " + address + "\n";
-                smsMessageStr += smsBody + "\n";
+                smsMessageStr += smsBody ;
 
                 if (smsReciever != null)
                     smsReciever.onSmsReciever(smsMessageStr);
@@ -49,6 +48,15 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
             IntentFilter filter = new IntentFilter();
             filter.addAction("android.provider.Telephony.SMS_RECEIVED");
             context.registerReceiver(receiver, filter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public  void unRegisterBroadCast(Context context, SMSBroadcastReceiver receiver) {
+
+        try {
+            context.unregisterReceiver(receiver);
         } catch (Exception e) {
             e.printStackTrace();
         }

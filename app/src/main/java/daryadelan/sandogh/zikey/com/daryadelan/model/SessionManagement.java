@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
-import android.text.TextUtils;
-
 import daryadelan.sandogh.zikey.com.daryadelan.BuildConfig;
 
 
@@ -17,12 +15,10 @@ public class SessionManagement {
     // preference name
     private final String KEY_PREFERENCES_NAME = "DARYADELAN_APPLICATION";
 
-    private final String KEY_CODE_MARKAZ = "CODE_MARKAZ";
+    private final String KEY_MOBILE = "KEY_MOBILE";
     private final String KEY_TOKEN = "TOKEN";
-    private final String KEY_PASS = "PASS";
-    private final String KEY_ID = "ID";
-    private final String KEY_NAME = "NAME";
-    private final String KEY_TEL = "TEL";
+    private final String KEY_STR_DATA = "PASS";
+
 
 
     private SharedPreferences preferences;
@@ -39,46 +35,6 @@ public class SessionManagement {
         return instance;
     }
 
-
-
-
-
-    public void setPass(String pass) {
-        if (preferences == null)
-            return;
-        if (TextUtils.isEmpty(pass)) {
-            this.preferences.edit().putString(KEY_PASS, "").apply();
-            return;
-        }
-
-        this.preferences.edit().putString(KEY_PASS, pass).apply();
-    }
-
-    public String getPass() {
-
-        if (preferences == null)
-            return null;
-        return this.preferences.getString(KEY_PASS, null);
-    }
-
-
-
-
-    public void setCodeMarkaz(long codeMarkaz) {
-
-        if (preferences == null)
-            return;
-
-        this.preferences.edit().putLong(KEY_CODE_MARKAZ, codeMarkaz).apply();
-    }
-
-    public long getCodeMarkaz() {
-        if (preferences == null)
-            return 0;
-
-        return this.preferences.getLong(KEY_CODE_MARKAZ, 0);
-    }
-
     public void setToken(String token) {
         if (preferences == null)
             return;
@@ -93,56 +49,30 @@ public class SessionManagement {
         return preferences.getString(KEY_TOKEN, "");
     }
 
-    public void setName(String name) {
-        if (preferences == null)
-            return;
-        this.preferences.edit().putString(KEY_NAME, name).apply();
-
-    }
-
-    public String getName() {
-        if (preferences == null)
-            return "";
-        return preferences.getString(KEY_NAME, "");
-    }
 
 
     public void setTel(String tel) {
         if (preferences == null)
             return;
-        this.preferences.edit().putString(KEY_TEL, tel).apply();
+        this.preferences.edit().putString(KEY_MOBILE, tel).apply();
 
     }
 
     public String getTel() {
         if (preferences == null)
             return "";
-        return preferences.getString(KEY_TEL, "");
+        return preferences.getString(KEY_MOBILE, "");
     }
 
 
 
 
 
-    public void setID(long id) {
-        if (preferences == null)
-            return;
-
-        this.preferences.edit().putLong(KEY_ID, id).apply();
-    }
-
-    public long getID() {
-        if (preferences == null)
-            return 0;
-
-        return this.preferences.getLong(KEY_ID, 0);
-    }
 
     public void clearMemberData() {
         setToken("");
-        setName("");
-        setCodeMarkaz(0);
-        setID(0);
+
+
     }
 
 

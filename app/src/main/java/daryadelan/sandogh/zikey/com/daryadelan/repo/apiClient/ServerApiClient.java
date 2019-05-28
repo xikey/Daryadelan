@@ -80,7 +80,7 @@ public class ServerApiClient {
             retrofitWithHeader = new Retrofit.Builder()
                     .baseUrl(BuildConfig.IPAddress)
                     .addConverterFactory(GsonConverterFactory.create())
-                    .client(initHeader(context).build())
+//                    .client(initHeader(context).build())
                     .build();
         }
         return retrofitWithHeader;

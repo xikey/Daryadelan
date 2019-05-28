@@ -15,7 +15,7 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
-        buildConfigField("String", "IPAddress", '"192.236.33.25"')
+        buildConfigField("String", "IPAddress", '"http://77.77.77.43"')
 
         packagingOptions {
             exclude 'META-INF/rxjava.properties'

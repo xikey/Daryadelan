@@ -43,9 +43,8 @@ public class DeviceHelper {
         return phrase.toString();
     }
 
-    private String getMobileIMEI(Context context)
-    {
-        if (context==null)
+    public String getMobileIMEI(Context context) {
+        if (context == null)
             return null;
 
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -61,5 +60,10 @@ public class DeviceHelper {
             return null;
         }
         return telephonyManager.getDeviceId();
+    }
+
+    public String getOSversion(Context context) {
+        String os = android.os.Build.VERSION.RELEASE;
+        return os;
     }
 }

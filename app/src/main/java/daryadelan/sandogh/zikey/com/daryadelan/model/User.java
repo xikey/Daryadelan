@@ -2,7 +2,9 @@ package daryadelan.sandogh.zikey.com.daryadelan.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper;
+
+public class User extends ServerWrapper {
 
     @SerializedName("personalCode")
     private  long personalCode;
@@ -33,6 +35,8 @@ public class User {
     private String lastName;
     @SerializedName("acceptCode")
     private String acceptCode;
+
+    private ServerWrapper serverWrapper;
 
 
     public long getPersonalCode() {
