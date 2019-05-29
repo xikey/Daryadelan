@@ -30,4 +30,12 @@
     <string name="retry">تلاش مجدد</string>
     <string name="sms_validate">تایید شماره موبایل</string>
     <string name="error_Verification_code">کد تایید نامعتبر!</string>
+    <string name="title_activity_create_user">ایجاد کاربر</string>
+    <string name="name">نام</string>
+    <string name="family">نام خانوادگی</string>
+    <string name="wanna_exit">مایل به بستن صفحه میباشید؟</string>
+    <string name="repeat_password">تکرار کلمه عبور</string>
+    <string name="error_pass_repeatPass">مقدار کلمه عبور و تکرار کلمه عبور یکسان نمیباشد</string>
+    <string name="please_waite">لطفا کمی صبر کنید...</string>
+
 </resources>

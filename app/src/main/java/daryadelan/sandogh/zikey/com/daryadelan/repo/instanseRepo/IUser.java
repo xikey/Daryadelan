@@ -11,5 +11,7 @@ public interface IUser {
 
     void checkSMSisValidate(Context context, User user, IRepoCallBack<User> callBack);
 
+    void createUser(Context context, User user, IRepoCallBack<User> callBack);
+
 
 }

@@ -7,15 +7,15 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper
 public class User extends ServerWrapper {
 
     @SerializedName("personalCode")
-    private  long personalCode;
+    private long personalCode;
     @SerializedName("mobile")
     private String mobile;
     @SerializedName("mobileDeviceBrand")
     private String mobileDeviceBrand;
     @SerializedName("mobileImei")
-    private  String mobileImei;
+    private String mobileImei;
     @SerializedName("osVersion")
-    private  String osVersion;
+    private String osVersion;
     /**
      * یکی از موارد زیر را می پذیرد:
      * Baz
@@ -25,18 +25,18 @@ public class User extends ServerWrapper {
      * مورد vaz برای وظیفه بگیر
      * مورد mos برای مستمری بگیر سازمانی
      */
-    private  String personType;
+    private String personType;
     @SerializedName("activeCode")
-    private  String activeCode;
-
+    private String activeCode;
     @SerializedName("firstName")
     private String firstName;
     @SerializedName("lastName")
     private String lastName;
     @SerializedName("acceptCode")
-    private String acceptCode;
 
-    private ServerWrapper serverWrapper;
+    private String acceptCode;
+    @SerializedName("pass")
+    private String password;
 
 
     public long getPersonalCode() {
@@ -118,5 +118,13 @@ public class User extends ServerWrapper {
 
     public void setAcceptCode(String acceptCode) {
         this.acceptCode = acceptCode;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

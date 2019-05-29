@@ -4,7 +4,7 @@ package daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ServerWrapper {
+public abstract class ServerWrapper {
 
     @SerializedName("resultId")
     @Expose

@@ -41,6 +41,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.DeviceHelper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
+import es.dmoral.toasty.Toasty;
 
 public class SigninActivity extends AppCompatActivity {
 
@@ -59,6 +60,7 @@ public class SigninActivity extends AppCompatActivity {
     private LinearLayout lyLogin;
     private LinearLayout lyGuest;
     private RelativeLayout lyHeader;
+    private LinearLayout lyProgress;
     private User personel;
 
     private IUser userRepo;
@@ -262,13 +264,16 @@ public class SigninActivity extends AppCompatActivity {
             return;
         }
 
+
+        lyProgress.setVisibility(View.VISIBLE);
         userRepo.personCheck(getApplicationContext(), user, new IRepoCallBack<User>() {
             @Override
             public void onAnswer(User answer) {
-
+                lyProgress.setVisibility(View.GONE);
                 if (answer.getResultId() != 0) {
                     return;
                 }
+                Toasty.success(SigninActivity.this, answer.getMessagee()).show();
                 personel = user;
                 String tmp = "کد ارسالی به شماره موبایل " + user.getMobile() + " را وارد نمایید ";
                 smSvalidationDialog = SMSvalidationDialog.Show(SigninActivity.this, getString(R.string.sms_validate), tmp, "تایید", "انصراف", new SMSvalidationDialog.OnActionClickListener() {
@@ -279,7 +284,7 @@ public class SigninActivity extends AppCompatActivity {
                             return;
                         }
                         fragment.dismiss();
-                        checkActivateCodeValitaton();
+                        checkActivateCodeValidation();
 
                     }
                 }, new SMSvalidationDialog.OnCancelClickListener() {
@@ -323,6 +328,7 @@ public class SigninActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable error) {
+                lyProgress.setVisibility(View.GONE);
                 new CustomDialogBuilder().showAlert(SigninActivity.this, error.toString());
             }
 
@@ -356,6 +362,7 @@ public class SigninActivity extends AppCompatActivity {
 
         lyLogin = (LinearLayout) findViewById(R.id.lyLogin);
         lyGuest = (LinearLayout) findViewById(R.id.lyGuest);
+        lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
 
 
         try {
@@ -510,7 +517,7 @@ public class SigninActivity extends AppCompatActivity {
 
     }
 
-    private void checkActivateCodeValitaton() {
+    private void checkActivateCodeValidation() {
         if (userRepo == null)
             return;
 
@@ -518,26 +525,39 @@ public class SigninActivity extends AppCompatActivity {
             new CustomDialogBuilder().showAlert(SigninActivity.this, "کد فعال سازی نامعتبر میباشد");
             return;
         }
-
+        lyProgress.setVisibility(View.VISIBLE);
         userRepo.checkSMSisValidate(getApplicationContext(), personel, new IRepoCallBack<User>() {
             @Override
             public void onAnswer(User answer) {
+                lyProgress.setVisibility(View.GONE);
 
                 if (answer.getResultId() != 0) {
                     new CustomDialogBuilder().showAlert(SigninActivity.this, "کد فعال سازی نامعتبر میباشد");
                     return;
                 }
 
+                if (TextUtils.isEmpty(answer.getStrData())) {
+                    new CustomDialogBuilder().showAlert(SigninActivity.this, "کد فعال سازی نامعتبر میباشد");
+                    return;
+                }
                 if (TextUtils.isEmpty(answer.getStrData())){
                     new CustomDialogBuilder().showAlert(SigninActivity.this, "کد فعال سازی نامعتبر میباشد");
                     return;
                 }
+                if (!TextUtils.isEmpty(answer.getMessagee())){
 
+                    Toasty.info(SigninActivity.this,answer.getMessagee()).show();
+                }
+
+                personel.setAcceptCode(answer.getStrData());
+
+                CreateUserActivity.start(SigninActivity.this,answer.getAcceptCode());
 
             }
 
             @Override
             public void onError(Throwable error) {
+                lyProgress.setVisibility(View.GONE);
                 new CustomDialogBuilder().showAlert(SigninActivity.this, error.toString());
                 return;
             }
@@ -555,7 +575,8 @@ public class SigninActivity extends AppCompatActivity {
 
     }
 
-    private void testApi(){
+    private void testApi() {
+
         TestRepo testRepo = new TestRepo();
         testRepo.testing(getApplicationContext());
     }

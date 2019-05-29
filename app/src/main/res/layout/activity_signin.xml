@@ -307,4 +307,6 @@
     </LinearLayout>
 
 
+    <include layout="@layout/layout_progress_match_parent"/>
+
 </RelativeLayout>
