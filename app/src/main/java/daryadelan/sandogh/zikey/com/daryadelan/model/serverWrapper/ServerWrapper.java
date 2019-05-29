@@ -6,13 +6,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class ServerWrapper {
 
-    @SerializedName("ResultId")
+    @SerializedName("resultId")
     @Expose
     private int ResultId = -1;
-    @SerializedName("StrData")
+    @SerializedName("strData")
     @Expose
     private String StrData;
-    @SerializedName("Message")
+    @SerializedName("message")
     @Expose
     private String Messagee = null;
 

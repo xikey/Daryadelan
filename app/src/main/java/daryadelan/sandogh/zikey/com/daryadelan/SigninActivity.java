@@ -35,6 +35,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.broadcasts.SMSBroadcastReceiver;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.TestRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
@@ -76,6 +77,7 @@ public class SigninActivity extends AppCompatActivity {
         initBroadCast();
         requestGetMessagePermission();
         requestReadPhoneStatePermission();
+
     }
 
     @Override
@@ -188,7 +190,6 @@ public class SigninActivity extends AppCompatActivity {
 
                         @Override
                         public void onClickOutside(DialogFragment fragment) {
-
                             fragment.dismiss();
                         }
                     });
@@ -238,7 +239,7 @@ public class SigninActivity extends AppCompatActivity {
         }
 
         DeviceHelper deviceHelper = new DeviceHelper();
-        User user = new User();
+        final User user = new User();
 
         user.setMobile(txtUserName.getText().toString());
         user.setPersonalCode(Long.parseLong(txtPersonelCode.getText().toString()));
@@ -552,6 +553,11 @@ public class SigninActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void testApi(){
+        TestRepo testRepo = new TestRepo();
+        testRepo.testing(getApplicationContext());
     }
 
 }

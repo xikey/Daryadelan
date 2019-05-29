@@ -19,7 +19,7 @@ public class UserServerRepo implements IUser {
     Call<ServerWrapper> wrapperCall;
 
     @Override
-    public void personCheck(Context context, User user, IRepoCallBack<User> callBack) {
+    public void personCheck(Context context, User user, final IRepoCallBack<User> callBack) {
 
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
         wrapperCall = userApi.checkPerson(String.valueOf(user.getPersonalCode()), user.getMobile(), user.getMobileDeviceBrand(), user.getMobileImei(), user.getOsVersion(), user.getPersonType());
@@ -59,8 +59,8 @@ public class UserServerRepo implements IUser {
     }
 
     @Override
-    public void checkSMSisValidate(Context context, User user, IRepoCallBack<User> callBack) {
-        IUserApi userApi = ServerApiClient.getClientWithHeader(context).create(IUserApi.class);
+    public void checkSMSisValidate(Context context, User user, final IRepoCallBack<User> callBack) {
+        IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
         userCall = userApi.checkSMSisValidate(user.getActiveCode(),user.getMobile());
         userCall.enqueue(new Callback<User>() {
             @Override
