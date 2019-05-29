@@ -265,28 +265,24 @@ public class CreateUserActivity extends AppCompatActivity {
                 lyProgress.setVisibility(View.GONE);
 
                 if (answer.getResultId() != 0) {
-                    new CustomDialogBuilder().showAlert(CreateUserActivity.this, "کد فعال سازی نامعتبر میباشد");
+                    new CustomDialogBuilder().showAlert(CreateUserActivity.this, "خطا در ذخیره سازی اطلاعات");
                     return;
                 }
 
-                if (TextUtils.isEmpty(answer.getStrData())) {
-                    new CustomDialogBuilder().showAlert(CreateUserActivity.this, "کد فعال سازی نامعتبر میباشد");
-                    return;
-                }
-                if (TextUtils.isEmpty(answer.getStrData())){
-                    new CustomDialogBuilder().showAlert(CreateUserActivity.this, "کد فعال سازی نامعتبر میباشد");
-                    return;
-                }
+
                 if (!TextUtils.isEmpty(answer.getMessagee())){
 
                     Toasty.info(CreateUserActivity.this,answer.getMessagee()).show();
                 }
 
+
+
             }
 
             @Override
             public void onError(Throwable error) {
-
+                lyProgress.setVisibility(View.GONE);
+                new CustomDialogBuilder().showAlert(CreateUserActivity.this, error.toString());
             }
 
             @Override

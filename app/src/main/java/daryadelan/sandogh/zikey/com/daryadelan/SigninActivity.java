@@ -231,12 +231,22 @@ public class SigninActivity extends AppCompatActivity {
 
     private void sendSMS() {
 
+
         if (TextUtils.isEmpty(txtUserName.getText())) {
             new CustomDialogBuilder().showAlert(SigninActivity.this, "شماره موبایل وارد شده نادرست میباشد");
             return;
         }
         if (TextUtils.isEmpty(txtPersonelCode.getText())) {
             new CustomDialogBuilder().showAlert(SigninActivity.this, "شماره پرسنلی وارد شده نادرست میباشد");
+            return;
+        }
+
+
+        int permission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_PHONE_STATE);
+
+        if (permission != 0) {
+            requestReadPhoneStatePermission();
             return;
         }
 
@@ -502,6 +512,13 @@ public class SigninActivity extends AppCompatActivity {
                     // if Permission Denied
                 }
             }
+            case PERMISSIONS_REQUEST_READ_PHONE_STATE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    sendSMS();
+                } else {
+                    // if Permission Denied
+                }
+            }
 
         }
     }
@@ -540,18 +557,18 @@ public class SigninActivity extends AppCompatActivity {
                     new CustomDialogBuilder().showAlert(SigninActivity.this, "کد فعال سازی نامعتبر میباشد");
                     return;
                 }
-                if (TextUtils.isEmpty(answer.getStrData())){
+                if (TextUtils.isEmpty(answer.getStrData())) {
                     new CustomDialogBuilder().showAlert(SigninActivity.this, "کد فعال سازی نامعتبر میباشد");
                     return;
                 }
-                if (!TextUtils.isEmpty(answer.getMessagee())){
+                if (!TextUtils.isEmpty(answer.getMessagee())) {
 
-                    Toasty.info(SigninActivity.this,answer.getMessagee()).show();
+                    Toasty.info(SigninActivity.this, answer.getMessagee()).show();
                 }
 
                 personel.setAcceptCode(answer.getStrData());
 
-                CreateUserActivity.start(SigninActivity.this,answer.getAcceptCode());
+                CreateUserActivity.start(SigninActivity.this, answer.getStrData());
 
             }
 
