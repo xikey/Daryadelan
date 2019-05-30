@@ -13,5 +13,7 @@ public interface IUser {
 
     void createUser(Context context, User user, IRepoCallBack<User> callBack);
 
+    void login(Context context, User user, IRepoCallBack<User> callBack);
+
 
 }

@@ -1,6 +1,7 @@
 package daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.apiClient.ServerApiClient;
@@ -14,6 +15,8 @@ import retrofit2.Response;
 public class UserServerRepo implements IUser {
 
     Call<User> userCall;
+    //مقدار پیش فرض توکن دریافتی. این مقدار از سمت سرور قرار داده شده ...
+    private   final String KEY_TOKEN_TYPE = "bearer";
 
 
     @Override
@@ -53,7 +56,7 @@ public class UserServerRepo implements IUser {
     @Override
     public void checkSMSisValidate(Context context, User user, final IRepoCallBack<User> callBack) {
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
-        userCall = userApi.checkSMSisValidate(user.getActiveCode(),user.getMobile());
+        userCall = userApi.checkSMSisValidate(user.getActiveCode(), user.getMobile());
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -89,7 +92,7 @@ public class UserServerRepo implements IUser {
     public void createUser(Context context, User user, final IRepoCallBack<User> callBack) {
 
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
-        userCall = userApi.createUser(user.getAcceptCode(),user.getMobile(),user.getPassword(),user.getFirstName(),user.getLastName());
+        userCall = userApi.createUser(user.getAcceptCode(), user.getMobile(), user.getPassword(), user.getFirstName(), user.getLastName());
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -118,6 +121,48 @@ public class UserServerRepo implements IUser {
                 callBack.onError(new Throwable("خطا در دریافت اطلاعات"));
             }
         });
+
+    }
+
+    @Override
+    public void login(Context context, User user, final IRepoCallBack<User> callBack) {
+        IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
+        userCall = userApi.login(user.getMobile(), user.getPassword(), user.getGrantType());
+        userCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response == null) {
+                    callBack.onError(new Throwable("RP ERR 101  خطا در دریافت اطلاعات"));
+                    return;
+                }
+
+                if (response.body() == null) {
+                    callBack.onError(new Throwable("RP ERR 102  response body is null"));
+                    return;
+                }
+
+
+                if (TextUtils.isEmpty(response.body().getToken())) {
+                    callBack.onError(new Throwable("خطا در دریافت اطلاعات token"));
+                    return;
+                }
+                 if (!response.body().getTokenType().equals(KEY_TOKEN_TYPE)) {
+                    callBack.onError(new Throwable("نا معتبر token"));
+                    return;
+                }
+
+
+
+
+                callBack.onAnswer(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                callBack.onError(new Throwable("خطا در دریافت اطلاعات"));
+            }
+        });
+
 
     }
 

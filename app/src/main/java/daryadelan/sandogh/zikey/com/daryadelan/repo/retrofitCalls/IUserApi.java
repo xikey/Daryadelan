@@ -32,12 +32,23 @@ public interface IUserApi {
 
     @FormUrlEncoded
     @POST("api/persons/usercreation")
-    Call<User> createUser( @Field("AcceptCode") String AcceptCode,
-                           @Field("Mobile") String Mobile,
-                           @Field("Password") String Password,
-                           @Field("FirstName") String FirstName,
-                           @Field("LastName") String LastName);
+    Call<User> createUser(@Field("AcceptCode") String AcceptCode,
+                          @Field("Mobile") String Mobile,
+                          @Field("Password") String Password,
+                          @Field("FirstName") String FirstName,
+                          @Field("LastName") String LastName);
 
+    /**
+     * @param mobile     user name is mobile number
+     * @param password   password
+     * @param Grant_type i dont know what is this!! but default value must be 'password'
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api/persons/usercreation")
+    Call<User> login(@Field("username") String mobile,
+                     @Field("password") String password,
+                     @Field("Grant_type") String Grant_type);
 
 
 }

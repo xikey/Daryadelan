@@ -33,10 +33,22 @@ public class User extends ServerWrapper {
     @SerializedName("lastName")
     private String lastName;
     @SerializedName("acceptCode")
-
     private String acceptCode;
     @SerializedName("pass")
     private String password;
+
+
+    //i dont khnow what is grant type but DefaultValue is 'password'
+    @SerializedName("grantType")
+    private String grantType = "password";
+
+    //Token
+    @SerializedName("access_token")
+    private String token;
+    @SerializedName("token_type")
+    private String tokenType;
+    @SerializedName("expires_in")
+    private String tokenExpireDate;
 
 
     public long getPersonalCode() {
@@ -126,5 +138,37 @@ public class User extends ServerWrapper {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getTokenType() {
+        return tokenType;
+    }
+
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
+    }
+
+    public String getTokenExpireDate() {
+        return tokenExpireDate;
+    }
+
+    public void setTokenExpireDate(String tokenExpireDate) {
+        this.tokenExpireDate = tokenExpireDate;
+    }
+
+    public String getGrantType() {
+        return grantType;
+    }
+
+    public void setGrantType(String grantType) {
+        this.grantType = grantType;
     }
 }

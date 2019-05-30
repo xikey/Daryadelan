@@ -37,5 +37,9 @@
     <string name="repeat_password">تکرار کلمه عبور</string>
     <string name="error_pass_repeatPass">مقدار کلمه عبور و تکرار کلمه عبور یکسان نمیباشد</string>
     <string name="please_waite">لطفا کمی صبر کنید...</string>
+    <string name="server_token_eror">token نا معتبر</string>
+    <string name="server_mobile_eror">موبایل نا معتبر</string>
+    <string name="server_firstName_eror">نام نا معتبر</string>
+    <string name="server_lastName_eror">نام خانوادگی نا معتبر</string>
 
 </resources>
