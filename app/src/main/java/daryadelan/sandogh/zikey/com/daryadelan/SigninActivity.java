@@ -45,6 +45,9 @@ import es.dmoral.toasty.Toasty;
 
 public class SigninActivity extends AppCompatActivity {
 
+
+    private static final int KEY_REQUEST_LOGIN = 11;
+
     private final int RESOLVE_HINT = 45;
     private TextView txtSendSMS;
     GoogleApiClient apiClient;
@@ -215,7 +218,7 @@ public class SigninActivity extends AppCompatActivity {
         lyLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginActivity.start(SigninActivity.this);
+                LoginActivity.start(SigninActivity.this, KEY_REQUEST_LOGIN);
 
             }
         });
@@ -399,6 +402,7 @@ public class SigninActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == RESOLVE_HINT) {
             if (resultCode == RESULT_OK) {
                 Credential credential = data.getParcelableExtra(Credential.EXTRA_KEY);
@@ -412,6 +416,13 @@ public class SigninActivity extends AppCompatActivity {
 
                 }
 
+            }
+        }
+        // در صورتی که عملیات لاگین با موفقیت اتجام شود
+        if (requestCode == KEY_REQUEST_LOGIN) {
+            if (resultCode == RESULT_OK) {
+                MainActivity.start(SigninActivity.this);
+                finish();
             }
         }
     }
@@ -591,6 +602,7 @@ public class SigninActivity extends AppCompatActivity {
         });
 
     }
+
 
     private void testApi() {
 

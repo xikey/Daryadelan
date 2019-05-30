@@ -41,5 +41,6 @@
     <string name="server_mobile_eror">موبایل نا معتبر</string>
     <string name="server_firstName_eror">نام نا معتبر</string>
     <string name="server_lastName_eror">نام خانوادگی نا معتبر</string>
+    <string name="error_login_please_try_again">متاسفانه خطایی هتگام ورود رخ داده است. لطفا مجددا تلاش نمایید</string>
 
 </resources>

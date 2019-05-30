@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layoutDirection="rtl"
+    android:id="@+id/lyContent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
@@ -197,6 +198,7 @@
             android:orientation="vertical"
             android:clickable="true"
             android:focusable="true"
+            android:id="@+id/lyAction"
             android:background="?android:attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -206,7 +208,7 @@
                 android:layout_weight="0.5"
                 android:gravity="center"
                 android:text="@string/login"
-                android:textSize="@dimen/very_small_font_size"
+                android:textSize="@dimen/normal_font_size"
                 android:textColor="@color/colorWhite"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -217,5 +219,7 @@
 
     </LinearLayout>
 
+
+    <include layout="@layout/layout_progress_match_parent"/>
 
 </RelativeLayout>

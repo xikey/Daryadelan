@@ -141,6 +141,11 @@ public class UserServerRepo implements IUser {
                     return;
                 }
 
+                if (response.body().getResultId()<0){
+                    callBack.onError(new Throwable(response.body().getMessagee()));
+                    return;
+                }
+
 
                 if (TextUtils.isEmpty(response.body().getToken())) {
                     callBack.onError(new Throwable("خطا در دریافت اطلاعات token"));

@@ -115,15 +115,15 @@ public class SessionManagement {
             dialog.showAlert(context, context.getString(R.string.server_mobile_eror));
             return false;
         }
-        if (TextUtils.isEmpty(member.getFirstName())) {
-            dialog.showAlert(context, context.getString(R.string.server_firstName_eror));
-            return false;
-        }
-
-        if (TextUtils.isEmpty(member.getLastName())) {
-            dialog.showAlert(context, context.getString(R.string.server_lastName_eror));
-            return false;
-        }
+//        if (TextUtils.isEmpty(member.getFirstName())) {
+//            dialog.showAlert(context, context.getString(R.string.server_firstName_eror));
+//            return false;
+//        }
+//
+//        if (TextUtils.isEmpty(member.getLastName())) {
+//            dialog.showAlert(context, context.getString(R.string.server_lastName_eror));
+//            return false;
+//        }
 
 
         setToken(member.getToken());
@@ -143,10 +143,10 @@ public class SessionManagement {
             return null;
         else if (TextUtils.isEmpty(getTel()))
             return null;
-        else if (TextUtils.isEmpty(getFirstName()))
-            return null;
-        else if (TextUtils.isEmpty(getLastName()))
-            return null;
+//        else if (TextUtils.isEmpty(getFirstName()))
+//            return null;
+//        else if (TextUtils.isEmpty(getLastName()))
+//            return null;
 
         member.setToken(getToken());
         member.setFirstName(getFirstName());
