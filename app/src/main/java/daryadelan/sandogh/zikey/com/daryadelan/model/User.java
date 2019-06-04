@@ -1,5 +1,7 @@
 package daryadelan.sandogh.zikey.com.daryadelan.model;
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.SerializedName;
 
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper;
@@ -17,13 +19,17 @@ public class User extends ServerWrapper {
     @SerializedName("osVersion")
     private String osVersion;
     /**
-     * یکی از موارد زیر را می پذیرد:
+     * یکی از موارد زیر که نوع کاربر می باشد را بر میگرداند:
      * Baz
      * Vaz
      * Mos
+     * Su
+     * guest
      * مورد baz برای بازنشسته
      * مورد vaz برای وظیفه بگیر
      * مورد mos برای مستمری بگیر سازمانی
+     * مورد su برای کاربر سوپر یوزر
+     * مورد guest برای کاربر مهمان
      */
     private String personType;
     @SerializedName("activeCode")
@@ -170,5 +176,28 @@ public class User extends ServerWrapper {
 
     public void setGrantType(String grantType) {
         this.grantType = grantType;
+    }
+
+    public String getPersonTypeName() {
+        if (TextUtils.isEmpty(personType)) {
+            return "کاربر نامشخص";
+        }
+
+        if (personType.equals("baz"))
+            return "کاربر بازنشسته";
+
+        if (personType.equals("Vaz"))
+            return "کاربر وظیفه بگیر";
+
+        if (personType.equals("mos"))
+            return "کاربر مستمری بگیر سازمانی";
+
+        if (personType.equals("su"))
+            return "کاربر سوپر یوزر";
+
+        if (personType.equals("guest"))
+            return "کاربر  مهمان";
+
+        return "کاربر نامشخص";
     }
 }

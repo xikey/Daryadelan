@@ -99,7 +99,6 @@ public class SigninActivity extends AppCompatActivity {
 
     private void initBroadCast() {
 
-
         if (SMSBroadcastReceiver == null)
             SMSBroadcastReceiver = new SMSBroadcastReceiver(new SMSBroadcastReceiver.setOnSmsReciever() {
                 @Override
@@ -261,7 +260,6 @@ public class SigninActivity extends AppCompatActivity {
 
         user.setMobileImei(deviceHelper.getMobileIMEI(getApplicationContext()));
         user.setMobileDeviceBrand(deviceHelper.getDeviceName(getApplicationContext()));
-        user.setPersonType("baz");
         user.setOsVersion(deviceHelper.getOSversion(getApplicationContext()));
 
         if (TextUtils.isEmpty(user.getMobileImei())) {
@@ -287,6 +285,11 @@ public class SigninActivity extends AppCompatActivity {
                     return;
                 }
                 Toasty.success(SigninActivity.this, answer.getMessagee()).show();
+                if (TextUtils.isEmpty(answer.getStrData())){
+                    new CustomDialogBuilder().showAlert(SigninActivity.this,"متاسفانه کد پرسنلی و شماره همراه شما شاما مجوز ورود به نرم افزار ندارد. در صورت مشکل با واحد پشتیبانی تماس حاصل نمایید");
+                    return;
+                }
+                user.setPersonType(answer.getStrData());
                 personel = user;
                 String tmp = "کد ارسالی به شماره موبایل " + user.getMobile() + " را وارد نمایید ";
                 smSvalidationDialog = SMSvalidationDialog.Show(SigninActivity.this, getString(R.string.sms_validate), tmp, "تایید", "انصراف", new SMSvalidationDialog.OnActionClickListener() {
@@ -579,7 +582,7 @@ public class SigninActivity extends AppCompatActivity {
 
                 personel.setAcceptCode(answer.getStrData());
 
-                CreateUserActivity.start(SigninActivity.this, answer.getStrData());
+                CreateUserActivity.start(SigninActivity.this,personel.getAcceptCode(),personel.getPersonType());
 
             }
 

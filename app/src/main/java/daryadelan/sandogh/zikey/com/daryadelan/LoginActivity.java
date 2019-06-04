@@ -127,6 +127,11 @@ public class LoginActivity extends AppCompatActivity {
                     new CustomDialogBuilder().showAlert(LoginActivity.this, getString(R.string.error_login_please_try_again));
                     return;
                 }
+
+                user.setToken(answer.getToken());
+                user.setTokenType(answer.getTokenType());
+                user.setTokenExpireDate(answer.getTokenExpireDate());
+
 // TODO: 5/31/2019 TOKEN IS BASE 64. MUST GET User FirstName and LastName From Token
                 if (SessionManagement.getInstance(getApplicationContext()).saveMemberData(LoginActivity.this, user)) {
 

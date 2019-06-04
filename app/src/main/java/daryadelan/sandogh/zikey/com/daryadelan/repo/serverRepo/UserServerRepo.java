@@ -92,7 +92,7 @@ public class UserServerRepo implements IUser {
     public void createUser(Context context, User user, final IRepoCallBack<User> callBack) {
 
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
-        userCall = userApi.createUser(user.getAcceptCode(), user.getMobile(), user.getPassword(), user.getFirstName(), user.getLastName());
+        userCall = userApi.createUser(user.getAcceptCode(), user.getMobile(), user.getPassword(), user.getFirstName(), user.getLastName(),user.getPersonType());
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -142,8 +142,11 @@ public class UserServerRepo implements IUser {
                 }
 
                 if (response.body().getResultId()<0){
-                    callBack.onError(new Throwable(response.body().getMessagee()));
-                    return;
+                    if (!TextUtils.isEmpty(response.body().getMessagee())){
+                        callBack.onError(new Throwable(response.body().getMessagee()));
+                        return;
+                    }
+
                 }
 
 

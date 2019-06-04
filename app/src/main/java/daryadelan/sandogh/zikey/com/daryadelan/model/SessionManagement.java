@@ -21,8 +21,25 @@ public class SessionManagement {
 
     private final String KEY_MOBILE = "KEY_MOBILE";
     private final String KEY_TOKEN = "TOKEN";
+    private final String KEY_TOKEN_TYPE = "TOKEN_TYPE";
+    private final String KEY_TOKEN_EXPIRE_DATE = "TOKEN_EXPIRE_DATE";
     private final String KEY_FIRST_NAME = "FIRST_NAME";
     private final String KEY_LAST_NAME = "LAST_NAME";
+
+    /**
+     * یکی از موارد زیر که نوع کاربر می باشد را بر میگرداند:
+     * Baz
+     * Vaz
+     * Mos
+     * Su
+     * guest
+     * مورد baz برای بازنشسته
+     * مورد vaz برای وظیفه بگیر
+     * مورد mos برای مستمری بگیر سازمانی
+     * مورد su برای کاربر سوپر یوزر
+     * مورد guest برای کاربر مهمان
+     */
+    private final String KEY_USER_TYPE = "USER_TYPE";
 
 
     private SharedPreferences preferences;
@@ -52,6 +69,31 @@ public class SessionManagement {
         return preferences.getString(KEY_TOKEN, "");
     }
 
+    public void setToken_type(String tokenType) {
+        if (preferences == null)
+            return;
+        this.preferences.edit().putString(KEY_TOKEN_TYPE, tokenType).apply();
+
+    }
+
+    public String getToken_type() {
+        if (preferences == null)
+            return "";
+        return preferences.getString(KEY_TOKEN_TYPE, "");
+    }
+
+    public void setToken_ExpireDate(String tokenExpireDate) {
+        if (preferences == null)
+            return;
+        this.preferences.edit().putString(KEY_TOKEN_EXPIRE_DATE, tokenExpireDate).apply();
+
+    }
+
+    public String getToken__ExpireDate() {
+        if (preferences == null)
+            return "";
+        return preferences.getString(KEY_TOKEN_EXPIRE_DATE, "");
+    }
 
     public void setTel(String tel) {
         if (preferences == null)
@@ -115,6 +157,7 @@ public class SessionManagement {
             dialog.showAlert(context, context.getString(R.string.server_mobile_eror));
             return false;
         }
+
 //        if (TextUtils.isEmpty(member.getFirstName())) {
 //            dialog.showAlert(context, context.getString(R.string.server_firstName_eror));
 //            return false;
@@ -131,7 +174,13 @@ public class SessionManagement {
         setFirstName(member.getFirstName());
         setLastName(member.getLastName());
 
+        if (!TextUtils.isEmpty(member.getTokenExpireDate())) {
+            setToken_ExpireDate(member.getTokenExpireDate());
+        }
 
+        if (!TextUtils.isEmpty(member.getTokenType())) {
+            setToken_ExpireDate(member.getTokenType());
+        }
         return true;
 
     }
@@ -153,6 +202,8 @@ public class SessionManagement {
         member.setLastName(getLastName());
         member.setToken(getToken());
         member.setMobile(getTel());
+        member.setTokenExpireDate(getToken__ExpireDate());
+        member.setTokenType(getToken_type());
 
         return member;
 

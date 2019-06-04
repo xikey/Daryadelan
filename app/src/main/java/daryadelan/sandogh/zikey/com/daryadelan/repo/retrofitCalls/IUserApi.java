@@ -36,7 +36,8 @@ public interface IUserApi {
                           @Field("Mobile") String Mobile,
                           @Field("Password") String Password,
                           @Field("FirstName") String FirstName,
-                          @Field("LastName") String LastName);
+                          @Field("LastName") String LastName,
+                          @Field("PersonType") String personType);
 
     /**
      * @param mobile     user name is mobile number
@@ -45,10 +46,10 @@ public interface IUserApi {
      * @return
      */
     @FormUrlEncoded
-    @POST("api/persons/usercreation")
+    @POST("oauth/token")
     Call<User> login(@Field("username") String mobile,
                      @Field("password") String password,
-                     @Field("Grant_type") String Grant_type);
+                     @Field("grant_type") String Grant_type);
 
 
 }

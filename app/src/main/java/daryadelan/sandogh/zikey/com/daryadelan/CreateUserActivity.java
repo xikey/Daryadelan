@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.razanpardazesh.razanlibs.Tools.ValidateHelper;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
+import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
@@ -29,6 +30,7 @@ import es.dmoral.toasty.Toasty;
 public class CreateUserActivity extends AppCompatActivity {
 
     private static final String KEY_ACCEPT_CODE = "ACCEPT_CODE";
+    private static final String KEY_USER_TYPE = "USER_TYPE";
 
     //Views
     private TextView txtAction;
@@ -77,6 +79,16 @@ public class CreateUserActivity extends AppCompatActivity {
                 user = new User();
             user.setAcceptCode(data.getStringExtra(KEY_ACCEPT_CODE));
         }
+
+        if (data.hasExtra(KEY_USER_TYPE)) {
+            if (user == null)
+                user = new User();
+            user.setPersonType(data.getStringExtra(KEY_USER_TYPE));
+
+            String message="با سلام"+"\n"+user.getPersonTypeName()+" گرامی"+" خوش آمدید"+"\n"+"جهت ایجاد حساب کاربری اطلاعات صفحه را با دقت تکمیل نمایید.";
+
+            new CustomDialogBuilder().showAlert(CreateUserActivity.this,message);
+        }
     }
 
     @Override
@@ -112,12 +124,13 @@ public class CreateUserActivity extends AppCompatActivity {
 
     }
 
-    public static void start(FragmentActivity context, String acceptCode) {
+    public static void start(FragmentActivity context, String acceptCode,String userType) {
         if (acceptCode == null)
             return;
 
         Intent starter = new Intent(context, CreateUserActivity.class);
         starter.putExtra(KEY_ACCEPT_CODE, acceptCode);
+        starter.putExtra(KEY_USER_TYPE, userType);
         context.startActivity(starter);
     }
 
@@ -256,7 +269,7 @@ public class CreateUserActivity extends AppCompatActivity {
     }
 
     private void createUser() {
-        if (repo==null)
+        if (repo == null)
             return;
         lyProgress.setVisibility(View.VISIBLE);
         repo.createUser(getApplicationContext(), user, new IRepoCallBack<User>() {
@@ -270,12 +283,11 @@ public class CreateUserActivity extends AppCompatActivity {
                 }
 
 
-                if (!TextUtils.isEmpty(answer.getMessagee())){
+                if (!TextUtils.isEmpty(answer.getMessagee())) {
 
-                    Toasty.info(CreateUserActivity.this,answer.getMessagee()).show();
+                    Toasty.info(CreateUserActivity.this, answer.getMessagee()).show();
                 }
-
-
+                login();
 
             }
 
@@ -342,6 +354,65 @@ public class CreateUserActivity extends AppCompatActivity {
         return false;
 
 
+    }
+
+
+    private void login() {
+        if (repo == null)
+            return;
+
+        if (user == null)
+            return;
+
+        lyProgress.setVisibility(View.VISIBLE);
+
+        repo.login(CreateUserActivity.this, user, new IRepoCallBack<User>() {
+            @Override
+            public void onAnswer(User answer) {
+                lyProgress.setVisibility(View.GONE);
+
+
+                if (answer == null) {
+                    new CustomDialogBuilder().showAlert(CreateUserActivity.this, getString(R.string.error_login_please_try_again));
+                    return;
+                }
+
+                if (TextUtils.isEmpty(answer.getToken())) {
+                    new CustomDialogBuilder().showAlert(CreateUserActivity.this, getString(R.string.error_login_please_try_again));
+                    return;
+                }
+
+                user.setToken(answer.getToken());
+                user.setTokenType(answer.getTokenType());
+                user.setTokenExpireDate(answer.getTokenExpireDate());
+
+// TODO: 5/31/2019 TOKEN IS BASE 64. MUST GET User FirstName and LastName From Token
+                if (SessionManagement.getInstance(getApplicationContext()).saveMemberData(CreateUserActivity.this, user)) {
+
+                    setResult(RESULT_OK);
+                    finish();
+
+                }
+
+
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                new CustomDialogBuilder().showAlert(CreateUserActivity.this, error.getMessage().toString());
+                lyProgress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
     }
 
 
