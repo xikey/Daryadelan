@@ -188,6 +188,10 @@ public class LoginActivity extends AppCompatActivity {
         context.startActivityForResult(starter, requestCode);
     }
 
+    public static void start(FragmentActivity context) {
+        Intent starter = new Intent(context, LoginActivity.class);
+        context.startActivity(starter);
+    }
 
     private void initHeaderSize() {
 

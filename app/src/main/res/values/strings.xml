@@ -45,5 +45,6 @@
     <string name="exit_app">خروج از حساب کاربری</string>
     <string name="about_us">دربازه ما</string>
     <string name="payslip">فیش حقوقی</string>
+    <string name="i_am_guest">کاربر مهمان هستم</string>
 
 </resources>

@@ -19,10 +19,12 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
@@ -33,6 +35,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import daryadelan.sandogh.zikey.com.daryadelan.broadcasts.SMSBroadcastReceiver;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
+import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.TestRepo;
@@ -63,9 +66,10 @@ public class SigninActivity extends AppCompatActivity {
     private ImageView imgMySim;
 
     private LinearLayout lyLogin;
-    private LinearLayout lyGuest;
+//    private LinearLayout lyGuest;
     private RelativeLayout lyHeader;
     private LinearLayout lyProgress;
+    private LinearLayout lyPersonelCode;
     private User personel;
 
     private IUser userRepo;
@@ -73,11 +77,14 @@ public class SigninActivity extends AppCompatActivity {
 
     private boolean isGuest = false;
 
+    private Switch swIAmGuest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
+        isUserLoggedInBefore();
         initViews();
         initListeners();
         initRepo();
@@ -86,6 +93,19 @@ public class SigninActivity extends AppCompatActivity {
         initBroadCast();
         requestGetMessagePermission();
         requestReadPhoneStatePermission();
+
+    }
+
+    /**
+     * در صورتی که کاربر قبلا ورود کرده باشد دیگر نباید بتواند صفحه ساخت یوزر را ببیند
+     */
+    private void isUserLoggedInBefore() {
+        User user = SessionManagement.getInstance(getApplicationContext()).loadMember();
+
+        if (!TextUtils.isEmpty(user.getToken())){
+            MainActivity.start(SigninActivity.this);
+            finish();
+        }
 
     }
 
@@ -115,8 +135,8 @@ public class SigninActivity extends AppCompatActivity {
                                 if (smSvalidationDialog != null) {
                                     smSvalidationDialog.userInputDialog.setText(validateCode);
                                     checkActivateCodeValidation();
-                                    if(smSvalidationDialog!=null)
-                                    smSvalidationDialog.dismiss();
+                                    if (smSvalidationDialog != null)
+                                        smSvalidationDialog.dismiss();
                                 }
                             }
                         } catch (Exception e) {
@@ -229,31 +249,45 @@ public class SigninActivity extends AppCompatActivity {
             }
         });
 
-        lyGuest.setOnClickListener(new View.OnClickListener() {
+//        lyGuest.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new CustomDialogBuilder().showYesNOCustomAlert(SigninActivity.this, "ارسال اطلاعات", "مایل به ورود به عنوان مهمان به برنامه میباشید؟", "ارسال", "انصراف", new CustomAlertDialog.OnActionClickListener() {
+//                    @Override
+//                    public void onClick(DialogFragment fragment) {
+//                        isGuest = true;
+//                        fragment.dismiss();
+//                        sendSMS();
+//
+//                    }
+//                }, new CustomAlertDialog.OnCancelClickListener() {
+//                    @Override
+//                    public void onClickCancel(DialogFragment fragment) {
+//
+//                        fragment.dismiss();
+//                    }
+//
+//                    @Override
+//                    public void onClickOutside(DialogFragment fragment) {
+//                        fragment.dismiss();
+//                    }
+//                });
+//
+//
+//            }
+//        });
+
+        swIAmGuest.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                new CustomDialogBuilder().showYesNOCustomAlert(SigninActivity.this, "ارسال اطلاعات", "مایل به ورود به عنوان مهمان به برنامه میباشید؟", "ارسال", "انصراف", new CustomAlertDialog.OnActionClickListener() {
-                    @Override
-                    public void onClick(DialogFragment fragment) {
-                        isGuest = true;
-                        fragment.dismiss();
-                        sendSMS();
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    isGuest = true;
+                    lyPersonelCode.setVisibility(View.GONE);
 
-                    }
-                }, new CustomAlertDialog.OnCancelClickListener() {
-                    @Override
-                    public void onClickCancel(DialogFragment fragment) {
-
-                        fragment.dismiss();
-                    }
-
-                    @Override
-                    public void onClickOutside(DialogFragment fragment) {
-                        fragment.dismiss();
-                    }
-                });
-
-
+                } else {
+                    isGuest = false;
+                    lyPersonelCode.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -267,10 +301,10 @@ public class SigninActivity extends AppCompatActivity {
         }
 
         if (!isGuest)
-        if (TextUtils.isEmpty(txtPersonelCode.getText())) {
-            new CustomDialogBuilder().showAlert(SigninActivity.this, "شماره پرسنلی وارد شده نادرست میباشد");
-            return;
-        }
+            if (TextUtils.isEmpty(txtPersonelCode.getText())) {
+                new CustomDialogBuilder().showAlert(SigninActivity.this, "شماره پرسنلی وارد شده نادرست میباشد");
+                return;
+            }
 
 
         int permission = ContextCompat.checkSelfPermission(this,
@@ -408,8 +442,11 @@ public class SigninActivity extends AppCompatActivity {
         lyHeader = (RelativeLayout) findViewById(R.id.lyHeader);
 
         lyLogin = (LinearLayout) findViewById(R.id.lyLogin);
-        lyGuest = (LinearLayout) findViewById(R.id.lyGuest);
+//        lyGuest = (LinearLayout) findViewById(R.id.lyGuest);
+        lyPersonelCode = (LinearLayout) findViewById(R.id.lyPersonelCode);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
+
+        swIAmGuest = (Switch) findViewById(R.id.swIAmGuest);
 
 
         try {
@@ -620,7 +657,7 @@ public class SigninActivity extends AppCompatActivity {
 
                 personel.setAcceptCode(answer.getStrData());
 
-                CreateUserActivity.start(SigninActivity.this, personel.getAcceptCode(), personel.getPersonType(),personel.getMobile(),KEY_REQUEST_CREATE_USER);
+                CreateUserActivity.start(SigninActivity.this, personel.getAcceptCode(), personel.getPersonType(), personel.getMobile(), KEY_REQUEST_CREATE_USER);
 
             }
 

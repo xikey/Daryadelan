@@ -158,7 +158,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
+                android:id="@+id/lyPersonelCode"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="20dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -196,6 +197,27 @@
                 </android.support.design.widget.TextInputLayout>
 
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:paddingTop="25dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Switch
+                    android:layout_marginRight="67dp"
+                    android:id="@+id/swIAmGuest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:alpha="0.4"
+                    android:textSize="@dimen/very_small_font_size"
+                    android:textColor="@color/colorBlack"
+                    android:text="@string/i_am_guest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                
             </LinearLayout>
 
             <LinearLayout
@@ -271,6 +293,7 @@
             android:layout_width="2dp"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             android:layout_marginBottom="10dp"
             android:background="@color/colorWhite" />
 
@@ -279,6 +302,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:id="@+id/lyGuest"
+            android:visibility="gone"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
