@@ -47,6 +47,8 @@ public class SigninActivity extends AppCompatActivity {
 
 
     private static final int KEY_REQUEST_LOGIN = 11;
+    private static final int KEY_REQUEST_CREATE_USER = 13;
+
 
     private final int RESOLVE_HINT = 45;
     private TextView txtSendSMS;
@@ -68,6 +70,8 @@ public class SigninActivity extends AppCompatActivity {
 
     private IUser userRepo;
     private SMSvalidationDialog smSvalidationDialog;
+
+    private boolean isGuest = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,7 +184,7 @@ public class SigninActivity extends AppCompatActivity {
                     new CustomDialogBuilder().showYesNOCustomAlert(SigninActivity.this, "ارسال اطلاعات", "مایل به ارسال اطلاعات میباشید؟", "ارسال", "انصراف", new CustomAlertDialog.OnActionClickListener() {
                         @Override
                         public void onClick(DialogFragment fragment) {
-
+                            isGuest = false;
                             fragment.dismiss();
                             sendSMS();
 
@@ -225,7 +229,27 @@ public class SigninActivity extends AppCompatActivity {
         lyGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginGuestActivity.start(SigninActivity.this);
+                new CustomDialogBuilder().showYesNOCustomAlert(SigninActivity.this, "ارسال اطلاعات", "مایل به ورود به عنوان مهمان به برنامه میباشید؟", "ارسال", "انصراف", new CustomAlertDialog.OnActionClickListener() {
+                    @Override
+                    public void onClick(DialogFragment fragment) {
+                        isGuest = true;
+                        fragment.dismiss();
+                        sendSMS();
+
+                    }
+                }, new CustomAlertDialog.OnCancelClickListener() {
+                    @Override
+                    public void onClickCancel(DialogFragment fragment) {
+
+                        fragment.dismiss();
+                    }
+
+                    @Override
+                    public void onClickOutside(DialogFragment fragment) {
+                        fragment.dismiss();
+                    }
+                });
+
 
             }
         });
@@ -238,6 +262,8 @@ public class SigninActivity extends AppCompatActivity {
             new CustomDialogBuilder().showAlert(SigninActivity.this, "شماره موبایل وارد شده نادرست میباشد");
             return;
         }
+
+        if (!isGuest)
         if (TextUtils.isEmpty(txtPersonelCode.getText())) {
             new CustomDialogBuilder().showAlert(SigninActivity.this, "شماره پرسنلی وارد شده نادرست میباشد");
             return;
@@ -256,7 +282,9 @@ public class SigninActivity extends AppCompatActivity {
         final User user = new User();
 
         user.setMobile(txtUserName.getText().toString());
-        user.setPersonalCode(Long.parseLong(txtPersonelCode.getText().toString()));
+
+        if (!isGuest)
+            user.setPersonalCode(Long.parseLong(txtPersonelCode.getText().toString()));
 
         user.setMobileImei(deviceHelper.getMobileIMEI(getApplicationContext()));
         user.setMobileDeviceBrand(deviceHelper.getDeviceName(getApplicationContext()));
@@ -285,8 +313,8 @@ public class SigninActivity extends AppCompatActivity {
                     return;
                 }
                 Toasty.success(SigninActivity.this, answer.getMessagee()).show();
-                if (TextUtils.isEmpty(answer.getStrData())){
-                    new CustomDialogBuilder().showAlert(SigninActivity.this,"متاسفانه کد پرسنلی و شماره همراه شما شاما مجوز ورود به نرم افزار ندارد. در صورت مشکل با واحد پشتیبانی تماس حاصل نمایید");
+                if (TextUtils.isEmpty(answer.getStrData())) {
+                    new CustomDialogBuilder().showAlert(SigninActivity.this, "متاسفانه کد پرسنلی و شماره همراه شما شاما مجوز ورود به نرم افزار ندارد. در صورت مشکل با واحد پشتیبانی تماس حاصل نمایید");
                     return;
                 }
                 user.setPersonType(answer.getStrData());
@@ -345,7 +373,7 @@ public class SigninActivity extends AppCompatActivity {
             @Override
             public void onError(Throwable error) {
                 lyProgress.setVisibility(View.GONE);
-                new CustomDialogBuilder().showAlert(SigninActivity.this, error.toString());
+                new CustomDialogBuilder().showAlert(SigninActivity.this, error.getMessage());
             }
 
             @Override
@@ -424,7 +452,14 @@ public class SigninActivity extends AppCompatActivity {
         // در صورتی که عملیات لاگین با موفقیت اتجام شود
         if (requestCode == KEY_REQUEST_LOGIN) {
             if (resultCode == RESULT_OK) {
-                MainActivity.start(SigninActivity.this);
+
+                finish();
+            }
+        }
+
+        if (requestCode == KEY_REQUEST_CREATE_USER) {
+            if (resultCode == RESULT_OK) {
+
                 finish();
             }
         }
@@ -582,14 +617,14 @@ public class SigninActivity extends AppCompatActivity {
 
                 personel.setAcceptCode(answer.getStrData());
 
-                CreateUserActivity.start(SigninActivity.this,personel.getAcceptCode(),personel.getPersonType());
+                CreateUserActivity.start(SigninActivity.this, personel.getAcceptCode(), personel.getPersonType(),KEY_REQUEST_CREATE_USER);
 
             }
 
             @Override
             public void onError(Throwable error) {
                 lyProgress.setVisibility(View.GONE);
-                new CustomDialogBuilder().showAlert(SigninActivity.this, error.toString());
+                new CustomDialogBuilder().showAlert(SigninActivity.this, error.getMessage());
                 return;
             }
 

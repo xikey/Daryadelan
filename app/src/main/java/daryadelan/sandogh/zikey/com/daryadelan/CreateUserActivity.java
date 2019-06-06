@@ -124,14 +124,14 @@ public class CreateUserActivity extends AppCompatActivity {
 
     }
 
-    public static void start(FragmentActivity context, String acceptCode,String userType) {
+    public static void start(FragmentActivity context, String acceptCode,String userType,int requestCode) {
         if (acceptCode == null)
             return;
 
         Intent starter = new Intent(context, CreateUserActivity.class);
         starter.putExtra(KEY_ACCEPT_CODE, acceptCode);
         starter.putExtra(KEY_USER_TYPE, userType);
-        context.startActivity(starter);
+        context.startActivityForResult(starter,requestCode);
     }
 
     private void initToolbar() {
@@ -294,7 +294,7 @@ public class CreateUserActivity extends AppCompatActivity {
             @Override
             public void onError(Throwable error) {
                 lyProgress.setVisibility(View.GONE);
-                new CustomDialogBuilder().showAlert(CreateUserActivity.this, error.toString());
+                new CustomDialogBuilder().showAlert(CreateUserActivity.this, error.getMessage());
             }
 
             @Override
@@ -390,6 +390,7 @@ public class CreateUserActivity extends AppCompatActivity {
                 if (SessionManagement.getInstance(getApplicationContext()).saveMemberData(CreateUserActivity.this, user)) {
 
                     setResult(RESULT_OK);
+                    MainActivity.start(CreateUserActivity.this);
                     finish();
 
                 }

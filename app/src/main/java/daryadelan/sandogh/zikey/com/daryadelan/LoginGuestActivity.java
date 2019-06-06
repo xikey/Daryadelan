@@ -15,10 +15,14 @@ import android.widget.TextView;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 
+@Deprecated
 public class LoginGuestActivity extends AppCompatActivity {
+
+    public final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 16;
 
     private TextView txtUserName;
     private TextView txtPassword;
@@ -32,6 +36,10 @@ public class LoginGuestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_guest);
+
+        initRepo();
+        initViews();
+        initListeners();
     }
 
     public static void start(FragmentActivity context) {
@@ -46,6 +54,13 @@ public class LoginGuestActivity extends AppCompatActivity {
         initHeaderSize();
     }
 
+    private void initRepo() {
+
+        if (repo == null)
+            repo = new UserServerRepo();
+    }
+
+
     private void initHeaderSize() {
 
         RelativeLayout lyHeader = (RelativeLayout) findViewById(R.id.lyHeader);
@@ -56,6 +71,7 @@ public class LoginGuestActivity extends AppCompatActivity {
         lyHeader.setLayoutParams(params);
 
     }
+
     private void initViews() {
 
         txtUserName = (TextView) findViewById(R.id.txtUserName);
@@ -104,13 +120,11 @@ public class LoginGuestActivity extends AppCompatActivity {
         }
 
 
-
-
-
         user = new User();
         user.setMobile(txtUserName.getText().toString().trim());
 
 
     }
+
 
 }

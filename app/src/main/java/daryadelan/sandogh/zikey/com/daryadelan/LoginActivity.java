@@ -136,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (SessionManagement.getInstance(getApplicationContext()).saveMemberData(LoginActivity.this, user)) {
 
                     setResult(RESULT_OK);
+                    MainActivity.start(LoginActivity.this);
                     finish();
 
                 }

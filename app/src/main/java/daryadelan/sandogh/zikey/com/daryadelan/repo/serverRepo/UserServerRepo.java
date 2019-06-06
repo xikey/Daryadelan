@@ -137,7 +137,7 @@ public class UserServerRepo implements IUser {
                 }
 
                 if (response.body() == null) {
-                    callBack.onError(new Throwable("RP ERR 102  response body is null"));
+                    callBack.onError(new Throwable("خطا در ورود به برنامه"));
                     return;
                 }
 

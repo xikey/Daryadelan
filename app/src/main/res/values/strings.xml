@@ -13,7 +13,7 @@
     <string name="im_not_retired">بازنشسته نیستم</string>
     <string name="login">ورود</string>
     <string name="password">رمز عبور</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">دریادلان</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -42,5 +42,8 @@
     <string name="server_firstName_eror">نام نا معتبر</string>
     <string name="server_lastName_eror">نام خانوادگی نا معتبر</string>
     <string name="error_login_please_try_again">متاسفانه خطایی هتگام ورود رخ داده است. لطفا مجددا تلاش نمایید</string>
+    <string name="exit_app">خروج از حساب کاربری</string>
+    <string name="about_us">دربازه ما</string>
+    <string name="payslip">فیش حقوقی</string>
 
 </resources>
