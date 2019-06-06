@@ -114,6 +114,8 @@ public class SigninActivity extends AppCompatActivity {
                             if (!TextUtils.isEmpty(validateCode)) {
                                 if (smSvalidationDialog != null) {
                                     smSvalidationDialog.userInputDialog.setText(validateCode);
+                                    checkActivateCodeValidation();
+                                    smSvalidationDialog.dismiss();
                                 }
                             }
                         } catch (Exception e) {
@@ -617,7 +619,7 @@ public class SigninActivity extends AppCompatActivity {
 
                 personel.setAcceptCode(answer.getStrData());
 
-                CreateUserActivity.start(SigninActivity.this, personel.getAcceptCode(), personel.getPersonType(),KEY_REQUEST_CREATE_USER);
+                CreateUserActivity.start(SigninActivity.this, personel.getAcceptCode(), personel.getPersonType(),personel.getMobile(),KEY_REQUEST_CREATE_USER);
 
             }
 

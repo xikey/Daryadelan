@@ -31,6 +31,7 @@ public class CreateUserActivity extends AppCompatActivity {
 
     private static final String KEY_ACCEPT_CODE = "ACCEPT_CODE";
     private static final String KEY_USER_TYPE = "USER_TYPE";
+    private static final String KEY_USER_MOBILE = "USER_MOBILE";
 
     //Views
     private TextView txtAction;
@@ -60,9 +61,9 @@ public class CreateUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_user);
 
         initToolbar();
+        initViews();
         parseIntent();
         initRepo();
-        initViews();
         initActionButton();
         initTabIndex();
         initClickListeners();
@@ -80,6 +81,15 @@ public class CreateUserActivity extends AppCompatActivity {
             user.setAcceptCode(data.getStringExtra(KEY_ACCEPT_CODE));
         }
 
+        if (data.hasExtra(KEY_USER_MOBILE)) {
+            if (user == null)
+                user = new User();
+            user.setMobile(data.getStringExtra(KEY_USER_MOBILE));
+
+            if (edtMobile!=null)
+                edtMobile.setText(user.getMobile());
+        }
+
         if (data.hasExtra(KEY_USER_TYPE)) {
             if (user == null)
                 user = new User();
@@ -89,6 +99,8 @@ public class CreateUserActivity extends AppCompatActivity {
 
             new CustomDialogBuilder().showAlert(CreateUserActivity.this,message);
         }
+
+
     }
 
     @Override
@@ -124,13 +136,14 @@ public class CreateUserActivity extends AppCompatActivity {
 
     }
 
-    public static void start(FragmentActivity context, String acceptCode,String userType,int requestCode) {
+    public static void start(FragmentActivity context, String acceptCode,String userType,String mobile,int requestCode) {
         if (acceptCode == null)
             return;
 
         Intent starter = new Intent(context, CreateUserActivity.class);
         starter.putExtra(KEY_ACCEPT_CODE, acceptCode);
         starter.putExtra(KEY_USER_TYPE, userType);
+        starter.putExtra(KEY_USER_MOBILE, mobile);
         context.startActivityForResult(starter,requestCode);
     }
 
@@ -165,8 +178,7 @@ public class CreateUserActivity extends AppCompatActivity {
 
         edtName.requestFocus();
         edtName.setNextFocusDownId(R.id.edtFamily);
-        edtFamily.setNextFocusDownId(R.id.edtMobile);
-        edtMobile.setNextFocusDownId(R.id.edtPassword);
+        edtFamily.setNextFocusDownId(R.id.edtPassword);
         edtPassword.setNextFocusDownId(R.id.edtRepeatPassword);
 
         edtRepeatPassword.setImeOptions(EditorInfo.IME_ACTION_DONE);
