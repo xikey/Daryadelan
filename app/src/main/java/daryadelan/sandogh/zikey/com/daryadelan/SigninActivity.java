@@ -115,6 +115,7 @@ public class SigninActivity extends AppCompatActivity {
                                 if (smSvalidationDialog != null) {
                                     smSvalidationDialog.userInputDialog.setText(validateCode);
                                     checkActivateCodeValidation();
+                                    if(smSvalidationDialog!=null)
                                     smSvalidationDialog.dismiss();
                                 }
                             }
