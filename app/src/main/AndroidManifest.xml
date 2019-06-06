@@ -16,12 +16,12 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SigninActivity"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,11 +30,11 @@
         </activity>
         <activity
             android:name=".LoginGuestActivity"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".MainActivity"
