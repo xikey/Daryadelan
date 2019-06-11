@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Daryadelan</string>
+    <string name="app_name">دریادلان</string>
 
     <string name="title_activity_wellcome">WellcomeActivity</string>
     <string name="dummy_button">Dummy Button</string>
@@ -42,9 +42,17 @@
     <string name="server_firstName_eror">نام نا معتبر</string>
     <string name="server_lastName_eror">نام خانوادگی نا معتبر</string>
     <string name="error_login_please_try_again">متاسفانه خطایی هتگام ورود رخ داده است. لطفا مجددا تلاش نمایید</string>
+    <string name="error_getting_data_please_try_again">متاسفانه خطایی هتگام دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید</string>
     <string name="exit_app">خروج از حساب کاربری</string>
-    <string name="about_us">دربازه ما</string>
+    <string name="about_us">درباره ما</string>
     <string name="payslip">فیش حقوقی</string>
     <string name="i_am_guest">کاربر مهمان هستم</string>
+    <string name="payroll">فیش حقوقی</string>
+    <string name="title_activity_payroll_header">فیش حقوقی</string>
+    <string name="year">سال</string>
+    <string name="month">ماه</string>
+    <string name="get_payroll">دریافت فیش حقوقی</string>
+    <string name="title_activity_payroll_footer">دریافت فیش حقوقی</string>
+    <string name="sandogh_title">صندوق بازنشستگی و وظیفه مستخدمین سازمان بنادر و دریانوردی</string>
 
 </resources>

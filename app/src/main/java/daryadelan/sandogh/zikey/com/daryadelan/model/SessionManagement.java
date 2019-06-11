@@ -179,7 +179,7 @@ public class SessionManagement {
         }
 
         if (!TextUtils.isEmpty(member.getTokenType())) {
-            setToken_ExpireDate(member.getTokenType());
+            setToken_type(member.getTokenType());
         }
         return true;
 

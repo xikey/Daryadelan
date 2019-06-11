@@ -31,9 +31,9 @@ public class SplashActivity extends AwesomeSplash {
 
 
         //Customize Title
-        configSplash.setTitleSplash(" ");
+        configSplash.setTitleSplash("صندوق بازنشستگی و وظیفه مستخدمین سازمان بنادر و دریانوردی");
         configSplash.setTitleTextColor(R.color.colorWhite);
-        configSplash.setTitleTextSize(18f); //float value
+        configSplash.setTitleTextSize(10f); //float value
         configSplash.setAnimTitleDuration(1000);
         configSplash.setAnimTitleTechnique(Techniques.FlipInX);
         configSplash.setTitleFont("fonts/IRYekan.ttf");

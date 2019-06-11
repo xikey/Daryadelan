@@ -52,7 +52,15 @@
         <activity
             android:name=".CreateUserActivity"
             android:label="@string/title_activity_create_user"
-            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".PayrollHeaderActivity"
+            android:label="@string/title_activity_payroll_header"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PayrollFooterActivity"
+            android:label="@string/title_activity_payroll_footer"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

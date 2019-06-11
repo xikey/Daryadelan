@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:layoutDirection="rtl"
     android:orientation="vertical"
     android:layout_height="wrap_content">
 
@@ -16,6 +17,7 @@
             android:layout_height="150dp"
             app:cardUseCompatPadding="true"
             android:layout_weight="0.5"
+            android:id="@+id/crdPayrolls"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
@@ -34,14 +36,14 @@
                     android:layout_alignParentBottom="true"
                     android:background="@color/colorWhite"
                     android:gravity="center"
-                    android:text="شماره یک" />
+                    android:text="@string/payroll" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/txtBottom2"
                     android:padding="15dp"
-                    app:srcCompat="@drawable/ic_record_voice_over_white_76dp" />
+                    app:srcCompat="@drawable/ic_receipt_white_96dp" />
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>

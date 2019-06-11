@@ -101,6 +101,8 @@ public class SigninActivity extends AppCompatActivity {
      */
     private void isUserLoggedInBefore() {
         User user = SessionManagement.getInstance(getApplicationContext()).loadMember();
+        if (user==null)
+            return;
 
         if (!TextUtils.isEmpty(user.getToken())){
             MainActivity.start(SigninActivity.this);
