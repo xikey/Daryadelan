@@ -17,10 +17,12 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:alpha="0.4"
             android:background="@color/colorGray" />
 
         <LinearLayout
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">

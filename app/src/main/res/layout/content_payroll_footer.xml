@@ -15,6 +15,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/lyHeader"
             android:background="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -35,7 +36,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/small_font_size" />
+                    android:textSize="@dimen/very_small_10" />
 
 
             </RelativeLayout>
@@ -61,7 +62,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/small_font_size" />
+                    android:textSize="@dimen/very_small_10" />
 
 
             </LinearLayout>
@@ -87,7 +88,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/small_font_size" />
+                    android:textSize="@dimen/very_small_10" />
 
             </LinearLayout>
 

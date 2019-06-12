@@ -69,6 +69,12 @@ public class PayrollFooterActivity extends AppCompatActivity {
         rvItem = (RecyclerView) findViewById(R.id.rtItem);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
 
+        try{
+            FontChanger.applyYekanFont(findViewById(R.id.lyHeader));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     private void initRecycleView() {
@@ -252,11 +258,11 @@ public class PayrollFooterActivity extends AppCompatActivity {
                 holder.imgTotal.setVisibility(View.GONE);
 
                 if (payroll.getTransactionType() == 1) {
-                    holder.txtPrice.setBackgroundColor(Color.parseColor("#DCEDC8"));
+                    holder.txtPrice.setBackgroundColor(Color.parseColor("#F1F8E9"));
                     holder.imgPositive.setVisibility(View.VISIBLE);
 
                 } else {
-                    holder.txtPrice.setBackgroundColor(Color.parseColor("#FFCCBC"));
+                    holder.txtPrice.setBackgroundColor(Color.parseColor("#FBE9E7"));
                     holder.imgNegative.setVisibility(View.VISIBLE);
                 }
 
