@@ -15,5 +15,7 @@ public interface IUser {
 
     void login(Context context, User user, IRepoCallBack<User> callBack);
 
+    void exitApp(Context context,  IRepoCallBack<User> callBack);
+
 
 }

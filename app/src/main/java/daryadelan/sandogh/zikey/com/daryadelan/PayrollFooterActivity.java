@@ -229,7 +229,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
             if (parent == null || parent.getContext() == null)
                 return null;
 
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_payrolls_item, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_payrolls_item_grid, parent, false);
             FontChanger.applyMainFont(view);
             return new ItemHolder(view);
 
@@ -252,18 +252,18 @@ public class PayrollFooterActivity extends AppCompatActivity {
                 holder.imgTotal.setVisibility(View.GONE);
 
                 if (payroll.getTransactionType() == 1) {
-                    holder.cardView.setCardBackgroundColor(Color.parseColor("#C5E1A5"));
+                    holder.txtPrice.setBackgroundColor(Color.parseColor("#DCEDC8"));
                     holder.imgPositive.setVisibility(View.VISIBLE);
 
                 } else {
-                    holder.cardView.setCardBackgroundColor(Color.parseColor("#FFCCBC"));
+                    holder.txtPrice.setBackgroundColor(Color.parseColor("#FFCCBC"));
                     holder.imgNegative.setVisibility(View.VISIBLE);
                 }
 
                 if (payroll.getTransactionType() == -10) {
                     holder.imgPositive.setVisibility(View.GONE);
                     holder.imgNegative.setVisibility(View.GONE);
-                    holder.cardView.setCardBackgroundColor(Color.parseColor("#90A4AE"));
+                    holder.txtPrice.setBackgroundColor(Color.parseColor("#CFD8DC"));
                     holder.imgTotal.setVisibility(View.VISIBLE);
                 }
 
@@ -302,7 +302,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
                 imgPositive = v.findViewById(R.id.imgPositive);
                 imgNegative = v.findViewById(R.id.imgNegative);
                 imgTotal = v.findViewById(R.id.imgTotal);
-                FontChanger.applyTitleFont(cardView);
+                FontChanger.applyYekanFont(cardView);
 
 
             }

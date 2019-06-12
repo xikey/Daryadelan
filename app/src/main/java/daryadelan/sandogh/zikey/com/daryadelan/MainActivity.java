@@ -1,5 +1,6 @@
 package daryadelan.sandogh.zikey.com.daryadelan;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,8 +24,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.Indicator;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.PageFragment;
+import daryadelan.sandogh.zikey.com.daryadelan.model.User;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
+import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,6 +43,7 @@ public class MainActivity extends AppCompatActivity
     Handler slideHandler = null;
 
     private CardView crdPayrolls;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +57,7 @@ public class MainActivity extends AppCompatActivity
         initListeners();
 
     }
+
 
     private void initListeners() {
 
@@ -93,8 +102,24 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toasty.info(MainActivity.this, getString(R.string.doble_tap_to_exit)).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
         }
+
+
     }
 
     @Override
@@ -125,9 +150,18 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_exit) {
+            String question = "مایل به خروج از حساب کاربری خود میباشید؟";
+            question += "\n\n" + "*توجه*" + "\n" + "در صورت خروج از حساب کاربری، عملیات ورود به حساب کاربری باید مجددا انجام پذیرد.";
+            new CustomDialogBuilder().showYesNOCustomAlert(MainActivity.this, "خروج از حساب کاربری", question, "خروج", "انصراف", new CustomAlertDialog.OnActionClickListener() {
+                @Override
+                public void onClick(DialogFragment fragment) {
+                    exitApp();
+                    fragment.dismiss();
+                }
+            }, null);
+        }
+//         else if (id == R.id.nav_gallery) {
 //
 //        } else if (id == R.id.nav_slideshow) {
 //
@@ -269,6 +303,38 @@ public class MainActivity extends AppCompatActivity
             return advertisePageCount;
         }
 
+    }
+
+    private void exitApp(){
+
+        UserServerRepo repo = new UserServerRepo();
+        repo.exitApp(getApplicationContext(), new IRepoCallBack<User>() {
+            @Override
+            public void onAnswer(User answer) {
+                if (answer!=null&&answer.getResultId()==0){
+                    finish();
+                    LoginActivity.start(MainActivity.this);
+                }
+                else {
+                    Toasty.error(MainActivity.this,getString(R.string.error_exit_app)).show();
+                }
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                Toasty.error(MainActivity.this,getString(R.string.error_exit_app)).show();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
     }
 
 
