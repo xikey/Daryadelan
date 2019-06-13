@@ -308,7 +308,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
                 imgPositive = v.findViewById(R.id.imgPositive);
                 imgNegative = v.findViewById(R.id.imgNegative);
                 imgTotal = v.findViewById(R.id.imgTotal);
-                FontChanger.applyYekanFont(cardView);
+                FontChanger.applyMainFont(cardView);
 
 
             }

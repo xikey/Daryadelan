@@ -24,7 +24,7 @@
             android:focusable="true"
             android:background="?android:attr/selectableItemBackground"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:orientation="horizontal">
 
             <RelativeLayout
@@ -79,7 +79,7 @@
                     android:gravity="center"
                     android:maxLines="2"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/very_small_10" />
+                    android:textSize="@dimen/very_small_font_size" />
 
 
             </LinearLayout>
