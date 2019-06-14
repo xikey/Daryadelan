@@ -1,5 +1,7 @@
 package daryadelan.sandogh.zikey.com.daryadelan.repo.retrofitCalls;
 
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.AhkamWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.HokmWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.PayrollWrapper;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -20,4 +22,10 @@ public interface IPayrollApi {
     Call<PayrollWrapper> getPayroll(@Query("year") long year
             , @Query("month") long month);
 
+
+    @GET("api/hokm/getallhokmname")
+    Call<AhkamWrapper> allAvailableAhkam();
+
+    @GET("api/hokm/gethokm")
+    Call<HokmWrapper> getHokm(@Query("year") String year);
 }

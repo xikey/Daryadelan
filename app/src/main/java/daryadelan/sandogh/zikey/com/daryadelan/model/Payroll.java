@@ -28,6 +28,10 @@ public class Payroll {
     private long payCode;
     @SerializedName("desc")
     private String desc;
+    @SerializedName("fileName")
+    private String fileName;
+    @SerializedName("byteData")
+    private String byteData;
 
 
 
@@ -127,6 +131,13 @@ public class Payroll {
         this.desc = desc;
     }
 
+    public String getByteData() {
+        return byteData;
+    }
+
+    public void setByteData(String byteData) {
+        this.byteData = byteData;
+    }
 
     public String getMonthAsString()  {
 

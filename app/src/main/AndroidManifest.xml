@@ -61,6 +61,14 @@
         <activity
             android:name=".PayrollFooterActivity"
             android:label="@string/title_activity_payroll_footer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AhkamHeaderActivity"
+            android:label="@string/title_activity_ahkam_header"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AhkamFooterActivity"
+            android:label="@string/title_activity_ahkam_footer"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

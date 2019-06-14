@@ -53,6 +53,7 @@
             android:layout_height="match_parent"/>
 
         <android.support.v7.widget.CardView
+            android:id="@+id/lyAhkam"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_weight="0.5"
@@ -75,14 +76,14 @@
                     android:layout_alignParentBottom="true"
                     android:background="@color/colorWhite"
                     android:gravity="center"
-                    android:text="شماره یک" />
+                    android:text="@string/ahkam" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/txtBottom1"
                     android:padding="15dp"
-                    app:srcCompat="@drawable/ic_photo_library_white_76dp" />
+                    app:srcCompat="@drawable/ic_description_white_96dp" />
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>

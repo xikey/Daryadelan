@@ -59,5 +59,9 @@
     <string name="details">توضیحات</string>
     <string name="price">مبلغ</string>
     <string name="type">نوع</string>
+    <string name="title_activity_ahkam_header">احکام</string>
+    <string name="ahkam">احکام</string>
+    <string name="get_hokms">دریافت احکام</string>
+    <string name="title_activity_ahkam_footer">AhkamFooterActivity</string>
 
 </resources>

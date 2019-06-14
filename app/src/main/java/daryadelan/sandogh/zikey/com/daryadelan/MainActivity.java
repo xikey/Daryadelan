@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
     Handler slideHandler = null;
 
     private CardView crdPayrolls;
+    private CardView lyAhkam;
     boolean doubleBackToExitPressedOnce = false;
 
     @Override
@@ -66,11 +67,17 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 PayrollHeaderActivity.start(MainActivity.this);
             }
+        });  lyAhkam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AhkamHeaderActivity.start(MainActivity.this);
+            }
         });
     }
 
     private void initViews() {
         crdPayrolls = (CardView) findViewById(R.id.crdPayrolls);
+        lyAhkam = (CardView) findViewById(R.id.lyAhkam);
     }
 
     private void initToolbar() {
