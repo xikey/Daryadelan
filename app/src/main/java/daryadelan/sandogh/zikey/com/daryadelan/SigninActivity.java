@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -25,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.credentials.Credential;
@@ -54,7 +54,7 @@ public class SigninActivity extends AppCompatActivity {
 
 
     private final int RESOLVE_HINT = 45;
-    private TextView txtSendSMS;
+    private CardView lySendSMS;
     GoogleApiClient apiClient;
     private SMSBroadcastReceiver SMSBroadcastReceiver;
     public final int PERMISSIONS_REQUEST_READ_SMS = 14;
@@ -69,7 +69,7 @@ public class SigninActivity extends AppCompatActivity {
 //    private LinearLayout lyGuest;
     private RelativeLayout lyHeader;
     private LinearLayout lyProgress;
-    private LinearLayout lyPersonelCode;
+    private CardView lyPersonelCode;
     private User personel;
 
     private IUser userRepo;
@@ -82,7 +82,7 @@ public class SigninActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signin);
+        setContentView(R.layout.activity_signin_2);
 
         isUserLoggedInBefore();
         initViews();
@@ -202,8 +202,8 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     private void initListeners() {
-        if (txtSendSMS != null)
-            txtSendSMS.setOnClickListener(new View.OnClickListener() {
+        if (lySendSMS != null)
+            lySendSMS.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     new CustomDialogBuilder().showYesNOCustomAlert(SigninActivity.this, "ارسال اطلاعات", "مایل به ارسال اطلاعات میباشید؟", "ارسال", "انصراف", new CustomAlertDialog.OnActionClickListener() {
@@ -437,7 +437,7 @@ public class SigninActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        txtSendSMS = (TextView) findViewById(R.id.txtSendSMS);
+        lySendSMS = (CardView) findViewById(R.id.lySendSMS);
         txtUserName = (EditText) findViewById(R.id.txtUserName);
         txtPersonelCode = (EditText) findViewById(R.id.txtPersonelCode);
         imgMySim = (ImageView) findViewById(R.id.imgMySim);
@@ -445,7 +445,7 @@ public class SigninActivity extends AppCompatActivity {
 
         lyLogin = (LinearLayout) findViewById(R.id.lyLogin);
 //        lyGuest = (LinearLayout) findViewById(R.id.lyGuest);
-        lyPersonelCode = (LinearLayout) findViewById(R.id.lyPersonelCode);
+        lyPersonelCode = (CardView) findViewById(R.id.lyPersonelCode);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
 
         swIAmGuest = (Switch) findViewById(R.id.swIAmGuest);
@@ -453,7 +453,7 @@ public class SigninActivity extends AppCompatActivity {
 
         try {
             FontChanger.applyMainFont(findViewById(R.id.lyRoot));
-            FontChanger.applyTitleFont(txtSendSMS);
+            FontChanger.applyTitleFont(lySendSMS);
         } catch (Exception e) {
             e.printStackTrace();
         }

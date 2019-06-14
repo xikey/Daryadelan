@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.PayrollServerRepo
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ToolbarWrapper;
 
@@ -28,8 +31,8 @@ public class PayrollHeaderActivity extends AppCompatActivity {
     private LinearLayout lyProgress;
 
 
-    private LinearLayout lyPickYear;
-    private LinearLayout lyMonth;
+    private CardView lyPickYear;
+    private CardView lyMonth;
     private LinearLayout lyAction;
     private EditText edtYear;
     private EditText edtMonth;
@@ -40,6 +43,8 @@ public class PayrollHeaderActivity extends AppCompatActivity {
     private ArrayList<Payroll> payrolls;
 
     private ArrayList<Payroll> filteredPayrolls;
+
+    private ImageView imgBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,17 +206,20 @@ public class PayrollHeaderActivity extends AppCompatActivity {
 
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
 
-        lyPickYear = (LinearLayout) findViewById(R.id.lyPickYear);
-        lyMonth = (LinearLayout) findViewById(R.id.lyMonth);
+        lyPickYear = (CardView) findViewById(R.id.lyPickYear);
+        lyMonth = (CardView) findViewById(R.id.lyMonth);
 
         lyAction = (LinearLayout) findViewById(R.id.lyAction);
 
         edtYear = (EditText) findViewById(R.id.edtYear);
         edtMonth = (EditText) findViewById(R.id.edtMonth);
+        imgBackground= (ImageView) findViewById(R.id.imgBackground);
+
+        new ImageViewWrapper(getApplicationContext()).into(imgBackground).loadBlur(R.drawable.bg_calendar);
 
         try {
             FontChanger.applyMainFont(findViewById(R.id.lyRoot));
-            FontChanger.applyTitleFont(findViewById(R.id.txtDateHeader));
+//            FontChanger.applyTitleFont(findViewById(R.id.txtDateHeader));
             FontChanger.applyTitleFont(findViewById(R.id.lyAction));
         } catch (Exception e) {
             e.printStackTrace();

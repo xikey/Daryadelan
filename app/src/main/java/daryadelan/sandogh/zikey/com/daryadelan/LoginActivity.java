@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView txtUserName;
     private TextView txtPassword;
-    private LinearLayout lyAction;
+    private CardView lyAction;
     private LinearLayout lyProgress;
 
     private IUser repo;
@@ -35,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login_2);
 
         initViews();
         initListeners();
@@ -166,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
 
         txtUserName = (TextView) findViewById(R.id.txtUserName);
         txtPassword = (TextView) findViewById(R.id.txtPassword);
-        lyAction = (LinearLayout) findViewById(R.id.lyAction);
+        lyAction = (CardView) findViewById(R.id.lyAction);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
 
         try {
@@ -198,7 +199,7 @@ public class LoginActivity extends AppCompatActivity {
         RelativeLayout lyHeader = (RelativeLayout) findViewById(R.id.lyHeader);
         int width = getResources().getDisplayMetrics().widthPixels;
         ViewGroup.LayoutParams params = lyHeader.getLayoutParams();
-        int height = (width / 2);
+        int height = ((width/2));
         params.height = height;
         lyHeader.setLayoutParams(params);
 

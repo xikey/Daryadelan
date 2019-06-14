@@ -9,6 +9,7 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 
 import daryadelan.sandogh.zikey.com.daryadelan.R;
+import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 
 /**
@@ -48,7 +49,7 @@ public class ImageViewWrapper {
         return this;
     }
 
-       public void load() {
+         public void load() {
 
         Picasso.with(context).load(url).fit().centerInside()
                 .placeholder(R.drawable.bg_product_avatar)
@@ -56,6 +57,16 @@ public class ImageViewWrapper {
                 .into(imgView);
 
     }
+
+    public void loadBlur(int drowable) {
+
+        Picasso.with(context).load(drowable).fit().centerCrop()
+                .transform(new BlurTransformation(context,25))
+                .error(R.drawable.bg_product_avatar)
+                .into(imgView);
+
+    }
+
 
     public void loadCenterCrop() {
 

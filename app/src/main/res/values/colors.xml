@@ -28,7 +28,7 @@
     <color name="colorAccent_alpha1">#10ff4081</color>
     <color name="black_overlay">#66000000</color>
     <color name="transparent">#00000000</color>
-
+    <color name="colorAccent_70alpha">#AAFFC107</color>
 
     <color name="coloraboutUs_top_selected">#788F9B</color>
     <color name="coloraboutUs_top">#61747E</color>

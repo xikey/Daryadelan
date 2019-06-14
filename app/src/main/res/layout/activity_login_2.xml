@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lyContent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGray"
+    android:layoutDirection="rtl"
+    tools:context=".LoginActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
+
+
+            <RelativeLayout
+                android:id="@+id/lyHeader"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/bg_corner_radus">
+
+
+                <ImageView
+                    android:id="@+id/imgMap"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_centerInParent="true"
+                    android:alpha="0.9"
+                    android:padding="10dp"
+                    android:rotation="0"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_daryadelan_splash" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:paddingLeft="70dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="70dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/sandogh_title"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/very_small_font_size" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.0"
+                    android:background="@color/colorBlack">
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/lyPickYear"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="30dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardCornerRadius="19dp"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingRight="3dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:alpha="0.4"
+                        android:padding="8dp"
+                        app:srcCompat="@drawable/ic_phone_android_black_24dp" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorGray" />
+
+                    <EditText
+                        android:id="@+id/txtUserName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingRight="10dp"
+                        android:inputType="numberDecimal"
+                        android:gravity="right|center_vertical"
+                        android:layout_weight="1"
+                        android:background="@color/colorWhite"
+
+                        android:hint="@string/mobile_number"
+                        android:textSize="@dimen/small_font_size" />
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:padding="7dp" />
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardCornerRadius="19dp"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingRight="3dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:alpha="0.4"
+                        android:padding="8dp"
+                        app:srcCompat="@drawable/ic_lock_outline_black_24dp" />
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorGray" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/txtPassword"
+                        android:layout_weight="1"
+                        android:background="@color/colorWhite"
+                        android:inputType="textPassword"
+android:gravity="right|center_vertical"
+                        android:paddingRight="10dp"
+                        android:hint="@string/password"
+                        android:textSize="@dimen/small_font_size" />
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:padding="7dp" />
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="30dp"
+                android:id="@+id/lyAction"
+                android:layout_marginTop="100dp"
+                android:layout_marginRight="30dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/colorAccent"
+                app:cardCornerRadius="19dp"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="false">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/login"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/normal_font_size" />
+            </android.support.v7.widget.CardView>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp"></View>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+    <include layout="@layout/layout_progress_match_parent" />
+
+</RelativeLayout>
