@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorGray"
+    android:layoutDirection="rtl"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/lblUserDatas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:paddingLeft="15dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="25dp"
+        android:paddingRight="15dp"
+        android:text="اطلاعات کاربر"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/very_small_font_size" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/lyUpdates"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#ffffff"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="#ffffff"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="3dp"
+        app:cardUseCompatPadding="false">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack">
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.5"
+                android:src="@drawable/bg_user_datas"
+                android:background="@color/colorWhite"
+                android:scaleType="centerCrop"  />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:alpha="0.9"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:alpha="1"
+                        android:padding="4dp"
+                        app:srcCompat="@drawable/ic_person_white_48dp" />
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:maxLines="1"
+                        android:text="نام کاربر:"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/very_small_font_size" />
+
+                    <TextView
+                        android:text="محسن هادی زاده"
+                        android:id="@+id/txtLastUpdateTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/small_font_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:alpha="1"
+                        android:padding="4dp"
+                        app:srcCompat="@drawable/ic_credit_card_white_48dp" />
+
+                    <TextView
+
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:maxLines="1"
+                        android:text="کد پرسنلی:"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/very_small_font_size" />
+
+                    <TextView
+                        android:id="@+id/txtCustomersCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="100020032"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/small_font_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:alpha="1"
+                        android:padding="4dp"
+                        app:srcCompat="@drawable/ic_perm_device_information_white_48dp" />
+
+                    <TextView
+
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:maxLines="1"
+                        android:text="نوع کابر:"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/very_small_font_size" />
+
+                    <TextView
+                        android:id="@+id/txtProductsCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:text="کاربر مهمان"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/small_font_size" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>

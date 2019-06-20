@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import daryadelan.sandogh.zikey.com.daryadelan.R;
+import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
 
 
 /**
@@ -49,10 +51,10 @@ public class PageFragment extends Fragment {
         switch (page) {
             case 1:
                 try {
-//                    String url = SessionManagement.getInstance(getActivity()).getAdvertise_1Url();
-//                   new ImageViewWrapper(getActivity()).FromUrl(null).into(imgAdv).defaultImage(placeHolder).load();
+                    String url = SessionManagement.getInstance(getActivity()).getAdvertise_1Url();
+                   new ImageViewWrapper(getActivity()).FromUrl(url).into(imgAdv).defaultImage(placeHolder).load();
                 } catch (Exception ex) {
-//                    LogWrapper.loge("PageFragment_onCreateView_Exception: ", ex);
+                    LogWrapper.loge("PageFragment_onCreateView_Exception: ", ex);
                 }
 
                 imgAdv.setOnClickListener(new View.OnClickListener() {
@@ -69,10 +71,10 @@ public class PageFragment extends Fragment {
                 break;
             case 2:
                 try {
-//                    String url = SessionManagement.getInstance(getActivity()).getAdvertise_2Url();
-//                  new ImageViewWrapper(getActivity()).FromUrl(null).into(imgAdv).defaultImage(placeHolder).load();
+                     String url = SessionManagement.getInstance(getActivity()).getAdvertise_2Url();
+                   new ImageViewWrapper(getActivity()).FromUrl(url).into(imgAdv).defaultImage(placeHolder).load();
                 } catch (Exception ex) {
-//                    LogWrapper.loge("PageFragment_onCreateView_Exception: ", ex);
+                    LogWrapper.loge("PageFragment_onCreateView_Exception: ", ex);
                 }
 
                 imgAdv.setOnClickListener(new View.OnClickListener() {
@@ -89,10 +91,10 @@ public class PageFragment extends Fragment {
                 break;
             case 3:
                 try {
-//                    String url = SessionManagement.getInstance(getActivity()).getAdvertise_3Url();
-//                   new ImageViewWrapper(getActivity()).FromUrl(null).into(imgAdv).defaultImage(placeHolder).load();
+                     String url = SessionManagement.getInstance(getActivity()).getAdvertise_3Url();
+                    new ImageViewWrapper(getActivity()).FromUrl(url).into(imgAdv).defaultImage(placeHolder).load();
                 } catch (Exception ex) {
-//                    LogWrapper.loge("PageFragment_onCreateView_Exception: ", ex);
+                    LogWrapper.loge("PageFragment_onCreateView_Exception: ", ex);
                 }
 
 

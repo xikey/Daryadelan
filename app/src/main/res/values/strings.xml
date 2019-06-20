@@ -63,5 +63,6 @@
     <string name="ahkam">احکام</string>
     <string name="get_hokms">دریافت احکام</string>
     <string name="title_activity_ahkam_footer">AhkamFooterActivity</string>
+    <string name="quick_shortcut">دسترسی سریع</string>
 
 </resources>

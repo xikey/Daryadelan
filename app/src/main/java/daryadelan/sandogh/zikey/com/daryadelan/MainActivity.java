@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -27,14 +25,23 @@ import android.view.ViewGroup;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.Indicator;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.PageFragment;
+import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
+import daryadelan.sandogh.zikey.com.daryadelan.model.UrlBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.AdvertiseWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IAdvertise;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.AdvertiseServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
 import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private IAdvertise advertiseRepo;
 
     int advertisePageCount = 3;
     ViewPager pager;
@@ -52,11 +59,18 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         initToolbar();
+        initRepo();
         saveAdvertiseUrl();
         initSlideAutoChanger();
         initViews();
         initListeners();
 
+    }
+
+    private void initRepo() {
+
+        if (advertiseRepo == null)
+            advertiseRepo = new AdvertiseServerRepo();
     }
 
 
@@ -67,7 +81,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 PayrollHeaderActivity.start(MainActivity.this);
             }
-        });  lyAhkam.setOnClickListener(new View.OnClickListener() {
+        });
+        lyAhkam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AhkamHeaderActivity.start(MainActivity.this);
@@ -78,20 +93,22 @@ public class MainActivity extends AppCompatActivity
     private void initViews() {
         crdPayrolls = (CardView) findViewById(R.id.crdPayrolls);
         lyAhkam = (CardView) findViewById(R.id.lyAhkam);
+
+        try{
+            FontChanger.applyTitleFont(findViewById(R.id.lyMainHeader));
+            FontChanger.applyYekanFont(findViewById(R.id.lblQuickShortcut));
+            FontChanger.applyYekanFont(findViewById(R.id.lblUserDatas));
+            FontChanger.applyYekanFont(findViewById(R.id.lblQuickNews));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void initToolbar() {
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -105,6 +122,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -144,9 +162,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -167,12 +183,12 @@ public class MainActivity extends AppCompatActivity
                     fragment.dismiss();
                 }
             }, null);
+        } else if (id == R.id.nav_hokm) {
+            AhkamHeaderActivity.start(MainActivity.this);
+        } else if (id == R.id.nav_payroll) {
+            PayrollHeaderActivity.start(MainActivity.this);
         }
-//         else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
+// else if (id == R.id.nav_manage) {
 //
 //        } else if (id == R.id.nav_share) {
 //
@@ -214,48 +230,48 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void saveAdvertiseUrl() {
-        //    if (answer == null)
-//            return;
-//
-//        if (answer.getAdvertises() == null || answer.getAdvertises().size() == 0)
-//            return;
-//
-//        try {
-//            if (answer.getAdvertises().size() > 0) {
-//                SessionManagement.getInstance(this).setAdvertise_1Url(new UrlBuilder(this).getAdvertiseImageUrl(answer.getAdvertises().get(0)));
-//                SessionManagement.getInstance(this).setAdvertise_1Uri(answer.getAdvertises().get(0).getUri());
-//            }
-//            if (answer.getAdvertises().size() > 1) {
-//                SessionManagement.getInstance(this).setAdvertise_2Url(new UrlBuilder(this).getAdvertiseImageUrl(answer.getAdvertises().get(1)));
-//                SessionManagement.getInstance(this).setAdvertise_2Uri(answer.getAdvertises().get(1).getUri());
-//            }
-//
-//            if (answer.getAdvertises().size() > 2) {
-//                SessionManagement.getInstance(this).setAdvertise_3Url(new UrlBuilder(this).getAdvertiseImageUrl(answer.getAdvertises().get(2)));
-//                SessionManagement.getInstance(this).setAdvertise_3Uri(answer.getAdvertises().get(2).getUri());
-//            }
-//
-//            if (answer.getAdvertises().size() > 3) {
-//                SessionManagement.getInstance(this).setAdvertise_4Url(new UrlBuilder(this).getAdvertiseImageUrl(answer.getAdvertises().get(3)));
-//                SessionManagement.getInstance(this).setAdvertise_4Uri(answer.getAdvertises().get(3).getUri());
-//            }
-//
-//            if (answer.getAdvertises().size() > 4) {
-//                SessionManagement.getInstance(this).setAdvertise_5Url(new UrlBuilder(this).getAdvertiseImageUrl(answer.getAdvertises().get(4)));
-//                SessionManagement.getInstance(this).setAdvertise_5Uri(answer.getAdvertises().get(4).getUri());
-//            }
-//        } catch (Exception ex) {
-//            LogWrapper.loge("MainActivity_saveAdvertiseUrl :", ex);
-//        }
-
         initAdvertiseBox();
+
+        if (advertiseRepo == null)
+            return;
+        advertiseRepo.getAdvertise(getApplicationContext(), "MainSlider", new IRepoCallBack<AdvertiseWrapper>() {
+            @Override
+            public void onAnswer(AdvertiseWrapper answer) {
+                if (answer != null && answer.getData() != null && answer.getData().size() != 0) {
+                    try {
+
+                            SessionManagement.getInstance(getApplicationContext()).setAdvertise_1Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(0)));
+                            SessionManagement.getInstance(getApplicationContext()).setAdvertise_2Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(1)));
+                            SessionManagement.getInstance(getApplicationContext()).setAdvertise_3Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(2)));
+
+
+                    } catch (Exception ex) {
+                        LogWrapper.loge("MainActivity_saveAdvertiseUrl :", ex);
+                    }
+                }
+                initAdvertiseBox();
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                initAdvertiseBox();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
+
     }
 
     private void initAdvertiseBox() {
 
-//        if (TextUtils.isEmpty(SessionManagement.getInstance(this).getAdvertise_1Url())) {
-//            getAdvertise();
-//        }
 
         View advertiseHeaderBox = findViewById(R.id.advertiseHeaderBox);
 
@@ -312,24 +328,23 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void exitApp(){
+    private void exitApp() {
 
         UserServerRepo repo = new UserServerRepo();
         repo.exitApp(getApplicationContext(), new IRepoCallBack<User>() {
             @Override
             public void onAnswer(User answer) {
-                if (answer!=null&&answer.getResultId()==0){
+                if (answer != null && answer.getResultId() == 0) {
                     finish();
                     LoginActivity.start(MainActivity.this);
-                }
-                else {
-                    Toasty.error(MainActivity.this,getString(R.string.error_exit_app)).show();
+                } else {
+                    Toasty.error(MainActivity.this, getString(R.string.error_exit_app)).show();
                 }
             }
 
             @Override
             public void onError(Throwable error) {
-                Toasty.error(MainActivity.this,getString(R.string.error_exit_app)).show();
+                Toasty.error(MainActivity.this, getString(R.string.error_exit_app)).show();
             }
 
             @Override

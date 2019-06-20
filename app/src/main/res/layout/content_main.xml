@@ -16,6 +16,7 @@
 
         <LinearLayout
             android:orientation="vertical"
+            android:id="@+id/lyMainHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -28,7 +29,10 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true" />
 
-            <include layout="@layout/layer_main_shortcusts"/>
+            <include layout="@layout/layout_quick_shortcut" />
+
+            <include layout="@layout/layout_user_datas" />
+            <include layout="@layout/layout_quick_news" />
 
             <View
                 android:layout_width="match_parent"

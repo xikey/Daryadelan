@@ -5,7 +5,7 @@
     android:id="@+id/lyRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
+    android:background="@color/colorGray"
     android:layoutDirection="rtl"
     android:windowSoftInputMode="stateHidden"
     tools:context=".SigninActivity">
