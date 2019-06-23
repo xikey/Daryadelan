@@ -82,8 +82,8 @@
                         android:textSize="@dimen/very_small_font_size" />
 
                     <TextView
-                        android:text="محسن هادی زاده"
-                        android:id="@+id/txtLastUpdateTime"
+
+                        android:id="@+id/txtUserName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -122,10 +122,9 @@
                         android:textSize="@dimen/very_small_font_size" />
 
                     <TextView
-                        android:id="@+id/txtCustomersCount"
+                        android:id="@+id/txtPersonelCode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="100020032"
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:gravity="center"
@@ -162,12 +161,11 @@
                         android:textSize="@dimen/very_small_font_size" />
 
                     <TextView
-                        android:id="@+id/txtProductsCount"
+                        android:id="@+id/txtUserType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ellipsize="end"
-                        android:text="کاربر مهمان"
                         android:gravity="center"
                         android:maxLines="1"
                         android:textColor="@color/colorWhite"

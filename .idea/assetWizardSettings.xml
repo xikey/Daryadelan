@@ -69,7 +69,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_assignment_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_monetization_on_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -80,11 +80,11 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="ffffff" />
-                            <entry key="height" value="96" />
-                            <entry key="outputName" value="ic_assignment_white_96dp" />
+                            <entry key="height" value="48" />
+                            <entry key="outputName" value="ic_monetization_on_white_48dp" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\zikey" />
-                            <entry key="width" value="96" />
+                            <entry key="width" value="48" />
                           </map>
                         </option>
                       </PersistentState>

@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.Indicator;
@@ -53,6 +54,10 @@ public class MainActivity extends AppCompatActivity
     private CardView lyAhkam;
     boolean doubleBackToExitPressedOnce = false;
 
+    private TextView txtUserType;
+    private TextView txtPersonelCode;
+    private TextView txtUserName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +69,22 @@ public class MainActivity extends AppCompatActivity
         initSlideAutoChanger();
         initViews();
         initListeners();
+        initContent();
 
+    }
+
+    private void initContent() {
+
+        User user = SessionManagement.getInstance(getApplicationContext()).loadMember();
+        if (user==null)
+            return;
+        try {
+            txtUserType.setText(user.getPersonType());
+            txtPersonelCode.setText(""+user.getPersonalCode());
+            txtUserName.setText(user.getFirstName()+user.getLastName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initRepo() {
@@ -94,12 +114,16 @@ public class MainActivity extends AppCompatActivity
         crdPayrolls = (CardView) findViewById(R.id.crdPayrolls);
         lyAhkam = (CardView) findViewById(R.id.lyAhkam);
 
-        try{
+        txtUserType = (TextView) findViewById(R.id.txtUserType);
+        txtPersonelCode = (TextView) findViewById(R.id.txtPersonelCode);
+        txtUserName = (TextView) findViewById(R.id.txtUserName);
+
+        try {
             FontChanger.applyTitleFont(findViewById(R.id.lyMainHeader));
             FontChanger.applyYekanFont(findViewById(R.id.lblQuickShortcut));
             FontChanger.applyYekanFont(findViewById(R.id.lblUserDatas));
             FontChanger.applyYekanFont(findViewById(R.id.lblQuickNews));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -240,9 +264,9 @@ public class MainActivity extends AppCompatActivity
                 if (answer != null && answer.getData() != null && answer.getData().size() != 0) {
                     try {
 
-                            SessionManagement.getInstance(getApplicationContext()).setAdvertise_1Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(0)));
-                            SessionManagement.getInstance(getApplicationContext()).setAdvertise_2Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(1)));
-                            SessionManagement.getInstance(getApplicationContext()).setAdvertise_3Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(2)));
+                        SessionManagement.getInstance(getApplicationContext()).setAdvertise_1Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(0)));
+                        SessionManagement.getInstance(getApplicationContext()).setAdvertise_2Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(1)));
+                        SessionManagement.getInstance(getApplicationContext()).setAdvertise_3Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(2)));
 
 
                     } catch (Exception ex) {

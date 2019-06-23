@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.IOException;
 
 import daryadelan.sandogh.zikey.com.daryadelan.BuildConfig;
+import daryadelan.sandogh.zikey.com.daryadelan.LoginActivity;
 import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -39,7 +40,7 @@ public class ServerApiClient {
                 Response response = chain.proceed(request);
                 if (response.code() == 401) {
                     SessionManagement.getInstance(context).clearMemberData();
-//                    LoginActivity.start(context);
+                    LoginActivity.start(context);
                     System.exit(0);
                 }
 

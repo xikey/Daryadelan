@@ -1,6 +1,7 @@
 package daryadelan.sandogh.zikey.com.daryadelan;
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -194,12 +195,17 @@ public class LoginActivity extends AppCompatActivity {
         context.startActivity(starter);
     }
 
+    public static void start(Context context) {
+        Intent starter = new Intent(context, LoginActivity.class);
+        context.startActivity(starter);
+    }
+
     private void initHeaderSize() {
 
         RelativeLayout lyHeader = (RelativeLayout) findViewById(R.id.lyHeader);
         int width = getResources().getDisplayMetrics().widthPixels;
         ViewGroup.LayoutParams params = lyHeader.getLayoutParams();
-        int height = ((width/2));
+        int height = ((width / 2));
         params.height = height;
         lyHeader.setLayoutParams(params);
 

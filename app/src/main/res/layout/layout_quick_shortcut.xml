@@ -22,10 +22,9 @@
 
 
     <HorizontalScrollView
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff">
+        android:background="@color/colorWhite">
 
         <LinearLayout
             android:id="@+id/lyQuickShortcutsLayout"
@@ -41,9 +40,9 @@
                 android:layout_marginRight="10dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="#FF5722"
+                app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="1dp"
+                app:cardElevation="4dp"
                 app:cardUseCompatPadding="true">
 
                 <RelativeLayout
@@ -59,12 +58,13 @@
                         android:alpha="0.9"
                         android:padding="20dp"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/ic_assignment_white_96dp" />
+                        app:srcCompat="@drawable/ic_assignment_colored_96dp" />
 
 
                     <FrameLayout
                         android:id="@+id/lyUploadBottom"
                         android:layout_width="match_parent"
+                        android:background="@color/colorGray"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true">
 
@@ -82,7 +82,7 @@
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="@string/payroll"
-                            android:textColor="@color/colorWhite"
+                            android:textColor="@color/colorBlack"
                             android:textSize="@dimen/very_small_10" />
 
 
@@ -100,9 +100,9 @@
                 android:layout_marginRight="10dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="#9CCC65"
+                app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="3dp"
+                app:cardElevation="4dp"
                 app:cardUseCompatPadding="true">
 
                 <RelativeLayout
@@ -122,6 +122,7 @@
                         android:id="@+id/lyCustomersList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/colorGray"
                         android:layout_alignParentBottom="true">
 
                         <View
@@ -129,7 +130,7 @@
                             android:layout_height="1dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:background="@color/colorWhite" />
+                            android:background="@color/colorGray" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -138,7 +139,7 @@
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="@string/ahkam"
-                            android:textColor="@color/colorWhite"
+                            android:textColor="@color/colorBlack"
                             android:textSize="@dimen/very_small_10" />
 
 
@@ -157,9 +158,9 @@
                 android:layout_marginRight="10dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/colorGreenLight"
+                app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="3dp"
+                app:cardElevation="4dp"
                 app:cardUseCompatPadding="true">
 
                 <RelativeLayout
@@ -179,6 +180,7 @@
                     <FrameLayout
                         android:id="@+id/lyTomorrowOrder"
                         android:layout_width="match_parent"
+                        android:background="@color/colorGray"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true">
 
@@ -196,7 +198,7 @@
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="آلبوم تصاویر"
-                            android:textColor="@color/colorWhite"
+                            android:textColor="@color/colorBlack"
                             android:textSize="@dimen/very_small_10" />
 
 
@@ -215,9 +217,9 @@
                 android:layout_marginRight="10dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/color_blue"
+                app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="3dp"
+                app:cardElevation="4dp"
                 app:cardUseCompatPadding="true">
 
                 <RelativeLayout
@@ -238,6 +240,7 @@
                     <FrameLayout
                         android:id="@+id/lyOrdersList"
                         android:layout_width="match_parent"
+                        android:background="@color/colorGray"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true">
 
@@ -255,7 +258,7 @@
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="اخبار و اطلاعیه ها"
-                            android:textColor="@color/colorWhite"
+                            android:textColor="@color/colorBlack"
                             android:textSize="@dimen/very_small_10" />
 
 
@@ -275,7 +278,7 @@
                 android:layout_marginRight="10dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="#FFA000"
+                app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="3dp"
                 app:cardUseCompatPadding="true">
@@ -296,6 +299,7 @@
 
                     <FrameLayout
                         android:id="@+id/lyPrinter"
+                        android:background="@color/colorGray"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true">
@@ -314,7 +318,7 @@
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="نظرسنجی"
-                            android:textColor="@color/colorWhite"
+                            android:textColor="@color/colorBlack"
                             android:textSize="@dimen/very_small_10" />
 
 
@@ -334,9 +338,9 @@
                 android:layout_marginLeft="15dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="#880E4F"
+                app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="3dp"
+                app:cardElevation="4dp"
                 app:cardUseCompatPadding="true">
 
                 <RelativeLayout
@@ -356,6 +360,7 @@
                     <FrameLayout
                         android:id="@+id/lyHelp"
                         android:layout_width="match_parent"
+                        android:background="@color/colorGray"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true">
 
@@ -373,7 +378,7 @@
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="درباره ما"
-                            android:textColor="@color/colorWhite"
+                            android:textColor="@color/colorBlack"
                             android:textSize="@dimen/very_small_10" />
 
 

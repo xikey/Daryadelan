@@ -70,7 +70,7 @@ public class SessionManagement {
     public void setToken(String token) {
         if (preferences == null)
             return;
-        this.preferences.edit().putString(KEY_TOKEN, token).apply();
+        this.preferences.edit().putString(KEY_TOKEN, token).commit();
 
     }
 

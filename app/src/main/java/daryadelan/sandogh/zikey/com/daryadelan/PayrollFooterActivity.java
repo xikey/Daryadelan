@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -12,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,6 +44,10 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
     private IPayroll repo;
 
+    private AppBarLayout AppBarLayout;
+
+    private Payroll payroll;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,10 +72,12 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
         rvItem = (RecyclerView) findViewById(R.id.rtItem);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
+        AppBarLayout = (android.support.design.widget.AppBarLayout) findViewById(R.id.appbar);
+        AppBarLayout.setExpanded(true);
 
-        try{
+        try {
             FontChanger.applyYekanFont(findViewById(R.id.lyHeader));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -133,19 +139,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
                     return;
                 }
 
-                ArrayList<Payroll> payrolls = answer.getData();
-                Payroll payroll = new Payroll();
-                payroll.setTransactionType(-10);
-                payroll.setDesc("جمع کل");
-                for (int i = 0; i < payrolls.size(); i++) {
-
-                    payroll.setAmount(payroll.getAmount() + payrolls.get(i).getAmount());
-                }
-
-                payrolls.add(payroll);
-
-                if (adapter != null)
-                    adapter.setPayrolls(payrolls);
+                MappingDate(answer.getData());
             }
 
             @Override
@@ -182,7 +176,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        String title = "تاریخ:  " + year + "/" + month;
+        String title = "فیش حقوقی:  " +  payroll.getMonthAsString()+ " "+year;
         new ToolbarWrapper(this).initToolbarWithBackArrow(R.id.toolbar, title, null);
 
     }
@@ -203,6 +197,14 @@ public class PayrollFooterActivity extends AppCompatActivity {
         if (month == 0 || year == 0)
             finish();
 
+
+        if (payroll==null)
+        {
+            payroll=new Payroll();
+            payroll.setYear(String.valueOf(year));
+            payroll.setMonth(String.valueOf(month));
+
+        }
 
     }
 
@@ -251,26 +253,46 @@ public class PayrollFooterActivity extends AppCompatActivity {
                 Payroll payroll = payrolls.get(position);
 
                 holder.txtTitle.setText(payroll.getDesc());
-                holder.txtPrice.setText(NumberSeperator.separate(payroll.getAmount()));
 
-                holder.imgPositive.setVisibility(View.GONE);
-                holder.imgNegative.setVisibility(View.GONE);
-                holder.imgTotal.setVisibility(View.GONE);
+                holder.txtPrice.setText("0");
+                holder.txtNavigatePrice.setText("0");
+                holder.txtNavigatePrice.setBackgroundColor(Color.parseColor("#ffffff"));
+                holder.txtPrice.setBackgroundColor(Color.parseColor("#ffffff"));
 
                 if (payroll.getTransactionType() == 1) {
-                    holder.txtPrice.setBackgroundColor(Color.parseColor("#F1F8E9"));
-                    holder.imgPositive.setVisibility(View.VISIBLE);
 
-                } else {
-                    holder.txtPrice.setBackgroundColor(Color.parseColor("#FBE9E7"));
-                    holder.imgNegative.setVisibility(View.VISIBLE);
+                    holder.txtPrice.setBackgroundColor(Color.parseColor("#F1F8E9"));
+                    holder.txtPrice.setText(NumberSeperator.separate(payroll.getAmount()));
+
+
+                }
+                if (payroll.getTransactionType() == -1) {
+
+                    holder.txtNavigatePrice.setBackgroundColor(Color.parseColor("#ffebee"));
+                    holder.txtNavigatePrice.setText(NumberSeperator.separate(payroll.getAmount()));
                 }
 
                 if (payroll.getTransactionType() == -10) {
-                    holder.imgPositive.setVisibility(View.GONE);
-                    holder.imgNegative.setVisibility(View.GONE);
-                    holder.txtPrice.setBackgroundColor(Color.parseColor("#CFD8DC"));
-                    holder.imgTotal.setVisibility(View.VISIBLE);
+
+                    holder.txtPrice.setBackgroundColor(Color.parseColor("#DCEDC8"));
+                    holder.txtPrice.setText(NumberSeperator.separate(payroll.getAmount()));
+                }
+                if (payroll.getTransactionType() == -11) {
+
+                    holder.txtNavigatePrice.setBackgroundColor(Color.parseColor("#FFCCBC"));
+                    holder.txtNavigatePrice.setText(NumberSeperator.separate(payroll.getAmount()));
+                }
+                if (payroll.getTransactionType() == -12) {
+
+                    if (payroll.getAmount()<0){
+                        holder.txtNavigatePrice.setBackgroundColor(Color.parseColor("#FFE082"));
+                        holder.txtNavigatePrice.setText(NumberSeperator.separate(payroll.getAmount()));
+                    }
+                    else {
+                        holder.txtPrice.setBackgroundColor(Color.parseColor("#FFE082"));
+                        holder.txtPrice.setText(NumberSeperator.separate(payroll.getAmount()));
+                    }
+
                 }
 
             } catch (Exception ex) {
@@ -292,9 +314,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
             CardView cardView;
             TextView txtPrice;
             TextView txtTitle;
-            ImageView imgPositive;
-            ImageView imgNegative;
-            ImageView imgTotal;
+            TextView txtNavigatePrice;
 
 
             public ItemHolder(View v) {
@@ -305,9 +325,8 @@ public class PayrollFooterActivity extends AppCompatActivity {
                 cardView = v.findViewById(R.id.cardView);
                 txtPrice = v.findViewById(R.id.txtPrice);
                 txtTitle = v.findViewById(R.id.txtTitle);
-                imgPositive = v.findViewById(R.id.imgPositive);
-                imgNegative = v.findViewById(R.id.imgNegative);
-                imgTotal = v.findViewById(R.id.imgTotal);
+                txtNavigatePrice = v.findViewById(R.id.txtNavigatePrice);
+
                 FontChanger.applyMainFont(cardView);
 
 
@@ -316,6 +335,56 @@ public class PayrollFooterActivity extends AppCompatActivity {
     }
 
 
+    private void MappingDate(ArrayList<Payroll> inputs) {
+
+        ArrayList<Payroll> payrolls = new ArrayList<>();
+        ArrayList<Payroll> negativePayroll = new ArrayList<>();
+
+        Payroll nep = new Payroll();
+        nep.setTransactionType(-11);
+        nep.setDesc("جمع کسورات");
+
+        Payroll pop = new Payroll();
+        pop.setTransactionType(-10);
+        pop.setDesc("جمع واریزی");
+
+
+        Payroll top = new Payroll();
+        top.setTransactionType(-12);
+        top.setDesc("خالص پرداختی");
+
+
+        if (inputs == null || inputs.size() == 0)
+            return;
+
+        for (int i = 0; i < inputs.size(); i++) {
+
+            Payroll p = inputs.get(i);
+            if (p.getTransactionType() == 1) {
+                payrolls.add(p);
+                pop.setAmount(pop.getAmount() + p.getAmount());
+            } else {
+                negativePayroll.add(p);
+                nep.setAmount(nep.getAmount() + p.getAmount());
+            }
+
+        }
+
+        payrolls.add(pop);
+        if (negativePayroll.size() != 0)
+            negativePayroll.add(nep);
+
+
+        ArrayList<Payroll> total = new ArrayList<>();
+        total.addAll(payrolls);
+        total.addAll(negativePayroll);
+        top.setAmount(pop.getAmount() - nep.getAmount());
+        total.add(top);
+
+
+        adapter.setPayrolls(total);
+
+    }
 
 
 }

@@ -31,6 +31,7 @@ public class User extends ServerWrapper {
      * مورد su برای کاربر سوپر یوزر
      * مورد guest برای کاربر مهمان
      */
+    @SerializedName("personType")
     private String personType;
     @SerializedName("activeCode")
     private String activeCode;

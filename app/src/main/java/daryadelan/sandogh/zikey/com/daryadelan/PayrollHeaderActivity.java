@@ -213,7 +213,7 @@ public class PayrollHeaderActivity extends AppCompatActivity {
 
         edtYear = (EditText) findViewById(R.id.edtYear);
         edtMonth = (EditText) findViewById(R.id.edtMonth);
-        imgBackground= (ImageView) findViewById(R.id.imgBackground);
+        imgBackground = (ImageView) findViewById(R.id.imgBackground);
 
         new ImageViewWrapper(getApplicationContext()).into(imgBackground).loadBlur(R.drawable.bg_calendar);
 
@@ -267,7 +267,7 @@ public class PayrollHeaderActivity extends AppCompatActivity {
             else {
                 boolean available = true;
                 for (int j = 0; j < availablePayrolls.size(); j++) {
-                    if (payrolls.get(i).getYear() == availablePayrolls.get(j).getYear())
+                    if (payrolls.get(i).getYear().equals(availablePayrolls.get(j).getYear()))
                         available = false;
                 }
                 if (available)
@@ -305,7 +305,7 @@ public class PayrollHeaderActivity extends AppCompatActivity {
         final ArrayList<Payroll> availablePayrolls = new ArrayList<>();
 
         for (int i = 0; i < payrolls.size(); i++) {
-            if (selectedPayroll.getYear() == payrolls.get(i).getYear())
+            if (selectedPayroll.getYear() .equals( payrolls.get(i).getYear()))
                 availablePayrolls.add(payrolls.get(i));
         }
 
@@ -329,7 +329,6 @@ public class PayrollHeaderActivity extends AppCompatActivity {
         } catch (Exception ex) {
             LogWrapper.loge("ChequesActivity_onClick_Exception: ", ex);
         }
-
 
     }
 }
