@@ -1,25 +1,44 @@
 package daryadelan.sandogh.zikey.com.daryadelan;
 
+import android.Manifest;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.pdf.PdfDocument;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Payroll;
+import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
+import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.PayrollWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IPayroll;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.PayrollServerRepo;
@@ -33,7 +52,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
     private static final String KEY_YEAR = "YEAR";
     private static final String KEY_MONTH = "MONTH";
-
+    public final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STOTAGE = 2;
     private long year;
     private long month;
 
@@ -48,6 +67,10 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
     private Payroll payroll;
 
+    private LinearLayout createPdf;
+    private CustomPrintLayout customPrintLayout;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +82,24 @@ public class PayrollFooterActivity extends AppCompatActivity {
         initViews();
         initRecycleView();
         getData();
+        initClickListeners();
+        requestGetMessagePermission();
+
+    }
+
+    private void initClickListeners() {
+        if (createPdf != null)
+            createPdf.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        printLayout();
+                    }
 
 
+                }
+            });
     }
 
     private void initRepo() {
@@ -74,6 +113,8 @@ public class PayrollFooterActivity extends AppCompatActivity {
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
         AppBarLayout = (android.support.design.widget.AppBarLayout) findViewById(R.id.appbar);
         AppBarLayout.setExpanded(true);
+        createPdf = (LinearLayout) findViewById(R.id.createPdf);
+        customPrintLayout = (CustomPrintLayout) findViewById(R.id.customPrintLayout);
 
         try {
             FontChanger.applyYekanFont(findViewById(R.id.lyHeader));
@@ -140,6 +181,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
                 }
 
                 MappingDate(answer.getData());
+                createCustomLayput();
             }
 
             @Override
@@ -176,7 +218,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        String title = "فیش حقوقی:  " +  payroll.getMonthAsString()+ " "+year;
+        String title = "فیش حقوقی:  " + payroll.getMonthAsString() + " " + year;
         new ToolbarWrapper(this).initToolbarWithBackArrow(R.id.toolbar, title, null);
 
     }
@@ -198,9 +240,8 @@ public class PayrollFooterActivity extends AppCompatActivity {
             finish();
 
 
-        if (payroll==null)
-        {
-            payroll=new Payroll();
+        if (payroll == null) {
+            payroll = new Payroll();
             payroll.setYear(String.valueOf(year));
             payroll.setMonth(String.valueOf(month));
 
@@ -284,11 +325,10 @@ public class PayrollFooterActivity extends AppCompatActivity {
                 }
                 if (payroll.getTransactionType() == -12) {
 
-                    if (payroll.getAmount()<0){
+                    if (payroll.getAmount() < 0) {
                         holder.txtNavigatePrice.setBackgroundColor(Color.parseColor("#FFE082"));
                         holder.txtNavigatePrice.setText(NumberSeperator.separate(payroll.getAmount()));
-                    }
-                    else {
+                    } else {
                         holder.txtPrice.setBackgroundColor(Color.parseColor("#FFE082"));
                         holder.txtPrice.setText(NumberSeperator.separate(payroll.getAmount()));
                     }
@@ -383,6 +423,207 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
 
         adapter.setPayrolls(total);
+
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void printLayout() {
+
+
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.lyRoot);
+
+        // convert view group to bitmap
+        linearLayout.setDrawingCacheEnabled(true);
+        linearLayout.buildDrawingCache();
+        Bitmap bm = linearLayout.getDrawingCache();
+
+        if (bm == null) {
+            linearLayout.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            linearLayout.layout(0, 0, linearLayout.getMeasuredWidth(), linearLayout.getHeight());
+            Bitmap bitmap = Bitmap.createBitmap(linearLayout.getMeasuredWidth(),
+                    linearLayout.getHeight(),
+                    Bitmap.Config.ARGB_8888);
+
+            Canvas c = new Canvas(bitmap);
+            linearLayout.layout(linearLayout.getLeft(), linearLayout.getTop(), linearLayout.getRight(), linearLayout.getBottom());
+            linearLayout.draw(c);
+            bm = bitmap;
+
+        }
+        if (bm!=null)
+            createPDF(bm);
+
+//        if (bm != null) {
+//            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bm, bm.getWidth(), bm.getHeight(), true);
+//            Bitmap[] imgs = new Bitmap[1];
+//            imgs[0] = Bitmap.createBitmap(scaledBitmap, 0, 0, bm.getWidth(), (bm.getHeight()  )  );
+//            createPDF(imgs);
+//        }
+
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void createPDF(Bitmap  layout) {
+
+        // create a new document
+        PdfDocument document = new PdfDocument();
+
+        Bitmap bitmap = layout;
+
+        // crate a page description
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(bitmap.getWidth(), bitmap.getHeight(), 1).create();
+        // start a page
+        PdfDocument.Page page = document.startPage(pageInfo);
+        Canvas canvas = page.getCanvas();
+
+        Paint paint = new Paint();
+        paint.setColor(Color.WHITE);
+        //Draw Image
+        canvas.drawBitmap(bitmap, 0, 5, paint);
+        document.finishPage(page);
+
+
+        // write the document content
+        String directory_path = Environment.getExternalStorageDirectory().getPath() + "/Payroll_Pdf/";
+        File file = new File(directory_path);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        String targetPdf = directory_path + "factor.pdf";
+        File filePath = new File(targetPdf);
+        try {
+            document.writeTo(new FileOutputStream(filePath));
+            Toast.makeText(this, "Done", Toast.LENGTH_LONG).show();
+
+            if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+
+            } else {
+
+            }
+
+        } catch (IOException e) {
+            Log.e("main", "error " + e.toString());
+            Toast.makeText(this, "Something wrong: " + e.toString(), Toast.LENGTH_LONG).show();
+        }
+        // close the document
+        document.close();
+
+
+    }
+
+
+    private void requestGetMessagePermission() {
+
+        int smsPermission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+
+        if (smsPermission == 0)
+            return;
+
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        PERMISSIONS_REQUEST_WRITE_EXTERNAL_STOTAGE);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        PERMISSIONS_REQUEST_WRITE_EXTERNAL_STOTAGE);
+            }
+        }
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+
+        switch (requestCode) {
+
+            case PERMISSIONS_REQUEST_WRITE_EXTERNAL_STOTAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    // if Permission Denied
+                }
+            }
+
+        }
+    }
+
+    private void createCustomLayput() {
+
+        ArrayList<Payroll> payrolls = adapter.getPayrolls();
+        if (payrolls == null || payrolls.size() == 0)
+            return;
+
+        User user = SessionManagement.getInstance(getApplicationContext()).loadMember();
+        user.setFirstName("محسن هادی زاده");
+        user.setMobile("09215963868");
+        user.setPersonalCode(1000);
+
+        customPrintLayout.addImage(R.drawable.ic_daryadelan_splash);
+        int printTextSize = 11;
+        customPrintLayout.addTextView("نام مشتری : " + user.getFirstName(), "#000000", Gravity.RIGHT, 5, printTextSize, null, false);
+        customPrintLayout.addTextView("کد مشتری : " + user.getPersonalCode(), "#000000", Gravity.RIGHT, 5, printTextSize, null, false);
+        customPrintLayout.addTextView("تلفن مشتری : " + user.getMobile(), "#000000", Gravity.RIGHT, 5, printTextSize, null, false);
+
+
+        customPrintLayout.addLine(2);
+        customPrintLayout.addTableFourRow("#", "عنوان", "پرداختی", "کسورات");
+        customPrintLayout.addLine(0);
+
+
+        for (int i = 0; i < payrolls.size(); i++) {
+
+            Payroll payroll = payrolls.get(i);
+
+            String rowNum = String.valueOf(i + 1);
+            String name = payroll.getDesc();
+            String positice = "0";
+            String negative = "0";
+
+            if (payroll.getTransactionType() == 1) {
+
+
+                positice = String.valueOf((payroll.getAmount()));
+                customPrintLayout.addTableFourRow(rowNum, name, positice, negative);
+                customPrintLayout.addLine(0);
+
+            }
+            if (payroll.getTransactionType() == -1) {
+
+                negative = String.valueOf((payroll.getAmount()));
+                customPrintLayout.addTableFourRow(rowNum, name, positice, negative);
+                customPrintLayout.addLine(0);
+            }
+
+//            if (payroll.getTransactionType() == -10) {
+//
+//                positice = String.valueOf((payroll.getAmount()));
+//            }
+//            if (payroll.getTransactionType() == -11) {
+//
+//                negative = String.valueOf((payroll.getAmount()));
+//            }
+//            if (payroll.getTransactionType() == -12) {
+//
+//                if (payroll.getAmount() < 0) {
+//                    negative = String.valueOf((payroll.getAmount()));
+//                } else {
+//                    positice = String.valueOf((payroll.getAmount()));
+//                }
+//
+//            }
+
+
+        }
+
 
     }
 

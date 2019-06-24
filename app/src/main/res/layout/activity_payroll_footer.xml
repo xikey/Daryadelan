@@ -7,12 +7,15 @@
     android:layoutDirection="rtl"
     tools:context=".PayrollFooterActivity">
 
+
+
+
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
         android:id="@+id/appbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:expanded="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:expanded="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
@@ -41,9 +44,9 @@
 
                 <LinearLayout
                     android:id="@+id/lyHeader"
-                    android:background="@color/colorPrimaryDark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
                     android:paddingBottom="5dp">
 
 
@@ -51,8 +54,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp">
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -104,8 +107,8 @@
                             android:layout_marginRight="10dp"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingBottom="5dp"
-                            android:paddingTop="5dp">
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp">
 
                             <ImageView
                                 android:layout_width="24dp"
@@ -151,8 +154,8 @@
                             android:layout_marginRight="10dp"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingBottom="5dp"
-                            android:paddingTop="5dp">
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp">
 
                             <ImageView
                                 android:layout_width="24dp"
@@ -193,9 +196,6 @@
                     </LinearLayout>
 
 
-
-
-
                 </LinearLayout>
 
 
@@ -215,9 +215,35 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
+
     </android.support.design.widget.AppBarLayout>
 
+
     <include layout="@layout/content_payroll_footer" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/createPdf"
+        android:gravity="center"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_gravity="bottom|end"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="ساخت فایل pdf"
+            android:alpha="0.9"
+            android:gravity="center"
+            android:background="@color/colorAccent"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/small_font_size"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </LinearLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

@@ -9,8 +9,16 @@
     tools:context=".PayrollFooterActivity"
     tools:showIn="@layout/activity_payroll_footer">
 
+
+
+    <View
+        android:layout_width="match_parent"
+         android:background="@color/colorGray"
+        android:layout_height="match_parent"/>
+
     <LinearLayout
         android:layout_width="match_parent"
+
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -75,6 +83,7 @@
 
 
             <LinearLayout
+                android:id="@+id/lyPDF"
                 android:layout_width="100dp"
                 android:layout_height="match_parent">
 
@@ -112,6 +121,10 @@
 
     </LinearLayout>
 
+
+
     <include layout="@layout/layout_progress_match_parent" />
+
+
 
 </RelativeLayout>

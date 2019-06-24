@@ -92,7 +92,7 @@ public class SigninActivity extends AppCompatActivity {
         initApiClient();
         initBroadCast();
         requestGetMessagePermission();
-        requestReadPhoneStatePermission();
+//        requestReadPhoneStatePermission();
 
     }
 
