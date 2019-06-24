@@ -118,6 +118,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
         try {
             FontChanger.applyYekanFont(findViewById(R.id.lyHeader));
+            FontChanger.applyMainFont(findViewById(R.id.customPrintLayout));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -569,15 +570,19 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
         customPrintLayout.addImage(R.drawable.ic_daryadelan_splash);
         int printTextSize = 11;
-        customPrintLayout.addTextView("نام مشتری : " + user.getFirstName(), "#000000", Gravity.RIGHT, 5, printTextSize, null, false);
-        customPrintLayout.addTextView("کد مشتری : " + user.getPersonalCode(), "#000000", Gravity.RIGHT, 5, printTextSize, null, false);
-        customPrintLayout.addTextView("تلفن مشتری : " + user.getMobile(), "#000000", Gravity.RIGHT, 5, printTextSize, null, false);
 
+        customPrintLayout.addLeftAndRightTextRow( "نام مشتری:", user.getFirstName());
+        customPrintLayout.addLeftAndRightTextRow( "کد مشتری:", String.valueOf(user.getPersonalCode()));
+        customPrintLayout.addLeftAndRightTextRow( "تلفن مشتری:", user.getMobile());
+
+        customPrintLayout.addEmptyRow(50);
 
         customPrintLayout.addLine(2);
         customPrintLayout.addTableFourRow("#", "عنوان", "پرداختی", "کسورات");
         customPrintLayout.addLine(0);
 
+        customPrintLayout.addEmptyRow(50);
+        customPrintLayout.addLine(0);
 
         for (int i = 0; i < payrolls.size(); i++) {
 
@@ -623,6 +628,51 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
 
         }
+
+
+        customPrintLayout.addEmptyRow(100);
+        customPrintLayout.addLine(0);
+
+        for (int i = 0; i < payrolls.size(); i++) {
+
+            Payroll payroll = payrolls.get(i);
+
+            String rowNum = String.valueOf(i + 1);
+            String name = payroll.getDesc();
+            String positice = "0";
+            String negative = "0";
+
+
+
+            if (payroll.getTransactionType() == -10) {
+
+                positice = String.valueOf((payroll.getAmount()));
+                customPrintLayout.addTableFourRow(rowNum, name, positice, negative);
+                customPrintLayout.addLine(0);
+            }
+            if (payroll.getTransactionType() == -11) {
+
+                negative = String.valueOf((payroll.getAmount()));
+                customPrintLayout.addTableFourRow(rowNum, name, positice, negative);
+                customPrintLayout.addLine(0);
+            }
+            if (payroll.getTransactionType() == -12) {
+
+                if (payroll.getAmount() < 0) {
+                    negative = String.valueOf((payroll.getAmount()));
+                    customPrintLayout.addTableFourRow(rowNum, name, positice, negative);
+                    customPrintLayout.addLine(0);
+                } else {
+                    positice = String.valueOf((payroll.getAmount()));
+                    customPrintLayout.addTableFourRow(rowNum, name, positice, negative);
+                    customPrintLayout.addLine(0);
+                }
+
+            }
+
+
+        }
+        customPrintLayout.addEmptyRow(250);
 
 
     }
