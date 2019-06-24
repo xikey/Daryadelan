@@ -433,6 +433,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void printLayout() {
 
+        lyProgress.setVisibility(View.VISIBLE);
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.lyRoot);
 
@@ -514,6 +515,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
         document.close();
 
 
+        lyProgress.setVisibility(View.GONE);
     }
 
 
@@ -673,7 +675,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
 
         }
-        customPrintLayout.addEmptyRow(500);
+        customPrintLayout.addEmptyRow(700);
 
 
     }
