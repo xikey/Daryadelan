@@ -130,7 +130,8 @@
                 android:layout_weight="0.5"
                 android:gravity="center"
                 android:text="@string/get_hokms"
-                android:textColor="@color/colorWhite"
+                android:alpha="0.7"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/small_font_size" />
 
         </LinearLayout>
