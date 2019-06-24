@@ -220,5 +220,43 @@ public class UserServerRepo implements IUser {
 
     }
 
+    @Override
+    public void userInfo(Context context, final IRepoCallBack<User> callBack) {
+
+        IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
+        userCall = userApi.userInfo( );
+        userCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response == null) {
+                    callBack.onError(new Throwable("RP ERR 101  خطا در دریافت اطلاعات"));
+                    return;
+                }
+
+                if (response.body() == null) {
+                    callBack.onError(new Throwable("خطا در ورود به برنامه"));
+                    return;
+                }
+
+                if (response.body().getResultId()<0){
+                    if (!TextUtils.isEmpty(response.body().getMessagee())){
+                        callBack.onError(new Throwable(response.body().getMessagee()));
+                        return;
+                    }
+
+                }
+
+
+                callBack.onAnswer(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                callBack.onError(new Throwable("خطا در دریافت اطلاعات"));
+            }
+        });
+
+    }
+
 
 }

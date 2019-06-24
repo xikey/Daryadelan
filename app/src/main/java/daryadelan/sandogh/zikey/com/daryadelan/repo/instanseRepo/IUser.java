@@ -17,5 +17,7 @@ public interface IUser {
 
     void exitApp(Context context,  IRepoCallBack<User> callBack);
 
+    void userInfo(Context context,  IRepoCallBack<User> callBack);
+
 
 }

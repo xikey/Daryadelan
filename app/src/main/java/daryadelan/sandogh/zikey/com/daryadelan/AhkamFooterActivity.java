@@ -168,7 +168,7 @@ public class AhkamFooterActivity extends AppCompatActivity {
                     });
                     return;
                 }
-
+                Base64Decode(answer.getData().get(0).getByteData(), scaleImageView);
                 adapter.setPayrolls(answer.getData());
 
             }

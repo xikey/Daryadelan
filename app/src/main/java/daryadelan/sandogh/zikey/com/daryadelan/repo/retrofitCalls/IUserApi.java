@@ -7,6 +7,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -50,6 +51,10 @@ public interface IUserApi {
     Call<User> login(@Field("username") String mobile,
                      @Field("password") String password,
                      @Field("grant_type") String Grant_type);
+
+
+    @GET("api/accounts/GetUserInfo")
+    Call<User> userInfo( );
 
 
 }
