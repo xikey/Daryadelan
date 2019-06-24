@@ -2,6 +2,7 @@ package daryadelan.sandogh.zikey.com.daryadelan;
 
 import android.Manifest;
 import android.app.DialogFragment;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -9,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -434,6 +436,8 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.lyRoot);
 
+        FontChanger.applyTitleFont(linearLayout);
+
         // convert view group to bitmap
         linearLayout.setDrawingCacheEnabled(true);
         linearLayout.buildDrawingCache();
@@ -495,15 +499,12 @@ public class PayrollFooterActivity extends AppCompatActivity {
         }
         String targetPdf = directory_path + "factor.pdf";
         File filePath = new File(targetPdf);
+
         try {
             document.writeTo(new FileOutputStream(filePath));
             Toast.makeText(this, "Done", Toast.LENGTH_LONG).show();
+            showPDF(filePath);
 
-            if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-
-            } else {
-
-            }
 
         } catch (IOException e) {
             Log.e("main", "error " + e.toString());
@@ -647,24 +648,24 @@ public class PayrollFooterActivity extends AppCompatActivity {
             if (payroll.getTransactionType() == -10) {
 
                 positice = String.valueOf((payroll.getAmount()));
-                customPrintLayout.addTableFourRow(rowNum, name, positice, negative);
+                customPrintLayout.addTableFourRow(String.valueOf(1), name, positice, negative);
                 customPrintLayout.addLine(0);
             }
             if (payroll.getTransactionType() == -11) {
 
                 negative = String.valueOf((payroll.getAmount()));
-                customPrintLayout.addTableFourRow(rowNum, name, positice, negative);
+                customPrintLayout.addTableFourRow(String.valueOf(2), name, positice, negative);
                 customPrintLayout.addLine(0);
             }
             if (payroll.getTransactionType() == -12) {
 
                 if (payroll.getAmount() < 0) {
                     negative = String.valueOf((payroll.getAmount()));
-                    customPrintLayout.addTableFourRow(rowNum, name, positice, negative);
+                    customPrintLayout.addTableFourRow(String.valueOf(3), name, positice, negative);
                     customPrintLayout.addLine(0);
                 } else {
                     positice = String.valueOf((payroll.getAmount()));
-                    customPrintLayout.addTableFourRow(rowNum, name, positice, negative);
+                    customPrintLayout.addTableFourRow(String.valueOf(3), name, positice, negative);
                     customPrintLayout.addLine(0);
                 }
 
@@ -672,10 +673,26 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
 
         }
-        customPrintLayout.addEmptyRow(250);
+        customPrintLayout.addEmptyRow(500);
 
 
     }
 
+    private void showPDF(File file){
+
+        if (file==null)
+            return;
+
+        Intent target = new Intent(Intent.ACTION_VIEW);
+        target.setDataAndType(Uri.fromFile(file),"application/pdf");
+        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+        Intent intent = Intent.createChooser(target, "Open File");
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            // Instruct the user to install a PDF reader here, or something
+        }
+    }
 
 }
