@@ -9,13 +9,19 @@
     tools:context=".AhkamFooterActivity"
     tools:showIn="@layout/activity_ahkam_footer">
 
+    <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rtItem"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
         android:layout_weight="1"
-        android:clipToPadding="false"
-        android:paddingBottom="50dp">
+        android:clipToPadding="false">
 
     </android.support.v7.widget.RecyclerView>
 

@@ -17,6 +17,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+
 import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
@@ -28,6 +31,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ToolbarWrapper;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AhkamFooterActivity extends AppCompatActivity {
 
@@ -40,6 +44,7 @@ public class AhkamFooterActivity extends AppCompatActivity {
     private RecyclerView rvItem;
     private ItemAdapter adapter;
 
+    public SubsamplingScaleImageView scaleImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +77,7 @@ public class AhkamFooterActivity extends AppCompatActivity {
 
         rvItem = (RecyclerView) findViewById(R.id.rtItem);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
+        scaleImageView = (SubsamplingScaleImageView) findViewById(R.id.imageView);
 
         try {
             FontChanger.applyYekanFont(findViewById(R.id.lyHeader));
@@ -96,7 +102,7 @@ public class AhkamFooterActivity extends AppCompatActivity {
         if (rvItem == null)
             initViews();
 
-        rvItem.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvItem.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvItem.setAdapter(adapter);
     }
 
@@ -211,6 +217,19 @@ public class AhkamFooterActivity extends AppCompatActivity {
 
 
     }
+ private void Base64Decode(String base64, SubsamplingScaleImageView imageView) {
+        if (imageView == null)
+            return;
+
+        if (TextUtils.isEmpty(base64))
+            return;
+
+        byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        imageView.setImage(ImageSource.bitmap(decodedByte));
+
+
+    }
 
     class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
 
@@ -245,6 +264,7 @@ public class AhkamFooterActivity extends AppCompatActivity {
                 return;
 
             Payroll payroll = payrolls.get(position);
+            holder.payroll = payroll;
 
             try {
 
@@ -266,12 +286,24 @@ public class AhkamFooterActivity extends AppCompatActivity {
 
         public class ItemHolder extends RecyclerView.ViewHolder {
 
-            ImageView imgHokm;
+            CircleImageView imgHokm;
+            Payroll payroll;
 
             public ItemHolder(View v) {
                 super(v);
 
                 imgHokm = v.findViewById(R.id.imgHokm);
+
+                imgHokm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (payroll==null)
+                            return;
+
+                        Base64Decode(payroll.getByteData(), scaleImageView);
+
+                    }
+                });
 
             }
         }

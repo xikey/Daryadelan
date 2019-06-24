@@ -58,6 +58,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:10.0.0'
     implementation 'jp.wasabeef:picasso-transformations:2.2.1'
     implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
     //implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     //implementation 'com.squareup.retrofit2:adapter-rxjava:2.5.0'
     // implementation 'com.squareup.retrofit2:retrofit:2.5.0'
