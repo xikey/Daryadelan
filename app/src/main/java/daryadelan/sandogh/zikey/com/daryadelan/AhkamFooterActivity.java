@@ -36,6 +36,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AhkamFooterActivity extends AppCompatActivity {
 
     private static final String KEY_YEAR = "YEAR";
+    private static final String KEY_PERSONEL_CODE = "PERSONEL_CODE";
     private String year;
     private IPayroll repo;
 
@@ -46,6 +47,7 @@ public class AhkamFooterActivity extends AppCompatActivity {
 
     public SubsamplingScaleImageView scaleImageView;
 
+    private long personelCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +62,10 @@ public class AhkamFooterActivity extends AppCompatActivity {
 
     }
 
-    public static void start(FragmentActivity context, String year) {
+    public static void start(FragmentActivity context, String year,long personelCode) {
         Intent starter = new Intent(context, AhkamFooterActivity.class);
         starter.putExtra(KEY_YEAR, year);
+        starter.putExtra(KEY_PERSONEL_CODE, personelCode);
         context.startActivity(starter);
     }
 
@@ -121,6 +124,9 @@ public class AhkamFooterActivity extends AppCompatActivity {
             finish();
 
 
+        if (data.hasExtra(KEY_PERSONEL_CODE))
+            personelCode = data.getLongExtra(KEY_PERSONEL_CODE, 0);
+
     }
 
     private void getData() {
@@ -130,7 +136,7 @@ public class AhkamFooterActivity extends AppCompatActivity {
 
         lyProgress.setVisibility(View.VISIBLE);
 
-        repo.getHokm(getApplicationContext(), year, new IRepoCallBack<HokmWrapper>() {
+        repo.getHokm(getApplicationContext(), year,personelCode, new IRepoCallBack<HokmWrapper>() {
             @Override
             public void onAnswer(HokmWrapper answer) {
 

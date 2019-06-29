@@ -25,6 +25,8 @@ public class SessionManagement {
     private final String KEY_TOKEN_EXPIRE_DATE = "TOKEN_EXPIRE_DATE";
     private final String KEY_FIRST_NAME = "FIRST_NAME";
     private final String KEY_LAST_NAME = "LAST_NAME";
+    private final String KEY_PERSONEL_CODE = "PERSONEL_CODE";
+
 
     private final String KEY_ADVERTISE_1 = "ADVERTISE_1";
     private final String KEY_ADVERTISE_1_URI = "ADVERTISE_1_URI";
@@ -80,12 +82,43 @@ public class SessionManagement {
         return preferences.getString(KEY_TOKEN, "");
     }
 
+
+    public void setPersonType(String token) {
+        if (preferences == null)
+            return;
+        this.preferences.edit().putString(KEY_USER_TYPE, token).commit();
+
+    }
+
+    public String getPersonType() {
+        if (preferences == null)
+            return "";
+        return preferences.getString(KEY_USER_TYPE, "");
+    }
+
+
+
+
     public void setToken_type(String tokenType) {
         if (preferences == null)
             return;
-        this.preferences.edit().putString(KEY_TOKEN_TYPE, tokenType).apply();
+        this.preferences.edit().putString(KEY_TOKEN_TYPE, tokenType).commit();
 
     }
+
+    public long getPersonelCode() {
+        if (preferences == null)
+            return 0;
+        return preferences.getLong(KEY_PERSONEL_CODE,0);
+    }
+
+    public void setPersonelCode(long personelCode) {
+        if (preferences == null)
+            return;
+        this.preferences.edit().putLong(KEY_PERSONEL_CODE, personelCode).commit();
+
+    }
+
 
     public String getToken_type() {
         if (preferences == null)
@@ -96,7 +129,7 @@ public class SessionManagement {
     public void setToken_ExpireDate(String tokenExpireDate) {
         if (preferences == null)
             return;
-        this.preferences.edit().putString(KEY_TOKEN_EXPIRE_DATE, tokenExpireDate).apply();
+        this.preferences.edit().putString(KEY_TOKEN_EXPIRE_DATE, tokenExpireDate).commit();
 
     }
 
@@ -109,7 +142,7 @@ public class SessionManagement {
     public void setTel(String tel) {
         if (preferences == null)
             return;
-        this.preferences.edit().putString(KEY_MOBILE, tel).apply();
+        this.preferences.edit().putString(KEY_MOBILE, tel).commit();
 
     }
 
@@ -123,7 +156,7 @@ public class SessionManagement {
     public void setFirstName(String tel) {
         if (preferences == null)
             return;
-        this.preferences.edit().putString(KEY_FIRST_NAME, tel).apply();
+        this.preferences.edit().putString(KEY_FIRST_NAME, tel).commit();
 
     }
 
@@ -136,7 +169,7 @@ public class SessionManagement {
     public void setLastName(String tel) {
         if (preferences == null)
             return;
-        this.preferences.edit().putString(KEY_LAST_NAME, tel).apply();
+        this.preferences.edit().putString(KEY_LAST_NAME, tel).commit();
 
     }
 
@@ -185,6 +218,14 @@ public class SessionManagement {
         setFirstName(member.getFirstName());
         setLastName(member.getLastName());
 
+        try{
+            setPersonelCode(member.getPersonalCode());
+            setPersonType(member.getPersonType());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
         if (!TextUtils.isEmpty(member.getTokenExpireDate())) {
             setToken_ExpireDate(member.getTokenExpireDate());
         }
@@ -195,6 +236,30 @@ public class SessionManagement {
         return true;
 
     }
+
+    public boolean saveMemberExtraInfo(AppCompatActivity context, User member) {
+        if (member == null)
+            return false;
+
+
+
+        setTel(member.getMobile());
+        setFirstName(member.getFirstName());
+        setLastName(member.getLastName());
+        setPersonelCode(member.getPersonalCode());
+        setPersonType(member.getPersonType());
+
+        if (!TextUtils.isEmpty(member.getTokenExpireDate())) {
+            setToken_ExpireDate(member.getTokenExpireDate());
+        }
+
+        if (!TextUtils.isEmpty(member.getTokenType())) {
+            setToken_type(member.getTokenType());
+        }
+        return true;
+
+    }
+
 
     public User loadMember() {
 
@@ -215,6 +280,8 @@ public class SessionManagement {
         member.setMobile(getTel());
         member.setTokenExpireDate(getToken__ExpireDate());
         member.setTokenType(getToken_type());
+        member.setPersonalCode(getPersonelCode());
+        member.setPersonType(getPersonType());
 
         return member;
 

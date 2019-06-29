@@ -223,7 +223,7 @@ public class UserServerRepo implements IUser {
     @Override
     public void userInfo(Context context, final IRepoCallBack<User> callBack) {
 
-        IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
+        IUserApi userApi = ServerApiClient.getClientWithHeader(context).create(IUserApi.class);
         userCall = userApi.userInfo( );
         userCall.enqueue(new Callback<User>() {
             @Override

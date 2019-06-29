@@ -31,6 +31,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.UrlBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.AdvertiseWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IAdvertise;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.AdvertiseServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
@@ -58,6 +59,9 @@ public class MainActivity extends AppCompatActivity
     private TextView txtPersonelCode;
     private TextView txtUserName;
 
+    private IUser userRepo;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +69,7 @@ public class MainActivity extends AppCompatActivity
 
         initToolbar();
         initRepo();
+        getUserExtraInfos();
         saveAdvertiseUrl();
         initSlideAutoChanger();
         initViews();
@@ -73,15 +78,53 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void getUserExtraInfos() {
+        if (userRepo == null)
+            return;
+
+        userRepo.userInfo(getApplicationContext(), new IRepoCallBack<User>() {
+            @Override
+            public void onAnswer(User answer) {
+                if (answer == null)
+                    return;
+
+                try {
+                    SessionManagement.getInstance(getApplicationContext()).saveMemberExtraInfo(MainActivity.this, answer);
+
+                    txtUserName.setText(answer.getFirstName() + " " + answer.getLastName());
+                    txtPersonelCode.setText("" + answer.getPersonalCode());
+                    txtUserType.setText("" + answer.getPersonTypeName());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable error) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
+    }
+
     private void initContent() {
 
         User user = SessionManagement.getInstance(getApplicationContext()).loadMember();
-        if (user==null)
+        if (user == null)
             return;
         try {
             txtUserType.setText(user.getPersonType());
-            txtPersonelCode.setText(""+user.getPersonalCode());
-            txtUserName.setText(user.getFirstName()+user.getLastName());
+            txtPersonelCode.setText("" + user.getPersonalCode());
+            txtUserName.setText(user.getFirstName() + user.getLastName());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -91,6 +134,9 @@ public class MainActivity extends AppCompatActivity
 
         if (advertiseRepo == null)
             advertiseRepo = new AdvertiseServerRepo();
+
+        if (userRepo == null)
+            userRepo = new UserServerRepo();
     }
 
 
@@ -99,12 +145,14 @@ public class MainActivity extends AppCompatActivity
         crdPayrolls.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (checkUserPersmission())
                 PayrollHeaderActivity.start(MainActivity.this);
             }
         });
         lyAhkam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (checkUserPersmission())
                 AhkamHeaderActivity.start(MainActivity.this);
             }
         });
@@ -383,5 +431,14 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    private boolean checkUserPersmission() {
 
+        User user = SessionManagement.getInstance(getApplicationContext()).loadMember();
+        if (user.isPersonGuest()) {
+            new CustomDialogBuilder().showAlert(MainActivity.this, "دسترسی به این بخش برای کاربر مهمان وجود ندارد");
+            return false;
+        }
+
+        return true;
+    }
 }

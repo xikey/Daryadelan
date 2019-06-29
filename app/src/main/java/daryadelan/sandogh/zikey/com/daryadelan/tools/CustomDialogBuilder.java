@@ -124,6 +124,53 @@ public class CustomDialogBuilder {
     }
 
 
+    public AlertDialog showInputTextDialog(AppCompatActivity context, String title,  final OnDialogListener onYesClickListener) {
+
+        String output = null;
+
+        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(context);
+        View mView = layoutInflaterAndroid.inflate(R.layout.layout_input_dialog_simple, null);
+        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(context);
+        alertDialogBuilderUserInput.setView(mView);
+
+        final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
+        TextView dialogTitle = (TextView) mView.findViewById(R.id.dialogTitle);
+
+        if (!TextUtils.isEmpty(title))
+            dialogTitle.setText(title);
+
+
+        alertDialogBuilderUserInput
+                .setCancelable(false)
+                .setPositiveButton("تایید", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogBox, int id) {
+
+                        if (onYesClickListener != null) {
+
+                            if (TextUtils.isEmpty(userInputDialogEditText.getText().toString())) {
+                                onYesClickListener.onOK(null);
+                            } else
+                                onYesClickListener.onOK(userInputDialogEditText.getText().toString());
+                        }
+
+                    }
+                })
+
+                .setNegativeButton("انصراف",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogBox, int id) {
+
+                                dialogBox.cancel();
+                            }
+                        });
+
+        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+        alertDialogAndroid.show();
+
+        return alertDialogAndroid;
+    }
+
+
     public AlertDialog showSMSvalidationDialog(final AppCompatActivity context, String title, String note, String question, boolean hasCountDown, final OnDialogListener onDialogListener) {
 
         String output = null;

@@ -9,7 +9,7 @@
         android:scaleType="center"
         android:layout_width="1dp"
         android:layout_height="fill_parent"
-        android:src="@drawable/dash_line_png" />
+        android:src="@color/colorBlack"  />
 
 
     <TextView
@@ -27,7 +27,7 @@
         android:scaleType="center"
         android:layout_width="1dp"
         android:layout_height="fill_parent"
-        android:src="@drawable/dash_line_png" />
+        android:src="@color/colorBlack" />
 
     <TextView
         android:textSize="@dimen/very_small_font_size"
@@ -45,7 +45,7 @@
         android:scaleType="center"
         android:layout_width="1dp"
         android:layout_height="fill_parent"
-        android:src="@drawable/dash_line_png" />
+        android:src="@color/colorBlack"  />
 
     <TextView
         android:textSize="@dimen/very_small_font_size"
@@ -63,7 +63,7 @@
         android:scaleType="center"
         android:layout_width="1dp"
         android:layout_height="fill_parent"
-        android:src="@drawable/dash_line_png" />
+        android:src="@color/colorBlack"  />
 
     <TextView
         android:textSize="@dimen/very_small_font_size"
@@ -82,6 +82,6 @@
         android:scaleType="center"
         android:layout_width="1dp"
         android:layout_height="fill_parent"
-        android:src="@drawable/dash_line_png" />
+        android:src="@color/colorBlack" />
 
 </LinearLayout>

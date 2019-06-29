@@ -20,10 +20,10 @@ public class PayrollServerRepo implements IPayroll {
     Call<HokmWrapper> hokmWrapperCall;
 
     @Override
-    public void allAvailablePayrolls(Context context, final IRepoCallBack<PayrollWrapper> callBack) {
+    public void allAvailablePayrolls(Context context,long personelCode, final IRepoCallBack<PayrollWrapper> callBack) {
 
         IPayrollApi payrollApi = ServerApiClient.getClientWithHeader(context).create(IPayrollApi.class);
-        call = payrollApi.allAvailablePayrolls();
+        call = payrollApi.allAvailablePayrolls(personelCode);
         call.enqueue(new Callback<PayrollWrapper>() {
             @Override
             public void onResponse(Call<PayrollWrapper> call, Response<PayrollWrapper> response) {
@@ -34,7 +34,7 @@ public class PayrollServerRepo implements IPayroll {
                 }
 
                 if (response.body() == null) {
-                    callBack.onError(new Throwable("اطلاعاتی جهت نمایش وجود ندارد"));
+                    callBack.onError(new Throwable("فیش حقوق جهت نمایش وجود ندارد"));
                     return;
                 }
 
@@ -44,7 +44,7 @@ public class PayrollServerRepo implements IPayroll {
                 }
 
                 if (response.body().getData() == null || response.body().getData().size() == 0) {
-                    callBack.onError(new Throwable("اطلاعاتی جهت نمایش وجود ندارد"));
+                    callBack.onError(new Throwable("فیش حقوق جهت نمایش وجود ندارد"));
                     return;
                 }
 
@@ -60,10 +60,10 @@ public class PayrollServerRepo implements IPayroll {
     }
 
     @Override
-    public void allAvailableAhkam(Context context, final IRepoCallBack<AhkamWrapper> callBack) {
+    public void allAvailableAhkam(Context context,long personelCode, final IRepoCallBack<AhkamWrapper> callBack) {
 
         IPayrollApi payrollApi = ServerApiClient.getClientWithHeader(context).create(IPayrollApi.class);
-        ahkamWrapperCall = payrollApi.allAvailableAhkam();
+        ahkamWrapperCall = payrollApi.allAvailableAhkam(personelCode);
         ahkamWrapperCall.enqueue(new Callback<AhkamWrapper>() {
             @Override
             public void onResponse(Call<AhkamWrapper> call, Response<AhkamWrapper> response) {
@@ -98,10 +98,10 @@ public class PayrollServerRepo implements IPayroll {
     }
 
     @Override
-    public void getPayroll(Context context, long year, long month, final IRepoCallBack<PayrollWrapper> callBack) {
+    public void getPayroll(Context context, long year, long month,long personelCode, final IRepoCallBack<PayrollWrapper> callBack) {
 
         IPayrollApi payrollApi = ServerApiClient.getClientWithHeader(context).create(IPayrollApi.class);
-        call = payrollApi.getPayroll(year, month);
+        call = payrollApi.getPayroll(year, month,personelCode);
         call.enqueue(new Callback<PayrollWrapper>() {
             @Override
             public void onResponse(Call<PayrollWrapper> call, Response<PayrollWrapper> response) {
@@ -141,9 +141,9 @@ public class PayrollServerRepo implements IPayroll {
     }
 
     @Override
-    public void getHokm(Context context, String year, final IRepoCallBack<HokmWrapper> callBack) {
+    public void getHokm(Context context, String year,long personelCode, final IRepoCallBack<HokmWrapper> callBack) {
         IPayrollApi payrollApi = ServerApiClient.getClientWithHeader(context).create(IPayrollApi.class);
-        hokmWrapperCall = payrollApi.getHokm(year);
+        hokmWrapperCall = payrollApi.getHokm(year,personelCode);
         hokmWrapperCall.enqueue(new Callback<HokmWrapper>() {
             @Override
             public void onResponse(Call<HokmWrapper> call, Response<HokmWrapper> response) {

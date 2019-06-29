@@ -2,6 +2,8 @@ package daryadelan.sandogh.zikey.com.daryadelan.repo.apiClient;
 
 import android.content.Context;
 
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
 
 import daryadelan.sandogh.zikey.com.daryadelan.BuildConfig;
@@ -73,9 +75,10 @@ public class ServerApiClient {
 
         try {
             if (retrofitWithHeader == null) {
+
                 retrofitWithHeader = new Retrofit.Builder()
                         .baseUrl(BuildConfig.IPAddress)
-                        .addConverterFactory(GsonConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create(new GsonBuilder() .setLenient() .create()))
                         .client(initHeader(context).build())
                         .build();
             }
@@ -93,4 +96,6 @@ public class ServerApiClient {
         retrofitWithHeader = null;
         retrofitWithoutHeader = null;
     }
+
+
 }

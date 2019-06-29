@@ -24,7 +24,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +42,9 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.PayrollWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IPayroll;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.PayrollServerRepo;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
@@ -54,6 +55,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
     private static final String KEY_YEAR = "YEAR";
     private static final String KEY_MONTH = "MONTH";
+    private static final String KEY_PERSONEL_CODE = "PERSONEL_CODE";
     public final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STOTAGE = 2;
     private long year;
     private long month;
@@ -63,15 +65,21 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
     private LinearLayout lyProgress;
 
+
     private IPayroll repo;
 
     private AppBarLayout AppBarLayout;
 
     private Payroll payroll;
+    private long personelCode;
 
     private LinearLayout createPdf;
     private CustomPrintLayout customPrintLayout;
+    private IUser userRepo;
 
+    private TextView txtName;
+    private TextView txtPersonelCode;
+    private TextView txtTotalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,11 +89,14 @@ public class PayrollFooterActivity extends AppCompatActivity {
         parseIntent();
         initToolbar();
         initRepo();
+        getUserExtraInfos();
         initViews();
         initRecycleView();
         getData();
         initClickListeners();
+
         requestGetMessagePermission();
+
 
     }
 
@@ -107,6 +118,9 @@ public class PayrollFooterActivity extends AppCompatActivity {
     private void initRepo() {
         if (repo == null)
             repo = new PayrollServerRepo();
+
+        if (userRepo == null)
+            userRepo = new UserServerRepo();
     }
 
     private void initViews() {
@@ -118,8 +132,13 @@ public class PayrollFooterActivity extends AppCompatActivity {
         createPdf = (LinearLayout) findViewById(R.id.createPdf);
         customPrintLayout = (CustomPrintLayout) findViewById(R.id.customPrintLayout);
 
+        txtName = (TextView) findViewById(R.id.txtName);
+        txtPersonelCode = (TextView) findViewById(R.id.txtPersonelCode);
+        txtTotalPrice = (TextView) findViewById(R.id.txtTotalPrice);
+
         try {
             FontChanger.applyYekanFont(findViewById(R.id.lyHeader));
+            FontChanger.applyMainFont(findViewById(R.id.lyCollapsingView));
             FontChanger.applyMainFont(findViewById(R.id.customPrintLayout));
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,41 +164,17 @@ public class PayrollFooterActivity extends AppCompatActivity {
             return;
         lyProgress.setVisibility(View.VISIBLE);
 
-        repo.getPayroll(getApplicationContext(), year, month, new IRepoCallBack<PayrollWrapper>() {
+        repo.getPayroll(getApplicationContext(), year, month, personelCode, new IRepoCallBack<PayrollWrapper>() {
             @Override
             public void onAnswer(PayrollWrapper answer) {
                 lyProgress.setVisibility(View.GONE);
                 if (answer == null) {
-                    new CustomDialogBuilder().showAlert(PayrollFooterActivity.this, getString(R.string.error_getting_data_please_try_again), new CustomAlertDialog.OnCancelClickListener() {
-                        @Override
-                        public void onClickCancel(DialogFragment fragment) {
-                            fragment.dismiss();
-                            finish();
-                        }
-
-                        @Override
-                        public void onClickOutside(DialogFragment fragment) {
-                            fragment.dismiss();
-                            finish();
-                        }
-                    });
+                    showError(getString(R.string.error_getting_data_please_try_again));
                     return;
                 }
 
                 if (answer.getData() == null || answer.getData().size() == 0) {
-                    new CustomDialogBuilder().showAlert(PayrollFooterActivity.this, getString(R.string.error_getting_data_please_try_again), new CustomAlertDialog.OnCancelClickListener() {
-                        @Override
-                        public void onClickCancel(DialogFragment fragment) {
-                            fragment.dismiss();
-                            finish();
-                        }
-
-                        @Override
-                        public void onClickOutside(DialogFragment fragment) {
-                            fragment.dismiss();
-                            finish();
-                        }
-                    });
+                    showError("فیش حقوق جهت نمایش وجود ندارد");
                     return;
                 }
 
@@ -191,19 +186,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
             public void onError(Throwable error) {
 
                 lyProgress.setVisibility(View.GONE);
-                new CustomDialogBuilder().showAlert(PayrollFooterActivity.this, getString(R.string.error_getting_data_please_try_again), new CustomAlertDialog.OnCancelClickListener() {
-                    @Override
-                    public void onClickCancel(DialogFragment fragment) {
-                        fragment.dismiss();
-                        finish();
-                    }
-
-                    @Override
-                    public void onClickOutside(DialogFragment fragment) {
-                        fragment.dismiss();
-                        finish();
-                    }
-                });
+                showError(error.getMessage());
                 return;
             }
 
@@ -239,6 +222,9 @@ public class PayrollFooterActivity extends AppCompatActivity {
         if (data.hasExtra(KEY_YEAR))
             year = data.getLongExtra(KEY_YEAR, 0);
 
+        if (data.hasExtra(KEY_PERSONEL_CODE))
+            personelCode = data.getLongExtra(KEY_PERSONEL_CODE, 0);
+
         if (month == 0 || year == 0)
             finish();
 
@@ -252,11 +238,12 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
     }
 
-    public static void start(FragmentActivity context, long year, long month) {
+    public static void start(FragmentActivity context, long year, long month, long personelCode) {
 
         Intent starter = new Intent(context, PayrollFooterActivity.class);
         starter.putExtra(KEY_YEAR, year);
         starter.putExtra(KEY_MONTH, month);
+        starter.putExtra(KEY_PERSONEL_CODE, personelCode);
         context.startActivity(starter);
     }
 
@@ -409,6 +396,15 @@ public class PayrollFooterActivity extends AppCompatActivity {
             } else {
                 negativePayroll.add(p);
                 nep.setAmount(nep.getAmount() + p.getAmount());
+                //به این معناست که این کسری به دلیل پرداخت وام میباشد و باید مانده وام نمایش داده شود
+                if (p.getTypePay() == 5) {
+                    Payroll payroll = new Payroll();
+                    payroll.setDesc("مانده");
+                    payroll.setAmount(p.getMande());
+                    payroll.setTransactionType(p.getTransactionType());
+                    negativePayroll.add(payroll);
+
+                }
             }
 
         }
@@ -458,7 +454,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
             bm = bitmap;
 
         }
-        if (bm!=null)
+        if (bm != null)
             createPDF(bm);
 
 //        if (bm != null) {
@@ -472,7 +468,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void createPDF(Bitmap  layout) {
+    private void createPDF(Bitmap layout) {
 
         // create a new document
         PdfDocument document = new PdfDocument();
@@ -567,16 +563,13 @@ public class PayrollFooterActivity extends AppCompatActivity {
             return;
 
         User user = SessionManagement.getInstance(getApplicationContext()).loadMember();
-        user.setFirstName("محسن هادی زاده");
-        user.setMobile("09215963868");
-        user.setPersonalCode(1000);
 
         customPrintLayout.addImage(R.drawable.ic_daryadelan_splash);
         int printTextSize = 11;
 
-        customPrintLayout.addLeftAndRightTextRow( "نام مشتری:", user.getFirstName());
-        customPrintLayout.addLeftAndRightTextRow( "کد مشتری:", String.valueOf(user.getPersonalCode()));
-        customPrintLayout.addLeftAndRightTextRow( "تلفن مشتری:", user.getMobile());
+        customPrintLayout.addLeftAndRightTextRow("نام :", user.getFirstName());
+        customPrintLayout.addLeftAndRightTextRow("کد پرسنلی:", String.valueOf(user.getPersonalCode()));
+        customPrintLayout.addLeftAndRightTextRow("تلفن :", user.getMobile());
 
         customPrintLayout.addEmptyRow(50);
 
@@ -609,6 +602,8 @@ public class PayrollFooterActivity extends AppCompatActivity {
                 negative = String.valueOf((payroll.getAmount()));
                 customPrintLayout.addTableFourRow(rowNum, name, positice, negative);
                 customPrintLayout.addLine(0);
+
+
             }
 
 //            if (payroll.getTransactionType() == -10) {
@@ -646,7 +641,6 @@ public class PayrollFooterActivity extends AppCompatActivity {
             String negative = "0";
 
 
-
             if (payroll.getTransactionType() == -10) {
 
                 positice = String.valueOf((payroll.getAmount()));
@@ -660,7 +654,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
                 customPrintLayout.addLine(0);
             }
             if (payroll.getTransactionType() == -12) {
-
+                txtTotalPrice.setText(NumberSeperator.separate(payroll.getAmount()) + " ریال ");
                 if (payroll.getAmount() < 0) {
                     negative = String.valueOf((payroll.getAmount()));
                     customPrintLayout.addTableFourRow(String.valueOf(3), name, positice, negative);
@@ -669,6 +663,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
                     positice = String.valueOf((payroll.getAmount()));
                     customPrintLayout.addTableFourRow(String.valueOf(3), name, positice, negative);
                     customPrintLayout.addLine(0);
+
                 }
 
             }
@@ -680,13 +675,13 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
     }
 
-    private void showPDF(File file){
+    private void showPDF(File file) {
 
-        if (file==null)
+        if (file == null)
             return;
 
         Intent target = new Intent(Intent.ACTION_VIEW);
-        target.setDataAndType(Uri.fromFile(file),"application/pdf");
+        target.setDataAndType(Uri.fromFile(file), "application/pdf");
         target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
         Intent intent = Intent.createChooser(target, "Open File");
@@ -695,6 +690,66 @@ public class PayrollFooterActivity extends AppCompatActivity {
         } catch (ActivityNotFoundException e) {
             // Instruct the user to install a PDF reader here, or something
         }
+    }
+
+    private void getUserExtraInfos() {
+        if (userRepo == null)
+            return;
+
+        userRepo.userInfo(getApplicationContext(), new IRepoCallBack<User>() {
+            @Override
+            public void onAnswer(User answer) {
+                if (answer == null)
+                    return;
+
+                try {
+                    SessionManagement.getInstance(getApplicationContext()).saveMemberExtraInfo(PayrollFooterActivity.this, answer);
+
+                    txtName.setText(answer.getFirstName() + " " + answer.getLastName());
+                    txtPersonelCode.setText("" + personelCode);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable error) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
+    }
+
+
+    private void showError(String message) {
+        new CustomDialogBuilder().showYesNOCustomAlert(PayrollFooterActivity.this, "خطا در دریافت اطلاعات", message, "تلاش مجدد", "انصراف", new CustomAlertDialog.OnActionClickListener() {
+            @Override
+            public void onClick(DialogFragment fragment) {
+                getData();
+                fragment.dismiss();
+
+            }
+        }, new CustomAlertDialog.OnCancelClickListener() {
+            @Override
+            public void onClickCancel(DialogFragment fragment) {
+                fragment.dismiss();
+            }
+
+            @Override
+            public void onClickOutside(DialogFragment fragment) {
+                fragment.dismiss();
+            }
+        });
     }
 
 }

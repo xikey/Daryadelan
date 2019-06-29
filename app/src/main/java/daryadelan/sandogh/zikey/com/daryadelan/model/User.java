@@ -201,4 +201,13 @@ public class User extends ServerWrapper {
 
         return "کاربر نامشخص";
     }
+
+    public boolean isPersonGuest() {
+
+        if (!TextUtils.isEmpty(personType))
+            if (personType.equals("guest"))
+                return true;
+
+        return false;
+    }
 }
