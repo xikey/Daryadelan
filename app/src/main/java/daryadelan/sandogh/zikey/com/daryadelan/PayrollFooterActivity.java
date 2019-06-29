@@ -289,6 +289,8 @@ public class PayrollFooterActivity extends AppCompatActivity {
                 holder.txtNavigatePrice.setText("0");
                 holder.txtNavigatePrice.setBackgroundColor(Color.parseColor("#ffffff"));
                 holder.txtPrice.setBackgroundColor(Color.parseColor("#ffffff"));
+                holder.lyDetails.setVisibility(View.GONE);
+                holder.txtDetails.setText("");
 
                 if (payroll.getTransactionType() == 1) {
 
@@ -301,6 +303,12 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
                     holder.txtNavigatePrice.setBackgroundColor(Color.parseColor("#ffebee"));
                     holder.txtNavigatePrice.setText(NumberSeperator.separate(payroll.getAmount()));
+
+
+                    if (payroll.getTypePay() == 5) {
+                        holder.txtDetails.setText("مانده: "+NumberSeperator.separate(payroll.getMande()));
+                        holder.lyDetails.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 if (payroll.getTransactionType() == -10) {
@@ -345,6 +353,8 @@ public class PayrollFooterActivity extends AppCompatActivity {
             TextView txtPrice;
             TextView txtTitle;
             TextView txtNavigatePrice;
+            TextView txtDetails;
+            LinearLayout lyDetails;
 
 
             public ItemHolder(View v) {
@@ -355,6 +365,8 @@ public class PayrollFooterActivity extends AppCompatActivity {
                 cardView = v.findViewById(R.id.cardView);
                 txtPrice = v.findViewById(R.id.txtPrice);
                 txtTitle = v.findViewById(R.id.txtTitle);
+                txtDetails = v.findViewById(R.id.txtDetails);
+                lyDetails = v.findViewById(R.id.lyDetails);
                 txtNavigatePrice = v.findViewById(R.id.txtNavigatePrice);
 
                 FontChanger.applyMainFont(cardView);
@@ -397,14 +409,14 @@ public class PayrollFooterActivity extends AppCompatActivity {
                 negativePayroll.add(p);
                 nep.setAmount(nep.getAmount() + p.getAmount());
                 //به این معناست که این کسری به دلیل پرداخت وام میباشد و باید مانده وام نمایش داده شود
-                if (p.getTypePay() == 5) {
-                    Payroll payroll = new Payroll();
-                    payroll.setDesc("مانده");
-                    payroll.setAmount(p.getMande());
-                    payroll.setTransactionType(p.getTransactionType());
-                    negativePayroll.add(payroll);
-
-                }
+//                if (p.getTypePay() == 5) {
+//                    Payroll payroll = new Payroll();
+//                    payroll.setDesc("مانده");
+//                    payroll.setAmount(p.getMande());
+//                    payroll.setTransactionType(p.getTransactionType());
+//                    negativePayroll.add(payroll);
+//
+//                }
             }
 
         }
@@ -601,7 +613,13 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
                 negative = String.valueOf((payroll.getAmount()));
                 customPrintLayout.addTableFourRow(rowNum, name, positice, negative);
+                if (payroll.getTypePay()==5){
+                    customPrintLayout.addTableFourRow("-", "مانده"+NumberSeperator.separate(payroll.getMande()), "", "");
+                }
                 customPrintLayout.addLine(0);
+
+
+
 
 
             }

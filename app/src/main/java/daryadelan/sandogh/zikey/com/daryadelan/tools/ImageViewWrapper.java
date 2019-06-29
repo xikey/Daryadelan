@@ -52,8 +52,7 @@ public class ImageViewWrapper {
          public void load() {
 
         Picasso.with(context).load(url).fit().centerInside()
-                .placeholder(R.drawable.bg_product_avatar)
-                .error(R.drawable.bg_product_avatar)
+
                 .into(imgView);
 
     }

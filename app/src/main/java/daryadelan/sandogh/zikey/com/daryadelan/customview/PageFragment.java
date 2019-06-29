@@ -110,6 +110,52 @@ public class PageFragment extends Fragment {
                     }
                 });
                 break;
+
+            case 4:
+                try {
+                    String url = SessionManagement.getInstance(getActivity()).getAdvertise_4Url();
+                    new ImageViewWrapper(getActivity()).FromUrl(url).into(imgAdv).defaultImage(placeHolder).load();
+                } catch (Exception ex) {
+                    LogWrapper.loge("PageFragment_onCreateView_Exception: ", ex);
+                }
+
+
+                imgAdv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+//                           UriParser.run(getActivity(), SessionManagement.getInstance(getActivity()).getAdvertise_3Uri());
+                        } catch (Exception ex) {
+//                            LogWrapper.loge("PageFragment_onClick_Exception: ", ex);
+                        }
+
+                    }
+                });
+                break;
+
+
+            case 5:
+                try {
+                    String url = SessionManagement.getInstance(getActivity()).getAdvertise_5Url();
+                    new ImageViewWrapper(getActivity()).FromUrl(url).into(imgAdv).defaultImage(placeHolder).load();
+                } catch (Exception ex) {
+                    LogWrapper.loge("PageFragment_onCreateView_Exception: ", ex);
+                }
+
+
+                imgAdv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+//                           UriParser.run(getActivity(), SessionManagement.getInstance(getActivity()).getAdvertise_3Uri());
+                        } catch (Exception ex) {
+//                            LogWrapper.loge("PageFragment_onClick_Exception: ", ex);
+                        }
+
+                    }
+                });
+                break;
+
         }
 
         final ViewGroup.LayoutParams params = imgAdv.getLayoutParams();

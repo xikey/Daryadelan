@@ -20,11 +20,11 @@
             android:background="@color/colorGray" />
 
         <LinearLayout
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?android:attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal">
 
 
@@ -44,16 +44,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ellipsize="end"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
                     android:gravity="center"
                     android:maxLines="2"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/very_small_font_size" />
 
 
             </LinearLayout>
-
 
 
             <View
@@ -105,6 +104,23 @@
 
             </LinearLayout>
 
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lyDetails"
+            android:layout_width="match_parent"
+            android:paddingRight="20dp"
+            android:layout_height="35dp"
+            android:gravity="center_vertical|right"
+            android:background="#FBFBFB">
+
+            <TextView
+                android:id="@+id/txtDetails"
+                android:textSize="@dimen/very_small_10"
+                android:layout_width="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

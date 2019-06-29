@@ -27,6 +27,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ToolbarWrapper;
+import es.dmoral.toasty.Toasty;
 
 public class PayrollHeaderActivity extends AppCompatActivity {
 
@@ -379,6 +380,7 @@ public class PayrollHeaderActivity extends AppCompatActivity {
     private void showError(String message) {
         edtMonth.setText("");
         edtYear.setText("");
+        if (!user.isPersonSuperUser())
         new CustomDialogBuilder().showYesNOCustomAlert(PayrollHeaderActivity.this, "خطا در دریافت اطلاعات", message, "تلاش مجدد", "انصراف", new CustomAlertDialog.OnActionClickListener() {
             @Override
             public void onClick(DialogFragment fragment) {
@@ -398,6 +400,10 @@ public class PayrollHeaderActivity extends AppCompatActivity {
                 fragment.dismiss();
             }
         });
+        else {
+              Toasty.error(PayrollHeaderActivity.this,"اطلاعاتی برای کد پرسنلی وارد شده وجود ندارد").show();
+
+        }
     }
 
 }

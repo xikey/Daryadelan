@@ -146,14 +146,14 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 if (checkUserPersmission())
-                PayrollHeaderActivity.start(MainActivity.this);
+                    PayrollHeaderActivity.start(MainActivity.this);
             }
         });
         lyAhkam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (checkUserPersmission())
-                AhkamHeaderActivity.start(MainActivity.this);
+                    AhkamHeaderActivity.start(MainActivity.this);
             }
         });
     }
@@ -311,10 +311,17 @@ public class MainActivity extends AppCompatActivity
             public void onAnswer(AdvertiseWrapper answer) {
                 if (answer != null && answer.getData() != null && answer.getData().size() != 0) {
                     try {
-
+                        advertisePageCount = answer.getData().size();
+                        if (answer.getData().get(0)!=null)
                         SessionManagement.getInstance(getApplicationContext()).setAdvertise_1Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(0)));
+                        if (answer.getData().get(1)!=null)
                         SessionManagement.getInstance(getApplicationContext()).setAdvertise_2Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(1)));
+                        if (answer.getData().get(2)!=null)
                         SessionManagement.getInstance(getApplicationContext()).setAdvertise_3Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(2)));
+                        if (answer.getData().get(3)!=null)
+                        SessionManagement.getInstance(getApplicationContext()).setAdvertise_4Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(3)));
+                        if (answer.getData().get(4)!=null)
+                        SessionManagement.getInstance(getApplicationContext()).setAdvertise_5Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(4)));
 
 
                     } catch (Exception ex) {

@@ -26,6 +26,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ToolbarWrapper;
+import es.dmoral.toasty.Toasty;
 
 public class AhkamHeaderActivity extends AppCompatActivity {
 
@@ -84,6 +85,12 @@ public class AhkamHeaderActivity extends AppCompatActivity {
         lyAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (TextUtils.isEmpty(edtYear.getText())){
+                    new CustomDialogBuilder().showAlert(AhkamHeaderActivity.this,"فیلد سال نامعتبر میباشد!");
+                    return;
+                }
+
                 if (!TextUtils.isEmpty(selectedHokm))
                     AhkamFooterActivity.start(AhkamHeaderActivity.this, selectedHokm, user.getPersonalCode());
             }
@@ -307,6 +314,7 @@ public class AhkamHeaderActivity extends AppCompatActivity {
     private void showError(String message) {
 
         edtYear.setText("");
+        if (!user.isPersonSuperUser())
         new CustomDialogBuilder().showYesNOCustomAlert(AhkamHeaderActivity.this, "خطا در دریافت اطلاعات", message, "تلاش مجدد", "انصراف", new CustomAlertDialog.OnActionClickListener() {
             @Override
             public void onClick(DialogFragment fragment) {
@@ -326,6 +334,11 @@ public class AhkamHeaderActivity extends AppCompatActivity {
                 fragment.dismiss();
             }
         });
+        else {
+
+              Toasty.error(AhkamHeaderActivity.this,"اطلاعاتی برای کد پرسنلی وارد شده وجود ندارد").show();
+
+        }
     }
 
 

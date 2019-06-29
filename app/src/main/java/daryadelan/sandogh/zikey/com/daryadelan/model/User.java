@@ -210,4 +210,13 @@ public class User extends ServerWrapper {
 
         return false;
     }
+
+    public boolean isPersonSuperUser() {
+
+        if (!TextUtils.isEmpty(personType))
+            if (personType.equals("su"))
+                return true;
+
+        return false;
+    }
 }
