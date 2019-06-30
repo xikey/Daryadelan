@@ -81,6 +81,8 @@ public class PayrollFooterActivity extends AppCompatActivity {
     private TextView txtPersonelCode;
     private TextView txtTotalPrice;
 
+    private User payrollUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,6 +178,15 @@ public class PayrollFooterActivity extends AppCompatActivity {
                 if (answer.getData() == null || answer.getData().size() == 0) {
                     showError("فیش حقوق جهت نمایش وجود ندارد");
                     return;
+                }
+
+                try{
+                    payrollUser=answer.getUser();
+                    txtName.setText(answer.getUser().getFullName());
+                    txtPersonelCode.setText(""+personelCode);
+
+                }catch (Exception e){
+
                 }
 
                 MappingDate(answer.getData());
@@ -579,8 +590,8 @@ public class PayrollFooterActivity extends AppCompatActivity {
         customPrintLayout.addImage(R.drawable.ic_daryadelan_splash);
         int printTextSize = 11;
 
-        customPrintLayout.addLeftAndRightTextRow("نام :", user.getFirstName());
-        customPrintLayout.addLeftAndRightTextRow("کد پرسنلی:", String.valueOf(user.getPersonalCode()));
+        customPrintLayout.addLeftAndRightTextRow("نام :", payrollUser.getFullName());
+        customPrintLayout.addLeftAndRightTextRow("کد پرسنلی:", String.valueOf(personelCode));
         customPrintLayout.addLeftAndRightTextRow("تلفن :", user.getMobile());
 
         customPrintLayout.addEmptyRow(50);
@@ -723,8 +734,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
                 try {
                     SessionManagement.getInstance(getApplicationContext()).saveMemberExtraInfo(PayrollFooterActivity.this, answer);
 
-                    txtName.setText(answer.getFirstName() + " " + answer.getLastName());
-                    txtPersonelCode.setText("" + personelCode);
+
 
                 } catch (Exception e) {
                     e.printStackTrace();

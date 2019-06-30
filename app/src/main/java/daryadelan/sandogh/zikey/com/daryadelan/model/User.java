@@ -2,6 +2,7 @@ package daryadelan.sandogh.zikey.com.daryadelan.model;
 
 import android.text.TextUtils;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper;
@@ -9,6 +10,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper
 public class User extends ServerWrapper {
 
     @SerializedName("personalCode")
+    @Expose
     private long personalCode;
     @SerializedName("mobile")
     private String mobile;
@@ -56,6 +58,8 @@ public class User extends ServerWrapper {
     private String tokenType;
     @SerializedName("expires_in")
     private String tokenExpireDate;
+    @SerializedName("fullName")
+    private String fullName;
 
 
     public long getPersonalCode() {
@@ -165,6 +169,14 @@ public class User extends ServerWrapper {
 
     public String getTokenExpireDate() {
         return tokenExpireDate;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public void setTokenExpireDate(String tokenExpireDate) {
