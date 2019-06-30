@@ -602,6 +602,7 @@ public class SigninActivity extends AppCompatActivity {
                 } else {
                     // if Permission Denied
                 }
+                break;
             }
             case PERMISSIONS_REQUEST_READ_PHONE_STATE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -609,6 +610,7 @@ public class SigninActivity extends AppCompatActivity {
                 } else {
                     // if Permission Denied
                 }
+                break;
             }
 
         }
