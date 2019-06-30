@@ -32,6 +32,8 @@ public class CreateUserActivity extends AppCompatActivity {
     private static final String KEY_ACCEPT_CODE = "ACCEPT_CODE";
     private static final String KEY_USER_TYPE = "USER_TYPE";
     private static final String KEY_USER_MOBILE = "USER_MOBILE";
+    private static final String KEY_USER_FIRST_NAME = "FIRST_NAME";
+    private static final String KEY_USER_LAST_NAME = "LAST_NAME";
 
     //Views
     private TextView txtAction;
@@ -86,8 +88,31 @@ public class CreateUserActivity extends AppCompatActivity {
                 user = new User();
             user.setMobile(data.getStringExtra(KEY_USER_MOBILE));
 
-            if (edtMobile!=null)
+            if (edtMobile != null)
                 edtMobile.setText(user.getMobile());
+        }
+
+        if (data.hasExtra(KEY_USER_FIRST_NAME)) {
+            if (user == null)
+                user = new User();
+            user.setFirstName(data.getStringExtra(KEY_USER_FIRST_NAME));
+            if (edtName != null){
+                edtName.setText(user.getFirstName());
+                edtName.setFocusable(false);
+                edtName.setClickable(false);
+
+            }
+        }
+        if (data.hasExtra(KEY_USER_LAST_NAME)) {
+            if (user == null)
+                user = new User();
+            user.setLastName(data.getStringExtra(KEY_USER_LAST_NAME));
+            if (edtFamily != null){
+                edtFamily.setText(user.getLastName());
+                edtFamily.setFocusable(false);
+                edtFamily.setClickable(false);
+
+            }
         }
 
         if (data.hasExtra(KEY_USER_TYPE)) {
@@ -95,9 +120,9 @@ public class CreateUserActivity extends AppCompatActivity {
                 user = new User();
             user.setPersonType(data.getStringExtra(KEY_USER_TYPE));
 
-            String message="با سلام"+"\n"+user.getPersonTypeName()+" گرامی"+" خوش آمدید"+"\n"+"جهت ایجاد حساب کاربری اطلاعات صفحه را با دقت تکمیل نمایید.";
+            String message = "با سلام" + "\n" + user.getPersonTypeName() + " گرامی" + " خوش آمدید" + "\n" + "جهت ایجاد حساب کاربری اطلاعات صفحه را با دقت تکمیل نمایید.";
 
-            new CustomDialogBuilder().showAlert(CreateUserActivity.this,message);
+            new CustomDialogBuilder().showAlert(CreateUserActivity.this, message);
         }
 
 
@@ -136,7 +161,7 @@ public class CreateUserActivity extends AppCompatActivity {
 
     }
 
-    public static void start(FragmentActivity context, String acceptCode,String userType,String mobile,int requestCode) {
+    public static void start(FragmentActivity context, String acceptCode, String userType, String mobile, String firstName,String lastName,int requestCode) {
         if (acceptCode == null)
             return;
 
@@ -144,7 +169,9 @@ public class CreateUserActivity extends AppCompatActivity {
         starter.putExtra(KEY_ACCEPT_CODE, acceptCode);
         starter.putExtra(KEY_USER_TYPE, userType);
         starter.putExtra(KEY_USER_MOBILE, mobile);
-        context.startActivityForResult(starter,requestCode);
+        starter.putExtra(KEY_USER_FIRST_NAME, firstName);
+        starter.putExtra(KEY_USER_LAST_NAME, lastName);
+        context.startActivityForResult(starter, requestCode);
     }
 
     private void initToolbar() {

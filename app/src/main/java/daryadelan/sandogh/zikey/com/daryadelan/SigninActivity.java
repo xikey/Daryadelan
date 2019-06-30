@@ -66,7 +66,7 @@ public class SigninActivity extends AppCompatActivity {
     private ImageView imgMySim;
 
     private LinearLayout lyLogin;
-//    private LinearLayout lyGuest;
+    //    private LinearLayout lyGuest;
     private RelativeLayout lyHeader;
     private LinearLayout lyProgress;
     private CardView lyPersonelCode;
@@ -101,10 +101,10 @@ public class SigninActivity extends AppCompatActivity {
      */
     private void isUserLoggedInBefore() {
         User user = SessionManagement.getInstance(getApplicationContext()).loadMember();
-        if (user==null)
+        if (user == null)
             return;
 
-        if (!TextUtils.isEmpty(user.getToken())){
+        if (!TextUtils.isEmpty(user.getToken())) {
             MainActivity.start(SigninActivity.this);
             finish();
         }
@@ -301,7 +301,7 @@ public class SigninActivity extends AppCompatActivity {
             new CustomDialogBuilder().showAlert(SigninActivity.this, "شماره موبایل وارد شده نادرست میباشد");
             return;
         }
-
+        isGuest = swIAmGuest.isChecked();
         if (!isGuest)
             if (TextUtils.isEmpty(txtPersonelCode.getText())) {
                 new CustomDialogBuilder().showAlert(SigninActivity.this, "شماره پرسنلی وارد شده نادرست میباشد");
@@ -661,7 +661,20 @@ public class SigninActivity extends AppCompatActivity {
 
                 personel.setAcceptCode(answer.getStrData());
 
-                CreateUserActivity.start(SigninActivity.this, personel.getAcceptCode(), personel.getPersonType(), personel.getMobile(), KEY_REQUEST_CREATE_USER);
+                String firstName=null;
+                String lastname=null;
+
+                try{
+                    if (answer.getUserExtrasInfo()!=null&&answer.getUserExtrasInfo().size()!=0){
+                        firstName=answer.getUserExtrasInfo().get(0).getFirstName();
+                        lastname=answer.getUserExtrasInfo().get(0).getLastName();
+                    }
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                CreateUserActivity.start(SigninActivity.this, personel.getAcceptCode(), personel.getPersonType(), personel.getMobile(),firstName,lastname, KEY_REQUEST_CREATE_USER);
 
             }
 

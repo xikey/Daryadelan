@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper;
 
 public class User extends ServerWrapper {
@@ -60,6 +62,10 @@ public class User extends ServerWrapper {
     private String tokenExpireDate;
     @SerializedName("fullName")
     private String fullName;
+    //قسمت نا معتبر کد
+    //به دلیل کیفیت پایین دیتای ارسالی از سمت سرور مجبور به این کار شدم!!
+    @SerializedName("userData")
+    private ArrayList<User> userExtrasInfo;
 
 
     public long getPersonalCode() {
@@ -189,6 +195,14 @@ public class User extends ServerWrapper {
 
     public void setGrantType(String grantType) {
         this.grantType = grantType;
+    }
+
+    public ArrayList<User> getUserExtrasInfo() {
+        return userExtrasInfo;
+    }
+
+    public void setUserExtrasInfo(ArrayList<User> userExtrasInfo) {
+        this.userExtrasInfo = userExtrasInfo;
     }
 
     public String getPersonTypeName() {

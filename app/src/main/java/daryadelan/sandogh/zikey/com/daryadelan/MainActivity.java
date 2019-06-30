@@ -17,6 +17,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -75,6 +76,25 @@ public class MainActivity extends AppCompatActivity
         initViews();
         initListeners();
         initContent();
+        initNavHeader();
+
+    }
+
+    private void initNavHeader() {
+        try {
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
+            View hView = navigationView.getHeaderView(0);
+
+            final TextView txtUserFullName = (TextView) hView.findViewById(R.id.txtUserFullName);
+
+
+            if (!TextUtils.isEmpty(SessionManagement.getInstance(getApplicationContext()).getFirstName())) {
+                txtUserFullName.setText(SessionManagement.getInstance(getApplicationContext()).getFirstName() + " " + SessionManagement.getInstance(getApplicationContext()).getLastName());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -256,9 +276,11 @@ public class MainActivity extends AppCompatActivity
                 }
             }, null);
         } else if (id == R.id.nav_hokm) {
-            AhkamHeaderActivity.start(MainActivity.this);
+            if (checkUserPersmission())
+                AhkamHeaderActivity.start(MainActivity.this);
         } else if (id == R.id.nav_payroll) {
-            PayrollHeaderActivity.start(MainActivity.this);
+            if (checkUserPersmission())
+                PayrollHeaderActivity.start(MainActivity.this);
         }
 // else if (id == R.id.nav_manage) {
 //
@@ -312,16 +334,16 @@ public class MainActivity extends AppCompatActivity
                 if (answer != null && answer.getData() != null && answer.getData().size() != 0) {
                     try {
                         advertisePageCount = answer.getData().size();
-                        if (answer.getData().get(0)!=null)
-                        SessionManagement.getInstance(getApplicationContext()).setAdvertise_1Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(0)));
-                        if (answer.getData().get(1)!=null)
-                        SessionManagement.getInstance(getApplicationContext()).setAdvertise_2Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(1)));
-                        if (answer.getData().get(2)!=null)
-                        SessionManagement.getInstance(getApplicationContext()).setAdvertise_3Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(2)));
-                        if (answer.getData().get(3)!=null)
-                        SessionManagement.getInstance(getApplicationContext()).setAdvertise_4Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(3)));
-                        if (answer.getData().get(4)!=null)
-                        SessionManagement.getInstance(getApplicationContext()).setAdvertise_5Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(4)));
+                        if (answer.getData().get(0) != null)
+                            SessionManagement.getInstance(getApplicationContext()).setAdvertise_1Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(0)));
+                        if (answer.getData().get(1) != null)
+                            SessionManagement.getInstance(getApplicationContext()).setAdvertise_2Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(1)));
+                        if (answer.getData().get(2) != null)
+                            SessionManagement.getInstance(getApplicationContext()).setAdvertise_3Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(2)));
+                        if (answer.getData().get(3) != null)
+                            SessionManagement.getInstance(getApplicationContext()).setAdvertise_4Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(3)));
+                        if (answer.getData().get(4) != null)
+                            SessionManagement.getInstance(getApplicationContext()).setAdvertise_5Url(new UrlBuilder(getApplicationContext()).getAdvertiseImageUrl(answer.getData().get(4)));
 
 
                     } catch (Exception ex) {
