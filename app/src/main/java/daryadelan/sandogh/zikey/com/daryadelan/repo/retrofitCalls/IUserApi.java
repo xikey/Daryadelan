@@ -18,7 +18,7 @@ public interface IUserApi {
 
     @FormUrlEncoded
     @POST("api/persons/personcheck")
-    Call<User> checkPerson(@Nullable @Field("PersonalCode") String PersonalCode,
+    Call<User> checkPerson(
                            @Field("Mobile") String Mobile,
                            @Field("MobileDeviceBrand") String MobileDeviceBrand,
                            @Field("MobileImei") String MobileImei,

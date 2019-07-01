@@ -20,12 +20,10 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.credentials.Credential;
@@ -38,7 +36,6 @@ import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
 import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
-import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.TestRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
@@ -61,7 +58,7 @@ public class SigninActivity extends AppCompatActivity {
     public final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 16;
 
     private EditText txtUserName;
-    private EditText txtPersonelCode;
+//    private EditText txtPersonelCode;
 
     private ImageView imgMySim;
 
@@ -77,7 +74,7 @@ public class SigninActivity extends AppCompatActivity {
 
     private boolean isGuest = false;
 
-    private Switch swIAmGuest;
+//    private Switch swIAmGuest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +89,7 @@ public class SigninActivity extends AppCompatActivity {
         initApiClient();
         initBroadCast();
         requestGetMessagePermission();
-//        requestReadPhoneStatePermission();
+
 
     }
 
@@ -251,47 +248,19 @@ public class SigninActivity extends AppCompatActivity {
             }
         });
 
-//        lyGuest.setOnClickListener(new View.OnClickListener() {
+//        swIAmGuest.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
-//            public void onClick(View v) {
-//                new CustomDialogBuilder().showYesNOCustomAlert(SigninActivity.this, "ارسال اطلاعات", "مایل به ورود به عنوان مهمان به برنامه میباشید؟", "ارسال", "انصراف", new CustomAlertDialog.OnActionClickListener() {
-//                    @Override
-//                    public void onClick(DialogFragment fragment) {
-//                        isGuest = true;
-//                        fragment.dismiss();
-//                        sendSMS();
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked) {
+//                    isGuest = true;
+//                    lyPersonelCode.setVisibility(View.GONE);
 //
-//                    }
-//                }, new CustomAlertDialog.OnCancelClickListener() {
-//                    @Override
-//                    public void onClickCancel(DialogFragment fragment) {
-//
-//                        fragment.dismiss();
-//                    }
-//
-//                    @Override
-//                    public void onClickOutside(DialogFragment fragment) {
-//                        fragment.dismiss();
-//                    }
-//                });
-//
-//
+//                } else {
+//                    isGuest = false;
+//                    lyPersonelCode.setVisibility(View.VISIBLE);
+//                }
 //            }
 //        });
-
-        swIAmGuest.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    isGuest = true;
-                    lyPersonelCode.setVisibility(View.GONE);
-
-                } else {
-                    isGuest = false;
-                    lyPersonelCode.setVisibility(View.VISIBLE);
-                }
-            }
-        });
     }
 
     private void sendSMS() {
@@ -301,13 +270,13 @@ public class SigninActivity extends AppCompatActivity {
             new CustomDialogBuilder().showAlert(SigninActivity.this, "شماره موبایل وارد شده نادرست میباشد");
             return;
         }
-        isGuest = swIAmGuest.isChecked();
-        if (!isGuest)
-            if (TextUtils.isEmpty(txtPersonelCode.getText())) {
-                new CustomDialogBuilder().showAlert(SigninActivity.this, "شماره پرسنلی وارد شده نادرست میباشد");
-                return;
-            }
-
+//        isGuest = swIAmGuest.isChecked();
+//        if (!isGuest)
+//            if (TextUtils.isEmpty(txtPersonelCode.getText())) {
+//                new CustomDialogBuilder().showAlert(SigninActivity.this, "شماره پرسنلی وارد شده نادرست میباشد");
+//                return;
+//            }
+//
 
         int permission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_PHONE_STATE);
@@ -322,8 +291,8 @@ public class SigninActivity extends AppCompatActivity {
 
         user.setMobile(txtUserName.getText().toString());
 
-        if (!isGuest)
-            user.setPersonalCode(Long.parseLong(txtPersonelCode.getText().toString()));
+//        if (!isGuest)
+//            user.setPersonalCode(Long.parseLong(txtPersonelCode.getText().toString()));
 
         user.setMobileImei(deviceHelper.getMobileIMEI(getApplicationContext()));
         user.setMobileDeviceBrand(deviceHelper.getDeviceName(getApplicationContext()));
@@ -439,7 +408,7 @@ public class SigninActivity extends AppCompatActivity {
 
         lySendSMS = (CardView) findViewById(R.id.lySendSMS);
         txtUserName = (EditText) findViewById(R.id.txtUserName);
-        txtPersonelCode = (EditText) findViewById(R.id.txtPersonelCode);
+//        txtPersonelCode = (EditText) findViewById(R.id.txtPersonelCode);
         imgMySim = (ImageView) findViewById(R.id.imgMySim);
         lyHeader = (RelativeLayout) findViewById(R.id.lyHeader);
 
@@ -448,7 +417,7 @@ public class SigninActivity extends AppCompatActivity {
         lyPersonelCode = (CardView) findViewById(R.id.lyPersonelCode);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
 
-        swIAmGuest = (Switch) findViewById(R.id.swIAmGuest);
+//        swIAmGuest = (Switch) findViewById(R.id.swIAmGuest);
 
 
         try {
@@ -699,10 +668,5 @@ public class SigninActivity extends AppCompatActivity {
     }
 
 
-    private void testApi() {
-
-        TestRepo testRepo = new TestRepo();
-        testRepo.testing(getApplicationContext());
-    }
 
 }
