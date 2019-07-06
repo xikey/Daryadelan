@@ -19,11 +19,11 @@ public interface IUserApi {
     @FormUrlEncoded
     @POST("api/persons/personcheck")
     Call<User> checkPerson(
-                           @Field("Mobile") String Mobile,
-                           @Field("MobileDeviceBrand") String MobileDeviceBrand,
-                           @Field("MobileImei") String MobileImei,
-                           @Field("OsVersion") String OsVersion,
-                           @Field("PersonType") String PersonType);
+            @Field("PersonalCode") long nationalCode,
+            @Field("Mobile") String Mobile,
+            @Field("MobileDeviceBrand") String MobileDeviceBrand,
+            @Field("MobileImei") String MobileImei,
+            @Field("OsVersion") String OsVersion);
 
 
     @FormUrlEncoded
@@ -54,7 +54,7 @@ public interface IUserApi {
 
 
     @GET("api/accounts/GetUserInfo")
-    Call<User> userInfo( );
+    Call<User> userInfo();
 
 
 }

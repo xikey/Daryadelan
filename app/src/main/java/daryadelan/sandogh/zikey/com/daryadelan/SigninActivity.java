@@ -58,7 +58,7 @@ public class SigninActivity extends AppCompatActivity {
     public final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 16;
 
     private EditText txtUserName;
-//    private EditText txtPersonelCode;
+    private EditText txtPersonelCode;
 
     private ImageView imgMySim;
 
@@ -270,13 +270,16 @@ public class SigninActivity extends AppCompatActivity {
             new CustomDialogBuilder().showAlert(SigninActivity.this, "شماره موبایل وارد شده نادرست میباشد");
             return;
         }
-//        isGuest = swIAmGuest.isChecked();
-//        if (!isGuest)
-//            if (TextUtils.isEmpty(txtPersonelCode.getText())) {
-//                new CustomDialogBuilder().showAlert(SigninActivity.this, "شماره پرسنلی وارد شده نادرست میباشد");
-//                return;
-//            }
-//
+
+
+        if (TextUtils.isEmpty(txtPersonelCode.getText())) {
+            new CustomDialogBuilder().showAlert(SigninActivity.this, "کد ملی وارد شده نادرست میباشد");
+            return;
+        }
+
+        if (!isValidNationalCode(txtPersonelCode.getText().toString()))
+            return;
+
 
         int permission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_PHONE_STATE);
@@ -291,9 +294,8 @@ public class SigninActivity extends AppCompatActivity {
 
         user.setMobile(txtUserName.getText().toString());
 
-//        if (!isGuest)
-//            user.setPersonalCode(Long.parseLong(txtPersonelCode.getText().toString()));
-
+//به این دلیل مقدار کد ملی از مقدار کد پرسنلی دریافت میشود که سمت درخاست کاربران عوض شد ولی سمت سرور تغییر نکرد!!
+        user.setPersonalCode(Long.parseLong((txtPersonelCode.getText().toString())));
         user.setMobileImei(deviceHelper.getMobileIMEI(getApplicationContext()));
         user.setMobileDeviceBrand(deviceHelper.getDeviceName(getApplicationContext()));
         user.setOsVersion(deviceHelper.getOSversion(getApplicationContext()));
@@ -408,7 +410,7 @@ public class SigninActivity extends AppCompatActivity {
 
         lySendSMS = (CardView) findViewById(R.id.lySendSMS);
         txtUserName = (EditText) findViewById(R.id.txtUserName);
-//        txtPersonelCode = (EditText) findViewById(R.id.txtPersonelCode);
+        txtPersonelCode = (EditText) findViewById(R.id.txtPersonelCode);
         imgMySim = (ImageView) findViewById(R.id.imgMySim);
         lyHeader = (RelativeLayout) findViewById(R.id.lyHeader);
 
@@ -476,39 +478,6 @@ public class SigninActivity extends AppCompatActivity {
         }
     }
 
-//    private void startSMSretriever() {
-//
-//        // Get an instance of SmsRetrieverClient, used to start listening for a matching
-//// SMS message.
-//        SmsRetrieverClient client = SmsRetriever.getClient(this /* context */);
-//
-//// Starts SmsRetriever, which waits for ONE matching SMS message until timeout
-//// (5 minutes). The matching SMS message will be sent via a Broadcast Intent with
-//// action SmsRetriever#SMS_RETRIEVED_ACTION.
-//        Task<Void> task = client.startSmsRetriever();
-//
-//// Listen for success/failure of the start Task. If in a background thread, this
-//// can be made blocking using Tasks.await(task, [timeout]);
-//        task.addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void aVoid) {
-//                Toasty.success(SigninActivity.this, "Successfully").show();
-//                MySMSBroadcastReceiver.registerBroadCast(SigninActivity.this, smsBroadcastReceiver);
-//                // Successfully started retriever, expect broadcast intent
-//                // ...
-//            }
-//        });
-//
-//        task.addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Toasty.success(SigninActivity.this, "Failed").show();
-//                // Failed to start retriever, inspect Exception for more details
-//                // ...
-//            }
-//        });
-//
-//    }
 
     private void requestGetMessagePermission() {
 
@@ -630,20 +599,20 @@ public class SigninActivity extends AppCompatActivity {
 
                 personel.setAcceptCode(answer.getStrData());
 
-                String firstName=null;
-                String lastname=null;
+                String firstName = null;
+                String lastname = null;
 
-                try{
-                    if (answer.getUserExtrasInfo()!=null&&answer.getUserExtrasInfo().size()!=0){
-                        firstName=answer.getUserExtrasInfo().get(0).getFirstName();
-                        lastname=answer.getUserExtrasInfo().get(0).getLastName();
+                try {
+                    if (answer.getUserExtrasInfo() != null && answer.getUserExtrasInfo().size() != 0) {
+                        firstName = answer.getUserExtrasInfo().get(0).getFirstName();
+                        lastname = answer.getUserExtrasInfo().get(0).getLastName();
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                CreateUserActivity.start(SigninActivity.this, personel.getAcceptCode(), personel.getPersonType(), personel.getMobile(),firstName,lastname, KEY_REQUEST_CREATE_USER);
+                CreateUserActivity.start(SigninActivity.this, personel.getAcceptCode(), personel.getPersonType(), personel.getMobile(), firstName, lastname, KEY_REQUEST_CREATE_USER);
 
             }
 
@@ -667,6 +636,70 @@ public class SigninActivity extends AppCompatActivity {
 
     }
 
+
+    public  Boolean isValidNationalCode(String nationalCode) {
+        //در صورتی که کد ملی وارد شده تهی باشد
+
+        if (TextUtils.isEmpty(nationalCode)) {
+            new CustomDialogBuilder().showAlert(SigninActivity.this, "مقدار کد ملی نمیتواند خالی باشد");
+            return false;
+        }
+
+        //در صورتی که کد ملی وارد شده طولش کمتر از 10 رقم باشد
+        if (nationalCode.length() != 10){
+            new CustomDialogBuilder().showAlert(SigninActivity.this, "مقدار کد ملی باید ده رقم باشد");
+            return false;
+        }
+
+        //در صورتی که کد ملی ده رقم عددی نباشد
+        if (!TextUtils.isDigitsOnly(nationalCode)) {
+            new CustomDialogBuilder().showAlert(SigninActivity.this, "مقدار کد ملی نمیتواند شامل حروف باشد");
+            return false;
+        }
+
+        //در صورتی که رقم‌های کد ملی وارد شده یکسان باشد
+        String allDigitEqual[] = new String[]{
+                "0000000000", "1111111111", "2222222222", "3333333333", "4444444444", "5555555555", "6666666666", "7777777777", "8888888888", "9999999999"
+        };
+
+        for (int i = 0; i < allDigitEqual.length; i++) {
+            if (allDigitEqual[i].equals(nationalCode)){
+                new CustomDialogBuilder().showAlert(SigninActivity.this, "مقدار کد ملی نادرست میباشد");
+                return false;
+            }
+        }
+
+        try {
+
+            long num0 = Long.parseLong("" + nationalCode.charAt(0)) * 10;
+            long num1 = Long.parseLong("" + nationalCode.charAt(1)) * 9;
+            long num2 = Long.parseLong("" + nationalCode.charAt(2)) * 8;
+            long num3 = Long.parseLong("" + nationalCode.charAt(3)) * 7;
+            long num4 = Long.parseLong("" + nationalCode.charAt(4)) * 6;
+            long num5 = Long.parseLong("" + nationalCode.charAt(5)) * 5;
+            long num6 = Long.parseLong("" + nationalCode.charAt(6)) * 4;
+            long num7 = Long.parseLong("" + nationalCode.charAt(7)) * 3;
+            long num8 = Long.parseLong("" + nationalCode.charAt(8)) * 2;
+            long a = Long.parseLong("" + nationalCode.charAt(9));
+
+            long b = (((((((num0 + num1) + num2) + num3) + num4) + num5) + num6) + num7) + num8;
+            long c = b % 11;
+
+            if (!(((c < 2) && (a == c)) || ((c >= 2) && ((11 - c) == a)))){
+                new CustomDialogBuilder().showAlert(SigninActivity.this, "مقدار کد ملی نادرست میباشد");
+                return false;
+            }
+            else {
+                return true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            new CustomDialogBuilder().showAlert(SigninActivity.this, "مقدار کد ملی نادرست میباشد");
+            return false;
+        }
+
+    }
 
 
 }

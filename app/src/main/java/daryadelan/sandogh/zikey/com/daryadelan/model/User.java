@@ -205,6 +205,8 @@ public class User extends ServerWrapper {
         this.userExtrasInfo = userExtrasInfo;
     }
 
+
+
     public String getPersonTypeName() {
         if (TextUtils.isEmpty(personType)) {
             return "کاربر نامشخص";

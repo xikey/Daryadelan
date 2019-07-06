@@ -27,7 +27,7 @@ public class UserServerRepo implements IUser {
     public void personCheck(Context context, User user, final IRepoCallBack<User> callBack) {
 
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
-        userCall = userApi.checkPerson( user.getMobile(), user.getMobileDeviceBrand(), user.getMobileImei(), user.getOsVersion(), user.getPersonType());
+        userCall = userApi.checkPerson( user.getPersonalCode(),user.getMobile(), user.getMobileDeviceBrand(), user.getMobileImei(), user.getOsVersion());
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
