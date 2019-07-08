@@ -29,11 +29,13 @@ public class User extends ServerWrapper {
      * Mos
      * Su
      * guest
+     * employee
      * مورد baz برای بازنشسته
      * مورد vaz برای وظیفه بگیر
      * مورد mos برای مستمری بگیر سازمانی
      * مورد su برای کاربر سوپر یوزر
      * مورد guest برای کاربر مهمان
+     * emlpoyee کارکنان صندوق
      */
     @SerializedName("personType")
     private String personType;
@@ -206,7 +208,6 @@ public class User extends ServerWrapper {
     }
 
 
-
     public String getPersonTypeName() {
         if (TextUtils.isEmpty(personType)) {
             return "کاربر نامشخص";
@@ -226,6 +227,9 @@ public class User extends ServerWrapper {
 
         if (personType.equals("guest"))
             return "کاربر  مهمان";
+
+        if (personType.equals("employee"))
+            return "کاربر صندوق";
 
         return "کاربر نامشخص";
     }
