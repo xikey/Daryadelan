@@ -179,7 +179,7 @@ public class UserServerRepo implements IUser {
     }
 
     @Override
-    public void exitApp(Context context, final IRepoCallBack<User> callBack) {
+    public void exitApp(final Context context, final IRepoCallBack<User> callBack) {
         final SqlAsyncWrapper asyncWrapper = new SqlAsyncWrapper();
 
         asyncWrapper.setDoOnBackground(new AsyncWrapper.Callback() {
@@ -190,6 +190,8 @@ public class UserServerRepo implements IUser {
                 try {
 
                     SessionManagement.getInstance(asyncWrapper.getContext()).clearMemberData();
+                    SessionManagement.getInstance(asyncWrapper.getContext()).clearSession(context);
+
 
                     answer.setResultId(0);
                 } catch (Exception e) {

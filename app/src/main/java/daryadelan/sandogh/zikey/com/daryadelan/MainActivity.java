@@ -24,6 +24,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendarUtils;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.Indicator;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.PageFragment;
@@ -145,6 +150,16 @@ public class MainActivity extends AppCompatActivity
             txtUserType.setText(user.getPersonType());
             txtPersonelCode.setText("" + user.getPersonalCode());
             txtUserName.setText(user.getFirstName() + user.getLastName());
+
+
+            DateFormat DF = new SimpleDateFormat("yyyyMMdd");
+            String dateString = user.getTokenExpireDate();
+            DF.setLenient(false);
+
+
+
+            Toasty.info(MainActivity.this,""+DF.parse(dateString)).show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -91,6 +91,7 @@ public class SigninActivity extends AppCompatActivity {
         requestGetMessagePermission();
 
 
+
     }
 
     /**
@@ -104,6 +105,9 @@ public class SigninActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(user.getToken())) {
             MainActivity.start(SigninActivity.this);
             finish();
+        }
+        else {
+            clearSession();
         }
 
     }
@@ -700,6 +704,33 @@ public class SigninActivity extends AppCompatActivity {
         }
 
     }
+
+    private void clearSession() {
+
+        UserServerRepo repo = new UserServerRepo();
+        repo.exitApp(getApplicationContext(), new IRepoCallBack<User>() {
+            @Override
+            public void onAnswer(User answer) {
+
+            }
+
+            @Override
+            public void onError(Throwable error) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
+    }
+
 
 
 }

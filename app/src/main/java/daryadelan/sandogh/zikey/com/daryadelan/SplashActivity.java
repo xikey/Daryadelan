@@ -27,7 +27,7 @@ public class SplashActivity extends AwesomeSplash {
         //Customize Logo
         configSplash.setLogoSplash(R.drawable.ic_daryadelan_splash); //or any other drawable
         configSplash.setAnimLogoSplashDuration(1000); //int ms
-        configSplash.setAnimLogoSplashTechnique(Techniques.FadeIn); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
+        configSplash.setAnimLogoSplashTechnique(Techniques.FadeInUp); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
 
 
         //Customize Title

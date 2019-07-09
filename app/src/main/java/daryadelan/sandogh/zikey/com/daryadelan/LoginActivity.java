@@ -42,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         initViews();
         initListeners();
         initRepo();
+        clearSession();
+
     }
 
     private void initRepo() {
@@ -209,6 +211,32 @@ public class LoginActivity extends AppCompatActivity {
         params.height = height;
         lyHeader.setLayoutParams(params);
 
+    }
+
+    private void clearSession() {
+
+        UserServerRepo repo = new UserServerRepo();
+        repo.exitApp(getApplicationContext(), new IRepoCallBack<User>() {
+            @Override
+            public void onAnswer(User answer) {
+
+            }
+
+            @Override
+            public void onError(Throwable error) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
     }
 
 

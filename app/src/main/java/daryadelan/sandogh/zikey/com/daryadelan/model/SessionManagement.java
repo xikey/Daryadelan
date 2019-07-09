@@ -59,7 +59,7 @@ public class SessionManagement {
     public static SessionManagement instance = null;
 
     public SessionManagement(Context context) {
-        this.preferences = context.getSharedPreferences(KEY_PREFERENCES_NAME + BuildConfig.FLAVOR, Context.MODE_PRIVATE);
+        this.preferences = context.getSharedPreferences(KEY_PREFERENCES_NAME + BuildConfig.VERSION_CODE, Context.MODE_PRIVATE);
     }
 
     public static SessionManagement getInstance(Context context) {
@@ -97,8 +97,6 @@ public class SessionManagement {
     }
 
 
-
-
     public void setToken_type(String tokenType) {
         if (preferences == null)
             return;
@@ -109,7 +107,7 @@ public class SessionManagement {
     public long getPersonelCode() {
         if (preferences == null)
             return 0;
-        return preferences.getLong(KEY_PERSONEL_CODE,0);
+        return preferences.getLong(KEY_PERSONEL_CODE, 0);
     }
 
     public void setPersonelCode(long personelCode) {
@@ -182,6 +180,11 @@ public class SessionManagement {
 
     public void clearMemberData() {
         setToken("");
+        setTel("");
+        setFirstName("");
+        setLastName("");
+        setPersonelCode(0);
+        setPersonType("");
 
 
     }
@@ -218,11 +221,10 @@ public class SessionManagement {
         setFirstName(member.getFirstName());
         setLastName(member.getLastName());
 
-        try{
+        try {
             setPersonelCode(member.getPersonalCode());
             setPersonType(member.getPersonType());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -240,7 +242,6 @@ public class SessionManagement {
     public boolean saveMemberExtraInfo(AppCompatActivity context, User member) {
         if (member == null)
             return false;
-
 
 
         setTel(member.getMobile());
@@ -292,11 +293,13 @@ public class SessionManagement {
             return;
 
 
-        SharedPreferences.Editor pref = context.getSharedPreferences(KEY_PREFERENCES_NAME + BuildConfig.FLAVOR, Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor pref = context.getSharedPreferences(KEY_PREFERENCES_NAME + BuildConfig.VERSION_CODE, Context.MODE_PRIVATE).edit();
         pref.clear();
         pref.apply();
 
-        preferences = null;
+        instance = null;
+
+
     }
 
 
@@ -449,7 +452,6 @@ public class SessionManagement {
 
         this.preferences.edit().putString(KEY_ADVERTISE_5_URI, url).commit();
     }
-
 
 
 }
