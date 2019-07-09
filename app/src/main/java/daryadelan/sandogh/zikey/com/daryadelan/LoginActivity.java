@@ -142,15 +142,36 @@ public class LoginActivity extends AppCompatActivity {
                 user.setTokenType(answer.getTokenType());
                 user.setTokenExpireDate(answer.getTokenExpireDate());
 
-// TODO: 5/31/2019 TOKEN IS BASE 64. MUST GET User FirstName and LastName From Token
-                if (SessionManagement.getInstance(getApplicationContext()).saveMemberData(LoginActivity.this, user)) {
+                if (userSqliteRepo!=null)
+                    userSqliteRepo.saveUserDatas(getApplicationContext(), user, new IRepoCallBack<User>() {
+                        @Override
+                        public void onAnswer(User answer) {
 
-                    setResult(RESULT_OK);
-                    MainActivity.start(LoginActivity.this);
-                    finish();
+                            if (answer==null||answer.getResultId()<0){
+                                new CustomDialogBuilder().showAlert(LoginActivity.this,"خطا در ذخیره سازی اطلاعات کاربر، لطفا مجددا تلاش نمایید!");
+                                return;
+                            }
 
-                }
+                            setResult(RESULT_OK);
+                            MainActivity.start(LoginActivity.this);
+                            finish();
+                        }
 
+                        @Override
+                        public void onError(Throwable error) {
+
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+
+                        @Override
+                        public void onProgress(int p) {
+
+                        }
+                    });
 
             }
 
@@ -221,31 +242,29 @@ public class LoginActivity extends AppCompatActivity {
 
     private void clearSession() {
 
-        SessionManagement.getInstance(getApplicationContext()).clearSession(getApplicationContext());
-        SessionManagement.getInstance(getApplicationContext()).clearMemberData();
+        if (userSqliteRepo != null)
+            userSqliteRepo.exitApp(getApplicationContext(), new IRepoCallBack<User>() {
+                @Override
+                public void onAnswer(User answer) {
 
-        UserServerRepo repo = new UserServerRepo();
-        repo.exitApp(getApplicationContext(), new IRepoCallBack<User>() {
-            @Override
-            public void onAnswer(User answer) {
+                }
 
-            }
+                @Override
+                public void onError(Throwable error) {
 
-            @Override
-            public void onError(Throwable error) {
+                }
 
-            }
+                @Override
+                public void onCancel() {
 
-            @Override
-            public void onCancel() {
+                }
 
-            }
+                @Override
+                public void onProgress(int p) {
 
-            @Override
-            public void onProgress(int p) {
+                }
+            });
 
-            }
-        });
     }
 
 
