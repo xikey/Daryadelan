@@ -20,9 +20,9 @@ public class PayrollServerRepo implements IPayroll {
     Call<HokmWrapper> hokmWrapperCall;
 
     @Override
-    public void allAvailablePayrolls(Context context,long personelCode, final IRepoCallBack<PayrollWrapper> callBack) {
+    public void allAvailablePayrolls(Context context,long personelCode, String tokenType,String token,final IRepoCallBack<PayrollWrapper> callBack) {
 
-        IPayrollApi payrollApi = ServerApiClient.getClientWithHeader(context).create(IPayrollApi.class);
+        IPayrollApi payrollApi = ServerApiClient.getClientWithHeader(context,tokenType,token).create(IPayrollApi.class);
         call = payrollApi.allAvailablePayrolls(personelCode);
         call.enqueue(new Callback<PayrollWrapper>() {
             @Override
@@ -60,9 +60,9 @@ public class PayrollServerRepo implements IPayroll {
     }
 
     @Override
-    public void allAvailableAhkam(Context context,long personelCode, final IRepoCallBack<AhkamWrapper> callBack) {
+    public void allAvailableAhkam(Context context,long personelCode,String tokenType,String token, final IRepoCallBack<AhkamWrapper> callBack) {
 
-        IPayrollApi payrollApi = ServerApiClient.getClientWithHeader(context).create(IPayrollApi.class);
+        IPayrollApi payrollApi = ServerApiClient.getClientWithHeader(context,tokenType,token).create(IPayrollApi.class);
         ahkamWrapperCall = payrollApi.allAvailableAhkam(personelCode);
         ahkamWrapperCall.enqueue(new Callback<AhkamWrapper>() {
             @Override
@@ -98,9 +98,9 @@ public class PayrollServerRepo implements IPayroll {
     }
 
     @Override
-    public void getPayroll(Context context, long year, long month,long personelCode, final IRepoCallBack<PayrollWrapper> callBack) {
+    public void getPayroll(Context context, long year, long month,long personelCode,String tokenType,String token, final IRepoCallBack<PayrollWrapper> callBack) {
 
-        IPayrollApi payrollApi = ServerApiClient.getClientWithHeader(context).create(IPayrollApi.class);
+        IPayrollApi payrollApi = ServerApiClient.getClientWithHeader(context,null,null).create(IPayrollApi.class);
         call = payrollApi.getPayroll(year, month,personelCode);
         call.enqueue(new Callback<PayrollWrapper>() {
             @Override
@@ -141,8 +141,8 @@ public class PayrollServerRepo implements IPayroll {
     }
 
     @Override
-    public void getHokm(Context context, String year,long personelCode, final IRepoCallBack<HokmWrapper> callBack) {
-        IPayrollApi payrollApi = ServerApiClient.getClientWithHeader(context).create(IPayrollApi.class);
+    public void getHokm(Context context, String year,long personelCode, String tokenType,String token, final IRepoCallBack<HokmWrapper> callBack) {
+        IPayrollApi payrollApi = ServerApiClient.getClientWithHeader(context,tokenType,token).create(IPayrollApi.class);
         hokmWrapperCall = payrollApi.getHokm(year,personelCode);
         hokmWrapperCall.enqueue(new Callback<HokmWrapper>() {
             @Override

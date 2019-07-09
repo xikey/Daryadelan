@@ -23,7 +23,9 @@ import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
+import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Payroll;
+import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.HokmWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IPayroll;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.PayrollServerRepo;
@@ -48,6 +50,7 @@ public class AhkamFooterActivity extends AppCompatActivity {
     public SubsamplingScaleImageView scaleImageView;
 
     private long personelCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +65,7 @@ public class AhkamFooterActivity extends AppCompatActivity {
 
     }
 
-    public static void start(FragmentActivity context, String year,long personelCode) {
+    public static void start(FragmentActivity context, String year, long personelCode) {
         Intent starter = new Intent(context, AhkamFooterActivity.class);
         starter.putExtra(KEY_YEAR, year);
         starter.putExtra(KEY_PERSONEL_CODE, personelCode);
@@ -135,79 +138,81 @@ public class AhkamFooterActivity extends AppCompatActivity {
             return;
 
         lyProgress.setVisibility(View.VISIBLE);
+        User user = UserInstance.getInstance().getUser();
 
-        repo.getHokm(getApplicationContext(), year,personelCode, new IRepoCallBack<HokmWrapper>() {
-            @Override
-            public void onAnswer(HokmWrapper answer) {
-
-                lyProgress.setVisibility(View.GONE);
-                if (answer == null) {
-                    new CustomDialogBuilder().showAlert(AhkamFooterActivity.this, getString(R.string.error_getting_data_please_try_again), new CustomAlertDialog.OnCancelClickListener() {
-                        @Override
-                        public void onClickCancel(DialogFragment fragment) {
-                            fragment.dismiss();
-                            finish();
-                        }
-
-                        @Override
-                        public void onClickOutside(DialogFragment fragment) {
-                            fragment.dismiss();
-                            finish();
-                        }
-                    });
-                    return;
-                }
-
-                if (answer.getData() == null || answer.getData().size() == 0) {
-                    new CustomDialogBuilder().showAlert(AhkamFooterActivity.this, getString(R.string.error_getting_data_please_try_again), new CustomAlertDialog.OnCancelClickListener() {
-                        @Override
-                        public void onClickCancel(DialogFragment fragment) {
-                            fragment.dismiss();
-                            finish();
-                        }
-
-                        @Override
-                        public void onClickOutside(DialogFragment fragment) {
-                            fragment.dismiss();
-                            finish();
-                        }
-                    });
-                    return;
-                }
-                Base64Decode(answer.getData().get(0).getByteData(), scaleImageView);
-                adapter.setPayrolls(answer.getData());
-
-            }
-
-            @Override
-            public void onError(Throwable error) {
-                lyProgress.setVisibility(View.GONE);
-                new CustomDialogBuilder().showAlert(AhkamFooterActivity.this, getString(R.string.error_getting_data_please_try_again), new CustomAlertDialog.OnCancelClickListener() {
+        repo.getHokm(getApplicationContext(), year, personelCode, user.getTokenType(), user.getToken(),
+                new IRepoCallBack<HokmWrapper>() {
                     @Override
-                    public void onClickCancel(DialogFragment fragment) {
-                        fragment.dismiss();
-                        finish();
+                    public void onAnswer(HokmWrapper answer) {
+
+                        lyProgress.setVisibility(View.GONE);
+                        if (answer == null) {
+                            new CustomDialogBuilder().showAlert(AhkamFooterActivity.this, getString(R.string.error_getting_data_please_try_again), new CustomAlertDialog.OnCancelClickListener() {
+                                @Override
+                                public void onClickCancel(DialogFragment fragment) {
+                                    fragment.dismiss();
+                                    finish();
+                                }
+
+                                @Override
+                                public void onClickOutside(DialogFragment fragment) {
+                                    fragment.dismiss();
+                                    finish();
+                                }
+                            });
+                            return;
+                        }
+
+                        if (answer.getData() == null || answer.getData().size() == 0) {
+                            new CustomDialogBuilder().showAlert(AhkamFooterActivity.this, getString(R.string.error_getting_data_please_try_again), new CustomAlertDialog.OnCancelClickListener() {
+                                @Override
+                                public void onClickCancel(DialogFragment fragment) {
+                                    fragment.dismiss();
+                                    finish();
+                                }
+
+                                @Override
+                                public void onClickOutside(DialogFragment fragment) {
+                                    fragment.dismiss();
+                                    finish();
+                                }
+                            });
+                            return;
+                        }
+                        Base64Decode(answer.getData().get(0).getByteData(), scaleImageView);
+                        adapter.setPayrolls(answer.getData());
+
                     }
 
                     @Override
-                    public void onClickOutside(DialogFragment fragment) {
-                        fragment.dismiss();
-                        finish();
+                    public void onError(Throwable error) {
+                        lyProgress.setVisibility(View.GONE);
+                        new CustomDialogBuilder().showAlert(AhkamFooterActivity.this, getString(R.string.error_getting_data_please_try_again), new CustomAlertDialog.OnCancelClickListener() {
+                            @Override
+                            public void onClickCancel(DialogFragment fragment) {
+                                fragment.dismiss();
+                                finish();
+                            }
+
+                            @Override
+                            public void onClickOutside(DialogFragment fragment) {
+                                fragment.dismiss();
+                                finish();
+                            }
+                        });
+                        return;
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onProgress(int p) {
+
                     }
                 });
-                return;
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onProgress(int p) {
-
-            }
-        });
     }
 
     private void Base64Decode(String base64, ImageView imageView) {
@@ -223,7 +228,8 @@ public class AhkamFooterActivity extends AppCompatActivity {
 
 
     }
- private void Base64Decode(String base64, SubsamplingScaleImageView imageView) {
+
+    private void Base64Decode(String base64, SubsamplingScaleImageView imageView) {
         if (imageView == null)
             return;
 
@@ -303,7 +309,7 @@ public class AhkamFooterActivity extends AppCompatActivity {
                 imgHokm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (payroll==null)
+                        if (payroll == null)
                             return;
 
                         Base64Decode(payroll.getByteData(), scaleImageView);

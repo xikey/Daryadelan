@@ -22,16 +22,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendarUtils;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.Indicator;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.PageFragment;
+import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.model.UrlBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
@@ -70,6 +67,7 @@ public class MainActivity extends AppCompatActivity
     private IUser userSqliteRepo;
 
     private User loadedUser;
+    private LinearLayout lyProgress;
 
 
     @Override
@@ -82,9 +80,7 @@ public class MainActivity extends AppCompatActivity
         initRepo();
         initViews();
         getUserSavedData();
-        saveAdvertiseUrl();
         initSlideAutoChanger();
-        getUserExtraInfos();
         initListeners();
         initNavHeader();
 
@@ -146,17 +142,47 @@ public class MainActivity extends AppCompatActivity
         if (userRepo == null)
             return;
 
-        userRepo.userInfo(getApplicationContext(), new IRepoCallBack<User>() {
+        userRepo.userInfo(getApplicationContext(), loadedUser.getTokenType(), loadedUser.getToken(), new IRepoCallBack<User>() {
             @Override
             public void onAnswer(User answer) {
-                if (answer == null)
+                if (answer == null) {
+                    new CustomDialogBuilder().showYesNOCustomAlert(MainActivity.this, "خطا در دریافت اطلاعات", "متاسفانه خطایی هنگام دریافت اطلاعات کاربری شما رخ داده است، لطفا پس از اطمینان از فعال بودن اینترنت دستگاه مجددا تلاش نمایید!", "تلاش مجدد", "خروج", new CustomAlertDialog.OnActionClickListener() {
+                        @Override
+                        public void onClick(DialogFragment fragment) {
+                            fragment.dismiss();
+                            getUserExtraInfos();
+                        }
+                    }, new CustomAlertDialog.OnCancelClickListener() {
+                        @Override
+                        public void onClickCancel(DialogFragment fragment) {
+                            fragment.dismiss();
+                            finish();
+
+                        }
+
+                        @Override
+                        public void onClickOutside(DialogFragment fragment) {
+                            fragment.dismiss();
+                            finish();
+
+                        }
+                    });
                     return;
+                }
+
 
                 try {
-
+                    lyProgress.setVisibility(View.GONE);
                     txtUserName.setText(answer.getFirstName() + " " + answer.getLastName());
                     txtPersonelCode.setText("" + answer.getPersonalCode());
                     txtUserType.setText("" + answer.getPersonTypeName());
+
+                    loadedUser.setFirstName(answer.getFirstName());
+                    loadedUser.setPersonalCode(answer.getPersonalCode());
+                    loadedUser.setLastName(answer.getLastName());
+                    loadedUser.setPersonType(answer.getPersonType());
+
+                    UserInstance.getInstance().setUser(loadedUser);
 
                     if (userSqliteRepo != null)
                         userSqliteRepo.updateUserDatas(getApplicationContext(), answer, new IRepoCallBack<User>() {
@@ -208,11 +234,18 @@ public class MainActivity extends AppCompatActivity
 
         if (loadedUser == null)
             return;
-        try {
-            txtUserType.setText(loadedUser.getPersonTypeName());
-            txtPersonelCode.setText("" + loadedUser.getPersonalCode());
-            txtUserName.setText(loadedUser.getFirstName() + loadedUser.getLastName());
 
+
+        saveAdvertiseUrl();
+        getUserExtraInfos();
+
+        try {
+            if (!TextUtils.isEmpty(loadedUser.getPersonTypeName()))
+                txtUserType.setText(loadedUser.getPersonTypeName());
+            if (loadedUser.getPersonalCode() != 0)
+                txtPersonelCode.setText("" + loadedUser.getPersonalCode());
+            if (!TextUtils.isEmpty(loadedUser.getFirstName()))
+                txtUserName.setText(loadedUser.getFirstName() + " " + loadedUser.getLastName());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -258,6 +291,8 @@ public class MainActivity extends AppCompatActivity
         txtUserType = (TextView) findViewById(R.id.txtUserType);
         txtPersonelCode = (TextView) findViewById(R.id.txtPersonelCode);
         txtUserName = (TextView) findViewById(R.id.txtUserName);
+        lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
+        lyProgress.setVisibility(View.VISIBLE);
 
         try {
             FontChanger.applyTitleFont(findViewById(R.id.lyMainHeader));
@@ -401,7 +436,7 @@ public class MainActivity extends AppCompatActivity
 
         if (advertiseRepo == null)
             return;
-        advertiseRepo.getAdvertise(getApplicationContext(), "MainSlider", new IRepoCallBack<AdvertiseWrapper>() {
+        advertiseRepo.getAdvertise(getApplicationContext(), "MainSlider", loadedUser.getTokenType(), loadedUser.getToken(), new IRepoCallBack<AdvertiseWrapper>() {
             @Override
             public void onAnswer(AdvertiseWrapper answer) {
                 if (answer != null && answer.getData() != null && answer.getData().size() != 0) {
@@ -504,33 +539,8 @@ public class MainActivity extends AppCompatActivity
 
     private void exitApp() {
 
-        UserServerRepo repo = new UserServerRepo();
-        repo.exitApp(getApplicationContext(), new IRepoCallBack<User>() {
-            @Override
-            public void onAnswer(User answer) {
-                if (answer != null && answer.getResultId() == 0) {
-                    finish();
-                    LoginActivity.start(MainActivity.this);
-                } else {
-                    Toasty.error(MainActivity.this, getString(R.string.error_exit_app)).show();
-                }
-            }
-
-            @Override
-            public void onError(Throwable error) {
-                Toasty.error(MainActivity.this, getString(R.string.error_exit_app)).show();
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onProgress(int p) {
-
-            }
-        });
+     LoginActivity.start(MainActivity.this);
+     finish();
     }
 
     private boolean checkUserPersmission() {

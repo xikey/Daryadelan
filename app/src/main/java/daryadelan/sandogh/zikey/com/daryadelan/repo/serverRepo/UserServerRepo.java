@@ -3,15 +3,11 @@ package daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.razanpardazesh.razanlibs.Tools.AsyncWrapper;
-
-import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.apiClient.ServerApiClient;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.retrofitCalls.IUserApi;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
-import daryadelan.sandogh.zikey.com.daryadelan.tools.SqlAsyncWrapper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -180,52 +176,13 @@ public class UserServerRepo implements IUser {
 
     @Override
     public void exitApp(final Context context, final IRepoCallBack<User> callBack) {
-        final SqlAsyncWrapper asyncWrapper = new SqlAsyncWrapper();
-
-        asyncWrapper.setDoOnBackground(new AsyncWrapper.Callback() {
-            @Override
-            public Object call(Object o) {
-                User answer = new User() {
-                };
-                try {
-
-                    SessionManagement.getInstance(asyncWrapper.getContext()).clearMemberData();
-                    SessionManagement.getInstance(asyncWrapper.getContext()).clearSession(context);
-
-
-                    answer.setResultId(0);
-                } catch (Exception e) {
-                    answer.setResultId(-1);
-                    e.printStackTrace();
-                }
-
-                return answer;
-            }
-        }).setDoOnAnswer(new AsyncWrapper.Callback() {
-            @Override
-            public Object call(Object o) {
-                if (o == null)
-                    callBack.onAnswer(null);
-                else if (o instanceof User)
-                    callBack.onAnswer((User) o);
-                return null;
-            }
-        }).setDoOnError(new AsyncWrapper.Callback() {
-            @Override
-            public Object call(Object o) {
-                if (o instanceof Throwable)
-                    callBack.onError((Throwable) o);
-
-                return null;
-            }
-        }).run(context);
 
     }
 
     @Override
-    public void userInfo(Context context, final IRepoCallBack<User> callBack) {
+    public void userInfo(Context context,String tokenType,String token, final IRepoCallBack<User> callBack) {
 
-        IUserApi userApi = ServerApiClient.getClientWithHeader(context).create(IUserApi.class);
+        IUserApi userApi = ServerApiClient.getClientWithHeader(context,tokenType,token).create(IUserApi.class);
         userCall = userApi.userInfo( );
         userCall.enqueue(new Callback<User>() {
             @Override
@@ -257,6 +214,21 @@ public class UserServerRepo implements IUser {
                 callBack.onError(new Throwable("خطا در دریافت اطلاعات"));
             }
         });
+
+    }
+
+    @Override
+    public void saveUserDatas(Context context, User user, IRepoCallBack<User> callBack) {
+
+    }
+
+    @Override
+    public void updateUserDatas(Context context, User user, IRepoCallBack<User> callBack) {
+
+    }
+
+    @Override
+    public void getUserDatas(Context context, IRepoCallBack<User> callBack) {
 
     }
 

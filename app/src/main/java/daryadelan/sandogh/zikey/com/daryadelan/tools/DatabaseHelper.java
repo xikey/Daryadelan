@@ -46,6 +46,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static void clearDatabase(SQLiteDatabase db) {
         db.beginTransaction();
         db.execSQL("DELETE FROM  " + UserData.TABLE_USER);
+        db.endTransaction();
+        db.close();
 
 
 

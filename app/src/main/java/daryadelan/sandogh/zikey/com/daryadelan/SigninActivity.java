@@ -33,10 +33,10 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import daryadelan.sandogh.zikey.com.daryadelan.broadcasts.SMSBroadcastReceiver;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
-import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.sqlite.UserSqliteRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.DeviceHelper;
@@ -72,6 +72,8 @@ public class SigninActivity extends AppCompatActivity {
     private IUser userRepo;
     private SMSvalidationDialog smSvalidationDialog;
 
+    private IUser userSqliteRepo;
+
     private boolean isGuest = false;
 
 //    private Switch swIAmGuest;
@@ -79,16 +81,12 @@ public class SigninActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signin_2);
 
-        isUserLoggedInBefore();
-        initViews();
-        initListeners();
+
         initRepo();
-        hideKeyBoard();
-        initApiClient();
-        initBroadCast();
-        requestGetMessagePermission();
+        isUserLoggedInBefore();
+
+
 
 
 
@@ -98,17 +96,46 @@ public class SigninActivity extends AppCompatActivity {
      * در صورتی که کاربر قبلا ورود کرده باشد دیگر نباید بتواند صفحه ساخت یوزر را ببیند
      */
     private void isUserLoggedInBefore() {
-        User user = SessionManagement.getInstance(getApplicationContext()).loadMember();
-        if (user == null)
-            return;
 
-        if (!TextUtils.isEmpty(user.getToken())) {
-            MainActivity.start(SigninActivity.this);
-            finish();
-        }
-        else {
-            clearSession();
-        }
+        userSqliteRepo.getUserDatas(getApplicationContext(), new IRepoCallBack<User>() {
+            @Override
+            public void onAnswer(User answer) {
+                if (answer!=null&&!TextUtils.isEmpty(answer.getToken())){
+                    MainActivity.start(SigninActivity.this);
+                    finish();
+                } else {
+                    setContentView(R.layout.activity_signin_2);
+                    initViews();
+                    initHeaderSize();
+                    initListeners();
+                    hideKeyBoard();
+                    clearSession();
+                    initApiClient();
+                    initBroadCast();
+                    requestGetMessagePermission();
+                }
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                clearSession();
+                initApiClient();
+                initBroadCast();
+                requestGetMessagePermission();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
+
+
 
     }
 
@@ -122,6 +149,10 @@ public class SigninActivity extends AppCompatActivity {
     private void initRepo() {
         if (userRepo == null)
             userRepo = new UserServerRepo();
+
+        if (userSqliteRepo == null)
+            userSqliteRepo = new UserSqliteRepo();
+
     }
 
     private void initBroadCast() {
@@ -156,7 +187,7 @@ public class SigninActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        initHeaderSize();
+
         SMSBroadcastReceiver.registerBroadCast(getApplicationContext(), SMSBroadcastReceiver);
 
     }
@@ -610,6 +641,7 @@ public class SigninActivity extends AppCompatActivity {
                     if (answer.getUserExtrasInfo() != null && answer.getUserExtrasInfo().size() != 0) {
                         firstName = answer.getUserExtrasInfo().get(0).getFirstName();
                         lastname = answer.getUserExtrasInfo().get(0).getLastName();
+
                     }
 
                 } catch (Exception e) {
@@ -707,31 +739,29 @@ public class SigninActivity extends AppCompatActivity {
 
     private void clearSession() {
 
-        SessionManagement.getInstance(getApplicationContext()).clearSession(getApplicationContext());
-        SessionManagement.getInstance(getApplicationContext()).clearMemberData();
+        if (userSqliteRepo != null)
+            userSqliteRepo.exitApp(getApplicationContext(), new IRepoCallBack<User>() {
+                @Override
+                public void onAnswer(User answer) {
 
-        UserServerRepo repo = new UserServerRepo();
-        repo.exitApp(getApplicationContext(), new IRepoCallBack<User>() {
-            @Override
-            public void onAnswer(User answer) {
+                }
 
-            }
+                @Override
+                public void onError(Throwable error) {
 
-            @Override
-            public void onError(Throwable error) {
+                }
 
-            }
+                @Override
+                public void onCancel() {
 
-            @Override
-            public void onCancel() {
+                }
 
-            }
+                @Override
+                public void onProgress(int p) {
 
-            @Override
-            public void onProgress(int p) {
+                }
+            });
 
-            }
-        });
     }
 
 

@@ -17,7 +17,7 @@ public interface IUser {
 
     void exitApp(Context context, IRepoCallBack<User> callBack);
 
-    void userInfo(Context context, IRepoCallBack<User> callBack);
+    void userInfo(Context context,String tokenType,String token, IRepoCallBack<User> callBack);
 
     void saveUserDatas(Context context,User user,IRepoCallBack<User> callBack);
 

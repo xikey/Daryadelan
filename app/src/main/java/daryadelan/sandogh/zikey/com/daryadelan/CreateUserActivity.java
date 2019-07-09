@@ -17,10 +17,10 @@ import android.widget.TextView;
 import com.razanpardazesh.razanlibs.Tools.ValidateHelper;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
-import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.sqlite.UserSqliteRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
@@ -56,6 +56,8 @@ public class CreateUserActivity extends AppCompatActivity {
 
     private User user;
     private IUser repo;
+
+    private IUser userSqliteRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +143,9 @@ public class CreateUserActivity extends AppCompatActivity {
     private void initRepo() {
         if (repo == null)
             repo = new UserServerRepo();
+
+        if (userSqliteRepo == null)
+            userSqliteRepo = new UserSqliteRepo();
     }
 
 
@@ -425,14 +430,37 @@ public class CreateUserActivity extends AppCompatActivity {
                 user.setTokenType(answer.getTokenType());
                 user.setTokenExpireDate(answer.getTokenExpireDate());
 
-// TODO: 5/31/2019 TOKEN IS BASE 64. MUST GET User FirstName and LastName From Token
-                if (SessionManagement.getInstance(getApplicationContext()).saveMemberData(CreateUserActivity.this, user)) {
+                if (userSqliteRepo!=null)
+                    userSqliteRepo.saveUserDatas(getApplicationContext(), user, new IRepoCallBack<User>() {
+                        @Override
+                        public void onAnswer(User answer) {
 
-                    setResult(RESULT_OK);
-                    MainActivity.start(CreateUserActivity.this);
-                    finish();
+                            if (answer==null||answer.getResultId()<0){
+                                new CustomDialogBuilder().showAlert(CreateUserActivity.this,"خطا در ذخیره سازی اطلاعات کاربر، لطفا مجددا تلاش نمایید!");
+                                return;
+                            }
 
-                }
+                            setResult(RESULT_OK);
+                            MainActivity.start(CreateUserActivity.this);
+                            finish();
+                        }
+
+                        @Override
+                        public void onError(Throwable error) {
+
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+
+                        @Override
+                        public void onProgress(int p) {
+
+                        }
+                    });
+
 
 
             }

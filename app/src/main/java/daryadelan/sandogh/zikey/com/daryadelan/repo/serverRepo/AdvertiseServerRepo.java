@@ -17,9 +17,9 @@ public class AdvertiseServerRepo implements IAdvertise {
 
     Call<AdvertiseWrapper> call;
     @Override
-    public void getAdvertise(Context context, String name, final IRepoCallBack<AdvertiseWrapper> callBack) {
+    public void getAdvertise(Context context, String name,String tokenType,String token, final IRepoCallBack<AdvertiseWrapper> callBack) {
 
-        IAdvertiseApi advertiseApi = ServerApiClient.getClientWithHeader(context).create(IAdvertiseApi.class);
+        IAdvertiseApi advertiseApi = ServerApiClient.getClientWithHeader(context,tokenType,token).create(IAdvertiseApi.class);
         call = advertiseApi.getMainSlider(KEY_MAIN_SLIDER);
         call.enqueue(new Callback<AdvertiseWrapper>() {
             @Override

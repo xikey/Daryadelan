@@ -15,8 +15,8 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
+import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Payroll;
-import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.PayrollWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IPayroll;
@@ -51,8 +51,9 @@ public class PayrollHeaderActivity extends AppCompatActivity {
     private ArrayList<Payroll> filteredPayrolls;
 
     private ImageView imgBackground;
+    private long personalCode;
 
-    private User user=null;
+    private User user = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,8 @@ public class PayrollHeaderActivity extends AppCompatActivity {
     }
 
     private void getUserData() {
-        user=SessionManagement.getInstance(getApplicationContext()).loadMember();
+        user = UserInstance.getInstance().getUser();
+        personalCode = user.getPersonalCode();
     }
 
     private void initListeners() {
@@ -105,24 +107,23 @@ public class PayrollHeaderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (TextUtils.isEmpty(edtMonth.getText())){
-                    new CustomDialogBuilder().showAlert(PayrollHeaderActivity.this,"فیلد ماه نامعتبر میباشد!");
+                if (TextUtils.isEmpty(edtMonth.getText())) {
+                    new CustomDialogBuilder().showAlert(PayrollHeaderActivity.this, "فیلد ماه نامعتبر میباشد!");
                     return;
                 }
 
                 if (selectedPayroll != null)
-                    PayrollFooterActivity.start(PayrollHeaderActivity.this, Long.parseLong(selectedPayroll.getYear()), Long.parseLong(selectedPayroll.getMonth()),user.getPersonalCode());
+                    PayrollFooterActivity.start(PayrollHeaderActivity.this, Long.parseLong(selectedPayroll.getYear()), Long.parseLong(selectedPayroll.getMonth()), personalCode);
             }
         });
 
         lyPersonelCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user = SessionManagement.getInstance(getApplicationContext()).loadMember();
-                if (!user.getPersonType().equals("su")){
-                    new CustomDialogBuilder().showAlert(PayrollHeaderActivity.this,"امکان تغییر کد پرسنلی برای شما وجود ندارد");
-                }
-                else {
+                User user = UserInstance.getInstance().getUser();
+                if (!user.getPersonType().equals("su")) {
+                    new CustomDialogBuilder().showAlert(PayrollHeaderActivity.this, "امکان تغییر کد پرسنلی برای شما وجود ندارد");
+                } else {
                     changePersonelCode();
                 }
             }
@@ -131,11 +132,10 @@ public class PayrollHeaderActivity extends AppCompatActivity {
         edtPersonelCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user = SessionManagement.getInstance(getApplicationContext()).loadMember();
-                if (!user.getPersonType().equals("su")){
-                    new CustomDialogBuilder().showAlert(PayrollHeaderActivity.this,"امکان تغییر کد پرسنلی برای شما وجود ندارد");
-                }
-                else {
+                User user = UserInstance.getInstance().getUser();
+                if (!user.getPersonType().equals("su")) {
+                    new CustomDialogBuilder().showAlert(PayrollHeaderActivity.this, "امکان تغییر کد پرسنلی برای شما وجود ندارد");
+                } else {
                     changePersonelCode();
                 }
             }
@@ -146,14 +146,18 @@ public class PayrollHeaderActivity extends AppCompatActivity {
         if (repo == null)
             return;
 
-        if (user==null){
-            new CustomDialogBuilder().showAlert(PayrollHeaderActivity.this,"خطا در دریافت اطلاعات کاربری");
+        if (user == null) {
+            new CustomDialogBuilder().showAlert(PayrollHeaderActivity.this, "خطا در دریافت اطلاعات کاربری");
             return;
         }
 
         lyProgress.setVisibility(View.VISIBLE);
+        User tempUser = new User();
+        tempUser.setPersonalCode(personalCode);
+        tempUser.setTokenType(user.getTokenType());
+        tempUser.setToken(user.getToken());
 
-        repo.allAvailablePayrolls(getApplicationContext(), user.getPersonalCode(),new IRepoCallBack<PayrollWrapper>() {
+        repo.allAvailablePayrolls(getApplicationContext(), tempUser.getPersonalCode(), tempUser.getTokenType(), tempUser.getToken(), new IRepoCallBack<PayrollWrapper>() {
             @Override
             public void onAnswer(PayrollWrapper answer) {
 
@@ -229,8 +233,8 @@ public class PayrollHeaderActivity extends AppCompatActivity {
         edtPersonelCode = (EditText) findViewById(R.id.edtPersonelCode);
         imgBackground = (ImageView) findViewById(R.id.imgBackground);
 
-        if (user!=null){
-            edtPersonelCode.setText(""+user.getPersonalCode());
+        if (user != null) {
+            edtPersonelCode.setText("" + user.getPersonalCode());
         }
 
         new ImageViewWrapper(getApplicationContext()).into(imgBackground).loadBlur(R.drawable.bg_calendar);
@@ -323,7 +327,7 @@ public class PayrollHeaderActivity extends AppCompatActivity {
         final ArrayList<Payroll> availablePayrolls = new ArrayList<>();
 
         for (int i = 0; i < payrolls.size(); i++) {
-            if (selectedPayroll.getYear() .equals( payrolls.get(i).getYear()))
+            if (selectedPayroll.getYear().equals(payrolls.get(i).getYear()))
                 availablePayrolls.add(payrolls.get(i));
         }
 
@@ -350,22 +354,22 @@ public class PayrollHeaderActivity extends AppCompatActivity {
 
     }
 
-    private void changePersonelCode(){
-        new CustomDialogBuilder().showInputTextDialog(PayrollHeaderActivity.this, "کد پرسنلی",  new CustomDialogBuilder.OnDialogListener() {
+    private void changePersonelCode() {
+        new CustomDialogBuilder().showInputTextDialog(PayrollHeaderActivity.this, "کد پرسنلی", new CustomDialogBuilder.OnDialogListener() {
             @Override
             public void onOK(String input) {
-                try{
-                    long pc= Long.parseLong(input);
-                    if (pc!=0){
-                        user.setPersonalCode(pc);
+                try {
+                    long pc = Long.parseLong(input);
+                    if (pc != 0) {
+                        personalCode = pc;
                         edtPersonelCode.setText(input);
-                        payrolls=null;
-                        filteredPayrolls=null;
+                        payrolls = null;
+                        filteredPayrolls = null;
                         getData();
                     }
 
-                }catch (Exception e){
-                    new CustomDialogBuilder().showAlert(PayrollHeaderActivity.this,"کد پرسنلی نامعتبر");
+                } catch (Exception e) {
+                    new CustomDialogBuilder().showAlert(PayrollHeaderActivity.this, "کد پرسنلی نامعتبر");
                     e.printStackTrace();
                 }
             }
@@ -381,27 +385,27 @@ public class PayrollHeaderActivity extends AppCompatActivity {
         edtMonth.setText("");
         edtYear.setText("");
         if (!user.isPersonSuperUser())
-        new CustomDialogBuilder().showYesNOCustomAlert(PayrollHeaderActivity.this, "خطا در دریافت اطلاعات", message, "تلاش مجدد", "انصراف", new CustomAlertDialog.OnActionClickListener() {
-            @Override
-            public void onClick(DialogFragment fragment) {
+            new CustomDialogBuilder().showYesNOCustomAlert(PayrollHeaderActivity.this, "خطا در دریافت اطلاعات", message, "تلاش مجدد", "انصراف", new CustomAlertDialog.OnActionClickListener() {
+                @Override
+                public void onClick(DialogFragment fragment) {
 
-                getData();
-                fragment.dismiss();
+                    getData();
+                    fragment.dismiss();
 
-            }
-        }, new CustomAlertDialog.OnCancelClickListener() {
-            @Override
-            public void onClickCancel(DialogFragment fragment) {
-                fragment.dismiss();
-            }
+                }
+            }, new CustomAlertDialog.OnCancelClickListener() {
+                @Override
+                public void onClickCancel(DialogFragment fragment) {
+                    fragment.dismiss();
+                }
 
-            @Override
-            public void onClickOutside(DialogFragment fragment) {
-                fragment.dismiss();
-            }
-        });
+                @Override
+                public void onClickOutside(DialogFragment fragment) {
+                    fragment.dismiss();
+                }
+            });
         else {
-              Toasty.error(PayrollHeaderActivity.this,"اطلاعاتی برای کد پرسنلی وارد شده وجود ندارد").show();
+            Toasty.error(PayrollHeaderActivity.this, "اطلاعاتی برای کد پرسنلی وارد شده وجود ندارد").show();
 
         }
     }

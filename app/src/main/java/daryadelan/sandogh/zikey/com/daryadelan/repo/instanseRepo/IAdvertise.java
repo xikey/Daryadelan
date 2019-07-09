@@ -12,5 +12,5 @@ public interface IAdvertise {
      * @param name name of the type of Advertises like MainSlider
      * @param callBack
      */
-    void getAdvertise(Context context, String name, IRepoCallBack<AdvertiseWrapper> callBack);
+    void getAdvertise(Context context, String name,String tokenType,String token, IRepoCallBack<AdvertiseWrapper> callBack);
 }

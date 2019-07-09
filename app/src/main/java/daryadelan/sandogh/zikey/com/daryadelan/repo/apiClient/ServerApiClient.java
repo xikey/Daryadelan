@@ -1,6 +1,7 @@
 package daryadelan.sandogh.zikey.com.daryadelan.repo.apiClient;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.google.gson.GsonBuilder;
 
@@ -8,7 +9,6 @@ import java.io.IOException;
 
 import daryadelan.sandogh.zikey.com.daryadelan.BuildConfig;
 import daryadelan.sandogh.zikey.com.daryadelan.LoginActivity;
-import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -26,7 +26,7 @@ public class ServerApiClient {
     private static Retrofit retrofitWithoutHeader = null;
     private static Retrofit retrofitWithHeader = null;
 
-    private static OkHttpClient.Builder initHeader(final Context context) {
+    private static OkHttpClient.Builder initHeader(final Context context,String tokenType,String token) {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(new Interceptor() {
@@ -35,13 +35,12 @@ public class ServerApiClient {
                 Request original = chain.request();
 
                 Request request = original.newBuilder()
-                        .header("Authorization", SessionManagement.getInstance(context).getToken_type()+" "+SessionManagement.getInstance(context).getToken())
+                        .header("Authorization", tokenType+" "+token)
                         .method(original.method(), original.body())
                         .build();
 
                 Response response = chain.proceed(request);
                 if (response.code() == 401) {
-                    SessionManagement.getInstance(context).clearMemberData();
                     LoginActivity.start(context);
                     System.exit(0);
                 }
@@ -71,15 +70,15 @@ public class ServerApiClient {
 
     }
 
-    public static Retrofit getClientWithHeader(Context context) {
+    public static Retrofit getClientWithHeader(Context context,String tokenType,String token) {
 
         try {
-            if (retrofitWithHeader == null) {
+            if (retrofitWithHeader == null&&!TextUtils.isEmpty(token)) {
 
                 retrofitWithHeader = new Retrofit.Builder()
                         .baseUrl(BuildConfig.IPAddress)
                         .addConverterFactory(GsonConverterFactory.create(new GsonBuilder() .setLenient() .create()))
-                        .client(initHeader(context).build())
+                        .client(initHeader(context,tokenType,token).build())
                         .build();
             }
             return retrofitWithHeader;

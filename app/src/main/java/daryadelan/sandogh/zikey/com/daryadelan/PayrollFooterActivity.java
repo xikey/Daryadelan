@@ -37,8 +37,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
+import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Payroll;
-import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.PayrollWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IPayroll;
@@ -91,7 +91,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
         parseIntent();
         initToolbar();
         initRepo();
-        getUserExtraInfos();
+        //getUserExtraInfos();
         initViews();
         initRecycleView();
         getData();
@@ -166,7 +166,9 @@ public class PayrollFooterActivity extends AppCompatActivity {
             return;
         lyProgress.setVisibility(View.VISIBLE);
 
-        repo.getPayroll(getApplicationContext(), year, month, personelCode, new IRepoCallBack<PayrollWrapper>() {
+        User user = UserInstance.getInstance().getUser();
+
+        repo.getPayroll(getApplicationContext(), year, month, personelCode, user.getTokenType(), user.getToken(), new IRepoCallBack<PayrollWrapper>() {
             @Override
             public void onAnswer(PayrollWrapper answer) {
                 lyProgress.setVisibility(View.GONE);
@@ -180,12 +182,12 @@ public class PayrollFooterActivity extends AppCompatActivity {
                     return;
                 }
 
-                try{
-                    payrollUser=answer.getUser();
+                try {
+                    payrollUser = answer.getUser();
                     txtName.setText(answer.getUser().getFullName());
-                    txtPersonelCode.setText(""+personelCode);
+                    txtPersonelCode.setText("" + personelCode);
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -317,7 +319,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
 
                     if (payroll.getTypePay() == 5) {
-                        holder.txtDetails.setText("مانده: "+NumberSeperator.separate(payroll.getMande()));
+                        holder.txtDetails.setText("مانده: " + NumberSeperator.separate(payroll.getMande()));
                         holder.lyDetails.setVisibility(View.VISIBLE);
                     }
                 }
@@ -585,7 +587,7 @@ public class PayrollFooterActivity extends AppCompatActivity {
         if (payrolls == null || payrolls.size() == 0)
             return;
 
-        User user = SessionManagement.getInstance(getApplicationContext()).loadMember();
+        User user = UserInstance.getInstance().getUser();
 
         customPrintLayout.addImage(R.drawable.ic_daryadelan_splash);
         int printTextSize = 11;
@@ -624,13 +626,10 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
                 negative = String.valueOf((payroll.getAmount()));
                 customPrintLayout.addTableFourRow(rowNum, name, positice, negative);
-                if (payroll.getTypePay()==5){
-                    customPrintLayout.addTableFourRow("-", "مانده"+NumberSeperator.separate(payroll.getMande()), "", "");
+                if (payroll.getTypePay() == 5) {
+                    customPrintLayout.addTableFourRow("-", "مانده" + NumberSeperator.separate(payroll.getMande()), "", "");
                 }
                 customPrintLayout.addLine(0);
-
-
-
 
 
             }
@@ -721,42 +720,42 @@ public class PayrollFooterActivity extends AppCompatActivity {
         }
     }
 
-    private void getUserExtraInfos() {
-        if (userRepo == null)
-            return;
-
-        userRepo.userInfo(getApplicationContext(), new IRepoCallBack<User>() {
-            @Override
-            public void onAnswer(User answer) {
-                if (answer == null)
-                    return;
-
-                try {
-                    SessionManagement.getInstance(getApplicationContext()).saveMemberExtraInfo(PayrollFooterActivity.this, answer);
-
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(Throwable error) {
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onProgress(int p) {
-
-            }
-        });
-    }
+//    private void getUserExtraInfos() {
+//        if (userRepo == null)
+//            return;
+//
+//        userRepo.userInfo(getApplicationContext(), new IRepoCallBack<User>() {
+//            @Override
+//            public void onAnswer(User answer) {
+//                if (answer == null)
+//                    return;
+//
+//                try {
+//                    SessionManagement.getInstance(getApplicationContext()).saveMemberExtraInfo(PayrollFooterActivity.this, answer);
+//
+//
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Throwable error) {
+//
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//
+//            }
+//
+//            @Override
+//            public void onProgress(int p) {
+//
+//            }
+//        });
+//    }
 
 
     private void showError(String message) {

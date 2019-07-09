@@ -71,9 +71,10 @@ public class UserSqliteRepo implements IUser {
     }
 
     @Override
-    public void userInfo(Context context, IRepoCallBack<User> callBack) {
+    public void userInfo(Context context, String tokenType, String token, IRepoCallBack<User> callBack) {
 
     }
+
 
     @Override
     public void saveUserDatas(Context context, final User user, final IRepoCallBack<User> callBack) {
@@ -242,9 +243,13 @@ public class UserSqliteRepo implements IUser {
             wrapper.setResultId(-1);
             return wrapper;
         }
+        try {
+            db.beginTransaction();
+            db.delete(UserData.TABLE_USER, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        db.beginTransaction();
-        db.delete(UserData.TABLE_USER, null, null);
 
 
         try {
@@ -310,7 +315,7 @@ public class UserSqliteRepo implements IUser {
         db.close();
 
 
-        if (wrapper == null) {
+        if (output == null) {
             wrapper.setResultId(-1);
             wrapper.setMessagee("#RP ASY ERR 401 خطا در دریافت اطلاعات کاربر");
         }

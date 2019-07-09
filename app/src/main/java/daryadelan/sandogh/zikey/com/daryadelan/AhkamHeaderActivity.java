@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
-import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
+import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.AhkamWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IPayroll;
@@ -46,6 +46,8 @@ public class AhkamHeaderActivity extends AppCompatActivity {
     private User user = null;
     private ImageView imgBackground;
 
+    private long personalCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +64,8 @@ public class AhkamHeaderActivity extends AppCompatActivity {
     }
 
     private void getUserData() {
-        user = SessionManagement.getInstance(getApplicationContext()).loadMember();
+        user = UserInstance.getInstance().getUser();
+        personalCode = user.getPersonalCode();
     }
 
 
@@ -86,20 +89,20 @@ public class AhkamHeaderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (TextUtils.isEmpty(edtYear.getText())){
-                    new CustomDialogBuilder().showAlert(AhkamHeaderActivity.this,"فیلد سال نامعتبر میباشد!");
+                if (TextUtils.isEmpty(edtYear.getText())) {
+                    new CustomDialogBuilder().showAlert(AhkamHeaderActivity.this, "فیلد سال نامعتبر میباشد!");
                     return;
                 }
 
                 if (!TextUtils.isEmpty(selectedHokm))
-                    AhkamFooterActivity.start(AhkamHeaderActivity.this, selectedHokm, user.getPersonalCode());
+                    AhkamFooterActivity.start(AhkamHeaderActivity.this, selectedHokm, personalCode);
             }
         });
 
         lyPersonelCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user = SessionManagement.getInstance(getApplicationContext()).loadMember();
+
                 if (!user.getPersonType().equals("su")) {
                     new CustomDialogBuilder().showAlert(AhkamHeaderActivity.this, "امکان تغییر کد پرسنلی برای شما وجود ندارد");
                 } else {
@@ -111,7 +114,7 @@ public class AhkamHeaderActivity extends AppCompatActivity {
         edtPersonelCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user = SessionManagement.getInstance(getApplicationContext()).loadMember();
+
                 if (!user.getPersonType().equals("su")) {
                     new CustomDialogBuilder().showAlert(AhkamHeaderActivity.this, "امکان تغییر کد پرسنلی برای شما وجود ندارد");
                 } else {
@@ -128,7 +131,12 @@ public class AhkamHeaderActivity extends AppCompatActivity {
 
         lyProgress.setVisibility(View.VISIBLE);
 
-        repo.allAvailableAhkam(getApplicationContext(), user.getPersonalCode(), new IRepoCallBack<AhkamWrapper>() {
+        User tempUser = new User();
+        tempUser.setPersonalCode(personalCode);
+        tempUser.setTokenType(user.getTokenType());
+        tempUser.setToken(user.getToken());
+
+        repo.allAvailableAhkam(getApplicationContext(), tempUser.getPersonalCode(), tempUser.getTokenType(), tempUser.getToken(), new IRepoCallBack<AhkamWrapper>() {
             @Override
             public void onAnswer(AhkamWrapper answer) {
 
@@ -153,7 +161,6 @@ public class AhkamHeaderActivity extends AppCompatActivity {
                 lyProgress.setVisibility(View.GONE);
                 showError(error.getMessage());
                 return;
-
 
 
             }
@@ -286,13 +293,14 @@ public class AhkamHeaderActivity extends AppCompatActivity {
     }
 
     private void changePersonelCode() {
+
         new CustomDialogBuilder().showInputTextDialog(AhkamHeaderActivity.this, "کد پرسنلی", new CustomDialogBuilder.OnDialogListener() {
             @Override
             public void onOK(String input) {
                 try {
                     long pc = Long.parseLong(input);
                     if (pc != 0) {
-                        user.setPersonalCode(pc);
+                        personalCode = pc;
                         ahkam = null;
                         edtPersonelCode.setText(input);
                         getData();
@@ -315,28 +323,28 @@ public class AhkamHeaderActivity extends AppCompatActivity {
 
         edtYear.setText("");
         if (!user.isPersonSuperUser())
-        new CustomDialogBuilder().showYesNOCustomAlert(AhkamHeaderActivity.this, "خطا در دریافت اطلاعات", message, "تلاش مجدد", "انصراف", new CustomAlertDialog.OnActionClickListener() {
-            @Override
-            public void onClick(DialogFragment fragment) {
+            new CustomDialogBuilder().showYesNOCustomAlert(AhkamHeaderActivity.this, "خطا در دریافت اطلاعات", message, "تلاش مجدد", "انصراف", new CustomAlertDialog.OnActionClickListener() {
+                @Override
+                public void onClick(DialogFragment fragment) {
 
-                getData();
-                fragment.dismiss();
+                    getData();
+                    fragment.dismiss();
 
-            }
-        }, new CustomAlertDialog.OnCancelClickListener() {
-            @Override
-            public void onClickCancel(DialogFragment fragment) {
-                fragment.dismiss();
-            }
+                }
+            }, new CustomAlertDialog.OnCancelClickListener() {
+                @Override
+                public void onClickCancel(DialogFragment fragment) {
+                    fragment.dismiss();
+                }
 
-            @Override
-            public void onClickOutside(DialogFragment fragment) {
-                fragment.dismiss();
-            }
-        });
+                @Override
+                public void onClickOutside(DialogFragment fragment) {
+                    fragment.dismiss();
+                }
+            });
         else {
 
-              Toasty.error(AhkamHeaderActivity.this,"اطلاعاتی برای کد پرسنلی وارد شده وجود ندارد").show();
+            Toasty.error(AhkamHeaderActivity.this, "اطلاعاتی برای کد پرسنلی وارد شده وجود ندارد").show();
 
         }
     }
