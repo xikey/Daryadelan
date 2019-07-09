@@ -1,5 +1,6 @@
 package daryadelan.sandogh.zikey.com.daryadelan.model;
 
+import android.database.Cursor;
 import android.text.TextUtils;
 
 import com.google.gson.annotations.Expose;
@@ -7,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+import daryadelan.sandogh.zikey.com.daryadelan.data.UserData;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper;
 
 public class User extends ServerWrapper {
@@ -25,6 +27,7 @@ public class User extends ServerWrapper {
     /**
      * یکی از موارد زیر که نوع کاربر می باشد را بر میگرداند:
      * Baz
+     * <p>
      * Vaz
      * Mos
      * Su
@@ -250,5 +253,77 @@ public class User extends ServerWrapper {
                 return true;
 
         return false;
+    }
+
+
+    public User() {
+    }
+
+    public User(Cursor in) {
+
+        if (in == null)
+            return;
+
+        try {
+            if (in.getColumnIndex(UserData.USR_FIRST_NAME) != -1) {
+                this.firstName = in.getString(in.getColumnIndex(UserData.USR_FIRST_NAME));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            if (in.getColumnIndex(UserData.USR_PERSONAL_CODE) != -1) {
+                this.personalCode = in.getLong(in.getColumnIndex(UserData.USR_PERSONAL_CODE));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        try {
+            if (in.getColumnIndex(UserData.USR_LAST_NAME) != -1) {
+                this.lastName = in.getString(in.getColumnIndex(UserData.USR_LAST_NAME));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            if (in.getColumnIndex(UserData.USR_PERSON_TYPE) != -1) {
+                this.personType = in.getString(in.getColumnIndex(UserData.USR_PERSON_TYPE));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        try {
+            if (in.getColumnIndex(UserData.USR_TOKEN) != -1) {
+                this.token = in.getString(in.getColumnIndex(UserData.USR_TOKEN));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            if (in.getColumnIndex(UserData.USR_TOKEN_TYPE) != -1) {
+                this.tokenType = in.getString(in.getColumnIndex(UserData.USR_TOKEN_TYPE));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        try {
+            if (in.getColumnIndex(UserData.USR_MOBILE) != -1) {
+                this.mobile = in.getString(in.getColumnIndex(UserData.USR_MOBILE));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+
     }
 }

@@ -19,6 +19,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.sqlite.UserSqliteRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
@@ -33,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private IUser repo;
     private User user;
+
+    private IUser userSqliteRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,9 @@ public class LoginActivity extends AppCompatActivity {
 
         if (repo == null)
             repo = new UserServerRepo();
+
+        if (userSqliteRepo == null)
+            userSqliteRepo = new UserSqliteRepo();
     }
 
     private void initListeners() {
@@ -214,6 +220,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void clearSession() {
+
+        SessionManagement.getInstance(getApplicationContext()).clearSession(getApplicationContext());
+        SessionManagement.getInstance(getApplicationContext()).clearMemberData();
 
         UserServerRepo repo = new UserServerRepo();
         repo.exitApp(getApplicationContext(), new IRepoCallBack<User>() {

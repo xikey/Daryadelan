@@ -707,6 +707,9 @@ public class SigninActivity extends AppCompatActivity {
 
     private void clearSession() {
 
+        SessionManagement.getInstance(getApplicationContext()).clearSession(getApplicationContext());
+        SessionManagement.getInstance(getApplicationContext()).clearMemberData();
+
         UserServerRepo repo = new UserServerRepo();
         repo.exitApp(getApplicationContext(), new IRepoCallBack<User>() {
             @Override

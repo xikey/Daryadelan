@@ -40,6 +40,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IAdvertise;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.AdvertiseServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.sqlite.UserSqliteRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
@@ -66,6 +67,9 @@ public class MainActivity extends AppCompatActivity
     private TextView txtUserName;
 
     private IUser userRepo;
+    private IUser userSqliteRepo;
+
+    private User loadedUser;
 
 
     @Override
@@ -73,16 +77,49 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         initToolbar();
         initRepo();
-        getUserExtraInfos();
+        initViews();
+        getUserSavedData();
         saveAdvertiseUrl();
         initSlideAutoChanger();
-        initViews();
+        getUserExtraInfos();
         initListeners();
-        initContent();
         initNavHeader();
 
+    }
+
+    private void getUserSavedData() {
+        if (userSqliteRepo == null)
+            return;
+        userSqliteRepo.getUserDatas(getApplicationContext(), new IRepoCallBack<User>() {
+            @Override
+            public void onAnswer(User answer) {
+
+                if (answer == null || answer.getResultId() < 0) {
+                    new CustomDialogBuilder().showAlert(MainActivity.this, "خطا در دریافت اطلاعات کاربر. لطفا عملیات ورود را مجددا انجام نمایید");
+                    return;
+                }
+                loadedUser = answer;
+                initContent();
+            }
+
+            @Override
+            public void onError(Throwable error) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
     }
 
     private void initNavHeader() {
@@ -93,9 +130,11 @@ public class MainActivity extends AppCompatActivity
 
             final TextView txtUserFullName = (TextView) hView.findViewById(R.id.txtUserFullName);
 
+            if (loadedUser == null)
+                return;
 
-            if (!TextUtils.isEmpty(SessionManagement.getInstance(getApplicationContext()).getFirstName())) {
-                txtUserFullName.setText(SessionManagement.getInstance(getApplicationContext()).getFirstName() + " " + SessionManagement.getInstance(getApplicationContext()).getLastName());
+            if (!TextUtils.isEmpty(loadedUser.getFirstName())) {
+                txtUserFullName.setText(loadedUser.getFirstName() + " " + loadedUser.getLastName());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,11 +153,34 @@ public class MainActivity extends AppCompatActivity
                     return;
 
                 try {
-                    SessionManagement.getInstance(getApplicationContext()).saveMemberExtraInfo(MainActivity.this, answer);
 
                     txtUserName.setText(answer.getFirstName() + " " + answer.getLastName());
                     txtPersonelCode.setText("" + answer.getPersonalCode());
                     txtUserType.setText("" + answer.getPersonTypeName());
+
+                    if (userSqliteRepo != null)
+                        userSqliteRepo.updateUserDatas(getApplicationContext(), answer, new IRepoCallBack<User>() {
+                            @Override
+                            public void onAnswer(User answer) {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable error) {
+
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+
+                            @Override
+                            public void onProgress(int p) {
+
+                            }
+                        });
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -143,22 +205,14 @@ public class MainActivity extends AppCompatActivity
 
     private void initContent() {
 
-        User user = SessionManagement.getInstance(getApplicationContext()).loadMember();
-        if (user == null)
+
+        if (loadedUser == null)
             return;
         try {
-            txtUserType.setText(user.getPersonType());
-            txtPersonelCode.setText("" + user.getPersonalCode());
-            txtUserName.setText(user.getFirstName() + user.getLastName());
+            txtUserType.setText(loadedUser.getPersonTypeName());
+            txtPersonelCode.setText("" + loadedUser.getPersonalCode());
+            txtUserName.setText(loadedUser.getFirstName() + loadedUser.getLastName());
 
-
-            DateFormat DF = new SimpleDateFormat("yyyyMMdd");
-            String dateString = user.getTokenExpireDate();
-            DF.setLenient(false);
-
-
-
-            Toasty.info(MainActivity.this,""+DF.parse(dateString)).show();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -172,6 +226,10 @@ public class MainActivity extends AppCompatActivity
 
         if (userRepo == null)
             userRepo = new UserServerRepo();
+
+
+        if (userSqliteRepo == null)
+            userSqliteRepo = new UserSqliteRepo();
     }
 
 
@@ -476,9 +534,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     private boolean checkUserPersmission() {
+        if (loadedUser == null) {
+            new CustomDialogBuilder().showAlert(MainActivity.this, "خطا در دریافت اطلاعات کاربر. لطفا عملیات ورود را مجددا انجام نمایید");
+            return false;
+        }
 
-        User user = SessionManagement.getInstance(getApplicationContext()).loadMember();
-        if (user.isPersonGuest()) {
+        if (loadedUser.isPersonGuest()) {
             new CustomDialogBuilder().showAlert(MainActivity.this, "دسترسی به این بخش برای کاربر مهمان وجود ندارد");
             return false;
         }

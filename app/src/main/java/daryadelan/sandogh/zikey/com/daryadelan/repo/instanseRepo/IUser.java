@@ -15,9 +15,17 @@ public interface IUser {
 
     void login(Context context, User user, IRepoCallBack<User> callBack);
 
-    void exitApp(Context context,  IRepoCallBack<User> callBack);
+    void exitApp(Context context, IRepoCallBack<User> callBack);
 
-    void userInfo(Context context,  IRepoCallBack<User> callBack);
+    void userInfo(Context context, IRepoCallBack<User> callBack);
+
+    void saveUserDatas(Context context,User user,IRepoCallBack<User> callBack);
+
+    void updateUserDatas(Context context,User user,IRepoCallBack<User> callBack);
+
+    void getUserDatas(Context context,IRepoCallBack<User> callBack);
+
+
 
 
 }
