@@ -9,7 +9,9 @@ import android.text.TextUtils;
 import com.razanpardazesh.razanlibs.Tools.AsyncWrapper;
 
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserData;
+import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.apiClient.ServerApiClient;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.DatabaseHelper;
@@ -251,7 +253,6 @@ public class UserSqliteRepo implements IUser {
         }
 
 
-
         try {
 
 
@@ -395,8 +396,15 @@ public class UserSqliteRepo implements IUser {
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
+        ServerApiClient.clearRetrofit();
 
-        DatabaseHelper.clearDatabase(db);
+        db.beginTransaction();
+        db.delete(UserData.TABLE_USER, null, null);
+        UserInstance.getInstance().setUser(null);
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        db.close();
 
 
         output = new User();

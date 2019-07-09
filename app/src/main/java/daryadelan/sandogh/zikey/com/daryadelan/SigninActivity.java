@@ -118,6 +118,11 @@ public class SigninActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable error) {
+                setContentView(R.layout.activity_signin_2);
+                initViews();
+                initHeaderSize();
+                initListeners();
+                hideKeyBoard();
                 clearSession();
                 initApiClient();
                 initBroadCast();

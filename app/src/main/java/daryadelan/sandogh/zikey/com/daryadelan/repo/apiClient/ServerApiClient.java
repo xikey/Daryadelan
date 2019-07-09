@@ -1,7 +1,6 @@
 package daryadelan.sandogh.zikey.com.daryadelan.repo.apiClient;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.google.gson.GsonBuilder;
 
@@ -73,7 +72,7 @@ public class ServerApiClient {
     public static Retrofit getClientWithHeader(Context context,String tokenType,String token) {
 
         try {
-            if (retrofitWithHeader == null&&!TextUtils.isEmpty(token)) {
+            if (retrofitWithHeader == null) {
 
                 retrofitWithHeader = new Retrofit.Builder()
                         .baseUrl(BuildConfig.IPAddress)
@@ -93,7 +92,8 @@ public class ServerApiClient {
     public static void clearRetrofit() {
 
         retrofitWithHeader = null;
-        retrofitWithoutHeader = null;
+        retrofitWithoutHeader=null;
+
     }
 
 
