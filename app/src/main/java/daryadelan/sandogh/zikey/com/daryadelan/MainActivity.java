@@ -2,6 +2,7 @@ package daryadelan.sandogh.zikey.com.daryadelan;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,36 +17,50 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.Indicator;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.PageFragment;
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
+import daryadelan.sandogh.zikey.com.daryadelan.model.News;
 import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.model.UrlBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.AdvertiseWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.NewsWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IAdvertise;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.INews;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.AdvertiseServerRepo;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.NewsServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.sqlite.UserSqliteRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.NumberSeperator;
 import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private final String KEY_NEWS_NAME = "news";
 
     private IAdvertise advertiseRepo;
 
@@ -68,6 +83,12 @@ public class MainActivity extends AppCompatActivity
 
     private User loadedUser;
     private LinearLayout lyProgress;
+    private LinearLayout lyNews;
+
+    private INews newsRepo;
+
+    private RecyclerView rvItem;
+    private NewsAdapter adapter;
 
 
     @Override
@@ -79,10 +100,12 @@ public class MainActivity extends AppCompatActivity
         initToolbar();
         initRepo();
         initViews();
+        initNewsRecycleView();
         getUserSavedData();
         initSlideAutoChanger();
         initListeners();
         initNavHeader();
+
 
     }
 
@@ -183,6 +206,7 @@ public class MainActivity extends AppCompatActivity
                     loadedUser.setPersonType(answer.getPersonType());
 
                     UserInstance.getInstance().setUser(loadedUser);
+                    getNews();
 
                     if (userSqliteRepo != null)
                         userSqliteRepo.updateUserDatas(getApplicationContext(), answer, new IRepoCallBack<User>() {
@@ -210,6 +234,61 @@ public class MainActivity extends AppCompatActivity
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                new CustomDialogBuilder().showYesNOCustomAlert(MainActivity.this, "خطا در دریافت اطلاعات", "متاسفانه خطایی هنگام دریافت اطلاعات کاربری شما رخ داده است، لطفا پس از اطمینان از فعال بودن اینترنت دستگاه مجددا تلاش نمایید!", "تلاش مجدد", "خروج", new CustomAlertDialog.OnActionClickListener() {
+                    @Override
+                    public void onClick(DialogFragment fragment) {
+                        fragment.dismiss();
+                        getUserExtraInfos();
+                    }
+                }, new CustomAlertDialog.OnCancelClickListener() {
+                    @Override
+                    public void onClickCancel(DialogFragment fragment) {
+                        fragment.dismiss();
+                        finish();
+
+                    }
+
+                    @Override
+                    public void onClickOutside(DialogFragment fragment) {
+                        fragment.dismiss();
+                        finish();
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
+    }
+
+    private void getNews() {
+        if (newsRepo == null)
+            return;
+
+        newsRepo.news(getApplicationContext(), KEY_NEWS_NAME, 0, loadedUser.getTokenType(), loadedUser.getToken(), new IRepoCallBack<NewsWrapper>() {
+            @Override
+            public void onAnswer(NewsWrapper answer) {
+                if (answer == null)
+                    return;
+                if (answer.getNews() == null || answer.getNews().size() == 0)
+                    return;
+
+                lyNews.setVisibility(View.VISIBLE);
+                if (adapter!=null)
+                    adapter.setItems(answer.getNews());
             }
 
             @Override
@@ -263,6 +342,9 @@ public class MainActivity extends AppCompatActivity
 
         if (userSqliteRepo == null)
             userSqliteRepo = new UserSqliteRepo();
+
+        if (newsRepo == null)
+            newsRepo = new NewsServerRepo();
     }
 
 
@@ -291,8 +373,12 @@ public class MainActivity extends AppCompatActivity
         txtUserType = (TextView) findViewById(R.id.txtUserType);
         txtPersonelCode = (TextView) findViewById(R.id.txtPersonelCode);
         txtUserName = (TextView) findViewById(R.id.txtUserName);
+        lyNews = (LinearLayout) findViewById(R.id.lyNews);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
         lyProgress.setVisibility(View.VISIBLE);
+        rvItem = (RecyclerView) findViewById(R.id.rtItem);
+
+        lyNews.setVisibility(View.GONE);
 
         try {
             FontChanger.applyTitleFont(findViewById(R.id.lyMainHeader));
@@ -302,6 +388,17 @@ public class MainActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void initNewsRecycleView() {
+        if (adapter == null)
+            adapter = new NewsAdapter();
+
+        if (rvItem == null)
+            initViews();
+
+        rvItem.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rvItem.setAdapter(adapter);
     }
 
     private void initToolbar() {
@@ -539,8 +636,8 @@ public class MainActivity extends AppCompatActivity
 
     private void exitApp() {
 
-     LoginActivity.start(MainActivity.this);
-     finish();
+        LoginActivity.start(MainActivity.this);
+        finish();
     }
 
     private boolean checkUserPersmission() {
@@ -556,4 +653,76 @@ public class MainActivity extends AppCompatActivity
 
         return true;
     }
+
+
+    public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
+
+        ArrayList<News> items;
+
+        public void setItems(ArrayList<News> items) {
+            this.items = items;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public NewsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+            if (parent == null || parent.getContext() == null)
+                return null;
+
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_news_main_item, parent, false);
+            if (view == null)
+                return null;
+            return new NewsHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(NewsHolder holder, int position) {
+            if (holder == null)
+                return;
+
+
+
+            holder.position = position;
+            News news = items.get(position);
+            if (news == null)
+                return;
+
+            String url=BuildConfig.IPAddress+"/"+news.getPostThumbImage();
+            holder.txtNew.setText(news.getPostBody());
+
+            new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(holder.imgProduct).load();
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return (items == null) ? 0 : items.size();
+        }
+
+        public class NewsHolder extends RecyclerView.ViewHolder {
+
+            LinearLayout lyRoot;
+            TextView txtNew;
+
+            ImageView imgProduct;
+
+            public int position = -1;
+
+
+            public NewsHolder(View v) {
+                super(v);
+
+                lyRoot = (LinearLayout) v.findViewById(R.id.lyRoot);
+                txtNew = (TextView) v.findViewById(R.id.txtNew);
+                imgProduct = v.findViewById(R.id.imgProduct);
+                FontChanger.applyTitleFont(txtNew);
+
+            }
+        }
+
+
+    }
+
+
 }

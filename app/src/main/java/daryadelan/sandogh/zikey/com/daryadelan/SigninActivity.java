@@ -82,9 +82,11 @@ public class SigninActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        requestGetMessagePermission();
         initRepo();
         isUserLoggedInBefore();
+        initApiClient();
+        initBroadCast();
 
 
 
@@ -110,9 +112,8 @@ public class SigninActivity extends AppCompatActivity {
                     initListeners();
                     hideKeyBoard();
                     clearSession();
-                    initApiClient();
-                    initBroadCast();
-                    requestGetMessagePermission();
+
+
                 }
             }
 
@@ -124,9 +125,7 @@ public class SigninActivity extends AppCompatActivity {
                 initListeners();
                 hideKeyBoard();
                 clearSession();
-                initApiClient();
-                initBroadCast();
-                requestGetMessagePermission();
+
             }
 
             @Override

@@ -32,7 +32,14 @@
             <include layout="@layout/layout_quick_shortcut" />
 
             <include layout="@layout/layout_user_datas" />
-            <include layout="@layout/layout_quick_news" />
+
+            <LinearLayout
+                android:id="@+id/lyNews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <include layout="@layout/layout_quick_news" />
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
