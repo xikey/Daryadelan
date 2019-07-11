@@ -12,12 +12,12 @@
     <application
         android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="false"
-        tools:replace="allowBackup"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="allowBackup">
         <activity
             android:name=".SigninActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -73,6 +73,10 @@
         <activity
             android:name=".AhkamFooterActivity"
             android:label="@string/title_activity_ahkam_footer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".OpenedNewsActivity"
+            android:label="@string/title_activity_opened_news"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

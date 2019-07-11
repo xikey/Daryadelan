@@ -287,7 +287,7 @@ public class MainActivity extends AppCompatActivity
                     return;
 
                 lyNews.setVisibility(View.VISIBLE);
-                if (adapter!=null)
+                if (adapter != null)
                     adapter.setItems(answer.getNews());
             }
 
@@ -682,14 +682,14 @@ public class MainActivity extends AppCompatActivity
                 return;
 
 
-
             holder.position = position;
             News news = items.get(position);
             if (news == null)
                 return;
 
-            String url=BuildConfig.IPAddress+"/"+news.getPostThumbImage();
-            holder.txtNew.setText(news.getPostBody());
+            holder.news = news;
+            String url = BuildConfig.IPAddress + "/" + news.getPostThumbImage();
+            holder.txtNew.setText(news.getPostTitle());
 
             new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(holder.imgProduct).load();
 
@@ -706,6 +706,7 @@ public class MainActivity extends AppCompatActivity
             TextView txtNew;
 
             ImageView imgProduct;
+            News news;
 
             public int position = -1;
 
@@ -717,6 +718,12 @@ public class MainActivity extends AppCompatActivity
                 txtNew = (TextView) v.findViewById(R.id.txtNew);
                 imgProduct = v.findViewById(R.id.imgProduct);
                 FontChanger.applyTitleFont(txtNew);
+                lyRoot.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        OpenedNewsActivity.start(MainActivity.this,news );
+                    }
+                });
 
             }
         }

@@ -1,8 +1,22 @@
 package daryadelan.sandogh.zikey.com.daryadelan.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class News {
+public class News  implements Parcelable {
+
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public News createFromParcel(Parcel in) {
+            return new News(in);
+        }
+
+        public News[] newArray(int size) {
+            return new News[size];
+        }
+    };
 
     @SerializedName("postID")
     private long postID;
@@ -64,5 +78,29 @@ public class News {
 
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.postID);
+        dest.writeString(this.postTitle);
+        dest.writeString(this.postBody);
+        dest.writeString(this.postSummary);
+        dest.writeString(this.postThumbImage);
+        dest.writeString(this.createDate);
+    }
+
+    public News(Parcel in){
+        this.postID = in.readLong();
+        this.postTitle = in.readString();
+        this.postBody =  in.readString();
+        this.postSummary =  in.readString();
+        this.postThumbImage =  in.readString();
+        this.createDate =  in.readString();
     }
 }
