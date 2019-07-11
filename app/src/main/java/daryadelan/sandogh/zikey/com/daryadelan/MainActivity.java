@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView rvItem;
     private NewsAdapter adapter;
 
+    private CardView crdNews;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -372,11 +374,19 @@ public class MainActivity extends AppCompatActivity
                 NewsActivity.start(MainActivity.this);
             }
         });
+
+        crdNews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewsActivity.start(MainActivity.this);
+            }
+        });
     }
 
     private void initViews() {
         crdPayrolls = (CardView) findViewById(R.id.crdPayrolls);
         lyAhkam = (CardView) findViewById(R.id.lyAhkam);
+        crdNews = (CardView) findViewById(R.id.crdNews);
 
         txtUserType = (TextView) findViewById(R.id.txtUserType);
         txtPersonelCode = (TextView) findViewById(R.id.txtPersonelCode);

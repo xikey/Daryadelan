@@ -151,6 +151,67 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/crdNews"
+
+                android:layout_width="120dp"
+                android:layout_height="170dp"
+                android:layout_marginRight="10dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_above="@+id/lyOrdersList"
+                        android:alpha="0.9"
+                        android:padding="18dp"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/ic_notifications_active_white_96dp" />
+
+
+                    <FrameLayout
+                        android:id="@+id/lyOrdersList"
+                        android:layout_width="match_parent"
+                        android:background="@color/colorGray"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@color/colorWhite" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="اخبار و اطلاعیه ها"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/very_small_10" />
+
+
+                    </FrameLayout>
+
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
                 android:id="@+id/crdGallery"
                 android:layout_width="120dp"
                 android:alpha="0.2"
@@ -209,65 +270,6 @@
 
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/crdNews"
-                android:alpha="0.2"
-                android:layout_width="120dp"
-                android:layout_height="170dp"
-                android:layout_marginRight="10dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/colorWhite"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_above="@+id/lyOrdersList"
-                        android:alpha="0.9"
-                        android:padding="18dp"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/ic_notifications_active_white_96dp" />
-
-
-                    <FrameLayout
-                        android:id="@+id/lyOrdersList"
-                        android:layout_width="match_parent"
-                        android:background="@color/colorGray"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true">
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@color/colorWhite" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="اخبار و اطلاعیه ها"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/very_small_10" />
-
-
-                    </FrameLayout>
-
-
-                </RelativeLayout>
-
-            </android.support.v7.widget.CardView>
 
 
             <android.support.v7.widget.CardView
