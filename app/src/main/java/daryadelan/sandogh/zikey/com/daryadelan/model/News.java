@@ -28,7 +28,7 @@ public class News  implements Parcelable {
     private String postSummary;
     @SerializedName("postThumbImage")
     private String postThumbImage;
-    @SerializedName("createDate")
+    @SerializedName("createdat")
     private String createDate;
 
 

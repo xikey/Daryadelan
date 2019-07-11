@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity
     private TextView txtUserType;
     private TextView txtPersonelCode;
     private TextView txtUserName;
+    private TextView txtMoreNews;
 
     private IUser userRepo;
     private IUser userSqliteRepo;
@@ -364,6 +365,13 @@ public class MainActivity extends AppCompatActivity
                     AhkamHeaderActivity.start(MainActivity.this);
             }
         });
+
+        txtMoreNews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewsActivity.start(MainActivity.this);
+            }
+        });
     }
 
     private void initViews() {
@@ -373,6 +381,7 @@ public class MainActivity extends AppCompatActivity
         txtUserType = (TextView) findViewById(R.id.txtUserType);
         txtPersonelCode = (TextView) findViewById(R.id.txtPersonelCode);
         txtUserName = (TextView) findViewById(R.id.txtUserName);
+        txtMoreNews = (TextView) findViewById(R.id.txtMoreNews);
         lyNews = (LinearLayout) findViewById(R.id.lyNews);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
         lyProgress.setVisibility(View.VISIBLE);
@@ -721,7 +730,7 @@ public class MainActivity extends AppCompatActivity
                 lyRoot.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        OpenedNewsActivity.start(MainActivity.this,news );
+                        OpenedNewsActivity.start(MainActivity.this, news);
                     }
                 });
 

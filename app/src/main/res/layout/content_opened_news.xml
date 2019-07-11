@@ -16,72 +16,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:id="@+id/crdAdd"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/colorAccent"
-            app:cardCornerRadius="4dp"
-            app:cardElevation="3dp"
-            app:cardUseCompatPadding="true">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="21dp">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="15dp"
-                    android:paddingTop="10dp"
-                    android:text="افزودن به سبد خرید"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/very_small_10" />
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
             android:ellipsize="end"
-            android:padding="10dp"
-            android:text="sdsdsdsd"
+            android:padding="15dp"
+            android:id="@+id/txtDetails"
+            android:text=""
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/small_font_size" />
+            android:textSize="@dimen/normal_font_size" />
 
 
-        <RelativeLayout
-            android:id="@+id/lyProgress"
-            android:layout_width="match_parent"
-            android:layout_height="900dp"
-            android:background="#ffffff"
-            android:visibility="gone">
-
-            <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/spin_kit"
-                style="@style/SpinKitView.Circle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:layout_marginTop="35dp"
-                app:SpinKit_Color="@color/colorAccent" />
-
-        </RelativeLayout>
 
     </RelativeLayout>
 

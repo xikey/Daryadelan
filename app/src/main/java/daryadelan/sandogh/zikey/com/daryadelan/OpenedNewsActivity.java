@@ -3,6 +3,7 @@ package daryadelan.sandogh.zikey.com.daryadelan;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -15,11 +16,13 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import daryadelan.sandogh.zikey.com.daryadelan.model.News;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ToolbarWrapper;
 import es.dmoral.toasty.Toasty;
 
@@ -29,16 +32,16 @@ public class OpenedNewsActivity extends AppCompatActivity {
 
     private RelativeLayout lyProgress;
     private RelativeLayout lyContent;
-    private TextView txtProviderName;
-
-    private CardView crdAdd;
+    private TextView txtDate;
 
     private AppBarLayout appbar;
     private CollapsingToolbarLayout toolbar_layout;
     private Toolbar toolbar;
     private Toolbar toolbar_colored;
+    private ImageView imgNews;
 
     private News news;
+    private TextView txtDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,21 @@ public class OpenedNewsActivity extends AppCompatActivity {
         initToolbar();
         initViews();
         initCollapsingToolbarLayout();
+        initContent();
 
+
+    }
+
+    private void initContent() {
+        if (news==null)
+            return;
+
+        txtDate.setText(news.getCreateDate());
+        txtDetails.setText(news.getPostBody());
+
+        String url = BuildConfig.IPAddress + "/" + news.getPostThumbImage();
+
+        new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(imgNews).load();
 
     }
 
@@ -101,6 +118,7 @@ public class OpenedNewsActivity extends AppCompatActivity {
                 int maxScroll = appBarLayout.getTotalScrollRange();
                 float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
                 float val = (1 - percentage);
+                float val2=1-percentage;
                 if (val < 0.7)
                     val = 0;
 
@@ -118,7 +136,8 @@ public class OpenedNewsActivity extends AppCompatActivity {
 
                 }
 
-                txtProviderName.setAlpha(val);
+                txtDate.setAlpha(val);
+                imgNews.setAlpha(val2);
             }
         });
 
@@ -127,18 +146,20 @@ public class OpenedNewsActivity extends AppCompatActivity {
     private void initViews() {
 
         FontChanger.applyMainFont(findViewById(R.id.lyContent));
-        lyProgress = (RelativeLayout) findViewById(R.id.lyProgress);
         lyContent = (RelativeLayout) findViewById(R.id.lyContent);
-        crdAdd = (CardView) findViewById(R.id.crdAdd);
-        txtProviderName = (TextView) findViewById(R.id.txtProviderName);
+
+        txtDate = (TextView) findViewById(R.id.txtDate);
         appbar = (AppBarLayout) findViewById(R.id.app_bar);
         toolbar_layout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_colored = (Toolbar) findViewById(R.id.toolbar_colored);
 
-        FontChanger.applyTitleFont(txtProviderName);
+        imgNews= (ImageView) findViewById(R.id.imgNews);
+        txtDetails= (TextView) findViewById(R.id.txtDetails);
+        FontChanger.applyTitleFont(txtDate);
+        FontChanger.applyMainFont(txtDetails);
 
-        FontChanger.applyTitleFont(crdAdd);
+
 
     }
 
