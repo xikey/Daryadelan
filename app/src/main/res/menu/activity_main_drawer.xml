@@ -7,14 +7,24 @@
 
         <item
             android:id="@+id/nav_hokm"
-            android:icon="@drawable/ic_info_black_24dp"
+            android:icon="@drawable/ic_description_black_24dp"
             android:title="@string/ahkam" />
 
 
         <item
             android:id="@+id/nav_payroll"
-            android:icon="@drawable/ic_info_black_24dp"
+            android:icon="@drawable/ic_assignment_black_24dp"
             android:title="@string/payroll" />
+        <item
+            android:id="@+id/nav_news"
+            android:icon="@drawable/ic_notifications_active_black_24dp"
+            android:title="@string/title_activity_news" />
+
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_photo_album_black_24dp"
+            android:title="آلبوم تصاویز" />
+
         <item
             android:id="@+id/nav_share"
             android:icon="@drawable/ic_info_black_24dp"

@@ -50,6 +50,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.NewsServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.sqlite.UserSqliteRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.CalendarWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity
     private NewsAdapter adapter;
 
     private CardView crdNews;
+    private CardView crdGallery;
 
 
     @Override
@@ -113,6 +115,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void getUserSavedData() {
+
+
         if (userSqliteRepo == null)
             return;
         userSqliteRepo.getUserDatas(getApplicationContext(), new IRepoCallBack<User>() {
@@ -122,6 +126,24 @@ public class MainActivity extends AppCompatActivity
                 if (answer == null || answer.getResultId() < 0) {
                     new CustomDialogBuilder().showAlert(MainActivity.this, "خطا در دریافت اطلاعات کاربر. لطفا عملیات ورود را مجددا انجام نمایید");
                     return;
+                }
+
+                if (!answer.getLoginDate().equals(CalendarWrapper.getCurrentPersianDate())) {
+                    new CustomDialogBuilder().showAlert(MainActivity.this, "تاریخ انقضا استفاده از برنامه تمام شده است. لطفا عملیات ورود را مجددا انجام نمایید.", new CustomAlertDialog.OnCancelClickListener() {
+                        @Override
+                        public void onClickCancel(DialogFragment fragment) {
+                            fragment.dismiss();
+                            LoginActivity.start(MainActivity.this);
+                            finish();
+                        }
+
+                        @Override
+                        public void onClickOutside(DialogFragment fragment) {
+                            fragment.dismiss();
+                            LoginActivity.start(MainActivity.this);
+                            finish();
+                        }
+                    });
                 }
                 loadedUser = answer;
                 initContent();
@@ -168,10 +190,42 @@ public class MainActivity extends AppCompatActivity
         if (userRepo == null)
             return;
 
-        userRepo.userInfo(getApplicationContext(), loadedUser.getTokenType(), loadedUser.getToken(), new IRepoCallBack<User>() {
-            @Override
-            public void onAnswer(User answer) {
-                if (answer == null) {
+        if (loadedUser != null && loadedUser.isUserDataComplete()) {
+            initUserDatas(loadedUser);
+        } else
+            userRepo.userInfo(getApplicationContext(), loadedUser.getTokenType(), loadedUser.getToken(), new IRepoCallBack<User>() {
+                @Override
+                public void onAnswer(User answer) {
+                    if (answer == null) {
+                        new CustomDialogBuilder().showYesNOCustomAlert(MainActivity.this, "خطا در دریافت اطلاعات", "متاسفانه خطایی هنگام دریافت اطلاعات کاربری شما رخ داده است، لطفا پس از اطمینان از فعال بودن اینترنت دستگاه مجددا تلاش نمایید!", "تلاش مجدد", "خروج", new CustomAlertDialog.OnActionClickListener() {
+                            @Override
+                            public void onClick(DialogFragment fragment) {
+                                fragment.dismiss();
+                                getUserExtraInfos();
+                            }
+                        }, new CustomAlertDialog.OnCancelClickListener() {
+                            @Override
+                            public void onClickCancel(DialogFragment fragment) {
+                                fragment.dismiss();
+                                finish();
+
+                            }
+
+                            @Override
+                            public void onClickOutside(DialogFragment fragment) {
+                                fragment.dismiss();
+                                finish();
+
+                            }
+                        });
+                        return;
+                    }
+                    initUserDatas(answer);
+
+                }
+
+                @Override
+                public void onError(Throwable error) {
                     new CustomDialogBuilder().showYesNOCustomAlert(MainActivity.this, "خطا در دریافت اطلاعات", "متاسفانه خطایی هنگام دریافت اطلاعات کاربری شما رخ داده است، لطفا پس از اطمینان از فعال بودن اینترنت دستگاه مجددا تلاش نمایید!", "تلاش مجدد", "خروج", new CustomAlertDialog.OnActionClickListener() {
                         @Override
                         public void onClick(DialogFragment fragment) {
@@ -193,88 +247,19 @@ public class MainActivity extends AppCompatActivity
 
                         }
                     });
-                    return;
+
                 }
 
+                @Override
+                public void onCancel() {
 
-                try {
-                    lyProgress.setVisibility(View.GONE);
-                    txtUserName.setText(answer.getFirstName() + " " + answer.getLastName());
-                    txtPersonelCode.setText("" + answer.getPersonalCode());
-                    txtUserType.setText("" + answer.getPersonTypeName());
-
-                    loadedUser.setFirstName(answer.getFirstName());
-                    loadedUser.setPersonalCode(answer.getPersonalCode());
-                    loadedUser.setLastName(answer.getLastName());
-                    loadedUser.setPersonType(answer.getPersonType());
-
-                    UserInstance.getInstance().setUser(loadedUser);
-                    getNews();
-
-                    if (userSqliteRepo != null)
-                        userSqliteRepo.updateUserDatas(getApplicationContext(), answer, new IRepoCallBack<User>() {
-                            @Override
-                            public void onAnswer(User answer) {
-
-                            }
-
-                            @Override
-                            public void onError(Throwable error) {
-
-                            }
-
-                            @Override
-                            public void onCancel() {
-
-                            }
-
-                            @Override
-                            public void onProgress(int p) {
-
-                            }
-                        });
-
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-            }
 
-            @Override
-            public void onError(Throwable error) {
-                new CustomDialogBuilder().showYesNOCustomAlert(MainActivity.this, "خطا در دریافت اطلاعات", "متاسفانه خطایی هنگام دریافت اطلاعات کاربری شما رخ داده است، لطفا پس از اطمینان از فعال بودن اینترنت دستگاه مجددا تلاش نمایید!", "تلاش مجدد", "خروج", new CustomAlertDialog.OnActionClickListener() {
-                    @Override
-                    public void onClick(DialogFragment fragment) {
-                        fragment.dismiss();
-                        getUserExtraInfos();
-                    }
-                }, new CustomAlertDialog.OnCancelClickListener() {
-                    @Override
-                    public void onClickCancel(DialogFragment fragment) {
-                        fragment.dismiss();
-                        finish();
+                @Override
+                public void onProgress(int p) {
 
-                    }
-
-                    @Override
-                    public void onClickOutside(DialogFragment fragment) {
-                        fragment.dismiss();
-                        finish();
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onProgress(int p) {
-
-            }
-        });
+                }
+            });
     }
 
     private void getNews() {
@@ -381,12 +366,21 @@ public class MainActivity extends AppCompatActivity
                 NewsActivity.start(MainActivity.this);
             }
         });
+        crdGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GalleriesActivity.start(MainActivity.this);
+            }
+        });
+
+
     }
 
     private void initViews() {
         crdPayrolls = (CardView) findViewById(R.id.crdPayrolls);
         lyAhkam = (CardView) findViewById(R.id.lyAhkam);
         crdNews = (CardView) findViewById(R.id.crdNews);
+        crdGallery = (CardView) findViewById(R.id.crdGallery);
 
         txtUserType = (TextView) findViewById(R.id.txtUserType);
         txtPersonelCode = (TextView) findViewById(R.id.txtPersonelCode);
@@ -505,6 +499,12 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_payroll) {
             if (checkUserPersmission())
                 PayrollHeaderActivity.start(MainActivity.this);
+        } else if (id == R.id.nav_news) {
+
+            NewsActivity.start(MainActivity.this);
+        } else if (id == R.id.nav_gallery) {
+
+            GalleriesActivity.start(MainActivity.this);
         }
 // else if (id == R.id.nav_manage) {
 //
@@ -602,7 +602,7 @@ public class MainActivity extends AppCompatActivity
 
         int width = getResources().getDisplayMetrics().widthPixels;
 
-        int height = width / 2;
+        int height = width * 2 / 3;
         ViewGroup.LayoutParams mainParams = advertiseHeaderBox.getLayoutParams();
         mainParams.height = height;
         advertiseHeaderBox.setLayoutParams(mainParams);
@@ -750,5 +750,48 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void initUserDatas(User answer) {
+        try {
+            lyProgress.setVisibility(View.GONE);
+            txtUserName.setText(answer.getFirstName() + " " + answer.getLastName());
+            txtPersonelCode.setText("" + answer.getPersonalCode());
+            txtUserType.setText("" + answer.getPersonTypeName());
+
+            loadedUser.setFirstName(answer.getFirstName());
+            loadedUser.setPersonalCode(answer.getPersonalCode());
+            loadedUser.setLastName(answer.getLastName());
+            loadedUser.setPersonType(answer.getPersonType());
+
+            UserInstance.getInstance().setUser(loadedUser);
+            getNews();
+
+            if (userSqliteRepo != null)
+                userSqliteRepo.updateUserDatas(getApplicationContext(), answer, new IRepoCallBack<User>() {
+                    @Override
+                    public void onAnswer(User answer) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable error) {
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onProgress(int p) {
+
+                    }
+                });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }

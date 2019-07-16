@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
+import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
 import com.razanpardazesh.razanlibs.Tools.AsyncWrapper;
 
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserData;
@@ -14,6 +15,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.apiClient.ServerApiClient;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.CalendarWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.DatabaseHelper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.SqlAsyncWrapper;
 
@@ -255,7 +257,6 @@ public class UserSqliteRepo implements IUser {
 
         try {
 
-
             ContentValues values = new ContentValues();
 
             values.put(UserData.USR_FIRST_NAME, user.getFirstName());
@@ -266,6 +267,7 @@ public class UserSqliteRepo implements IUser {
             values.put(UserData.USR_PERSON_TYPE, user.getPersonType());
             values.put(UserData.USR_TOKEN_EXPIRE, user.getTokenExpireDate());
             values.put(UserData.USR_PERSONAL_CODE, user.getPersonalCode());
+            values.put(UserData.USR_LOGIN_DATE,CalendarWrapper.getCurrentPersianDate());
 
 
             db.insert(UserData.TABLE_USER, null, values);
@@ -300,6 +302,7 @@ public class UserSqliteRepo implements IUser {
                 UserData.USR_TOKEN_TYPE,
                 UserData.USR_PERSON_TYPE,
                 UserData.USR_TOKEN_EXPIRE,
+                UserData.USR_LOGIN_DATE,
                 UserData.USR_PERSONAL_CODE};
 
 

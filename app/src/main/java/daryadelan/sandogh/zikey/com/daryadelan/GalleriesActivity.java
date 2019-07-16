@@ -2,7 +2,6 @@ package daryadelan.sandogh.zikey.com.daryadelan;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,7 +11,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +22,11 @@ import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.News;
+import daryadelan.sandogh.zikey.com.daryadelan.model.Photo;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
-import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.NewsWrapper;
-import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.INews;
-import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.NewsServerRepo;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.PhotosWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IPhotos;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.PhotosServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
@@ -35,15 +34,13 @@ import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ToolbarWrapper;
 import es.dmoral.toasty.Toasty;
 
-public class NewsActivity extends AppCompatActivity {
-
-    private final String KEY_NEWS_NAME = "news";
+public class GalleriesActivity extends AppCompatActivity {
 
     private RecyclerView rvItem;
     private ItemAdapter adapter;
     private LinearLayout lyProgress;
     private LinearLayout lyBottomProgress;
-    private INews newsRepo;
+    private IPhotos photosRepo;
     private User user;
     private long pageCount = 0;
     private int hasMore = 0;
@@ -51,7 +48,7 @@ public class NewsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news);
+        setContentView(R.layout.activity_galleries);
 
         initRepo();
         initToolbar();
@@ -62,24 +59,25 @@ public class NewsActivity extends AppCompatActivity {
 
     }
 
+
     private void getUserData() {
         user = UserInstance.getInstance().getUser();
         if (user == null) {
-            Toasty.error(NewsActivity.this, "خطا در دریافت اطلاعات کاربری");
+            Toasty.error(GalleriesActivity.this, "خطا در دریافت اطلاعات کاربری");
             finish();
         }
     }
 
     private void initRepo() {
 
-        if (newsRepo == null)
-            newsRepo = new NewsServerRepo();
+        if (photosRepo == null)
+            photosRepo = new PhotosServerRepo();
 
     }
 
     private void initToolbar() {
 
-        new ToolbarWrapper(this).initToolbarWithBackArrow(R.id.toolbar, getString(R.string.title_activity_news), null);
+        new ToolbarWrapper(this).initToolbarWithBackArrow(R.id.toolbar, getString(R.string.title_activity_galleries), null);
     }
 
     private void initViews() {
@@ -91,7 +89,6 @@ public class NewsActivity extends AppCompatActivity {
         lyProgress.setVisibility(View.VISIBLE);
 
     }
-
     private void initRecycleView() {
 
         if (adapter == null)
@@ -100,7 +97,7 @@ public class NewsActivity extends AppCompatActivity {
         if (rvItem == null)
             initViews();
 
-        rvItem.setLayoutManager(new LinearLayoutManager(NewsActivity.this, LinearLayoutManager.VERTICAL, false));
+        rvItem.setLayoutManager(new LinearLayoutManager(GalleriesActivity.this, LinearLayoutManager.VERTICAL, false));
         rvItem.setAdapter(adapter);
 
         rvItem.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -114,13 +111,13 @@ public class NewsActivity extends AppCompatActivity {
                 if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
                     LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     int pos = layoutManager.findLastVisibleItemPosition();
-                 if (adapter!=null){
-                     if (adapter.getItemCount()-1==pos){
-                         pageCount++;
-                         getNews();
-                     }
+                    if (adapter!=null){
+                        if (adapter.getItemCount()-1==pos){
+                            pageCount++;
+                            getNews();
+                        }
 
-                 }
+                    }
                 }
 
             }
@@ -129,16 +126,16 @@ public class NewsActivity extends AppCompatActivity {
     }
 
     public static void start(FragmentActivity context) {
-        Intent starter = new Intent(context, NewsActivity.class);
+        Intent starter = new Intent(context, GalleriesActivity.class);
         context.startActivity(starter);
     }
 
 
     class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
 
-        private ArrayList<News> items;
+        private ArrayList<Photo> items;
 
-        public void setItems(ArrayList<News> in) {
+        public void setItems(ArrayList<Photo> in) {
             if (items==null)
                 items=new ArrayList<>();
             items.addAll(in);
@@ -175,21 +172,16 @@ public class NewsActivity extends AppCompatActivity {
                     return;
 
 
-                News news = items.get(position);
-                if (news == null)
+                Photo photo = items.get(position);
+                if (photo == null)
                     return;
 
-                holder.news = news;
-                String url = BuildConfig.IPAddress + "/" + news.getPostThumbImage();
-                holder.txtTitle.setText(news.getPostTitle());
-                holder.txtDate.setText(news.getPersianDate());
-                holder.txtNumber.setText("# "+position);
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    holder.txtDetails.setText(Html.fromHtml(news.getPostBody(), Html.FROM_HTML_MODE_COMPACT));
-                } else {
-                    holder.txtDetails.setText(Html.fromHtml(news.getPostBody()));
-                }
+                String url = BuildConfig.IPAddress + "/" + photo.getGalleryThumbImage();
+                holder.txtTitle.setText(photo.getGalleryNameFA());
+                holder.txtDate.setText(photo.getPersianDate());
+
+
 
                 new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(holder.imgAvatar).load();
 
@@ -215,9 +207,8 @@ public class NewsActivity extends AppCompatActivity {
             TextView txtTitle;
             TextView txtDate;
             TextView txtDetails;
-            TextView txtNumber;
             ImageView imgAvatar;
-            News news;
+            Photo photo;
 
 
             public ItemHolder(View v) {
@@ -226,20 +217,17 @@ public class NewsActivity extends AppCompatActivity {
                 cardView = v.findViewById(R.id.cardView);
                 txtTitle = v.findViewById(R.id.txtTitle);
                 txtDate = v.findViewById(R.id.txtDate);
-                txtNumber = v.findViewById(R.id.txtNumber);
                 txtDetails = v.findViewById(R.id.txtDetails);
                 imgAvatar = v.findViewById(R.id.imgAvatar);
 
                 FontChanger.applyMainFont(cardView);
-                FontChanger.applyTitleFont(txtNumber);
 
 
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        if (news != null)
-                            OpenedNewsActivity.start(NewsActivity.this, news);
+
                     }
                 });
 
@@ -248,23 +236,24 @@ public class NewsActivity extends AppCompatActivity {
     }
 
     private void getNews() {
-        if (newsRepo == null)
+        if (photosRepo == null)
             return;
 
         lyBottomProgress.setVisibility(View.VISIBLE);
-        newsRepo.news(getApplicationContext(), KEY_NEWS_NAME, pageCount, user.getTokenType(), user.getToken(), new IRepoCallBack<NewsWrapper>() {
+
+        photosRepo.galleries(getApplicationContext(), pageCount, user.getTokenType(), user.getToken(), new IRepoCallBack<PhotosWrapper>() {
             @Override
-            public void onAnswer(NewsWrapper answer) {
+            public void onAnswer(PhotosWrapper answer) {
                 lyProgress.setVisibility(View.GONE);
                 lyBottomProgress.setVisibility(View.GONE);
                 if (answer == null) {
 
                     return;
                 }
-                if (answer.getNews() == null || answer.getNews().size() == 0)
+                if (answer.getPhotos() == null || answer.getPhotos().size() == 0)
                     return;
 
-                if (answer.getNews().size()<10){
+                if (answer.getPhotos().size()<10){
                     hasMore=0;
 
                 }else {
@@ -272,13 +261,12 @@ public class NewsActivity extends AppCompatActivity {
                 }
 
                 if (adapter != null)
-                    adapter.setItems(answer.getNews());
+                    adapter.setItems(answer.getPhotos());
             }
 
             @Override
             public void onError(Throwable error) {
-                lyProgress.setVisibility(View.GONE);
-                lyBottomProgress.setVisibility(View.GONE);
+
             }
 
             @Override
@@ -291,7 +279,8 @@ public class NewsActivity extends AppCompatActivity {
 
             }
         });
-    }
+
+     }
 
 
 }

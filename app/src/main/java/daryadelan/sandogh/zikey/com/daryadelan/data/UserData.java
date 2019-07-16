@@ -18,6 +18,7 @@ public class UserData {
     public static final String USR_TOKEN_TYPE = "USR_TOKEN_TYPE";
     public static final String USR_TOKEN_EXPIRE = "USR_TOKEN_EXPIRE";
     public static final String USR_MOBILE = "USR_MOBILE";
+    public static final String USR_LOGIN_DATE = "USR_LOGIN_DATE";
 
     // DB create table
     public static final String  CREATE_TABLE = "create table " + TABLE_USER
@@ -29,6 +30,7 @@ public class UserData {
             + USR_TOKEN_TYPE + " TEXT,"
             + USR_TOKEN_EXPIRE + " TEXT,"
             + USR_MOBILE + " TEXT,"
+            + USR_LOGIN_DATE + " TEXT,"
             + USR_FIRST_NAME + " TEXT" + ");";
 
 
@@ -40,6 +42,7 @@ public class UserData {
     private String tokenType;
     private String tokenExpireDate;
     private String mobile;
+    private String loginDate;
     /**
      * یکی از موارد زیر که نوع کاربر می باشد را بر میگرداند:
      * Baz

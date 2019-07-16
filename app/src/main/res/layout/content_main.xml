@@ -10,6 +10,29 @@
     android:orientation="vertical"
     tools:showIn="@layout/app_bar_main">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <include
+            android:id="@+id/advertiseHeaderBox"
+            layout="@layout/advertise_slide_show"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/transparent"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -20,14 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <include
-                android:id="@+id/advertiseHeaderBox"
-                layout="@layout/advertise_slide_show"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
 
             <include layout="@layout/layout_quick_shortcut" />
 
@@ -44,6 +59,18 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="100dp"/>
+
+            <TextView
+                android:text="@string/copywright"
+                android:textSize="@dimen/very_small_10"
+                android:alpha="0.7"
+                android:background="@color/colorAccent"
+                android:padding="10dp"
+                android:gravity="center"
+                android:textDirection="rtl"
+                android:textColor="@color/colorBlack"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 

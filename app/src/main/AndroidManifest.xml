@@ -81,6 +81,14 @@
         <activity
             android:name=".NewsActivity"
             android:label="@string/title_activity_news"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".GalleriesActivity"
+            android:label="@string/title_activity_galleries"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PhotoViewActivity"
+            android:label="@string/title_activity_photo_view"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

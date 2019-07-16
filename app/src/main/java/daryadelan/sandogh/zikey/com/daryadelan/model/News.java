@@ -30,6 +30,10 @@ public class News  implements Parcelable {
     private String postThumbImage;
     @SerializedName("createdat")
     private String createDate;
+    @SerializedName("postImage")
+    private String postImage;
+    @SerializedName("datefa")
+    private String persianDate;
 
 
     public long getPostID() {
@@ -80,6 +84,22 @@ public class News  implements Parcelable {
         this.createDate = createDate;
     }
 
+    public String getPersianDate() {
+        return persianDate;
+    }
+
+    public void setPersianDate(String persianDate) {
+        this.persianDate = persianDate;
+    }
+
+    public String getPostImage() {
+        return postImage;
+    }
+
+    public void setPostImage(String postImage) {
+        this.postImage = postImage;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -93,6 +113,8 @@ public class News  implements Parcelable {
         dest.writeString(this.postSummary);
         dest.writeString(this.postThumbImage);
         dest.writeString(this.createDate);
+        dest.writeString(this.postImage);
+        dest.writeString(this.persianDate);
     }
 
     public News(Parcel in){
@@ -102,5 +124,8 @@ public class News  implements Parcelable {
         this.postSummary =  in.readString();
         this.postThumbImage =  in.readString();
         this.createDate =  in.readString();
+        this.postImage =  in.readString();
+        this.persianDate =  in.readString();
+
     }
 }

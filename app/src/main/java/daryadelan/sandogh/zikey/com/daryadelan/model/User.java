@@ -2,6 +2,7 @@ package daryadelan.sandogh.zikey.com.daryadelan.model;
 
 import android.database.Cursor;
 import android.text.TextUtils;
+import android.widget.TextView;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -71,6 +72,8 @@ public class User extends ServerWrapper {
     //به دلیل کیفیت پایین دیتای ارسالی از سمت سرور مجبور به این کار شدم!!
     @SerializedName("userData")
     private ArrayList<User> userExtrasInfo;
+
+    private String loginDate;
 
 
     public long getPersonalCode() {
@@ -210,6 +213,13 @@ public class User extends ServerWrapper {
         this.userExtrasInfo = userExtrasInfo;
     }
 
+    public String getLoginDate() {
+        return loginDate;
+    }
+
+    public void setLoginDate(String loginDate) {
+        this.loginDate = loginDate;
+    }
 
     public String getPersonTypeName() {
         if (TextUtils.isEmpty(personType)) {
@@ -324,6 +334,28 @@ public class User extends ServerWrapper {
             ex.printStackTrace();
         }
 
+        try {
+            if (in.getColumnIndex(UserData.USR_LOGIN_DATE) != -1) {
+                this.loginDate = in.getString(in.getColumnIndex(UserData.USR_LOGIN_DATE));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public boolean isUserDataComplete(){
+        if (personalCode==0)
+            return false;
+
+        if (TextUtils.isEmpty(firstName)||TextUtils.isEmpty(lastName))
+            return false;
+
+        if (TextUtils.isEmpty(token)||TextUtils.isEmpty(personType)||TextUtils.isEmpty(tokenType))
+            return false;
+
+        return true;
 
     }
 }

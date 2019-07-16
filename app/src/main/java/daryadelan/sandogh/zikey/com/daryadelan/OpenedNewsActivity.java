@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -14,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -61,10 +63,16 @@ public class OpenedNewsActivity extends AppCompatActivity {
         if (news==null)
             return;
 
-        txtDate.setText(news.getCreateDate());
+        txtDate.setText(news.getPersianDate());
         txtDetails.setText(news.getPostBody());
 
-        String url = BuildConfig.IPAddress + "/" + news.getPostThumbImage();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            txtDetails.setText(Html.fromHtml(news.getPostBody(), Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            txtDetails.setText(Html.fromHtml(news.getPostBody()));
+        }
+
+        String url = BuildConfig.IPAddress + "/" + news.getPostImage();
 
         new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(imgNews).load();
 
@@ -105,10 +113,10 @@ public class OpenedNewsActivity extends AppCompatActivity {
         toolbar_layout.setExpandedTitleTypeface(Typeface.createFromAsset(getAssets(), "fonts/IRANSansMobile_Bold.ttf"));
 
         int width = getResources().getDisplayMetrics().widthPixels;
-        int height = width;
+
 
         final ViewGroup.LayoutParams params = appbar.getLayoutParams();
-        params.height = height;
+        params.height = (width*2/3);
         appbar.setLayoutParams(params);
 
         appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {

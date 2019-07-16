@@ -23,8 +23,9 @@
 
     <HorizontalScrollView
         android:layout_width="match_parent"
+        android:alpha="0.8"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite">
+        android:background="#55FFFFFF">
 
         <LinearLayout
             android:id="@+id/lyQuickShortcutsLayout"
@@ -35,12 +36,12 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/crdPayrolls"
-                android:layout_width="120dp"
-                android:layout_height="170dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginRight="10dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/colorWhite"
+                app:cardBackgroundColor="@color/colorAccent"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="4dp"
                 app:cardUseCompatPadding="true">
@@ -55,8 +56,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_above="@+id/lyUploadBottom"
-                        android:alpha="0.9"
-                        android:padding="20dp"
+                        android:alpha="0.6"
+                        android:padding="25dp"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/ic_assignment_colored_96dp" />
 
@@ -95,12 +96,12 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/lyAhkam"
-                android:layout_width="120dp"
-                android:layout_height="170dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginRight="10dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/colorWhite"
+                app:cardBackgroundColor="@color/colorAccent"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="4dp"
                 app:cardUseCompatPadding="true">
@@ -113,7 +114,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_above="@+id/lyCustomersList"
-                        android:padding="15dp"
+                        android:padding="25dp"
+                        android:alpha="0.6"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/ic_description_white_96dp" />
 
@@ -153,12 +155,12 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/crdNews"
 
-                android:layout_width="120dp"
-                android:layout_height="170dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginRight="10dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/colorWhite"
+                app:cardBackgroundColor="@color/colorAccent"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="4dp"
                 app:cardUseCompatPadding="true">
@@ -172,8 +174,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_above="@+id/lyOrdersList"
-                        android:alpha="0.9"
-                        android:padding="18dp"
+                        android:alpha="0.6"
+                        android:padding="25dp"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/ic_notifications_active_white_96dp" />
 
@@ -213,13 +215,12 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/crdGallery"
-                android:layout_width="120dp"
-                android:alpha="0.2"
-                android:layout_height="170dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginRight="10dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/colorWhite"
+                app:cardBackgroundColor="@color/colorAccent"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="4dp"
                 app:cardUseCompatPadding="true">
@@ -232,8 +233,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_above="@+id/lyTomorrowOrder"
-                        android:alpha="0.9"
-                        android:padding="18dp"
+                        android:alpha="0.6"
+                        android:padding="25dp"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/ic_photo_album_white_96dp" />
 
@@ -274,8 +275,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/crdPrinter"
-                android:layout_width="120dp"
-                android:layout_height="170dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:alpha="0.2"
                 android:layout_marginRight="10dp"
                 android:clickable="true"
@@ -294,7 +295,7 @@
                         android:layout_height="match_parent"
                         android:layout_above="@+id/lyPrinter"
                         android:alpha="0.9"
-                        android:padding="18dp"
+                        android:padding="25dp"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/ic_rate_review_white_96dp" />
 
@@ -334,8 +335,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/crdHelp"
-                android:layout_width="120dp"
-                android:layout_height="170dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:alpha="0.2"
                 android:layout_marginLeft="15dp"
                 android:clickable="true"
@@ -355,7 +356,7 @@
                         android:layout_height="match_parent"
                         android:layout_above="@+id/lyHelp"
                         android:alpha="0.9"
-                        android:padding="15dp"
+                        android:padding="25dp"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/ic_help_outline_white_96dp" />
 
