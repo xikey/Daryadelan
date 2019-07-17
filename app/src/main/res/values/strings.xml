@@ -53,7 +53,7 @@
     <string name="month">ماه</string>
     <string name="get_payroll">دریافت فیش حقوقی</string>
     <string name="title_activity_payroll_footer">دریافت فیش حقوقی</string>
-    <string name="sandogh_title">صندوق بازنشستگی و وظیفه مستخدمین سازمان بنادر و دریانوردی</string>
+    <string name="sandogh_title">صندوق بازنشستگی سازمان بنادر و دریانوردی</string>
     <string name="doble_tap_to_exit">جهت خروج مجددا کلید بازگشت را لمس نمایید</string>
     <string name="error_exit_app">خطا در خروج از برنامه، لظفا مجددا تلاش نمایید</string>
     <string name="details">توضیحات</string>

@@ -1,8 +1,10 @@
 package daryadelan.sandogh.zikey.com.daryadelan;
 
+import android.app.ActionBar;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -26,9 +28,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
 import java.util.ArrayList;
 
@@ -96,9 +103,22 @@ public class MainActivity extends AppCompatActivity
     private CardView crdGallery;
 
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT < 16) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }else {
+            View decorView = getWindow().getDecorView();
+// Hide the status bar.
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+
+        }
         setContentView(R.layout.activity_main);
 
 
@@ -113,6 +133,7 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+
 
     private void getUserSavedData() {
 
@@ -393,6 +414,8 @@ public class MainActivity extends AppCompatActivity
 
         lyNews.setVisibility(View.GONE);
 
+
+
         try {
             FontChanger.applyTitleFont(findViewById(R.id.lyMainHeader));
             FontChanger.applyYekanFont(findViewById(R.id.lblQuickShortcut));
@@ -415,6 +438,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initToolbar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(android.R.color.transparent));
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

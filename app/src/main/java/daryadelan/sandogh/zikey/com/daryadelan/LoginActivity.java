@@ -234,7 +234,7 @@ public class LoginActivity extends AppCompatActivity {
         RelativeLayout lyHeader = (RelativeLayout) findViewById(R.id.lyHeader);
         int width = getResources().getDisplayMetrics().widthPixels;
         ViewGroup.LayoutParams params = lyHeader.getLayoutParams();
-        int height = ((width / 2));
+        int height = ((width *2/3));
         params.height = height;
         lyHeader.setLayoutParams(params);
 

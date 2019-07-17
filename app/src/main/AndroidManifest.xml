@@ -21,7 +21,7 @@
         <activity
             android:name=".SigninActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"

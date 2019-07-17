@@ -62,7 +62,7 @@ public class SigninActivity extends AppCompatActivity {
 
     private ImageView imgMySim;
 
-    private LinearLayout lyLogin;
+    private CardView lyLogin;
     //    private LinearLayout lyGuest;
     private RelativeLayout lyHeader;
     private LinearLayout lyProgress;
@@ -453,7 +453,7 @@ public class SigninActivity extends AppCompatActivity {
         imgMySim = (ImageView) findViewById(R.id.imgMySim);
         lyHeader = (RelativeLayout) findViewById(R.id.lyHeader);
 
-        lyLogin = (LinearLayout) findViewById(R.id.lyLogin);
+        lyLogin = (CardView) findViewById(R.id.lyLogin);
 //        lyGuest = (LinearLayout) findViewById(R.id.lyGuest);
         lyPersonelCode = (CardView) findViewById(R.id.lyPersonelCode);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
@@ -598,7 +598,7 @@ public class SigninActivity extends AppCompatActivity {
 
         int width = getResources().getDisplayMetrics().widthPixels;
         ViewGroup.LayoutParams params = lyHeader.getLayoutParams();
-        int height = (width / 2);
+        int height = ((width ));
         params.height = height;
         lyHeader.setLayoutParams(params);
 
