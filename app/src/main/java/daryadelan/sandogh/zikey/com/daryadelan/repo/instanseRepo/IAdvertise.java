@@ -13,4 +13,6 @@ public interface IAdvertise {
      * @param callBack
      */
     void getAdvertise(Context context, String name,String tokenType,String token, IRepoCallBack<AdvertiseWrapper> callBack);
+
+    void getGallary(Context context, String name,String tokenType,String token, IRepoCallBack<AdvertiseWrapper> callBack);
 }

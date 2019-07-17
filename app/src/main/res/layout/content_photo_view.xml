@@ -16,13 +16,13 @@
         app:cardUseCompatPadding="false"
         app:cardBackgroundColor="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imgFullPhoto"
             android:scaleType="fitXY"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
 
     </android.support.v7.widget.CardView>
 
@@ -31,10 +31,20 @@
         android:background="@color/colorGray"
         android:layout_height="2dp"/>
 
-    <android.support.v7.widget.RecyclerView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_weight="1"
-        android:background="@color/colorWhite"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/rvItems"
+            android:background="@color/colorWhite"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+        <include layout="@layout/layout_progress_match_parent"/>
+
+    </RelativeLayout>
+
 
 </LinearLayout>

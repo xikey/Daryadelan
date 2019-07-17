@@ -9,4 +9,8 @@ public interface IAdvertiseApi {
 
     @GET("api/Gallery/GetGalleryByName")
     Call<AdvertiseWrapper> getMainSlider(@Query("name") String name);
+
+    @GET("api/Gallery/GetGalleryByName")
+    Call<AdvertiseWrapper> getGallery(@Query("name") String name);
+
 }

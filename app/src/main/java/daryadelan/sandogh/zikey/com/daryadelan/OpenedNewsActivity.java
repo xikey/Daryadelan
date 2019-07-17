@@ -60,7 +60,7 @@ public class OpenedNewsActivity extends AppCompatActivity {
     }
 
     private void initContent() {
-        if (news==null)
+        if (news == null)
             return;
 
         txtDate.setText(news.getPersianDate());
@@ -87,12 +87,10 @@ public class OpenedNewsActivity extends AppCompatActivity {
         if (data.hasExtra(KEY_PARCABLE))
             news = data.getExtras().getParcelable(KEY_PARCABLE);
 
-        if (news == null){
-            Toasty.error(OpenedNewsActivity.this,"خطا در دریافت اطلاعات خبر");
+        if (news == null) {
+            Toasty.error(OpenedNewsActivity.this, "خطا در دریافت اطلاعات خبر");
             return;
         }
-
-
 
     }
 
@@ -116,7 +114,7 @@ public class OpenedNewsActivity extends AppCompatActivity {
 
 
         final ViewGroup.LayoutParams params = appbar.getLayoutParams();
-        params.height = (width*2/3);
+        params.height = (width * 2 / 3);
         appbar.setLayoutParams(params);
 
         appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -126,7 +124,7 @@ public class OpenedNewsActivity extends AppCompatActivity {
                 int maxScroll = appBarLayout.getTotalScrollRange();
                 float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
                 float val = (1 - percentage);
-                float val2=1-percentage;
+                float val2 = 1 - percentage;
                 if (val < 0.7)
                     val = 0;
 
@@ -162,11 +160,10 @@ public class OpenedNewsActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_colored = (Toolbar) findViewById(R.id.toolbar_colored);
 
-        imgNews= (ImageView) findViewById(R.id.imgNews);
-        txtDetails= (TextView) findViewById(R.id.txtDetails);
+        imgNews = (ImageView) findViewById(R.id.imgNews);
+        txtDetails = (TextView) findViewById(R.id.txtDetails);
         FontChanger.applyTitleFont(txtDate);
         FontChanger.applyMainFont(txtDetails);
-
 
 
     }

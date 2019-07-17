@@ -25,6 +25,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.News;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Photo;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.PhotosWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IAdvertise;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IPhotos;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.PhotosServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
@@ -45,6 +46,8 @@ public class GalleriesActivity extends AppCompatActivity {
     private long pageCount = 0;
     private int hasMore = 0;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +66,7 @@ public class GalleriesActivity extends AppCompatActivity {
     private void getUserData() {
         user = UserInstance.getInstance().getUser();
         if (user == null) {
-            Toasty.error(GalleriesActivity.this, "خطا در دریافت اطلاعات کاربری");
+            Toasty.error(GalleriesActivity.this, "خطا در دریافت اطلاعات کاربری").show();
             finish();
         }
     }
@@ -89,6 +92,7 @@ public class GalleriesActivity extends AppCompatActivity {
         lyProgress.setVisibility(View.VISIBLE);
 
     }
+
     private void initRecycleView() {
 
         if (adapter == null)
@@ -111,8 +115,8 @@ public class GalleriesActivity extends AppCompatActivity {
                 if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
                     LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     int pos = layoutManager.findLastVisibleItemPosition();
-                    if (adapter!=null){
-                        if (adapter.getItemCount()-1==pos){
+                    if (adapter != null) {
+                        if (adapter.getItemCount() - 1 == pos) {
                             pageCount++;
                             getNews();
                         }
@@ -136,12 +140,11 @@ public class GalleriesActivity extends AppCompatActivity {
         private ArrayList<Photo> items;
 
         public void setItems(ArrayList<Photo> in) {
-            if (items==null)
-                items=new ArrayList<>();
+            if (items == null)
+                items = new ArrayList<>();
             items.addAll(in);
             notifyDataSetChanged();
         }
-
 
 
         void clearAdapter() {
@@ -173,14 +176,14 @@ public class GalleriesActivity extends AppCompatActivity {
 
 
                 Photo photo = items.get(position);
+
                 if (photo == null)
                     return;
-
+                holder.photo = photo;
 
                 String url = BuildConfig.IPAddress + "/" + photo.getGalleryThumbImage();
                 holder.txtTitle.setText(photo.getGalleryNameFA());
                 holder.txtDate.setText(photo.getPersianDate());
-
 
 
                 new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(holder.imgAvatar).load();
@@ -227,6 +230,7 @@ public class GalleriesActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
+                        PhotoViewActivity.start(GalleriesActivity.this, photo);
 
                     }
                 });
@@ -253,11 +257,11 @@ public class GalleriesActivity extends AppCompatActivity {
                 if (answer.getPhotos() == null || answer.getPhotos().size() == 0)
                     return;
 
-                if (answer.getPhotos().size()<10){
-                    hasMore=0;
+                if (answer.getPhotos().size() < 10) {
+                    hasMore = 0;
 
-                }else {
-                    hasMore=1;
+                } else {
+                    hasMore = 1;
                 }
 
                 if (adapter != null)
@@ -280,7 +284,7 @@ public class GalleriesActivity extends AppCompatActivity {
             }
         });
 
-     }
+    }
 
 
 }
