@@ -34,6 +34,8 @@ public class News  implements Parcelable {
     private String postImage;
     @SerializedName("datefa")
     private String persianDate;
+    @SerializedName("galleryName")
+    private String galleryName;
 
 
     public long getPostID() {
@@ -100,6 +102,14 @@ public class News  implements Parcelable {
         this.postImage = postImage;
     }
 
+    public String getGalleryName() {
+        return galleryName;
+    }
+
+    public void setGalleryName(String galleryName) {
+        this.galleryName = galleryName;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -115,6 +125,7 @@ public class News  implements Parcelable {
         dest.writeString(this.createDate);
         dest.writeString(this.postImage);
         dest.writeString(this.persianDate);
+        dest.writeString(this.galleryName);
     }
 
     public News(Parcel in){
@@ -126,6 +137,7 @@ public class News  implements Parcelable {
         this.createDate =  in.readString();
         this.postImage =  in.readString();
         this.persianDate =  in.readString();
+        this.galleryName =  in.readString();
 
     }
 }

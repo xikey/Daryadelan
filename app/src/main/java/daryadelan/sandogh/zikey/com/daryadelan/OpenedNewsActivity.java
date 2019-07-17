@@ -1,5 +1,6 @@
 package daryadelan.sandogh.zikey.com.daryadelan;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -14,15 +15,32 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.razanpardazesh.razanlibs.Tools.Convertor;
+
+import java.util.ArrayList;
+
+import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
+import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
+import daryadelan.sandogh.zikey.com.daryadelan.model.Advertise;
 import daryadelan.sandogh.zikey.com.daryadelan.model.News;
+import daryadelan.sandogh.zikey.com.daryadelan.model.User;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.AdvertiseWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IAdvertise;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.AdvertiseServerRepo;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.AutoFitGridLayoutManager;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ToolbarWrapper;
@@ -35,15 +53,18 @@ public class OpenedNewsActivity extends AppCompatActivity {
     private RelativeLayout lyProgress;
     private RelativeLayout lyContent;
     private TextView txtDate;
-
+    private RecyclerView rvItems;
     private AppBarLayout appbar;
     private CollapsingToolbarLayout toolbar_layout;
     private Toolbar toolbar;
     private Toolbar toolbar_colored;
     private ImageView imgNews;
-
+    private AutoFitGridLayoutManager gridLayoutManager;
     private News news;
     private TextView txtDetails;
+
+    private ImagesAdapter adapter;
+    private IAdvertise repo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +72,12 @@ public class OpenedNewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_opened_news);
 
         parseIntent();
+        initRepo();
         initToolbar();
         initViews();
         initCollapsingToolbarLayout();
         initContent();
+        initRecycleView();
 
 
     }
@@ -76,7 +99,36 @@ public class OpenedNewsActivity extends AppCompatActivity {
 
         new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(imgNews).load();
 
+        if (!TextUtils.isEmpty(news.getGalleryName())) {
+            getImages(news.getGalleryName());
+        }
+
     }
+
+    private void initRepo() {
+
+        if (repo == null)
+            repo = new AdvertiseServerRepo();
+    }
+
+    private void initRecycleView() {
+
+        int gridWidth = Convertor.toPixcel(120, getApplicationContext());
+
+        if (gridLayoutManager == null)
+            gridLayoutManager = new AutoFitGridLayoutManager(this, gridWidth);
+
+
+        rvItems.setLayoutManager(gridLayoutManager);
+
+        if (adapter == null)
+            adapter = new ImagesAdapter();
+
+        rvItems.setAdapter(adapter);
+
+
+    }
+
 
     private void parseIntent() {
 
@@ -159,6 +211,7 @@ public class OpenedNewsActivity extends AppCompatActivity {
         toolbar_layout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar_colored = (Toolbar) findViewById(R.id.toolbar_colored);
+        rvItems = (RecyclerView) findViewById(R.id.rvItems);
 
         imgNews = (ImageView) findViewById(R.id.imgNews);
         txtDetails = (TextView) findViewById(R.id.txtDetails);
@@ -184,5 +237,130 @@ public class OpenedNewsActivity extends AppCompatActivity {
 
         new ToolbarWrapper(this).initToolbarWithBackArrow(R.id.toolbar_colored, null, null, null);
     }
+
+    public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.PhotoHolder> {
+
+        private ArrayList<Advertise> images;
+
+
+        public void setImages(ArrayList<Advertise> images) {
+            this.images = images;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public ImagesAdapter.PhotoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            if (parent == null || parent.getContext() == null)
+                return null;
+
+
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_images_grid_item, parent, false);
+            PhotoHolder holder = new PhotoHolder(view);
+            return holder;
+
+        }
+
+        @Override
+        public void onBindViewHolder(ImagesAdapter.PhotoHolder holder, int position) {
+
+            if (holder == null)
+                return;
+
+            Advertise photo = images.get(position);
+            if (photo == null)
+                return;
+
+            String url = BuildConfig.IPAddress + "/" + photo.getImagepath();
+            new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(holder.image).load();
+
+            holder.photo = photo;
+
+
+        }
+
+
+        @Override
+        public int getItemCount() {
+
+            if (images == null || images.size() == 0)
+                return 0;
+
+
+            return images.size();
+
+
+        }
+
+
+        private class PhotoHolder extends RecyclerView.ViewHolder {
+
+            ImageView image;
+            Advertise photo;
+
+
+            public PhotoHolder(View v) {
+                super(v);
+
+                image = v.findViewById(R.id.image);
+
+                image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+//                        String url = BuildConfig.IPAddress + "/" + photo.getImagepath();
+//                        new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(imgFullPhoto).load();
+
+
+                    }
+                });
+
+
+            }
+        }
+
+
+    }
+
+    private void getImages(String galleryName) {
+
+        User user = UserInstance.getInstance().getUser();
+        if (user == null) {
+            return;
+        }
+
+        if (TextUtils.isEmpty(galleryName)) {
+            return;
+        }
+
+        repo.getGallary(getApplicationContext(), galleryName, user.getTokenType(), user.getToken(), new IRepoCallBack<AdvertiseWrapper>() {
+            @Override
+            public void onAnswer(AdvertiseWrapper answer) {
+
+
+                if (answer != null && answer.getData() != null && answer.getData().size() != 0) {
+                    adapter.setImages(answer.getData());
+                } else {
+                    // TODO: 7/17/2019 Nothing .!.??
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable error) {
+             
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
+
+    }
+
 
 }
