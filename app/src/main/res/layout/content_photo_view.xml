@@ -10,21 +10,39 @@
     tools:context=".PhotoViewActivity"
     tools:showIn="@layout/activity_photo_view">
 
-    <android.support.v7.widget.CardView
-        app:cardCornerRadius="0dp"
-        app:cardElevation="10dp"
-        app:cardUseCompatPadding="false"
-        app:cardBackgroundColor="@color/colorPrimary"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imgFullPhoto"
-            android:scaleType="fitXY"
+        <android.support.v7.widget.CardView
+            app:cardCornerRadius="0dp"
+            app:cardElevation="10dp"
+            app:cardUseCompatPadding="false"
+            app:cardBackgroundColor="@color/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
 
-    </android.support.v7.widget.CardView>
+            <ImageView
+                android:id="@+id/imgFullPhoto"
+                android:scaleType="fitXY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:background="@color/transparent"/>
+
+
+
+    </RelativeLayout>
+
 
     <View
         android:layout_width="match_parent"
