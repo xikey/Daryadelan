@@ -1,12 +1,16 @@
 package daryadelan.sandogh.zikey.com.daryadelan;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.DialogFragment;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +23,10 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -74,6 +82,10 @@ public class SigninActivity extends AppCompatActivity {
 
     private IUser userSqliteRepo;
 
+    private AnimatorSet shirinkLogo;
+    private AnimatorSet globalAnimate;
+    private CardView crdContainer;
+
     private boolean isGuest = false;
 
 //    private Switch swIAmGuest;
@@ -81,6 +93,17 @@ public class SigninActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT < 16) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }else {
+            View decorView = getWindow().getDecorView();
+// Hide the status bar.
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+
+        }
 
         requestGetMessagePermission();
         initRepo();
@@ -190,7 +213,7 @@ public class SigninActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        animateLogo();
 
         SMSBroadcastReceiver.registerBroadCast(getApplicationContext(), SMSBroadcastReceiver);
 
@@ -457,7 +480,7 @@ public class SigninActivity extends AppCompatActivity {
 //        lyGuest = (LinearLayout) findViewById(R.id.lyGuest);
         lyPersonelCode = (CardView) findViewById(R.id.lyPersonelCode);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
-
+        crdContainer = (CardView) findViewById(R.id.crdContainer);
 //        swIAmGuest = (Switch) findViewById(R.id.swIAmGuest);
 
 
@@ -468,6 +491,7 @@ public class SigninActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        animateLogo();
     }
 
     private void requestHint() throws IntentSender.SendIntentException {
@@ -768,6 +792,54 @@ public class SigninActivity extends AppCompatActivity {
 
     }
 
+    private void animateLogo() {
+        if (crdContainer==null)
+            return;
+
+        shirinkLogo = new AnimatorSet();
+//        Animator animatorShirinkX = ObjectAnimator.ofFloat(crdContainer, "scaleX", 1f, 0.9f);
+//        animatorShirinkX.setDuration(50);
+//        animatorShirinkX.setInterpolator(new DecelerateInterpolator());
+//
+//        Animator animatorShirinkY = ObjectAnimator.ofFloat(crdContainer, "scaleY", 1f, 0.9f);
+//        animatorShirinkY.setDuration(50);
+//        animatorShirinkY.setInterpolator(new DecelerateInterpolator());
+//
+//        shirinkLogo.playTogether(animatorShirinkX, animatorShirinkY);
+
+
+        AnimatorSet setGrow = new AnimatorSet();
+        Animator animatorGrowX = ObjectAnimator.ofFloat(crdContainer, "scaleX", 0.9f, 1.1f);
+        animatorGrowX.setDuration(200);
+        animatorGrowX.setInterpolator(new AccelerateInterpolator());
+
+        Animator animatorGrowY = ObjectAnimator.ofFloat(crdContainer, "scaleY", 0.9f, 1.1f);
+        animatorGrowY.setDuration(200);
+        animatorGrowY.setInterpolator(new AccelerateInterpolator());
+
+        setGrow.playTogether(animatorGrowX, animatorGrowY);
+
+
+        AnimatorSet setFix = new AnimatorSet();
+        Animator setFixX = ObjectAnimator.ofFloat(crdContainer, "scaleX", 1.1f, 1f);
+        setFixX.setDuration(800);
+        setFixX.setInterpolator(new BounceInterpolator());
+
+        Animator setFixY = ObjectAnimator.ofFloat(crdContainer, "scaleY", 1.1f, 1f);
+        setFixY.setDuration(800);
+        setFixY.setInterpolator(new BounceInterpolator());
+        setFix.playTogether(setFixX, setFixY);
+
+        globalAnimate = new AnimatorSet();
+        globalAnimate.playSequentially(shirinkLogo,setGrow,setFix);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(globalAnimate);
+        animatorSet.setStartDelay(50);
+        animatorSet.start();
+
+
+    }
 
 
 }

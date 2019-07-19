@@ -1,8 +1,12 @@
 package daryadelan.sandogh.zikey.com.daryadelan;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -10,12 +14,15 @@ import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
-import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
@@ -37,9 +44,25 @@ public class LoginActivity extends AppCompatActivity {
 
     private IUser userSqliteRepo;
 
+    private AnimatorSet shirinkLogo;
+    private AnimatorSet globalAnimate;
+    private CardView crdContainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT < 16) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }else {
+            View decorView = getWindow().getDecorView();
+// Hide the status bar.
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+
+        }
+
         setContentView(R.layout.activity_login_2);
 
         initViews();
@@ -121,11 +144,13 @@ public class LoginActivity extends AppCompatActivity {
             return;
 
         lyProgress.setVisibility(View.VISIBLE);
+        crdContainer.setVisibility(View.GONE);
 
         repo.login(LoginActivity.this, user, new IRepoCallBack<User>() {
             @Override
             public void onAnswer(User answer) {
                 lyProgress.setVisibility(View.GONE);
+                crdContainer.setVisibility(View.VISIBLE);
 
 
                 if (answer == null) {
@@ -179,6 +204,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onError(Throwable error) {
                 new CustomDialogBuilder().showAlert(LoginActivity.this, error.getMessage().toString());
                 lyProgress.setVisibility(View.GONE);
+                crdContainer.setVisibility(View.VISIBLE);
+
             }
 
             @Override
@@ -199,6 +226,7 @@ public class LoginActivity extends AppCompatActivity {
         txtPassword = (TextView) findViewById(R.id.txtPassword);
         lyAction = (CardView) findViewById(R.id.lyAction);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
+        crdContainer = (CardView) findViewById(R.id.crdContainer);
 
         try {
             FontChanger.applyMainFont(findViewById(R.id.lyContent));
@@ -206,6 +234,9 @@ public class LoginActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        animateLogo();
+
     }
 
     @Override
@@ -234,7 +265,7 @@ public class LoginActivity extends AppCompatActivity {
         RelativeLayout lyHeader = (RelativeLayout) findViewById(R.id.lyHeader);
         int width = getResources().getDisplayMetrics().widthPixels;
         ViewGroup.LayoutParams params = lyHeader.getLayoutParams();
-        int height = ((width *2/3));
+        int height = ((width  ));
         params.height = height;
         lyHeader.setLayoutParams(params);
 
@@ -264,6 +295,53 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             });
+
+    }
+
+    private void animateLogo() {
+
+        shirinkLogo = new AnimatorSet();
+//        Animator animatorShirinkX = ObjectAnimator.ofFloat(crdContainer, "scaleX", 1f, 0.9f);
+//        animatorShirinkX.setDuration(50);
+//        animatorShirinkX.setInterpolator(new DecelerateInterpolator());
+//
+//        Animator animatorShirinkY = ObjectAnimator.ofFloat(crdContainer, "scaleY", 1f, 0.9f);
+//        animatorShirinkY.setDuration(50);
+//        animatorShirinkY.setInterpolator(new DecelerateInterpolator());
+//
+//        shirinkLogo.playTogether(animatorShirinkX, animatorShirinkY);
+
+
+        AnimatorSet setGrow = new AnimatorSet();
+        Animator animatorGrowX = ObjectAnimator.ofFloat(crdContainer, "scaleX", 0.9f, 1.1f);
+        animatorGrowX.setDuration(200);
+        animatorGrowX.setInterpolator(new AccelerateInterpolator());
+
+        Animator animatorGrowY = ObjectAnimator.ofFloat(crdContainer, "scaleY", 0.9f, 1.1f);
+        animatorGrowY.setDuration(200);
+        animatorGrowY.setInterpolator(new AccelerateInterpolator());
+
+        setGrow.playTogether(animatorGrowX, animatorGrowY);
+
+
+        AnimatorSet setFix = new AnimatorSet();
+        Animator setFixX = ObjectAnimator.ofFloat(crdContainer, "scaleX", 1.1f, 1f);
+        setFixX.setDuration(800);
+        setFixX.setInterpolator(new BounceInterpolator());
+
+        Animator setFixY = ObjectAnimator.ofFloat(crdContainer, "scaleY", 1.1f, 1f);
+        setFixY.setDuration(800);
+        setFixY.setInterpolator(new BounceInterpolator());
+        setFix.playTogether(setFixX, setFixY);
+
+        globalAnimate = new AnimatorSet();
+        globalAnimate.playSequentially(shirinkLogo,setGrow,setFix);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(globalAnimate);
+        animatorSet.setStartDelay(50);
+        animatorSet.start();
+
 
     }
 
