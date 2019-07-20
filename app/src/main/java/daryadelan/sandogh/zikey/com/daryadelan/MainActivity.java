@@ -648,7 +648,7 @@ public class MainActivity extends AppCompatActivity
 
         int width = getResources().getDisplayMetrics().widthPixels;
 
-        int height = width * 2 / 3;
+        int height = width  /2;
         ViewGroup.LayoutParams mainParams = advertiseHeaderBox.getLayoutParams();
         mainParams.height = height;
         advertiseHeaderBox.setLayoutParams(mainParams);

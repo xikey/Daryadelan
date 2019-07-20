@@ -81,17 +81,7 @@
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/very_small_font_size" />
 
-                    <TextView
 
-                        android:id="@+id/txtUserName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/small_font_size" />
 
                 </LinearLayout>
 
@@ -121,16 +111,7 @@
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/very_small_font_size" />
 
-                    <TextView
-                        android:id="@+id/txtPersonelCode"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/small_font_size" />
+
 
                 </LinearLayout>
 
@@ -160,16 +141,7 @@
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/very_small_font_size" />
 
-                    <TextView
-                        android:id="@+id/txtUserType"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/small_font_size" />
+
 
                 </LinearLayout>
 
