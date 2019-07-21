@@ -1,9 +1,7 @@
 package daryadelan.sandogh.zikey.com.daryadelan;
 
-import android.app.ActionBar;
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,9 +32,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.davemorrissey.labs.subscaleview.ImageSource;
-import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
-
 import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
@@ -62,7 +57,6 @@ import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
-import daryadelan.sandogh.zikey.com.daryadelan.tools.NumberSeperator;
 import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity
