@@ -71,5 +71,7 @@
     <string name="title_activity_photo_view">PhotoViewActivity</string>
     <string name="copywright"> © تمامی حقوق این اپلیکیشن نزد   صندوق بازنشستگی سازمان بنادر و دریانوردی محفوظ است </string>
     <string name="nationalcode">کد ملی</string>
+    <string name="photo_album">آلبوم تصاویر</string>
+    <string name="news">اخبار و اطلاعیه ها</string>
 
 </resources>

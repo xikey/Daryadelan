@@ -346,7 +346,7 @@ public class OpenedNewsActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable error) {
-             
+
             }
 
             @Override

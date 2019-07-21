@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity
     boolean doubleBackToExitPressedOnce = false;
 
     private TextView txtUserType;
-    private TextView txtPersonelCode;
     private TextView txtUserName;
     private TextView txtMoreNews;
 
@@ -352,8 +351,8 @@ public class MainActivity extends AppCompatActivity
         try {
             if (!TextUtils.isEmpty(loadedUser.getPersonTypeName()))
                 txtUserType.setText(loadedUser.getPersonTypeName());
-            if (loadedUser.getPersonalCode() != 0)
-                txtPersonelCode.setText("" + loadedUser.getPersonalCode());
+//            if (loadedUser.getPersonalCode() != 0)
+//                txtPersonelCode.setText("" + loadedUser.getPersonalCode());
             if (!TextUtils.isEmpty(loadedUser.getFirstName()))
                 txtUserName.setText(loadedUser.getFirstName() + " " + loadedUser.getLastName());
 
@@ -426,7 +425,6 @@ public class MainActivity extends AppCompatActivity
         crdGallery = (CardView) findViewById(R.id.crdGallery);
 
         txtUserType = (TextView) findViewById(R.id.txtUserType);
-        txtPersonelCode = (TextView) findViewById(R.id.txtPersonelCode);
         txtUserName = (TextView) findViewById(R.id.txtUserName);
         txtMoreNews = (TextView) findViewById(R.id.txtMoreNews);
         lyNews = (LinearLayout) findViewById(R.id.lyNews);
@@ -800,7 +798,7 @@ public class MainActivity extends AppCompatActivity
         try {
             lyProgress.setVisibility(View.GONE);
             txtUserName.setText(answer.getFirstName() + " " + answer.getLastName());
-            txtPersonelCode.setText("" + answer.getPersonalCode());
+//            txtPersonelCode.setText("" + answer.getPersonalCode());
             txtUserType.setText("" + answer.getPersonTypeName());
 
             loadedUser.setFirstName(answer.getFirstName());

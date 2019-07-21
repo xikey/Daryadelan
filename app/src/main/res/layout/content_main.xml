@@ -88,6 +88,9 @@
 
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
+                        android:id="@+id/crdPayrolls"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
                         app:cardCornerRadius="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="5dp"
@@ -103,7 +106,7 @@
                             android:layout_height="wrap_content">
 
                             <ImageView
-                                android:src="@drawable/ic_payment"
+                                android:src="@drawable/ic_payroll"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp" />
                             <TextView
@@ -129,6 +132,9 @@
                     android:layout_weight="0.5">
 
                     <android.support.v7.widget.CardView
+                        android:id="@+id/lyAhkam"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_marginRight="5dp"
                         android:layout_marginLeft="10dp"
                         android:layout_width="match_parent"
@@ -207,6 +213,9 @@
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
+                    android:id="@+id/crdGallery"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
                     app:cardCornerRadius="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="5dp"
@@ -222,14 +231,16 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:src="@drawable/ic_payment"
+                            android:src="@drawable/ic_gallery"
                             android:layout_width="50dp"
                             android:layout_height="50dp" />
+
                         <TextView
-                            android:layout_marginTop="10dp"
-                            android:text="@string/payroll"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/photo_album"
+                            android:alpha="0.7"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/normal_font_size"
+                            android:textSize="@dimen/small_font_size"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -247,37 +258,13 @@
                 android:layout_weight="0.5">
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/crdNews"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:layout_marginRight="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_width="match_parent"
                     app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp"
-                    app:cardUseCompatPadding="true"
-                    android:layout_height="160dp"></android.support.v7.widget.CardView>
-
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5">
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    app:cardCornerRadius="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="5dp"
                     app:cardElevation="5dp"
                     app:cardUseCompatPadding="true"
                     android:layout_height="160dp">
@@ -290,49 +277,29 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:src="@drawable/ic_payment"
+                            android:src="@drawable/ic_news"
                             android:layout_width="50dp"
                             android:layout_height="50dp" />
+
                         <TextView
-                            android:layout_marginTop="10dp"
-                            android:text="@string/payroll"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/news"
+                            android:alpha="0.7"
                             android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/normal_font_size"
+                            android:textSize="@dimen/small_font_size"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
                     </LinearLayout>
 
+
                 </android.support.v7.widget.CardView>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_weight="0.5">
-
-                <android.support.v7.widget.CardView
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_width="match_parent"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp"
-                    app:cardUseCompatPadding="true"
-                    android:layout_height="160dp"></android.support.v7.widget.CardView>
 
 
             </LinearLayout>
 
 
         </LinearLayout>
-
-
-        <include layout="@layout/layout_user_datas" />
-
-        <include layout="@layout/layout_quick_shortcut" />
 
 
         <LinearLayout
