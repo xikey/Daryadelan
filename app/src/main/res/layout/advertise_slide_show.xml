@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:paddingBottom="25dp" />
+        android:paddingBottom="10dp" />
 
 
 </RelativeLayout>
