@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         initViews();
         initListeners();
         initRepo();
-        clearSession();
+
 
     }
 
@@ -242,6 +242,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        clearSession();
         initHeaderSize();
     }
 

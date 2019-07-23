@@ -25,4 +25,9 @@ public class UserInstance {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public void clear(){
+        ourInstance=null;
+        user=null;
+    }
 }

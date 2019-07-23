@@ -398,12 +398,12 @@ public class UserSqliteRepo implements IUser {
         User output = null;
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
-
+        UserInstance.getInstance().clear();
         ServerApiClient.clearRetrofit();
 
         db.beginTransaction();
         db.delete(UserData.TABLE_USER, null, null);
-        UserInstance.getInstance().setUser(null);
+
 
         db.setTransactionSuccessful();
         db.endTransaction();

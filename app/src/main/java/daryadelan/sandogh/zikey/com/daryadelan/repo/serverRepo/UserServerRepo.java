@@ -3,6 +3,10 @@ package daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+
+import java.io.IOException;
+
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.apiClient.ServerApiClient;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
@@ -30,6 +34,19 @@ public class UserServerRepo implements IUser {
                 if (response == null) {
                     callBack.onError(new Throwable("RP ERR 101  خطا در دریافت اطلاعات"));
                     return;
+                }
+
+                if (response.errorBody()!=null){
+
+                    Gson gson = new Gson();
+                    try {
+                        User user= gson.fromJson(response.errorBody().string(),User.class);
+                        callBack.onError(new Throwable(user.getError_description()));
+                        return;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 }
 
                 if (response.body() == null) {
@@ -66,6 +83,19 @@ public class UserServerRepo implements IUser {
                     return;
                 }
 
+                if (response.errorBody()!=null){
+
+                    Gson gson = new Gson();
+                    try {
+                        User user= gson.fromJson(response.errorBody().string(),User.class);
+                        callBack.onError(new Throwable(user.getError_description()));
+                        return;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
                 if (response.body() == null) {
                     callBack.onError(new Throwable("RP ERR 102  response body is null"));
                     return;
@@ -100,7 +130,18 @@ public class UserServerRepo implements IUser {
                     callBack.onError(new Throwable("RP ERR 101  خطا در دریافت اطلاعات"));
                     return;
                 }
+                if (response.errorBody()!=null){
 
+                    Gson gson = new Gson();
+                    try {
+                        User user= gson.fromJson(response.errorBody().string(),User.class);
+                        callBack.onError(new Throwable(user.getError_description()));
+                        return;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
                 if (response.body() == null) {
                     callBack.onError(new Throwable("RP ERR 102  response body is null"));
                     return;
@@ -136,10 +177,24 @@ public class UserServerRepo implements IUser {
                     return;
                 }
 
+                if (response.errorBody()!=null){
+
+                        Gson gson = new Gson();
+                    try {
+                       User user= gson.fromJson(response.errorBody().string(),User.class);
+                        callBack.onError(new Throwable(user.getError_description()));
+                        return;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
                 if (response.body() == null) {
                     callBack.onError(new Throwable("خطا در ورود به برنامه"));
                     return;
                 }
+
 
                 if (response.body().getResultId()<0){
                     if (!TextUtils.isEmpty(response.body().getMessagee())){
@@ -191,7 +246,18 @@ public class UserServerRepo implements IUser {
                     callBack.onError(new Throwable("RP ERR 101  خطا در دریافت اطلاعات"));
                     return;
                 }
+                if (response.errorBody()!=null){
 
+                    Gson gson = new Gson();
+                    try {
+                        User user= gson.fromJson(response.errorBody().string(),User.class);
+                        callBack.onError(new Throwable(user.getError_description()));
+                        return;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
                 if (response.body() == null) {
                     callBack.onError(new Throwable("خطا در ورود به برنامه"));
                     return;

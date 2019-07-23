@@ -76,6 +76,7 @@ public class User extends ServerWrapper {
     private String loginDate;
 
 
+
     public long getPersonalCode() {
         return personalCode;
     }
