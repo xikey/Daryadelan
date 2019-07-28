@@ -51,7 +51,7 @@
                         android:alpha="0.8"
                         android:padding="2dp"
                         android:rotation="0"
-                        android:scaleType="centerInside"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/ic_daryadelan_splash" />
 
                     <TextView
