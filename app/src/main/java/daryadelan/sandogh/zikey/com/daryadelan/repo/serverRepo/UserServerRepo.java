@@ -36,6 +36,11 @@ public class UserServerRepo implements IUser {
                     return;
                 }
 
+                if (response.raw()!=null&&response.raw().code()==404){
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
+
                 if (response.errorBody()!=null){
 
                     Gson gson = new Gson();
@@ -80,6 +85,11 @@ public class UserServerRepo implements IUser {
 
                 if (response == null) {
                     callBack.onError(new Throwable("RP ERR 101  خطا در دریافت اطلاعات"));
+                    return;
+                }
+
+                if (response.raw()!=null&&response.raw().code()==404){
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
                     return;
                 }
 
@@ -130,6 +140,12 @@ public class UserServerRepo implements IUser {
                     callBack.onError(new Throwable("RP ERR 101  خطا در دریافت اطلاعات"));
                     return;
                 }
+
+                if (response.raw()!=null&&response.raw().code()==404){
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
+
                 if (response.errorBody()!=null){
 
                     Gson gson = new Gson();
@@ -172,8 +188,14 @@ public class UserServerRepo implements IUser {
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
+
                 if (response == null) {
                     callBack.onError(new Throwable("RP ERR 101  خطا در دریافت اطلاعات"));
+                    return;
+                }
+
+                if (response.raw()!=null&&response.raw().code()==404){
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
                     return;
                 }
 
@@ -246,6 +268,12 @@ public class UserServerRepo implements IUser {
                     callBack.onError(new Throwable("RP ERR 101  خطا در دریافت اطلاعات"));
                     return;
                 }
+
+                if (response.raw()!=null&&response.raw().code()==404){
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
+
                 if (response.errorBody()!=null){
 
                     Gson gson = new Gson();

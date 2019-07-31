@@ -5,6 +5,8 @@
     android:paddingBottom="30dp"
     android:layout_height="match_parent">
 
+
+
     <com.github.ybq.android.spinkit.SpinKitView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/spin_kit"
