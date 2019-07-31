@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -263,12 +264,46 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initHeaderSize() {
 
-        RelativeLayout lyHeader = (RelativeLayout) findViewById(R.id.lyHeader);
-        int width = getResources().getDisplayMetrics().widthPixels;
-        ViewGroup.LayoutParams params = lyHeader.getLayoutParams();
-        int height = ((width  ));
-        params.height = height;
-        lyHeader.setLayoutParams(params);
+
+
+        try {
+            RelativeLayout lyHeader = (RelativeLayout) findViewById(R.id.lyHeader);
+            int width = getResources().getDisplayMetrics().widthPixels;
+            ViewGroup.LayoutParams params = lyHeader.getLayoutParams();
+            int height = ((width));
+            params.height = height;
+            lyHeader.setLayoutParams(params);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+
+            DisplayMetrics metrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+            int widthPixels = metrics.widthPixels;
+            int heightPixels = metrics.heightPixels;
+            float scaleFactor = metrics.density;
+            float widthDp = widthPixels / scaleFactor;
+            float heightDp = heightPixels / scaleFactor;
+            float smallestWidth = Math.min(widthDp, heightDp);
+
+            // is Tablet?
+            if (smallestWidth > 600) {
+                int height = getResources().getDisplayMetrics().heightPixels;
+                int width = getResources().getDisplayMetrics().widthPixels;
+                ViewGroup.LayoutParams params = crdContainer.getLayoutParams();
+                params.height = height / 2;
+                crdContainer.setLayoutParams(params);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 
