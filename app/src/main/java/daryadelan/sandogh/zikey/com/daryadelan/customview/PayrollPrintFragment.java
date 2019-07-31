@@ -19,6 +19,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.R;
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Payroll;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.NumberSeperator;
@@ -138,8 +140,8 @@ public class PayrollPrintFragment extends DialogFragment {
 
     private void initClickListeners() {
 
-        if (openPdfFileClickLister==null)
-            openPdfFileClickLister=new View.OnClickListener() {
+        if (openPdfFileClickLister == null)
+            openPdfFileClickLister = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
@@ -157,7 +159,6 @@ public class PayrollPrintFragment extends DialogFragment {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void printLayout() {
-
 
 
         LinearLayout linearLayout = (LinearLayout) root.findViewById(R.id.lyRoot);
@@ -222,12 +223,14 @@ public class PayrollPrintFragment extends DialogFragment {
         if (!file.exists()) {
             file.mkdirs();
         }
-        String targetPdf = directory_path + "factor.pdf";
+        // TODO: 7/31/2019 DATE MSUT SET HERE
+        String filename = "payroll_" + payrollUser.getPersonalCode() + "_DATE.pdf";
+        String targetPdf = directory_path + filename;
         File filePath = new File(targetPdf);
 
         try {
             document.writeTo(new FileOutputStream(filePath));
-            Toast.makeText(getActivity(), "Done", Toast.LENGTH_LONG).show();
+            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "فایل فیش حقوقی شما در مسیر زیر ذخیره شد");
             showPDF(filePath);
 
 
@@ -258,7 +261,6 @@ public class PayrollPrintFragment extends DialogFragment {
             // Instruct the user to install a PDF reader here, or something
         }
     }
-
 
 
     private void initContent() {
