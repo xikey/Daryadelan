@@ -21,7 +21,6 @@ import daryadelan.sandogh.zikey.com.daryadelan.tools.SqlAsyncWrapper;
 
 public class UserSqliteRepo implements IUser {
 
-    private SqlAsyncWrapper asyncWrapper;
 
     @Override
     public void personCheck(Context context, User user, IRepoCallBack<User> callBack) {
@@ -48,8 +47,8 @@ public class UserSqliteRepo implements IUser {
         if (context == null)
             return;
 
-        if (asyncWrapper == null)
-            asyncWrapper = new SqlAsyncWrapper();
+
+        SqlAsyncWrapper asyncWrapper = new SqlAsyncWrapper();
 
         asyncWrapper.setDoOnBackground(new AsyncWrapper.Callback() {
             @Override
@@ -97,8 +96,7 @@ public class UserSqliteRepo implements IUser {
         }
 
 
-        if (asyncWrapper == null)
-            asyncWrapper = new SqlAsyncWrapper();
+        SqlAsyncWrapper  asyncWrapper = new SqlAsyncWrapper();
 
         asyncWrapper.setDoOnBackground(new AsyncWrapper.Callback() {
             @Override
@@ -155,8 +153,7 @@ public class UserSqliteRepo implements IUser {
         }
 
 
-        if (asyncWrapper == null)
-            asyncWrapper = new SqlAsyncWrapper();
+        SqlAsyncWrapper    asyncWrapper = new SqlAsyncWrapper();
 
         asyncWrapper.setDoOnBackground(new AsyncWrapper.Callback() {
             @Override
@@ -201,8 +198,7 @@ public class UserSqliteRepo implements IUser {
         if (context == null)
             return;
 
-        if (asyncWrapper == null)
-            asyncWrapper = new SqlAsyncWrapper();
+        SqlAsyncWrapper   asyncWrapper = new SqlAsyncWrapper();
 
         asyncWrapper.setDoOnBackground(new AsyncWrapper.Callback() {
             @Override
@@ -267,7 +263,7 @@ public class UserSqliteRepo implements IUser {
             values.put(UserData.USR_PERSON_TYPE, user.getPersonType());
             values.put(UserData.USR_TOKEN_EXPIRE, user.getTokenExpireDate());
             values.put(UserData.USR_PERSONAL_CODE, user.getPersonalCode());
-            values.put(UserData.USR_LOGIN_DATE,CalendarWrapper.getCurrentPersianDate());
+            values.put(UserData.USR_LOGIN_DATE, CalendarWrapper.getCurrentPersianDate());
 
 
             db.insert(UserData.TABLE_USER, null, values);
