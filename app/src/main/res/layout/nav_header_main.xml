@@ -30,7 +30,7 @@
             android:layout_centerHorizontal="true"
             android:paddingTop="16dp"
             android:contentDescription="@string/nav_header_desc"
-            app:srcCompat="@drawable/ic_daryadelan_splash" />
+            app:srcCompat="@drawable/ic_daryadelan_signin" />
 
         <TextView
             android:layout_width="wrap_content"
