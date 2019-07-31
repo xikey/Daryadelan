@@ -147,6 +147,7 @@ public class SigninActivity extends AppCompatActivity {
                     initListeners();
                     hideKeyBoard();
                     clearSession();
+                    showValidationDialog();
 
 
                 }
@@ -160,6 +161,7 @@ public class SigninActivity extends AppCompatActivity {
                 initListeners();
                 hideKeyBoard();
                 clearSession();
+                showValidationDialog();
 
             }
 
@@ -883,5 +885,11 @@ public class SigninActivity extends AppCompatActivity {
 
     }
 
+
+    private void showValidationDialog(){
+
+        SMSvalidationDialogFullScreen.Show(SigninActivity.this);
+
+    }
 
 }

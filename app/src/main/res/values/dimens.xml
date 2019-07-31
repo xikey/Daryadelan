@@ -12,6 +12,10 @@
 
     <dimen name="very_big_font_size">20sp</dimen>
 
+    <dimen name="very_big_font_size_22">22sp</dimen>
+
+    <dimen name="very_big_font_size_24">24sp</dimen>
+
     <dimen name="small_font_size">14dp</dimen>
 
     <dimen name="very_small_font_size">12sp</dimen>
