@@ -10,248 +10,81 @@
     android:windowSoftInputMode="stateHidden"
     tools:context=".SigninActivity">
 
-    <ScrollView
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true">
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorGray"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/lyHeader"
-                android:layout_width="match_parent"
-                android:layout_height="300dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/bg_login_shadow" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:paddingTop="20dp">
-
-                    <ImageView
-                        android:id="@+id/imgMap"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_centerInParent="true"
-                        android:alpha="0.9"
-                        android:padding="2dp"
-                        android:rotation="0"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/ic_daryadelan_signin" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center"
-                        android:paddingLeft="70dp"
-                        android:alpha="0.9"
-                        android:paddingTop="5dp"
-                        android:paddingRight="70dp"
-                        android:paddingBottom="5dp"
-                        android:text="@string/sandogh_title"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/very_small_font_size"
-                        android:visibility="gone" />
-
-                </LinearLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:alpha="0.0"
-                    android:background="@color/colorBlack">
-
-                </RelativeLayout>
-
-
-            </RelativeLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingTop="20dp"
-                android:visibility="gone">
-
-                <Switch
-                    android:id="@+id/swIAmGuest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.4"
-                    android:text="@string/i_am_guest"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/very_small_font_size" />
-
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp" />
-
-
-        </LinearLayout>
-
-    </ScrollView>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/crdContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        app:cardBackgroundColor="@color/colorWhite"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="9dp">
+        android:layout_height="match_parent">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorGray"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_marginTop="10dp"
-                    android:layout_width="95dp"
-                    android:layout_height="95dp">
+                    android:id="@+id/lyHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp">
 
                     <ImageView
-                        android:layout_centerInParent="true"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_cyrcle_user" />
-
-                    <com.github.ybq.android.spinkit.SpinKitView
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/spin_kit"
-                        android:visibility="gone"
-                        android:layout_centerInParent="true"
-                        style="@style/SpinKitView.Small.Circle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        app:SpinKit_Color="@color/colorAccent" />
-
-
-                </RelativeLayout>
-
-
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="25dp">
+                        android:scaleType="fitXY"
+                        android:src="@drawable/bg_login_shadow" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingTop="20dp">
+
+                        <ImageView
+                            android:id="@+id/imgMap"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_centerInParent="true"
+                            android:alpha="0.9"
+                            android:padding="2dp"
+                            android:rotation="0"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/ic_daryadelan_signin" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            android:text="@string/mobile_number"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/very_small_font_size" />
-
-
-                        <EditText
-                            android:id="@+id/txtUserName"
                             android:layout_width="match_parent"
-                            android:layout_height="42dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/textview_border_dark"
-                            android:gravity="right|center_vertical"
-                            android:inputType="numberDecimal"
-                            android:paddingRight="10dp"
-                            android:textSize="@dimen/small_font_size" />
-
-
+                            android:layout_height="40dp"
+                            android:layout_alignParentBottom="true"
+                            android:alpha="0.9"
+                            android:gravity="center"
+                            android:paddingLeft="70dp"
+                            android:paddingTop="5dp"
+                            android:paddingRight="70dp"
+                            android:paddingBottom="5dp"
+                            android:text="@string/sandogh_title"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/very_small_font_size"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
-                    <ImageView
 
-                        android:id="@+id/imgMySim"
-                        android:layout_marginTop="33dp"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_alignParentLeft="true"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:padding="7dp"
-                        app:srcCompat="@drawable/ic_sim_card_accent_24dp" />
-
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="25dp">
-
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent"
+                        android:alpha="0.0"
+                        android:background="@color/colorBlack">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            android:text="@string/nationalcode"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/very_small_font_size" />
-
-                        <EditText
-                            android:id="@+id/txtPersonelCode"
-                            android:layout_width="match_parent"
-                            android:layout_height="42dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/textview_border_dark"
-                            android:gravity="right|center_vertical"
-                            android:inputType="numberDecimal"
-                            android:paddingRight="10dp"
-                            android:textSize="@dimen/small_font_size" />
-
-                    </LinearLayout>
+                    </RelativeLayout>
 
 
                 </RelativeLayout>
@@ -260,72 +93,242 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal"
-                    android:paddingBottom="10dp">
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingTop="20dp"
+                    android:visibility="gone">
 
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/lySendSMS"
+                    <Switch
+                        android:id="@+id/swIAmGuest"
                         android:layout_width="wrap_content"
-                        android:layout_weight="0.5"
-                        android:layout_height="55dp"
-                        android:layout_marginTop="40dp"
-                        android:clickable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:cardBackgroundColor="@color/colorAccent"
-                        app:cardCornerRadius="18dp"
-                        app:cardElevation="1dp"
-                        app:cardUseCompatPadding="true">
+                        android:layout_height="wrap_content" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:alpha="0.8"
-                            android:gravity="center"
-                            android:paddingLeft="50dp"
-                            android:paddingRight="50dp"
-                            android:text="@string/send_sms"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/very_small_10" />
-                    </android.support.v7.widget.CardView>
-
-
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/lyLogin"
-                        android:layout_weight="0.5"
-                        android:alpha="0.8"
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="55dp"
-                        android:clickable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:cardBackgroundColor="@color/colorAccent"
-                        app:cardCornerRadius="18dp"
-                        app:cardElevation="1dp"
-                        app:cardUseCompatPadding="true">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:paddingRight="30dp"
-                            android:paddingLeft="30dp"
-                            android:alpha="0.8"
-                            android:gravity="center"
-                            android:text="@string/login_member"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/very_small_10" />
-                    </android.support.v7.widget.CardView>
-
+                        android:layout_height="wrap_content"
+                        android:alpha="0.4"
+                        android:text="@string/i_am_guest"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/very_small_font_size" />
 
                 </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp" />
+
 
             </LinearLayout>
 
         </ScrollView>
 
+        <android.support.v7.widget.CardView
+            android:id="@+id/crdContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="9dp">
 
-    </android.support.v7.widget.CardView>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="95dp"
+                        android:layout_height="95dp"
+                        android:layout_marginTop="10dp">
+
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_centerInParent="true"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_cyrcle_user" />
+
+                        <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/spin_kit"
+                            style="@style/SpinKitView.Small.Circle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:visibility="gone"
+                            app:SpinKit_Color="@color/colorAccent" />
 
 
-    <include layout="@layout/layout_progress_match_parent" />
+                    </RelativeLayout>
 
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="25dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:text="@string/mobile_number"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/very_small_font_size" />
+
+
+                            <EditText
+                                android:id="@+id/txtUserName"
+                                android:layout_width="match_parent"
+                                android:layout_height="42dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/textview_border_dark"
+                                android:gravity="right|center_vertical"
+                                android:inputType="numberDecimal"
+                                android:paddingRight="10dp"
+                                android:textSize="@dimen/small_font_size" />
+
+
+                        </LinearLayout>
+
+                        <ImageView
+
+                            android:id="@+id/imgMySim"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginTop="33dp"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:padding="7dp"
+                            app:srcCompat="@drawable/ic_sim_card_accent_24dp" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="25dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:text="@string/nationalcode"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/very_small_font_size" />
+
+                            <EditText
+                                android:id="@+id/txtPersonelCode"
+                                android:layout_width="match_parent"
+                                android:layout_height="42dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/textview_border_dark"
+                                android:gravity="right|center_vertical"
+                                android:inputType="numberDecimal"
+                                android:paddingRight="10dp"
+                                android:textSize="@dimen/small_font_size" />
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
+
+                        <android.support.v7.widget.CardView
+                            android:id="@+id/lySendSMS"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:layout_marginTop="40dp"
+                            android:layout_weight="0.5"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            app:cardBackgroundColor="@color/colorAccent"
+                            app:cardCornerRadius="18dp"
+                            app:cardElevation="1dp"
+                            app:cardUseCompatPadding="true">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:alpha="0.8"
+                                android:gravity="center"
+                                android:paddingLeft="50dp"
+                                android:paddingRight="50dp"
+                                android:text="@string/send_sms"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/very_small_10" />
+                        </android.support.v7.widget.CardView>
+
+
+                        <android.support.v7.widget.CardView
+                            android:id="@+id/lyLogin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:layout_weight="0.5"
+                            android:alpha="0.8"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            app:cardBackgroundColor="@color/colorAccent"
+                            app:cardCornerRadius="18dp"
+                            app:cardElevation="1dp"
+                            app:cardUseCompatPadding="true">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:alpha="0.8"
+                                android:gravity="center"
+                                android:paddingLeft="30dp"
+                                android:paddingRight="30dp"
+                                android:text="@string/login_member"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/very_small_10" />
+                        </android.support.v7.widget.CardView>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+
+        </android.support.v7.widget.CardView>
+
+
+    </RelativeLayout>
+
+
+    <include layout="@layout/layout_progress_match_parent"/>
 </RelativeLayout>
