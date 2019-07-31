@@ -21,6 +21,7 @@ import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -97,7 +98,7 @@ public class SigninActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }else {
+        } else {
             View decorView = getWindow().getDecorView();
 // Hide the status bar.
             int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -112,9 +113,6 @@ public class SigninActivity extends AppCompatActivity {
         initBroadCast();
 
 
-
-
-
     }
 
     /**
@@ -125,7 +123,7 @@ public class SigninActivity extends AppCompatActivity {
         userSqliteRepo.getUserDatas(getApplicationContext(), new IRepoCallBack<User>() {
             @Override
             public void onAnswer(User answer) {
-                if (answer!=null&&!TextUtils.isEmpty(answer.getToken())){
+                if (answer != null && !TextUtils.isEmpty(answer.getToken())) {
                     MainActivity.start(SigninActivity.this);
                     finish();
                 } else {
@@ -161,7 +159,6 @@ public class SigninActivity extends AppCompatActivity {
 
             }
         });
-
 
 
     }
@@ -620,11 +617,43 @@ public class SigninActivity extends AppCompatActivity {
 
     private void initHeaderSize() {
 
-        int width = getResources().getDisplayMetrics().widthPixels;
-        ViewGroup.LayoutParams params = lyHeader.getLayoutParams();
-        int height = ((width ));
-        params.height = height;
-        lyHeader.setLayoutParams(params);
+
+        try {
+            int width = getResources().getDisplayMetrics().widthPixels;
+            ViewGroup.LayoutParams params = lyHeader.getLayoutParams();
+            int height = ((width));
+            params.height = height;
+            lyHeader.setLayoutParams(params);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+
+            DisplayMetrics metrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+            int widthPixels = metrics.widthPixels;
+            int heightPixels = metrics.heightPixels;
+            float scaleFactor = metrics.density;
+            float widthDp = widthPixels / scaleFactor;
+            float heightDp = heightPixels / scaleFactor;
+            float smallestWidth = Math.min(widthDp, heightDp);
+
+            // is Tablet?
+            if (smallestWidth > 600) {
+                int height = getResources().getDisplayMetrics().heightPixels;
+                int width = getResources().getDisplayMetrics().widthPixels;
+                ViewGroup.LayoutParams params = crdContainer.getLayoutParams();
+                params.height = height / 2;
+                crdContainer.setLayoutParams(params);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -701,7 +730,7 @@ public class SigninActivity extends AppCompatActivity {
     }
 
 
-    public  Boolean isValidNationalCode(String nationalCode) {
+    public Boolean isValidNationalCode(String nationalCode) {
         //در صورتی که کد ملی وارد شده تهی باشد
 
         if (TextUtils.isEmpty(nationalCode)) {
@@ -710,7 +739,7 @@ public class SigninActivity extends AppCompatActivity {
         }
 
         //در صورتی که کد ملی وارد شده طولش کمتر از 10 رقم باشد
-        if (nationalCode.length() != 10){
+        if (nationalCode.length() != 10) {
             new CustomDialogBuilder().showAlert(SigninActivity.this, "مقدار کد ملی باید ده رقم باشد");
             return false;
         }
@@ -727,7 +756,7 @@ public class SigninActivity extends AppCompatActivity {
         };
 
         for (int i = 0; i < allDigitEqual.length; i++) {
-            if (allDigitEqual[i].equals(nationalCode)){
+            if (allDigitEqual[i].equals(nationalCode)) {
                 new CustomDialogBuilder().showAlert(SigninActivity.this, "مقدار کد ملی نادرست میباشد");
                 return false;
             }
@@ -749,11 +778,10 @@ public class SigninActivity extends AppCompatActivity {
             long b = (((((((num0 + num1) + num2) + num3) + num4) + num5) + num6) + num7) + num8;
             long c = b % 11;
 
-            if (!(((c < 2) && (a == c)) || ((c >= 2) && ((11 - c) == a)))){
+            if (!(((c < 2) && (a == c)) || ((c >= 2) && ((11 - c) == a)))) {
                 new CustomDialogBuilder().showAlert(SigninActivity.this, "مقدار کد ملی نادرست میباشد");
                 return false;
-            }
-            else {
+            } else {
                 return true;
             }
 
@@ -793,7 +821,7 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     private void animateLogo() {
-        if (crdContainer==null)
+        if (crdContainer == null)
             return;
 
         shirinkLogo = new AnimatorSet();
@@ -831,7 +859,7 @@ public class SigninActivity extends AppCompatActivity {
         setFix.playTogether(setFixX, setFixY);
 
         globalAnimate = new AnimatorSet();
-        globalAnimate.playSequentially(shirinkLogo,setGrow,setFix);
+        globalAnimate.playSequentially(shirinkLogo, setGrow, setFix);
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(globalAnimate);
