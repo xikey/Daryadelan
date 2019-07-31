@@ -95,17 +95,6 @@ public class SigninActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT < 16) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        } else {
-            View decorView = getWindow().getDecorView();
-// Hide the status bar.
-            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-
-        }
-
         requestGetMessagePermission();
         initRepo();
         isUserLoggedInBefore();
@@ -127,6 +116,31 @@ public class SigninActivity extends AppCompatActivity {
                     MainActivity.start(SigninActivity.this);
                     finish();
                 } else {
+
+                    if (Build.VERSION.SDK_INT < 16) {
+                        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    } else {
+                        View decorView = getWindow().getDecorView();
+// Hide the status bar.
+                        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+                        decorView.setSystemUiVisibility(uiOptions);
+
+
+                    }
+
+
+                    if (Build.VERSION.SDK_INT < 16) {
+                        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    } else {
+                        View decorView = getWindow().getDecorView();
+// Hide the status bar.
+                        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+                        decorView.setSystemUiVisibility(uiOptions);
+
+
+                    }
                     setContentView(R.layout.activity_signin_2);
                     initViews();
                     initHeaderSize();
