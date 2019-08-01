@@ -20,14 +20,14 @@ public class UserServerRepo implements IUser {
 
     Call<User> userCall;
     //مقدار پیش فرض توکن دریافتی. این مقدار از سمت سرور قرار داده شده ...
-    private   final String KEY_TOKEN_TYPE = "bearer";
+    private final String KEY_TOKEN_TYPE = "bearer";
 
 
     @Override
     public void personCheck(Context context, User user, final IRepoCallBack<User> callBack) {
 
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
-        userCall = userApi.checkPerson( user.getPersonalCode(),user.getMobile(), user.getMobileDeviceBrand(), user.getMobileImei(), user.getOsVersion());
+        userCall = userApi.checkPerson(user);
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -36,16 +36,16 @@ public class UserServerRepo implements IUser {
                     return;
                 }
 
-                if (response.raw()!=null&&response.raw().code()==404){
+                if (response.raw() != null && response.raw().code() == 404) {
                     callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
                     return;
                 }
 
-                if (response.errorBody()!=null){
+                if (response.errorBody() != null) {
 
                     Gson gson = new Gson();
                     try {
-                        User user= gson.fromJson(response.errorBody().string(),User.class);
+                        User user = gson.fromJson(response.errorBody().string(), User.class);
                         callBack.onError(new Throwable(user.getError_description()));
                         return;
                     } catch (IOException e) {
@@ -78,7 +78,7 @@ public class UserServerRepo implements IUser {
     @Override
     public void checkSMSisValidate(Context context, User user, final IRepoCallBack<User> callBack) {
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
-        userCall = userApi.checkSMSisValidate(user.getActiveCode(), user.getMobile());
+        userCall = userApi.checkSMSisValidate(user);
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -88,16 +88,16 @@ public class UserServerRepo implements IUser {
                     return;
                 }
 
-                if (response.raw()!=null&&response.raw().code()==404){
+                if (response.raw() != null && response.raw().code() == 404) {
                     callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
                     return;
                 }
 
-                if (response.errorBody()!=null){
+                if (response.errorBody() != null) {
 
                     Gson gson = new Gson();
                     try {
-                        User user= gson.fromJson(response.errorBody().string(),User.class);
+                        User user = gson.fromJson(response.errorBody().string(), User.class);
                         callBack.onError(new Throwable(user.getError_description()));
                         return;
                     } catch (IOException e) {
@@ -132,7 +132,7 @@ public class UserServerRepo implements IUser {
     public void createUser(Context context, User user, final IRepoCallBack<User> callBack) {
 
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
-        userCall = userApi.createUser(user.getAcceptCode(), user.getMobile(), user.getPassword(), user.getFirstName(), user.getLastName(),user.getPersonType());
+        userCall = userApi.createUser(user);
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -141,16 +141,16 @@ public class UserServerRepo implements IUser {
                     return;
                 }
 
-                if (response.raw()!=null&&response.raw().code()==404){
+                if (response.raw() != null && response.raw().code() == 404) {
                     callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
                     return;
                 }
 
-                if (response.errorBody()!=null){
+                if (response.errorBody() != null) {
 
                     Gson gson = new Gson();
                     try {
-                        User user= gson.fromJson(response.errorBody().string(),User.class);
+                        User user = gson.fromJson(response.errorBody().string(), User.class);
                         callBack.onError(new Throwable(user.getError_description()));
                         return;
                     } catch (IOException e) {
@@ -184,7 +184,8 @@ public class UserServerRepo implements IUser {
     @Override
     public void login(Context context, User user, final IRepoCallBack<User> callBack) {
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
-        userCall = userApi.login(user.getMobile(), user.getPassword(), user.getGrantType());
+//        userCall = userApi.login(user.getMobile(), user.getPassword(), user.getGrantType());
+        userCall = userApi.login(user);
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -194,16 +195,16 @@ public class UserServerRepo implements IUser {
                     return;
                 }
 
-                if (response.raw()!=null&&response.raw().code()==404){
+                if (response.raw() != null && response.raw().code() == 404) {
                     callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
                     return;
                 }
 
-                if (response.errorBody()!=null){
+                if (response.errorBody() != null) {
 
-                        Gson gson = new Gson();
+                    Gson gson = new Gson();
                     try {
-                       User user= gson.fromJson(response.errorBody().string(),User.class);
+                        User user = gson.fromJson(response.errorBody().string(), User.class);
                         callBack.onError(new Throwable(user.getError_description()));
                         return;
                     } catch (IOException e) {
@@ -218,8 +219,8 @@ public class UserServerRepo implements IUser {
                 }
 
 
-                if (response.body().getResultId()<0){
-                    if (!TextUtils.isEmpty(response.body().getMessagee())){
+                if (response.body().getResultId() < 0) {
+                    if (!TextUtils.isEmpty(response.body().getMessagee())) {
                         callBack.onError(new Throwable(response.body().getMessagee()));
                         return;
                     }
@@ -231,12 +232,10 @@ public class UserServerRepo implements IUser {
                     callBack.onError(new Throwable("خطا در دریافت اطلاعات token"));
                     return;
                 }
-                 if (!response.body().getTokenType().equals(KEY_TOKEN_TYPE)) {
+                if (!response.body().getTokenType().equals(KEY_TOKEN_TYPE)) {
                     callBack.onError(new Throwable("نا معتبر token"));
                     return;
                 }
-
-
 
 
                 callBack.onAnswer(response.body());
@@ -257,10 +256,10 @@ public class UserServerRepo implements IUser {
     }
 
     @Override
-    public void userInfo(Context context,String tokenType,String token, final IRepoCallBack<User> callBack) {
+    public void userInfo(Context context, String tokenType, String token, final IRepoCallBack<User> callBack) {
 
-        IUserApi userApi = ServerApiClient.getClientWithHeader(context,tokenType,token).create(IUserApi.class);
-        userCall = userApi.userInfo( );
+        IUserApi userApi = ServerApiClient.getClientWithHeader(context, tokenType, token).create(IUserApi.class);
+        userCall = userApi.userInfo();
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -269,16 +268,16 @@ public class UserServerRepo implements IUser {
                     return;
                 }
 
-                if (response.raw()!=null&&response.raw().code()==404){
+                if (response.raw() != null && response.raw().code() == 404) {
                     callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
                     return;
                 }
 
-                if (response.errorBody()!=null){
+                if (response.errorBody() != null) {
 
                     Gson gson = new Gson();
                     try {
-                        User user= gson.fromJson(response.errorBody().string(),User.class);
+                        User user = gson.fromJson(response.errorBody().string(), User.class);
                         callBack.onError(new Throwable(user.getError_description()));
                         return;
                     } catch (IOException e) {
@@ -291,8 +290,8 @@ public class UserServerRepo implements IUser {
                     return;
                 }
 
-                if (response.body().getResultId()<0){
-                    if (!TextUtils.isEmpty(response.body().getMessagee())){
+                if (response.body().getResultId() < 0) {
+                    if (!TextUtils.isEmpty(response.body().getMessagee())) {
                         callBack.onError(new Throwable(response.body().getMessagee()));
                         return;
                     }

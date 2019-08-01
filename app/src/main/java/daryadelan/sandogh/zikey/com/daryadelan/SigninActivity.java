@@ -416,7 +416,17 @@ public class SigninActivity extends AppCompatActivity {
                 smSvalidationDialogFullScreen=SMSvalidationDialogFullScreen.Show(SigninActivity.this, new SMSvalidationDialogFullScreen.IInputTextWatcher() {
                     @Override
                     public void onDone(String input) {
-                        Toast.makeText(SigninActivity.this, "DONE!!!!!!!!!!!", Toast.LENGTH_SHORT).show();
+                       if (smSvalidationDialogFullScreen!=null)
+                           smSvalidationDialogFullScreen.dismiss();
+
+                       try {
+                           personel.setActiveCode(input);
+                       }catch (Exception e){
+                           e.printStackTrace();
+                       }
+
+                        checkActivateCodeValidation();
+
                     }
                 });
 

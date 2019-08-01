@@ -2,6 +2,7 @@ package daryadelan.sandogh.zikey.com.daryadelan;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -102,7 +103,7 @@ public class SMSvalidationDialogFullScreen extends DialogFragment {
         dialog.getWindow().setBackgroundDrawable(
                 new ColorDrawable(Color.TRANSPARENT));
         dialog.setCanceledOnTouchOutside(false);
-//        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
             dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);

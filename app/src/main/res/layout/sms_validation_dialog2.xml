@@ -92,7 +92,6 @@
 
                     <TextView
                         android:gravity="center"
-                        android:text="1"
                         android:id="@+id/txtInputFive"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/very_big_font_size_24"
@@ -112,7 +111,7 @@
 
                     <TextView
                         android:gravity="center"
-                        android:text="1"
+
                         android:id="@+id/txtInputFour"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/very_big_font_size_24"
@@ -131,7 +130,7 @@
 
                     <TextView
                         android:gravity="center"
-                        android:text="1"
+
                         android:id="@+id/txtInputThree"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/very_big_font_size_24"
@@ -149,7 +148,7 @@
 
                     <TextView
                         android:gravity="center"
-                        android:text="1"
+
                         android:id="@+id/txtInputTwo"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/very_big_font_size_24"
@@ -167,7 +166,7 @@
 
                     <TextView
                         android:gravity="center"
-                        android:text="1"
+
                         android:id="@+id/txtInputOne"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/very_big_font_size_24"

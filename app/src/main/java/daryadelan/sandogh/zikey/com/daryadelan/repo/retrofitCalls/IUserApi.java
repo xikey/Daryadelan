@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by Zikey on 19/09/2017.
@@ -16,42 +18,22 @@ import retrofit2.http.POST;
 
 public interface IUserApi {
 
-    @FormUrlEncoded
+
     @POST("api/persons/personcheck")
-    Call<User> checkPerson(
-            @Field("PersonalCode") long nationalCode,
-            @Field("Mobile") String Mobile,
-            @Field("MobileDeviceBrand") String MobileDeviceBrand,
-            @Field("MobileImei") String MobileImei,
-            @Field("OsVersion") String OsVersion);
+    Call<User> checkPerson(@Body User user);
 
 
-    @FormUrlEncoded
+
     @POST("api/persons/CheckActivationCode")
-    Call<User> checkSMSisValidate(@Nullable @Field("ActiveCode") String ActiveCode,
-                                  @Field("Mobile") String Mobile);
+    Call<User> checkSMSisValidate(@Body User user);
 
-    @FormUrlEncoded
+
     @POST("api/persons/usercreation")
-    Call<User> createUser(@Field("AcceptCode") String AcceptCode,
-                          @Field("Mobile") String Mobile,
-                          @Field("Password") String Password,
-                          @Field("FirstName") String FirstName,
-                          @Field("LastName") String LastName,
-                          @Field("PersonType") String personType);
+    Call<User> createUser(@Body User user);
 
-    /**
-     * @param mobile     user name is mobile number
-     * @param password   password
-     * @param Grant_type i dont know what is this!! but default value must be 'password'
-     * @return
-     */
-    @FormUrlEncoded
-    @POST("oauth/token")
-    Call<User> login(@Field("username") String mobile,
-                     @Field("password") String password,
-                     @Field("grant_type") String Grant_type);
 
+    @POST("api/auth/login")
+    Call<User> login(@Body User user);
 
     @GET("api/accounts/GetUserInfo")
     Call<User> userInfo();
