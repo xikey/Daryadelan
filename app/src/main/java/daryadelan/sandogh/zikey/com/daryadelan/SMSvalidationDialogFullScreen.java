@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,14 +43,53 @@ public class SMSvalidationDialogFullScreen extends DialogFragment {
     public boolean isCanceleed = true;
     private boolean pleaseWait = false;
 
+    private IInputTextWatcher iInputTextWatcher;
+
     //Views
     private ViewGroup root;
     private RelativeLayout lyContent;
     private RelativeLayout lyBackground;
+    private ImageView btnBack;
+
+    private TextView txtInputOne;
+    private TextView txtInputTwo;
+    private TextView txtInputThree;
+    private TextView txtInputFour;
+    private TextView txtInputFive;
+
+    private TextView btnOne;
+    private TextView btnTwo;
+    private TextView btnThree;
+    private TextView btnFour;
+    private TextView btnFive;
+    private TextView btnSix;
+    private TextView btnSeven;
+    private TextView btnEight;
+    private TextView btnNine;
+    private TextView btnZero;
+    private ImageView btnDelete;
+
+
+    private String inputValidation = "";
 
 
     public SMSvalidationDialogFullScreen setDialog(SMSvalidationDialogFullScreen dialog) {
         this.dialog = dialog;
+        return this;
+    }
+
+
+    public SMSvalidationDialogFullScreen fillFromSMS(String input) {
+        if (!TextUtils.isEmpty(input))
+            inputValidation = input;
+
+        return this;
+
+
+    }
+
+    public SMSvalidationDialogFullScreen setiInputTextWatcher(IInputTextWatcher iInputTextWatcher) {
+        this.iInputTextWatcher = iInputTextWatcher;
         return this;
     }
 
@@ -110,6 +150,80 @@ public class SMSvalidationDialogFullScreen extends DialogFragment {
 
     private void initClickListeners() {
 
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+
+        btnOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnPressed("1", false);
+            }
+        });
+        btnTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnPressed("2", false);
+            }
+        });
+        btnThree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnPressed("3", false);
+            }
+        });
+        btnFour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnPressed("4", false);
+            }
+        });
+        btnFive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnPressed("5", false);
+            }
+        });
+        btnSix.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnPressed("6", false);
+            }
+        });
+        btnSeven.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnPressed("7", false);
+            }
+        });
+        btnEight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnPressed("8", false);
+            }
+        });
+        btnNine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnPressed("9", false);
+            }
+        });
+        btnZero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnPressed("0", false);
+            }
+        });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnPressed(null, true);
+            }
+        });
+
 
     }
 
@@ -129,7 +243,28 @@ public class SMSvalidationDialogFullScreen extends DialogFragment {
 
         lyBackground = (RelativeLayout) root.findViewById(R.id.lyBackground);
 
+        btnBack = (ImageView) root.findViewById(R.id.btnBack);
+
+        txtInputOne = root.findViewById(R.id.txtInputOne);
+        txtInputTwo = root.findViewById(R.id.txtInputTwo);
+        txtInputThree = root.findViewById(R.id.txtInputThree);
+        txtInputFour = root.findViewById(R.id.txtInputFour);
+        txtInputFive = root.findViewById(R.id.txtInputFive);
+
+        btnOne = root.findViewById(R.id.btnOne);
+        btnTwo = root.findViewById(R.id.btnTwo);
+        btnThree = root.findViewById(R.id.btnThree);
+        btnFour = root.findViewById(R.id.btnFour);
+        btnFive = root.findViewById(R.id.btnFive);
+        btnSix = root.findViewById(R.id.btnSix);
+        btnSeven = root.findViewById(R.id.btnSeven);
+        btnEight = root.findViewById(R.id.btnEight);
+        btnNine = root.findViewById(R.id.btnNine);
+        btnZero = root.findViewById(R.id.btnZero);
+        btnDelete = root.findViewById(R.id.btnDelete);
+
         FontChanger.applyTitleFont(lyBackground);
+        FontChanger.applyMainFont(root.findViewById(R.id.lyNumbers));
 
     }
 
@@ -172,6 +307,76 @@ public class SMSvalidationDialogFullScreen extends DialogFragment {
         void onClickCancel(DialogFragment fragment, String input, boolean isPleaseWait);
 
         void onClickOutside(DialogFragment fragment, String input);
+
+    }
+
+    private void btnPressed(String input, boolean deleteLastChar) {
+
+        if (deleteLastChar) {
+            if (TextUtils.isEmpty(inputValidation))
+                return;
+
+            int size = inputValidation.length();
+            inputValidation = inputValidation.substring(0, size - 1);
+        } else {
+            if (inputValidation != null && inputValidation.length() < 5) {
+
+                inputValidation += input;
+
+            }
+        }
+
+
+        fillInputBox();
+
+    }
+
+    private void fillInputBox() {
+
+        txtInputOne.setText("");
+        txtInputTwo.setText("");
+        txtInputThree.setText("");
+        txtInputFour.setText("");
+        txtInputFive.setText("");
+
+        if (TextUtils.isEmpty(inputValidation)) {
+
+            return;
+        }
+
+        for (int i = 0; i < inputValidation.length(); i++) {
+            String tmp = String.valueOf(inputValidation.charAt(i));
+
+            if (i == 0) {
+                txtInputOne.setText(tmp);
+            } else if (i == 1) {
+                txtInputTwo.setText(tmp);
+            } else if (i == 2) {
+                txtInputThree.setText(tmp);
+            } else if (i == 3) {
+                txtInputFour.setText(tmp);
+            } else if (i == 4) {
+                txtInputFive.setText(tmp);
+            }
+
+        }
+
+        checkInputValidation();
+    }
+
+    private void checkInputValidation() {
+        if (TextUtils.isEmpty(inputValidation))
+            return;
+
+        if (inputValidation.length() == 5) {
+            if (iInputTextWatcher != null)
+                iInputTextWatcher.onDone(inputValidation);
+        }
+    }
+
+    public interface IInputTextWatcher {
+
+        public void onDone(String input);
 
     }
 

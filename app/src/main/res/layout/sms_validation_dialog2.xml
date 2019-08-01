@@ -32,6 +32,7 @@
             android:gravity="right">
 
             <ImageView
+                android:id="@+id/btnBack"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_marginRight="10dp"
@@ -92,6 +93,7 @@
                     <TextView
                         android:gravity="center"
                         android:text="1"
+                        android:id="@+id/txtInputFive"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/very_big_font_size_24"
                         android:layout_width="match_parent"
@@ -111,6 +113,7 @@
                     <TextView
                         android:gravity="center"
                         android:text="1"
+                        android:id="@+id/txtInputFour"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/very_big_font_size_24"
                         android:layout_width="match_parent"
@@ -129,6 +132,7 @@
                     <TextView
                         android:gravity="center"
                         android:text="1"
+                        android:id="@+id/txtInputThree"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/very_big_font_size_24"
                         android:layout_width="match_parent"
@@ -146,6 +150,7 @@
                     <TextView
                         android:gravity="center"
                         android:text="1"
+                        android:id="@+id/txtInputTwo"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/very_big_font_size_24"
                         android:layout_width="match_parent"
@@ -163,6 +168,7 @@
                     <TextView
                         android:gravity="center"
                         android:text="1"
+                        android:id="@+id/txtInputOne"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/very_big_font_size_24"
                         android:layout_width="match_parent"
@@ -177,6 +183,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="250dp"
+            android:id="@+id/lyNumbers"
             android:layout_marginBottom="20dp"
             android:orientation="vertical"
             android:padding="20dp">
@@ -191,6 +198,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.33"
+                    android:id="@+id/btnThree"
                     android:background="?android:attr/selectableItemBackground"
                     android:gravity="center"
                     android:text="3"
@@ -205,6 +213,7 @@
                     android:clickable="true"
                     android:background="?android:attr/selectableItemBackground"
                     android:gravity="center"
+                    android:id="@+id/btnTwo"
                     android:text="2"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/very_big_font_size" />
@@ -213,6 +222,7 @@
                     android:layout_width="match_parent"
                     android:clickable="true"
                     android:layout_height="match_parent"
+                    android:id="@+id/btnOne"
                     android:layout_weight="0.33"
                     android:background="?android:attr/selectableItemBackground"
                     android:gravity="center"
@@ -235,6 +245,7 @@
                     android:layout_weight="0.33"
                     android:background="?android:attr/selectableItemBackground"
                     android:gravity="center"
+                    android:id="@+id/btnSix"
                     android:text="6"
                     android:clickable="true"
                     android:textColor="@color/colorWhite"
@@ -247,6 +258,7 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:gravity="center"
                     android:text="5"
+                    android:id="@+id/btnFive"
                     android:clickable="true"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/very_big_font_size" />
@@ -255,6 +267,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.33"
+                    android:id="@+id/btnFour"
                     android:background="?android:attr/selectableItemBackground"
                     android:gravity="center"
                     android:clickable="true"
@@ -278,6 +291,7 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:gravity="center"
                     android:text="9"
+                    android:id="@+id/btnNine"
                     android:clickable="true"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/very_big_font_size" />
@@ -290,6 +304,7 @@
                     android:gravity="center"
                     android:clickable="true"
                     android:text="8"
+                    android:id="@+id/btnEight"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/very_big_font_size" />
 
@@ -299,6 +314,7 @@
                     android:layout_weight="0.33"
                     android:background="?android:attr/selectableItemBackground"
                     android:gravity="center"
+                    android:id="@+id/btnSeven"
                     android:clickable="true"
                     android:text="7"
                     android:textColor="@color/colorWhite"
@@ -318,6 +334,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.33"
                     android:clickable="true"
+                    android:id="@+id/btnDelete"
+                    android:background="?android:attr/selectableItemBackground"
                     android:padding="@dimen/very_small_10"
                     android:src="@drawable/ic_delete_png_white" />
 
@@ -326,6 +344,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.33"
                     android:clickable="true"
+                    android:id="@+id/btnZero"
                     android:background="?android:attr/selectableItemBackground"
                     android:gravity="center"
                     android:text="0"

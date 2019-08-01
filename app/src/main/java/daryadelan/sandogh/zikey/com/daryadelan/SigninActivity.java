@@ -27,7 +27,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.BounceInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -886,7 +885,7 @@ public class SigninActivity extends AppCompatActivity {
     }
 
 
-    private void showValidationDialog(){
+    private void showValidationDialog() {
 
         SMSvalidationDialogFullScreen.Show(SigninActivity.this);
 

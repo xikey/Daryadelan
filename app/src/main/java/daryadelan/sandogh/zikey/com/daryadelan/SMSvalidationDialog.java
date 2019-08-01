@@ -395,8 +395,10 @@ public class SMSvalidationDialog extends DialogFragment {
                     pleaseWait = false;
                     lyCountDown.setVisibility(View.GONE);
                     btnClose.setText(R.string.retry);
-                    if (!getActivity().isDestroyed())
-                        Toast.makeText(getActivity(), "در صورتی که کد فعال سازی ارسال نشد، عملیات عضویت را مجددا تکرار نمایید.", Toast.LENGTH_SHORT).show();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        if (!getActivity().isDestroyed())
+                            Toast.makeText(getActivity(), "در صورتی که کد فعال سازی ارسال نشد، عملیات عضویت را مجددا تکرار نمایید.", Toast.LENGTH_SHORT).show();
+                    }
 
 
                 } catch (Exception ex) {
