@@ -32,6 +32,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.credentials.Credential;
@@ -79,6 +80,7 @@ public class SigninActivity extends AppCompatActivity {
 
     private IUser userRepo;
     private SMSvalidationDialog smSvalidationDialog;
+    private SMSvalidationDialogFullScreen smSvalidationDialogFullScreen;
 
     private IUser userSqliteRepo;
 
@@ -146,8 +148,6 @@ public class SigninActivity extends AppCompatActivity {
                     initListeners();
                     hideKeyBoard();
                     clearSession();
-                    showValidationDialog();
-
 
                 }
             }
@@ -160,7 +160,6 @@ public class SigninActivity extends AppCompatActivity {
                 initListeners();
                 hideKeyBoard();
                 clearSession();
-                showValidationDialog();
 
             }
 
@@ -205,12 +204,21 @@ public class SigninActivity extends AppCompatActivity {
                             String validateCode = "";
                             validateCode += sms.replaceAll("[^0-9]", "");
                             if (!TextUtils.isEmpty(validateCode)) {
-                                if (smSvalidationDialog != null) {
-                                    smSvalidationDialog.userInputDialog.setText(validateCode);
+
+                                {
+                                    if (smSvalidationDialogFullScreen != null)
+                                        smSvalidationDialogFullScreen.fillFromSMS(validateCode);
                                     checkActivateCodeValidation();
                                     if (smSvalidationDialog != null)
                                         smSvalidationDialog.dismiss();
                                 }
+
+//                                if (smSvalidationDialog != null) {
+//                                    smSvalidationDialog.userInputDialog.setText(validateCode);
+//                                    checkActivateCodeValidation();
+//                                    if (smSvalidationDialog != null)
+//                                        smSvalidationDialog.dismiss();
+//                                }
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -404,52 +412,60 @@ public class SigninActivity extends AppCompatActivity {
                 user.setPersonType(answer.getStrData());
                 personel = user;
                 String tmp = "کد ارسالی به شماره موبایل " + user.getMobile() + " را وارد نمایید ";
-                smSvalidationDialog = SMSvalidationDialog.Show(SigninActivity.this, getString(R.string.sms_validate), tmp, "تایید", "انصراف", new SMSvalidationDialog.OnActionClickListener() {
+
+                smSvalidationDialogFullScreen=SMSvalidationDialogFullScreen.Show(SigninActivity.this, new SMSvalidationDialogFullScreen.IInputTextWatcher() {
                     @Override
-                    public void onClick(DialogFragment fragment, String input) {
-                        if (TextUtils.isEmpty(input)) {
-                            new CustomDialogBuilder().showAlert(SigninActivity.this, getString(R.string.error_Verification_code));
-                            return;
-                        }
-                        fragment.dismiss();
-                        checkActivateCodeValidation();
-
-                    }
-                }, new SMSvalidationDialog.OnCancelClickListener() {
-                    @Override
-                    public void onClickCancel(DialogFragment fragment, String input, boolean isPleaseWait) {
-
-                        if (!isPleaseWait) {
-                            fragment.dismiss();
-                            sendSMS();
-
-                        } else
-                            fragment.dismiss();
-
-                    }
-
-                    @Override
-                    public void onClickOutside(DialogFragment fragment, String input) {
-                        fragment.dismiss();
-                    }
-                }, new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        if (!TextUtils.isEmpty(s.toString())) {
-                            personel.setActiveCode(s.toString());
-                        }
+                    public void onDone(String input) {
+                        Toast.makeText(SigninActivity.this, "DONE!!!!!!!!!!!", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+//                smSvalidationDialog = SMSvalidationDialog.Show(SigninActivity.this, getString(R.string.sms_validate), tmp, "تایید", "انصراف", new SMSvalidationDialog.OnActionClickListener() {
+//                    @Override
+//                    public void onClick(DialogFragment fragment, String input) {
+//                        if (TextUtils.isEmpty(input)) {
+//                            new CustomDialogBuilder().showAlert(SigninActivity.this, getString(R.string.error_Verification_code));
+//                            return;
+//                        }
+//                        fragment.dismiss();
+//                        checkActivateCodeValidation();
+//
+//                    }
+//                }, new SMSvalidationDialog.OnCancelClickListener() {
+//                    @Override
+//                    public void onClickCancel(DialogFragment fragment, String input, boolean isPleaseWait) {
+//
+//                        if (!isPleaseWait) {
+//                            fragment.dismiss();
+//                            sendSMS();
+//
+//                        } else
+//                            fragment.dismiss();
+//
+//                    }
+//
+//                    @Override
+//                    public void onClickOutside(DialogFragment fragment, String input) {
+//                        fragment.dismiss();
+//                    }
+//                }, new TextWatcher() {
+//                    @Override
+//                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//                    }
+//
+//                    @Override
+//                    public void afterTextChanged(Editable s) {
+//                        if (!TextUtils.isEmpty(s.toString())) {
+//                            personel.setActiveCode(s.toString());
+//                        }
+//                    }
+//                });
 
 
             }
@@ -885,10 +901,5 @@ public class SigninActivity extends AppCompatActivity {
     }
 
 
-    private void showValidationDialog() {
-
-        SMSvalidationDialogFullScreen.Show(SigninActivity.this);
-
-    }
 
 }

@@ -329,8 +329,10 @@ public class SMSvalidationDialog extends DialogFragment {
                     .initCountDown()
                     .setOnCancleClickListener(onCancelClickListener);
 
-            if (!act.isDestroyed())
-                fragment.show(act.getFragmentManager(), KEY_ALERT_DIALOG);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                if (!act.isDestroyed())
+                    fragment.show(act.getFragmentManager(), KEY_ALERT_DIALOG);
+            }
 
             return fragment;
         } catch (Exception ex) {

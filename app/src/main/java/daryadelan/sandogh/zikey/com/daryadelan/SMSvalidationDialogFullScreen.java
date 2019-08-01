@@ -7,25 +7,17 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.razanpardazesh.razanlibs.Tools.Convertor;
 
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
@@ -269,12 +261,13 @@ public class SMSvalidationDialogFullScreen extends DialogFragment {
     }
 
 
-    public static SMSvalidationDialogFullScreen Show(FragmentActivity act) {
+    public static SMSvalidationDialogFullScreen Show(FragmentActivity act, IInputTextWatcher textWatcher) {
 
         try {
 
 
             SMSvalidationDialogFullScreen fragment = new SMSvalidationDialogFullScreen();
+            fragment.setiInputTextWatcher(textWatcher);
 
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
