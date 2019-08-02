@@ -406,7 +406,7 @@ public class SigninActivity extends AppCompatActivity {
                 }
                 Toasty.success(SigninActivity.this, answer.getMessagee()).show();
                 if (TextUtils.isEmpty(answer.getStrData())) {
-                    new CustomDialogBuilder().showAlert(SigninActivity.this, "متاسفانه کد پرسنلی و شماره همراه شما شاما مجوز ورود به نرم افزار ندارد. در صورت مشکل با واحد پشتیبانی تماس حاصل نمایید");
+                    new CustomDialogBuilder().showAlert(SigninActivity.this, "متاسفانه کد پرسنلی و شماره همراه شما مجوز ورود به نرم افزار ندارد. در صورت مشکل با واحد پشتیبانی تماس حاصل نمایید");
                     return;
                 }
                 user.setPersonType(answer.getStrData());

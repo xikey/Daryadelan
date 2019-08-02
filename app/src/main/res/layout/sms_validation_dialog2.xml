@@ -70,7 +70,7 @@
                 android:maxLines="2"
                 android:paddingLeft="50dp"
                 android:paddingRight="50dp"
-                android:text="کد فعال سازی ارسال شده به شماره تلفن 09215963868 را وارد نمایید"
+                android:text="کد فعال سازی ارسال شده را وارد نمایید"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/very_small_font_size" />
 

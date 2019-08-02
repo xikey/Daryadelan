@@ -7,7 +7,11 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
+import daryadelan.sandogh.zikey.com.daryadelan.model.CheckActivationCode;
+import daryadelan.sandogh.zikey.com.daryadelan.model.LoginDto;
+import daryadelan.sandogh.zikey.com.daryadelan.model.PersonCheck;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
+import daryadelan.sandogh.zikey.com.daryadelan.model.UserCreation;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.apiClient.ServerApiClient;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.retrofitCalls.IUserApi;
@@ -27,7 +31,15 @@ public class UserServerRepo implements IUser {
     public void personCheck(Context context, User user, final IRepoCallBack<User> callBack) {
 
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
-        userCall = userApi.checkPerson(user);
+
+        PersonCheck o=new PersonCheck();
+        o.mobile= user.getMobile();
+        o.mobileDeviceBrand=user.getMobileDeviceBrand();
+        o.mobileImei=user.getMobileImei();
+        o.osVersion=user.getOsVersion();
+        o.personalCode=user.getPersonalCode();
+
+        userCall = userApi.checkPerson(o);
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -78,7 +90,10 @@ public class UserServerRepo implements IUser {
     @Override
     public void checkSMSisValidate(Context context, User user, final IRepoCallBack<User> callBack) {
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
-        userCall = userApi.checkSMSisValidate(user);
+        CheckActivationCode o=new CheckActivationCode();
+        o.activeCode=user.getActiveCode();
+        o.mobile=user.getMobile();
+        userCall = userApi.checkSMSisValidate(o);
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -132,7 +147,15 @@ public class UserServerRepo implements IUser {
     public void createUser(Context context, User user, final IRepoCallBack<User> callBack) {
 
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
-        userCall = userApi.createUser(user);
+        UserCreation o=new UserCreation();
+        o.acceptCode=user.getAcceptCode();
+        o.firstName=user.getFirstName();
+        o.lastName=user.getLastName();
+        o.mobile=user.getMobile();
+        o.password=user.getPassword();
+        o.personType=user.getPersonType();
+        userCall = userApi.createUser(o);
+
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -185,7 +208,8 @@ public class UserServerRepo implements IUser {
     public void login(Context context, User user, final IRepoCallBack<User> callBack) {
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
 //        userCall = userApi.login(user.getMobile(), user.getPassword(), user.getGrantType());
-        userCall = userApi.login(user);
+        LoginDto obj=new LoginDto(user.getMobile(),user.getPassword(),"pass");
+        userCall = userApi.login(obj);
         userCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {

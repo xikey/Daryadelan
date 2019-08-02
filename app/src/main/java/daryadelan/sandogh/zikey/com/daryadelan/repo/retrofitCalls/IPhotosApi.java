@@ -8,6 +8,6 @@ import retrofit2.http.Query;
 
 public interface IPhotosApi {
 
-    @GET("api/Gallery/GetGalleries")
+    @GET("api/Galleries/GetGalleries")
     Call<PhotosWrapper> galleries(@Query("page") Long page);
 }

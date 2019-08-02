@@ -7,10 +7,10 @@ import retrofit2.http.Query;
 
 public interface IAdvertiseApi {
 
-    @GET("api/Gallery/GetGalleryByName")
+    @GET("api/Galleries/GetGalleryByName")
     Call<AdvertiseWrapper> getMainSlider(@Query("name") String name);
 
-    @GET("api/Gallery/GetGalleryByName")
+    @GET("api/Galleries/GetGalleryByName")
     Call<AdvertiseWrapper> getGallery(@Query("name") String name);
 
 }
