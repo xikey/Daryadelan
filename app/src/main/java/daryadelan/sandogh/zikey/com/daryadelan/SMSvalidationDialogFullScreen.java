@@ -75,6 +75,7 @@ public class SMSvalidationDialogFullScreen extends DialogFragment {
     public SMSvalidationDialogFullScreen fillFromSMS(String input) {
         if (!TextUtils.isEmpty(input))
             inputValidation = input;
+        fillInputBox();
 
         return this;
 

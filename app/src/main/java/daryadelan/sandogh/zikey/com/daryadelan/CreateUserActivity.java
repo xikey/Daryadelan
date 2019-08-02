@@ -98,7 +98,7 @@ public class CreateUserActivity extends AppCompatActivity {
             if (user == null)
                 user = new User();
             user.setFirstName(data.getStringExtra(KEY_USER_FIRST_NAME));
-            if (edtName != null){
+            if (edtName != null&&user.getFirstName()!=null){
                 edtName.setText(user.getFirstName());
                 edtName.setFocusable(false);
                 edtName.setClickable(false);
@@ -109,7 +109,7 @@ public class CreateUserActivity extends AppCompatActivity {
             if (user == null)
                 user = new User();
             user.setLastName(data.getStringExtra(KEY_USER_LAST_NAME));
-            if (edtFamily != null){
+            if (edtFamily != null&&user.getLastName()!=null){
                 edtFamily.setText(user.getLastName());
                 edtFamily.setFocusable(false);
                 edtFamily.setClickable(false);

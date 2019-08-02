@@ -208,9 +208,7 @@ public class SigninActivity extends AppCompatActivity {
                                 {
                                     if (smSvalidationDialogFullScreen != null)
                                         smSvalidationDialogFullScreen.fillFromSMS(validateCode);
-                                    checkActivateCodeValidation();
-                                    if (smSvalidationDialog != null)
-                                        smSvalidationDialog.dismiss();
+
                                 }
 
 //                                if (smSvalidationDialog != null) {
@@ -416,8 +414,7 @@ public class SigninActivity extends AppCompatActivity {
                 smSvalidationDialogFullScreen=SMSvalidationDialogFullScreen.Show(SigninActivity.this, new SMSvalidationDialogFullScreen.IInputTextWatcher() {
                     @Override
                     public void onDone(String input) {
-                       if (smSvalidationDialogFullScreen!=null)
-                           smSvalidationDialogFullScreen.dismiss();
+
 
                        try {
                            personel.setActiveCode(input);
@@ -426,7 +423,8 @@ public class SigninActivity extends AppCompatActivity {
                        }
 
                         checkActivateCodeValidation();
-
+                        if (smSvalidationDialogFullScreen!=null)
+                            smSvalidationDialogFullScreen.dismiss();
                     }
                 });
 
