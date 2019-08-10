@@ -223,29 +223,26 @@ public class User extends ServerWrapper {
     }
 
     public String getPersonTypeName() {
-        if (TextUtils.isEmpty(personType)) {
-            return "کاربر نامشخص";
-        }
 
-        if (personType.equals("baz"))
+        if (personType.equals("baz") || personType.equals("101"))
             return "کاربر بازنشسته";
 
-        if (personType.equals("Vaz"))
+        else if (personType.equals("Vaz") || personType.equals("102"))
             return "کاربر وظیفه بگیر";
 
-        if (personType.equals("mos"))
+        else if (personType.equals("mos") || personType.equals("115"))
             return "کاربر مستمری بگیر سازمانی";
 
-        if (personType.equals("su"))
+        else if (personType.equals("su") || personType.equals("1"))
             return "کاربر سوپر یوزر";
 
-        if (personType.equals("guest"))
+        else if (personType.equals("guest") || personType.equals("1000"))
             return "کاربر  مهمان";
 
-        if (personType.equals("employee"))
+        else if (personType.equals("employee") || personType.equals("2"))
             return "کاربر صندوق";
-
-        return "کاربر نامشخص";
+        else
+            return "کاربر نامشخص";
     }
 
     public boolean isPersonGuest() {
