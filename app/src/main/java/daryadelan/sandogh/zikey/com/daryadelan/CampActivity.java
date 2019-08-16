@@ -131,8 +131,8 @@ public class CampActivity extends AppCompatActivity {
             camp = data.getExtras().getParcelable(KEY_PARCABLE);
 
         if (camp == null) {
-            Toasty.error(this, "خطا در دریافت اطلاعات خبر");
-            return;
+            Toasty.error(this, "خطا در دریافت اطلاعات  ").show();
+
         }
 
     }

@@ -224,6 +224,7 @@ public class CampsActivity extends AppCompatActivity {
                 String url = BuildConfig.IPAddress + "/" + camp.getImagePath();
                 holder.txtTitle.setText(camp.getCampName());
                 holder.txtRate.setText(camp.getStar() + "ستاره");
+                holder.txtDesc.setText(camp.getState() + "-"+camp.getCity());
 
 
                 new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(holder.imgAvatar).load();
@@ -250,8 +251,11 @@ public class CampsActivity extends AppCompatActivity {
             TextView txtTitle;
             TextView txtRate;
             TextView txtDetails;
+            TextView txtDesc;
             ImageView imgAvatar;
             Camp camp;
+
+            CardView crdConfirmCamp;
 
 
             public ItemHolder(View v) {
@@ -263,6 +267,8 @@ public class CampsActivity extends AppCompatActivity {
                 txtDetails = v.findViewById(R.id.txtDetails);
                 imgAvatar = v.findViewById(R.id.imgAvatar);
                 lyRoot = v.findViewById(R.id.lyRoot);
+                txtDesc = v.findViewById(R.id.txtDesc);
+                crdConfirmCamp = v.findViewById(R.id.crdConfirmCamp);
 
                 FontChanger.applyMainFont(lyRoot);
                 FontChanger.applyTitleFont(txtTitle);
@@ -273,6 +279,13 @@ public class CampsActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         CampActivity.start(CampsActivity.this, camp);
+                    }
+                });
+
+                crdConfirmCamp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ConfirmCampActivity.start(CampsActivity.this,camp);
                     }
                 });
 

@@ -100,6 +100,10 @@
         <activity
             android:name=".CampsRequestsHistory"
             android:label="@string/title_activity_camps_requests_history"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ConfirmCampActivity"
+            android:label="@string/title_activity_confirm_camp"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
