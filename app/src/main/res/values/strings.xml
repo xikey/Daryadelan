@@ -73,5 +73,9 @@
     <string name="nationalcode">کد ملی</string>
     <string name="photo_album">آلبوم تصاویر</string>
     <string name="news">اخبار و اطلاعیه ها</string>
+    <string name="camps">هتل ها و مکان های اقامتی</string>
+    <string name="title_activity_camps">هتل ها و مکان های اقامتی</string>
+    <string name="title_activity_camp">CampActivity</string>
+    <string name="title_activity_camps_requests_history">CampsRequestsHistory</string>
 
 </resources>

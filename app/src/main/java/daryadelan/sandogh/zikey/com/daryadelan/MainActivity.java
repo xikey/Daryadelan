@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity
 
     private CardView crdNews;
     private CardView crdGallery;
+    private CardView crdCamps;
+    private CardView crdRequestsList;
 
 
 
@@ -169,14 +171,14 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public void onClickCancel(DialogFragment fragment) {
                             fragment.dismiss();
-                            LoginActivity.start(MainActivity.this);
+                            SigninActivity.start(MainActivity.this);
                             finish();
                         }
 
                         @Override
                         public void onClickOutside(DialogFragment fragment) {
                             fragment.dismiss();
-                            LoginActivity.start(MainActivity.this);
+                            SigninActivity.start(MainActivity.this);
                             finish();
                         }
                     });
@@ -409,6 +411,20 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        crdCamps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CampsActivity.start(MainActivity.this);
+            }
+        });
+
+        crdRequestsList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
     }
 
@@ -425,7 +441,8 @@ public class MainActivity extends AppCompatActivity
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
         lyProgress.setVisibility(View.VISIBLE);
         rvItem = (RecyclerView) findViewById(R.id.rtItem);
-
+        crdCamps= (CardView) findViewById(R.id.crdCamps);
+        crdRequestsList= (CardView) findViewById(R.id.crdRequestsList);
         lyNews.setVisibility(View.GONE);
 
 
@@ -693,7 +710,7 @@ public class MainActivity extends AppCompatActivity
 
     private void exitApp() {
 
-        LoginActivity.start(MainActivity.this);
+        SigninActivity.start(MainActivity.this);
         finish();
     }
 

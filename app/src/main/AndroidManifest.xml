@@ -88,6 +88,18 @@
         <activity
             android:name=".PhotoViewActivity"
             android:label="@string/title_activity_photo_view"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CampsActivity"
+            android:label="@string/title_activity_camps"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CampActivity"
+            android:label="@string/title_activity_camp"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CampsRequestsHistory"
+            android:label="@string/title_activity_camps_requests_history"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
