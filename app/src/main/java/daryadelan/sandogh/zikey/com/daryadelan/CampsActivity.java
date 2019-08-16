@@ -94,7 +94,6 @@ public class CampsActivity extends AppCompatActivity {
                     return;
 
 
-
                 if (adapter != null)
                     adapter.setItems(answer.getCamps());
             }
@@ -116,7 +115,6 @@ public class CampsActivity extends AppCompatActivity {
         });
 
     }
-
 
 
     private void initRecycleView() {
@@ -156,7 +154,6 @@ public class CampsActivity extends AppCompatActivity {
     }
 
 
-
     private void initRepo() {
 
         if (campRepo == null)
@@ -171,7 +168,6 @@ public class CampsActivity extends AppCompatActivity {
             finish();
         }
     }
-
 
 
     private void initToolbar() {
@@ -227,7 +223,7 @@ public class CampsActivity extends AppCompatActivity {
 
                 String url = BuildConfig.IPAddress + "/" + camp.getImagePath();
                 holder.txtTitle.setText(camp.getCampName());
-                holder.txtRate.setText(camp.getStar()+"ستاره");
+                holder.txtRate.setText(camp.getStar() + "ستاره");
 
 
                 new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(holder.imgAvatar).load();
@@ -266,7 +262,7 @@ public class CampsActivity extends AppCompatActivity {
                 txtRate = v.findViewById(R.id.txtRate);
                 txtDetails = v.findViewById(R.id.txtDetails);
                 imgAvatar = v.findViewById(R.id.imgAvatar);
-                lyRoot=v.findViewById(R.id.lyRoot);
+                lyRoot = v.findViewById(R.id.lyRoot);
 
                 FontChanger.applyMainFont(lyRoot);
                 FontChanger.applyTitleFont(txtTitle);
@@ -276,10 +272,9 @@ public class CampsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-
+                        CampActivity.start(CampsActivity.this, camp);
                     }
                 });
-
 
 
             }

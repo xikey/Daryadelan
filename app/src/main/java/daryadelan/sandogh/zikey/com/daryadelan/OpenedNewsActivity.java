@@ -292,7 +292,7 @@ public class OpenedNewsActivity extends AppCompatActivity {
         }
 
 
-        private class PhotoHolder extends RecyclerView.ViewHolder {
+        public class PhotoHolder extends RecyclerView.ViewHolder {
 
             ImageView image;
             Advertise photo;
@@ -362,5 +362,7 @@ public class OpenedNewsActivity extends AppCompatActivity {
 
     }
 
+
+    
 
 }

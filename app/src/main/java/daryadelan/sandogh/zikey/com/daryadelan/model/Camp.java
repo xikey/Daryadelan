@@ -24,7 +24,7 @@ public class Camp implements Parcelable {
     private long code;
     @SerializedName("campName")
     private String campName;
-    @SerializedName("imagepath")
+    @SerializedName("imagePath")
     private String imagePath;
     @SerializedName("reservable ")
     private boolean reservable;
