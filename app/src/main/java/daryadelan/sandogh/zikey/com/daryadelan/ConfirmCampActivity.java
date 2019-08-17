@@ -65,6 +65,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
     private ItemAdapter adapter;
 
     private LinearLayout lyAction;
+    private LinearLayout lyConstLayouts;
 
     private ArrayList<CampReseption> campReseptions;
 
@@ -208,6 +209,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
         crdAddNewPerson = (CardView) findViewById(R.id.crdAddNewPerson);
 
         lyAction = (LinearLayout) findViewById(R.id.lyAction);
+        lyConstLayouts = (LinearLayout) findViewById(R.id.lyConstLayouts);
 
         rvItem = (RecyclerView) findViewById(R.id.rvItem);
 
@@ -288,7 +290,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
         TranslateAnimation animate = new TranslateAnimation(
                 0,                 // fromXDelta
                 0,                 // toXDelta
-                lyAddPersonFloat.getHeight(),  // fromYDelta
+                lyConstLayouts.getHeight(),  // fromYDelta
                 0);                // toYDelta
         animate.setDuration(500);
         animate.setFillAfter(true);
@@ -328,7 +330,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
                 0,                 // fromXDelta
                 0,                 // toXDelta
                 0,                 // fromYDelta
-                lyAddPersonFloat.getHeight()); // toYDelta
+                lyConstLayouts.getHeight()); // toYDelta
         animate.setDuration(500);
         animate.setInterpolator(new AccelerateInterpolator());
         animate.setFillAfter(true);
