@@ -76,8 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-
-            android:layout_toLeftOf="@id/lyDate"
+            android:layout_toLeftOf="@+id/lyDate"
             android:orientation="vertical"
             android:padding="10dp">
 

@@ -6,9 +6,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
@@ -24,6 +26,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.Camp;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CalendarWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.PersianDateConverter;
 import es.dmoral.toasty.Toasty;
 
@@ -45,6 +48,13 @@ public class ConfirmCampActivity extends AppCompatActivity {
     private int dayCount = 1;
 
     private ImageView imgDropDown;
+    private ImageView imgFullPhoto;
+
+    private TextView txtCampName;
+    private TextView txtCampDetail;
+
+    private RelativeLayout lyFullPhoto;
+    private CardView crdAddNewPerson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +74,15 @@ public class ConfirmCampActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(date))
             txtDate.setText(date);
 
-        txtDayCount.setText(dayCount+" روز ");
+        txtDayCount.setText(dayCount + " روز ");
+
+        txtCampName.setText(camp.getCampName());
+        txtCampDetail.setText(camp.getState() + " - " + camp.getCity() + " - " + camp.getStar() + " ستاره");
+
+        if (imgFullPhoto != null) {
+            String url = BuildConfig.IPAddress + "/" + camp.getImagePath();
+            new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(imgFullPhoto).load();
+        }
 
     }
 
@@ -90,7 +108,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
                     @Override
                     public void onOK(String input) {
 
-                        dayCount= Integer.parseInt(input);
+                        dayCount = Integer.parseInt(input);
                         initContent();
 
                     }
@@ -116,6 +134,13 @@ public class ConfirmCampActivity extends AppCompatActivity {
                 showHideList();
             }
         });
+
+        crdAddNewPerson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     private void initViews() {
@@ -128,9 +153,24 @@ public class ConfirmCampActivity extends AppCompatActivity {
         txtDayCount = (TextView) findViewById(R.id.txtDayCount);
         lyAddPersonFloat = (RelativeLayout) findViewById(R.id.lyAddPersonFloat);
         imgDropDown = (ImageView) findViewById(R.id.imgDropDown);
+        imgFullPhoto = (ImageView) findViewById(R.id.imgFullPhoto);
+
+        txtCampName = (TextView) findViewById(R.id.txtCampName);
+        txtCampDetail = (TextView) findViewById(R.id.txtCampDetail);
+
+        lyFullPhoto = (RelativeLayout) findViewById(R.id.lyFullPhoto);
+
+        crdAddNewPerson = (CardView) findViewById(R.id.crdAddNewPerson);
 
         try {
             FontChanger.applyMainFont(findViewById(R.id.lyContent));
+
+            int width = getResources().getDisplayMetrics().widthPixels;
+
+            final ViewGroup.LayoutParams params = lyFullPhoto.getLayoutParams();
+            params.height = (width * 2 / 3);
+            lyFullPhoto.setLayoutParams(params);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -203,7 +243,11 @@ public class ConfirmCampActivity extends AppCompatActivity {
         });
         view.startAnimation(animate);
         lyAddPersonFloat.setVisibility(View.VISIBLE);
+        imgDropDown.setVisibility(View.VISIBLE);
 
+        lyAddPerson.setVisibility(View.GONE);
+        lyDayCount.setVisibility(View.GONE);
+        lyDate.setVisibility(View.GONE);
     }
 
     // slide the view from its current position to below itself
@@ -225,6 +269,11 @@ public class ConfirmCampActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 lyAddPersonFloat.setVisibility(View.GONE);
+                imgDropDown.setVisibility(View.VISIBLE);
+
+                lyAddPerson.setVisibility(View.VISIBLE);
+                lyDayCount.setVisibility(View.VISIBLE);
+                lyDate.setVisibility(View.VISIBLE);
 
             }
 
