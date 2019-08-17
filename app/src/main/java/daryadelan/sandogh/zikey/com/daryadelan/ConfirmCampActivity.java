@@ -7,8 +7,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
@@ -27,6 +29,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.tools.CalendarWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.PersianDateConverter;
 import es.dmoral.toasty.Toasty;
 
@@ -55,6 +58,9 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
     private RelativeLayout lyFullPhoto;
     private CardView crdAddNewPerson;
+
+    private RecyclerView rvItem;
+    private ItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -244,10 +250,12 @@ public class ConfirmCampActivity extends AppCompatActivity {
         view.startAnimation(animate);
         lyAddPersonFloat.setVisibility(View.VISIBLE);
         imgDropDown.setVisibility(View.VISIBLE);
+        crdAddNewPerson.setVisibility(View.VISIBLE);
 
         lyAddPerson.setVisibility(View.GONE);
         lyDayCount.setVisibility(View.GONE);
         lyDate.setVisibility(View.GONE);
+
     }
 
     // slide the view from its current position to below itself
@@ -269,11 +277,13 @@ public class ConfirmCampActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 lyAddPersonFloat.setVisibility(View.GONE);
-                imgDropDown.setVisibility(View.VISIBLE);
+                imgDropDown.setVisibility(View.GONE);
+                crdAddNewPerson.setVisibility(View.GONE);
 
                 lyAddPerson.setVisibility(View.VISIBLE);
                 lyDayCount.setVisibility(View.VISIBLE);
                 lyDate.setVisibility(View.VISIBLE);
+
 
             }
 
@@ -285,5 +295,61 @@ public class ConfirmCampActivity extends AppCompatActivity {
         view.startAnimation(animate);
 
     }
+
+
+    class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
+
+
+        @Override
+        public ItemAdapter.ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+            if (parent == null || parent.getContext() == null)
+                return null;
+
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_camps_item, parent, false);
+            return new ItemAdapter.ItemHolder(view);
+
+        }
+
+        @Override
+        public void onBindViewHolder(ItemAdapter.ItemHolder holder, int position) {
+
+
+            try {
+                if (holder == null)
+                    return;
+
+
+            } catch (Exception ex) {
+                LogWrapper.loge("ItemAdapter_onBindViewHolder_Exception: ", ex);
+            }
+
+
+        }
+
+        @Override
+        public int getItemCount() {
+
+            return 3;
+
+        }
+
+        public class ItemHolder extends RecyclerView.ViewHolder {
+
+            RelativeLayout lyRoot;
+
+
+            public ItemHolder(View v) {
+                super(v);
+
+                lyRoot = v.findViewById(R.id.lyRoot);
+
+                FontChanger.applyMainFont(lyRoot);
+
+
+            }
+        }
+    }
+
 
 }
