@@ -28,10 +28,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
             android:background="@drawable/bg_shadow"
-            android:padding="15dp"
-            android:layout_alignParentBottom="true">
+            android:orientation="vertical"
+            android:padding="15dp">
 
             <TextView
                 android:id="@+id/txtCampName"
@@ -46,13 +46,13 @@
 
 
             <TextView
-                android:layout_marginTop="5dp"
                 android:id="@+id/txtCampDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
+                android:layout_marginTop="5dp"
                 android:ellipsize="end"
                 android:maxLines="3"
+                android:textColor="@color/colorWhite"
                 android:textSize="@dimen/small_font_size" />
 
         </LinearLayout>
@@ -252,6 +252,27 @@
 
 
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:alpha="0.4"
+                android:background="@color/colorBlack" />
+            <LinearLayout
+                android:id="@+id/lyAction"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorAccent">
+
+                <TextView
+                    android:alpha="0.8"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/normal_font_size"
+                    android:text="ثبت و ارسال اطلاعات"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -262,7 +283,8 @@
             android:id="@+id/lyAddPersonFloat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorWhite">
+            android:background="@color/colorWhite"
+            android:visibility="gone">
 
 
             <LinearLayout
@@ -272,10 +294,10 @@
                 android:orientation="vertical">
 
                 <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="40dp"
-                    android:layout_height="match_parent"
                     android:id="@+id/rvItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="40dp"
                     android:layout_weight="1">
 
                 </android.support.v7.widget.RecyclerView>
@@ -290,10 +312,11 @@
                     app:cardCornerRadius="5dp"
                     app:cardElevation="2dp"
                     app:cardUseCompatPadding="true">
+
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -307,14 +330,14 @@
 
                         <View
                             android:layout_width="1dp"
-                            android:background="@color/colorWhite"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent"
+                            android:background="@color/colorWhite" />
 
                         <ImageView
-                            android:padding="5dp"
-                            app:srcCompat="@drawable/ic_add_black_48dp"
                             android:layout_width="40dp"
-                            android:layout_height="40dp" />
+                            android:layout_height="40dp"
+                            android:padding="5dp"
+                            app:srcCompat="@drawable/ic_add_black_48dp" />
 
 
                     </LinearLayout>
@@ -325,9 +348,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:background="#FFFDE7"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="#FFFDE7">
 
                 <ImageView
                     android:id="@+id/imgDropDown"
@@ -340,7 +363,6 @@
                     app:srcCompat="@drawable/ic_expand_more_black_48dp" />
 
             </LinearLayout>
-
 
 
         </RelativeLayout>

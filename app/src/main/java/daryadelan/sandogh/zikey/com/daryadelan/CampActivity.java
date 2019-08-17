@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -73,6 +74,8 @@ public class CampActivity extends AppCompatActivity {
     private EditText edtAddress;
     private EditText edtDetails;
 
+    private CardView crdConfirmCamp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +88,18 @@ public class CampActivity extends AppCompatActivity {
         initCollapsingToolbarLayout();
         initContent();
         initRecycleView();
+        initClickListeners();
+
+    }
+
+    private void initClickListeners() {
+
+        crdConfirmCamp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ConfirmCampActivity.start(CampActivity.this, camp);
+            }
+        });
 
     }
 
@@ -113,6 +128,8 @@ public class CampActivity extends AppCompatActivity {
         edtTel2 = (EditText) findViewById(R.id.edtTel2);
         edtAddress = (EditText) findViewById(R.id.edtAddress);
         edtDetails = (EditText) findViewById(R.id.edtDetails);
+
+        crdConfirmCamp = (CardView) findViewById(R.id.crdConfirmCamp);
 
 
         FontChanger.applyTitleFont(txtDate);
@@ -155,7 +172,7 @@ public class CampActivity extends AppCompatActivity {
 
         try {
             edtName.setText(camp.getCampName());
-            edtCode.setText(""+camp.getCampID());
+            edtCode.setText("" + camp.getCampID());
             edtStar.setText(camp.getStar() + " ستاره ");
             edtState.setText(camp.getState());
             edtCity.setText(camp.getCity());

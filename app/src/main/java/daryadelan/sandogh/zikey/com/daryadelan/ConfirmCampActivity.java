@@ -2,14 +2,11 @@ package daryadelan.sandogh.zikey.com.daryadelan;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +15,6 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -68,6 +64,8 @@ public class ConfirmCampActivity extends AppCompatActivity {
     private RecyclerView rvItem;
     private ItemAdapter adapter;
 
+    private LinearLayout lyAction;
+
     private ArrayList<CampReseption> campReseptions;
 
 
@@ -81,7 +79,6 @@ public class ConfirmCampActivity extends AppCompatActivity {
         initClickListeners();
         initContent();
         initRecycleView();
-
 
     }
 
@@ -210,7 +207,11 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
         crdAddNewPerson = (CardView) findViewById(R.id.crdAddNewPerson);
 
+        lyAction = (LinearLayout) findViewById(R.id.lyAction);
+
         rvItem = (RecyclerView) findViewById(R.id.rvItem);
+
+
 
         try {
             FontChanger.applyMainFont(findViewById(R.id.lyContent));
@@ -224,6 +225,8 @@ public class ConfirmCampActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 
 
@@ -298,7 +301,10 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
+                lyAction.setVisibility(View.GONE);
+                lyAddPerson.setVisibility(View.GONE);
+                lyDayCount.setVisibility(View.GONE);
+                lyDate.setVisibility(View.GONE);
             }
 
             @Override
@@ -312,9 +318,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
         crdAddNewPerson.setVisibility(View.VISIBLE);
         rvItem.setVisibility(View.VISIBLE);
 
-        lyAddPerson.setVisibility(View.GONE);
-        lyDayCount.setVisibility(View.GONE);
-        lyDate.setVisibility(View.GONE);
+
 
     }
 
@@ -341,9 +345,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
                 crdAddNewPerson.setVisibility(View.GONE);
                 rvItem.setVisibility(View.GONE);
 
-                lyAddPerson.setVisibility(View.VISIBLE);
-                lyDayCount.setVisibility(View.VISIBLE);
-                lyDate.setVisibility(View.VISIBLE);
+
 
 
             }
@@ -354,7 +356,10 @@ public class ConfirmCampActivity extends AppCompatActivity {
             }
         });
         view.startAnimation(animate);
-
+        lyAction.setVisibility(View.VISIBLE);
+        lyAddPerson.setVisibility(View.VISIBLE);
+        lyDayCount.setVisibility(View.VISIBLE);
+        lyDate.setVisibility(View.VISIBLE);
     }
 
 
