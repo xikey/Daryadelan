@@ -1,11 +1,17 @@
 package daryadelan.sandogh.zikey.com.daryadelan.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class CampReseption {
 
     private long id;
+    @SerializedName("FirstName")
     private String name;
+    @SerializedName("LastName")
     private String family;
+    @SerializedName("NationalCode")
     private long nationalCode;
+    @SerializedName("Nesbat")
     private int relation;
 
 
@@ -47,5 +53,20 @@ public class CampReseption {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getRelationShipName() {
+
+        if (relation == 0) {
+            return "خودم";
+        }
+        if (relation == 1) {
+            return "بازنشسته,موظف و تحت تکفل";
+        }
+        if (relation == 2) {
+            return "اقوام درجه 1";
+        }
+
+        return "اقوام درجه 2";
     }
 }

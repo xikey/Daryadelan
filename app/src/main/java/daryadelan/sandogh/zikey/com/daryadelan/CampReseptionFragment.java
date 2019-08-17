@@ -51,7 +51,7 @@ public class CampReseptionFragment extends DialogFragment {
 
     private CardView crdSaveFrom;
     private CardView crdDelete;
-
+    private RelativeLayout lyPickCount;
     private CampReseption campReseption;
     private int position;
 
@@ -148,6 +148,12 @@ public class CampReseptionFragment extends DialogFragment {
             }
         });
 
+        lyPickCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
@@ -191,6 +197,8 @@ public class CampReseptionFragment extends DialogFragment {
 
         crdSaveFrom = root.findViewById(R.id.crdSaveFrom);
         crdDelete = root.findViewById(R.id.crdRemove);
+
+        lyPickCount = root.findViewById(R.id.lyPickCount);
 
         tlb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

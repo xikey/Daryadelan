@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class Camp implements Parcelable {
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
@@ -26,7 +28,7 @@ public class Camp implements Parcelable {
     private String campName;
     @SerializedName("imagePath")
     private String imagePath;
-    @SerializedName("reservable ")
+    @SerializedName("reservable")
     private boolean reservable;
     @SerializedName("state")
     private String state;
@@ -44,6 +46,8 @@ public class Camp implements Parcelable {
     private int star;
     @SerializedName("galleryname")
     private String galleryName;
+    @SerializedName("person")
+    private ArrayList<CampReseption> campReseptions;
 
     public long getCampID() {
         return campID;
@@ -149,6 +153,13 @@ public class Camp implements Parcelable {
         this.galleryName = galleryName;
     }
 
+    public ArrayList<CampReseption> getCampReseptions() {
+        return campReseptions;
+    }
+
+    public void setCampReseptions(ArrayList<CampReseption> campReseptions) {
+        this.campReseptions = campReseptions;
+    }
 
     @Override
     public int describeContents() {
