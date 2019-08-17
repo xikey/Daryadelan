@@ -10,17 +10,21 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
 import daryadelan.sandogh.zikey.com.daryadelan.model.CampReseption;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ToolbarWrapper;
@@ -42,6 +46,13 @@ public class CampReseptionFragment extends DialogFragment {
     private RelativeLayout lyBackground;
 
     private ISaveForm iSaveForm;
+
+    private EditText edtName;
+    private EditText edtFamily;
+    private EditText edtNationalCode;
+    private EditText edtRelation;
+
+    private CardView crdSaveFrom;
 
     public void setiSaveForm(ISaveForm iSaveForm) {
         this.iSaveForm = iSaveForm;
@@ -104,6 +115,15 @@ public class CampReseptionFragment extends DialogFragment {
 
     private void initClickListeners() {
 
+        crdSaveFrom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                saveForm();
+
+            }
+        });
+
 
     }
 
@@ -124,6 +144,12 @@ public class CampReseptionFragment extends DialogFragment {
         lyBackground = (RelativeLayout) root.findViewById(R.id.lyBackground);
         tlb = (Toolbar) root.findViewById(R.id.tlb);
 
+        edtName = root.findViewById(R.id.edtName);
+        edtFamily = root.findViewById(R.id.edtFamily);
+        edtNationalCode = root.findViewById(R.id.edtNationalCode);
+        edtRelation = root.findViewById(R.id.edtRelation);
+
+        crdSaveFrom = root.findViewById(R.id.crdSaveFrom);
 
         tlb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,6 +200,104 @@ public class CampReseptionFragment extends DialogFragment {
         public void onSaveForm(CampReseption campReseption);
 
     }
+
+
+    private void saveForm() {
+
+        if (TextUtils.isEmpty(edtName.getText())){
+            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(),"فیلد نام خالی میباشد!");
+            return;
+        }
+
+        if (TextUtils.isEmpty(edtFamily.getText())){
+            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(),"فیلد نام خانوادگی خالی میباشد!");
+            return;
+        }
+
+        if (TextUtils.isEmpty(edtNationalCode.getText())) {
+            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "کد ملی وارد شده نادرست میباشد");
+            return;
+        }
+
+        if (!isValidNationalCode(edtNationalCode.getText().toString()))
+            return;
+
+
+        if (TextUtils.isEmpty(edtRelation.getText())) {
+            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "فیلد نسبت خالی میباشد!");
+            return;
+        }
+
+
+
+
+
+    }
+
+
+    public Boolean isValidNationalCode(String nationalCode) {
+        //در صورتی که کد ملی وارد شده تهی باشد
+
+        if (TextUtils.isEmpty(nationalCode)) {
+            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "مقدار کد ملی نمیتواند خالی باشد");
+            return false;
+        }
+
+        //در صورتی که کد ملی وارد شده طولش کمتر از 10 رقم باشد
+        if (nationalCode.length() != 10) {
+            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "مقدار کد ملی باید ده رقم باشد");
+            return false;
+        }
+
+        //در صورتی که کد ملی ده رقم عددی نباشد
+        if (!TextUtils.isDigitsOnly(nationalCode)) {
+            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "مقدار کد ملی نمیتواند شامل حروف باشد");
+            return false;
+        }
+
+        //در صورتی که رقم‌های کد ملی وارد شده یکسان باشد
+        String allDigitEqual[] = new String[]{
+                "0000000000", "1111111111", "2222222222", "3333333333", "4444444444", "5555555555", "6666666666", "7777777777", "8888888888", "9999999999"
+        };
+
+        for (int i = 0; i < allDigitEqual.length; i++) {
+            if (allDigitEqual[i].equals(nationalCode)) {
+                new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "مقدار کد ملی نادرست میباشد");
+                return false;
+            }
+        }
+
+        try {
+
+            long num0 = Long.parseLong("" + nationalCode.charAt(0)) * 10;
+            long num1 = Long.parseLong("" + nationalCode.charAt(1)) * 9;
+            long num2 = Long.parseLong("" + nationalCode.charAt(2)) * 8;
+            long num3 = Long.parseLong("" + nationalCode.charAt(3)) * 7;
+            long num4 = Long.parseLong("" + nationalCode.charAt(4)) * 6;
+            long num5 = Long.parseLong("" + nationalCode.charAt(5)) * 5;
+            long num6 = Long.parseLong("" + nationalCode.charAt(6)) * 4;
+            long num7 = Long.parseLong("" + nationalCode.charAt(7)) * 3;
+            long num8 = Long.parseLong("" + nationalCode.charAt(8)) * 2;
+            long a = Long.parseLong("" + nationalCode.charAt(9));
+
+            long b = (((((((num0 + num1) + num2) + num3) + num4) + num5) + num6) + num7) + num8;
+            long c = b % 11;
+
+            if (!(((c < 2) && (a == c)) || ((c >= 2) && ((11 - c) == a)))) {
+                new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "مقدار کد ملی نادرست میباشد");
+                return false;
+            } else {
+                return true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "مقدار کد ملی نادرست میباشد");
+            return false;
+        }
+
+    }
+
 
 
 }
