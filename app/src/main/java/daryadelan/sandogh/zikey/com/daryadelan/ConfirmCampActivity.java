@@ -18,6 +18,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -68,6 +69,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
     private ArrayList<CampReseption> campReseptions;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +98,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
             String url = BuildConfig.IPAddress + "/" + camp.getImagePath();
             new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(imgFullPhoto).load();
         }
+
 
     }
 
@@ -152,7 +155,26 @@ public class ConfirmCampActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                CampReseptionFragment.Show(ConfirmCampActivity.this);
+                CampReseptionFragment.Show(ConfirmCampActivity.this, new CampReseptionFragment.ISaveForm() {
+                    @Override
+                    public void onSaveForm(CampReseption campReseption) {
+                        if (campReseptions == null)
+                            campReseptions = new ArrayList<>();
+
+                        campReseptions.add(campReseption);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onEdit(CampReseption campReseption, int pos) {
+
+                    }
+
+                    @Override
+                    public void onRemove(int pos) {
+
+                    }
+                });
 
             }
         });
@@ -349,7 +371,14 @@ public class ConfirmCampActivity extends AppCompatActivity {
                 if (holder == null)
                     return;
 
+                holder.campReseption = campReseptions.get(position);
+                CampReseption cmp = campReseptions.get(position);
+                holder.pos = position;
 
+                holder.edtName.setText(cmp.getName());
+                holder.edtFamily.setText(cmp.getFamily());
+                holder.edtNationalCode.setText(""+(int) cmp.getNationalCode());
+                holder.edtRelation.setText("" + cmp.getRelation());
             } catch (Exception ex) {
                 LogWrapper.loge("ItemAdapter_onBindViewHolder_Exception: ", ex);
             }
@@ -366,15 +395,49 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
         public class ItemHolder extends RecyclerView.ViewHolder {
 
-            RelativeLayout lyRoot;
-
+            CardView lyRoot;
+            CampReseption campReseption;
+            int pos;
+            TextView edtName;
+            TextView edtFamily;
+            TextView edtNationalCode;
+            TextView edtRelation;
 
             public ItemHolder(View v) {
                 super(v);
 
                 lyRoot = v.findViewById(R.id.lyRoot);
 
+                edtName = v.findViewById(R.id.edtName);
+                edtFamily = v.findViewById(R.id.edtFamily);
+                edtNationalCode = v.findViewById(R.id.edtNationalCode);
+                edtRelation = v.findViewById(R.id.edtRelation);
+
                 FontChanger.applyMainFont(lyRoot);
+
+                lyRoot.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        CampReseptionFragment.Show_EditableMode(ConfirmCampActivity.this, new CampReseptionFragment.ISaveForm() {
+                            @Override
+                            public void onSaveForm(CampReseption campReseption) {
+
+                            }
+
+                            @Override
+                            public void onEdit(CampReseption campReseption, int pos) {
+                                campReseptions.set(pos, campReseption);
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onRemove(int pos) {
+                                campReseptions.remove(pos);
+                                adapter.notifyDataSetChanged();
+                            }
+                        }, campReseption, pos);
+                    }
+                });
 
 
             }

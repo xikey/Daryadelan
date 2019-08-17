@@ -12,22 +12,19 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
 
 import daryadelan.sandogh.zikey.com.daryadelan.model.CampReseption;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
-import daryadelan.sandogh.zikey.com.daryadelan.tools.ToolbarWrapper;
 
 /**
  * Created by Zikey on 23/10/2017.
@@ -54,8 +51,25 @@ public class CampReseptionFragment extends DialogFragment {
 
     private CardView crdSaveFrom;
 
+    private CampReseption campReseption;
+    private int position;
+
+    private boolean editMode;
+
     public void setiSaveForm(ISaveForm iSaveForm) {
         this.iSaveForm = iSaveForm;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
+    }
+
+    public void setCampReseption(CampReseption campReseption) {
+        this.campReseption = campReseption;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     @Override
@@ -130,6 +144,16 @@ public class CampReseptionFragment extends DialogFragment {
 
     private void initContent() {
 
+        try {
+
+            edtName.setText(campReseption.getName());
+            edtFamily.setText(campReseption.getFamily());
+            edtNationalCode.setText("" + campReseption.getNationalCode());
+            edtRelation.setText("" + campReseption.getRelation());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void initDialog() {
@@ -189,6 +213,34 @@ public class CampReseptionFragment extends DialogFragment {
 
     }
 
+    public static CampReseptionFragment Show_EditableMode(FragmentActivity act, ISaveForm iSaveForm, CampReseption campReseption, int position) {
+
+        try {
+
+            if (iSaveForm == null)
+                return null;
+
+            CampReseptionFragment fragment = new CampReseptionFragment();
+            fragment.setiSaveForm(iSaveForm);
+            fragment.setCampReseption(campReseption);
+            fragment.setPosition(position);
+            fragment.setEditMode(true);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                if (!act.isDestroyed())
+                    fragment.show(act.getFragmentManager(), KEY_ALERT_DIALOG);
+            }
+
+            return fragment;
+        } catch (Exception ex) {
+
+            LogWrapper.loge("VisitorsAlertDialog_Show_Exception: ", ex);
+        }
+        return null;
+
+    }
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -199,18 +251,22 @@ public class CampReseptionFragment extends DialogFragment {
 
         public void onSaveForm(CampReseption campReseption);
 
+        void onEdit(CampReseption campReseption, int pos);
+
+        void onRemove(int pos);
+
     }
 
 
     private void saveForm() {
 
-        if (TextUtils.isEmpty(edtName.getText())){
-            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(),"فیلد نام خالی میباشد!");
+        if (TextUtils.isEmpty(edtName.getText())) {
+            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "فیلد نام خالی میباشد!");
             return;
         }
 
-        if (TextUtils.isEmpty(edtFamily.getText())){
-            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(),"فیلد نام خانوادگی خالی میباشد!");
+        if (TextUtils.isEmpty(edtFamily.getText())) {
+            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "فیلد نام خانوادگی خالی میباشد!");
             return;
         }
 
@@ -229,7 +285,21 @@ public class CampReseptionFragment extends DialogFragment {
         }
 
 
+        try {
+            campReseption = new CampReseption();
+            campReseption.setName(edtName.getText().toString());
+            campReseption.setFamily(edtFamily.getText().toString());
+            campReseption.setNationalCode(Long.parseLong(edtNationalCode.getText().toString()));
+            campReseption.setRelation(Integer.parseInt(edtRelation.getText().toString()));
 
+            if (iSaveForm != null)
+                iSaveForm.onSaveForm(campReseption);
+            dismiss();
+
+        } catch (Exception e) {
+            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "خطا در ذخیره سازی اطلاعات. لطفا فیلد های ورودی را مجددا بررسی نمایید");
+            e.printStackTrace();
+        }
 
 
     }
@@ -297,7 +367,6 @@ public class CampReseptionFragment extends DialogFragment {
         }
 
     }
-
 
 
 }

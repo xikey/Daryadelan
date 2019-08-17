@@ -3,10 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/lyRoot"
     android:layout_marginLeft="10dp"
     android:layout_marginTop="10dp"
     android:layout_marginRight="10dp"
     android:background="@color/colorGray"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
     android:layoutDirection="rtl"
     android:orientation="vertical"
     android:paddingTop="5dp"
@@ -44,6 +47,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
+                android:id="@+id/edtName"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorBlack"
@@ -83,6 +87,7 @@
                 android:textSize="@dimen/very_small_font_size" />
 
             <TextView
+                android:id="@+id/edtFamily"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_weight="1"
@@ -127,6 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_weight="1"
+                android:id="@+id/edtNationalCode"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/very_small_font_size" />
@@ -169,6 +175,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_weight="1"
+                android:id="@+id/edtRelation"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/very_small_font_size" />
