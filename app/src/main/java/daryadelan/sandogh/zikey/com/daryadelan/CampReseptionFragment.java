@@ -50,6 +50,7 @@ public class CampReseptionFragment extends DialogFragment {
     private EditText edtRelation;
 
     private CardView crdSaveFrom;
+    private CardView crdDelete;
 
     private CampReseption campReseption;
     private int position;
@@ -138,11 +139,26 @@ public class CampReseptionFragment extends DialogFragment {
             }
         });
 
+        crdDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (iSaveForm != null)
+                    iSaveForm.onRemove(position);
+                dismiss();
+            }
+        });
+
 
     }
 
 
     private void initContent() {
+
+        if (editMode) {
+            crdDelete.setVisibility(View.VISIBLE);
+        } else {
+            crdDelete.setVisibility(View.GONE);
+        }
 
         try {
 
@@ -174,6 +190,7 @@ public class CampReseptionFragment extends DialogFragment {
         edtRelation = root.findViewById(R.id.edtRelation);
 
         crdSaveFrom = root.findViewById(R.id.crdSaveFrom);
+        crdDelete = root.findViewById(R.id.crdRemove);
 
         tlb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -292,9 +309,17 @@ public class CampReseptionFragment extends DialogFragment {
             campReseption.setNationalCode(Long.parseLong(edtNationalCode.getText().toString()));
             campReseption.setRelation(Integer.parseInt(edtRelation.getText().toString()));
 
-            if (iSaveForm != null)
-                iSaveForm.onSaveForm(campReseption);
-            dismiss();
+            if (editMode) {
+                if (iSaveForm != null)
+                    iSaveForm.onEdit(campReseption, position);
+                dismiss();
+
+            } else {
+                if (iSaveForm != null)
+                    iSaveForm.onSaveForm(campReseption);
+                dismiss();
+            }
+
 
         } catch (Exception e) {
             new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "خطا در ذخیره سازی اطلاعات. لطفا فیلد های ورودی را مجددا بررسی نمایید");
