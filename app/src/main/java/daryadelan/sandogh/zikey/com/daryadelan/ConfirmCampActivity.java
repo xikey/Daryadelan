@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -24,7 +25,10 @@ import android.widget.TextView;
 
 import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog;
 
+import java.util.ArrayList;
+
 import daryadelan.sandogh.zikey.com.daryadelan.model.Camp;
+import daryadelan.sandogh.zikey.com.daryadelan.model.CampReseption;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CalendarWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
@@ -62,6 +66,8 @@ public class ConfirmCampActivity extends AppCompatActivity {
     private RecyclerView rvItem;
     private ItemAdapter adapter;
 
+    private ArrayList<CampReseption> campReseptions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +77,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
         initViews();
         initClickListeners();
         initContent();
+        initRecycleView();
 
 
     }
@@ -145,8 +152,12 @@ public class ConfirmCampActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                CampReseptionFragment.Show(ConfirmCampActivity.this);
+
             }
         });
+
+
     }
 
     private void initViews() {
@@ -168,6 +179,8 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
         crdAddNewPerson = (CardView) findViewById(R.id.crdAddNewPerson);
 
+        rvItem = (RecyclerView) findViewById(R.id.rvItem);
+
         try {
             FontChanger.applyMainFont(findViewById(R.id.lyContent));
 
@@ -180,6 +193,21 @@ public class ConfirmCampActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    private void initRecycleView() {
+
+        if (adapter == null)
+            adapter = new ItemAdapter();
+
+        if (rvItem == null)
+            initViews();
+
+        rvItem.setLayoutManager(new LinearLayoutManager(ConfirmCampActivity.this, LinearLayoutManager.VERTICAL, false));
+        rvItem.setAdapter(adapter);
+
+
     }
 
 
@@ -251,6 +279,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
         lyAddPersonFloat.setVisibility(View.VISIBLE);
         imgDropDown.setVisibility(View.VISIBLE);
         crdAddNewPerson.setVisibility(View.VISIBLE);
+        rvItem.setVisibility(View.VISIBLE);
 
         lyAddPerson.setVisibility(View.GONE);
         lyDayCount.setVisibility(View.GONE);
@@ -279,6 +308,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
                 lyAddPersonFloat.setVisibility(View.GONE);
                 imgDropDown.setVisibility(View.GONE);
                 crdAddNewPerson.setVisibility(View.GONE);
+                rvItem.setVisibility(View.GONE);
 
                 lyAddPerson.setVisibility(View.VISIBLE);
                 lyDayCount.setVisibility(View.VISIBLE);
@@ -306,7 +336,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
             if (parent == null || parent.getContext() == null)
                 return null;
 
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_camps_item, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_add_person_for_camp_item, parent, false);
             return new ItemAdapter.ItemHolder(view);
 
         }
@@ -330,7 +360,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
         @Override
         public int getItemCount() {
 
-            return 3;
+            return (campReseptions != null && campReseptions.size() != 0) ? campReseptions.size() : 0;
 
         }
 

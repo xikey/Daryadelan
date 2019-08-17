@@ -82,5 +82,6 @@
     <string name="family_lbl">نام خانوادگی:</string>
     <string name="national_code_lbl">کد ملی:</string>
     <string name="relation_lbl">نسبت:</string>
+    <string name="relation">نسبت</string>
 
 </resources>
