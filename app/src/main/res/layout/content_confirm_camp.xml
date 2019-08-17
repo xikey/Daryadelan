@@ -105,11 +105,12 @@
                         app:srcCompat="@drawable/ic_chevron_right_black_48dp" />
 
                     <TextView
+                        android:id="@+id/txtPersonsCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="40dp"
                         android:paddingRight="40dp"
-                        android:text="2 نفر"
+                        android:text="0 نفر"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/normal_font_size" />
 

@@ -60,6 +60,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
     private TextView txtCampName;
     private TextView txtCampDetail;
+    private TextView txtPersonsCount;
 
     private RelativeLayout lyFullPhoto;
     private CardView crdAddNewPerson;
@@ -88,6 +89,12 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(date))
             txtDate.setText(date);
+
+        if (campReseptions==null){
+            txtPersonsCount.setText("0 نفر");
+        }else {
+            txtPersonsCount.setText(campReseptions.size()+" نفر ");
+        }
 
         txtDayCount.setText(dayCount + " روز ");
 
@@ -163,6 +170,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
                         campReseptions.add(campReseption);
                         adapter.notifyDataSetChanged();
+                        initContent();
                     }
 
                     @Override
@@ -190,6 +198,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
         txtDate = (TextView) findViewById(R.id.txtDate);
         txtDayCount = (TextView) findViewById(R.id.txtDayCount);
+        txtPersonsCount = (TextView) findViewById(R.id.txtPersonsCount);
         lyAddPersonFloat = (RelativeLayout) findViewById(R.id.lyAddPersonFloat);
         imgDropDown = (ImageView) findViewById(R.id.imgDropDown);
         imgFullPhoto = (ImageView) findViewById(R.id.imgFullPhoto);
@@ -428,12 +437,14 @@ public class ConfirmCampActivity extends AppCompatActivity {
                             public void onEdit(CampReseption campReseption, int pos) {
                                 campReseptions.set(pos, campReseption);
                                 adapter.notifyDataSetChanged();
+                                initContent();
                             }
 
                             @Override
                             public void onRemove(int pos) {
                                 campReseptions.remove(pos);
                                 adapter.notifyDataSetChanged();
+                                initContent();
                             }
                         }, campReseption, pos);
                     }
