@@ -24,8 +24,11 @@ import java.util.ArrayList;
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Camp;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampsWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.NewsWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.ICamp;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.CampServerRepo;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
@@ -41,7 +44,7 @@ public class CampsRequestsHistory extends AppCompatActivity {
     private LinearLayout lyBottomProgress;
     private ICamp campRepo;
     private User user;
-    private long pageCount = 0;
+    private int pageCount = 0;
     private int hasMore = 0;
 
 
@@ -61,8 +64,51 @@ public class CampsRequestsHistory extends AppCompatActivity {
     }
 
     private void getCamps() {
+        if (campRepo == null)
+            return;
 
+        lyBottomProgress.setVisibility(View.VISIBLE);
+        campRepo.campRequestsHistory(getApplicationContext(), pageCount, user.getTokenType(), user.getToken(), new IRepoCallBack<CampsWrapper>() {
+            @Override
+            public void onAnswer(CampsWrapper answer) {
+                lyProgress.setVisibility(View.GONE);
+                lyBottomProgress.setVisibility(View.GONE);
+                if (answer == null) {
+
+                    return;
+                }
+                if (answer.getCamps() == null || answer.getCamps().size() == 0)
+                    return;
+
+                if (answer.getCamps().size()<10){
+                    hasMore=0;
+
+                }else {
+                    hasMore=1;
+                }
+
+                if (adapter != null)
+                    adapter.setItems(answer.getCamps());
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                lyProgress.setVisibility(View.GONE);
+                lyBottomProgress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
     }
+
 
     private void initViews() {
 
@@ -95,6 +141,28 @@ public class CampsRequestsHistory extends AppCompatActivity {
         rvItem.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvItem.setAdapter(adapter);
 
+        rvItem.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (hasMore == 0)
+                    return;
+
+                if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+                    LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    int pos = layoutManager.findLastVisibleItemPosition();
+                    if (adapter!=null){
+                        if (adapter.getItemCount()-1==pos){
+                            pageCount++;
+                            getCamps();
+                        }
+
+                    }
+                }
+
+            }
+        });
 
 
     }
@@ -108,6 +176,7 @@ public class CampsRequestsHistory extends AppCompatActivity {
 
 
     private void getUserData() {
+
         user = UserInstance.getInstance().getUser();
         if (user == null) {
             Toasty.error(CampsRequestsHistory.this, "خطا در دریافت اطلاعات کاربری").show();

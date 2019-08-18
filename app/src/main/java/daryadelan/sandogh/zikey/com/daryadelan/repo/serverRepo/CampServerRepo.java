@@ -95,5 +95,10 @@ public class CampServerRepo implements ICamp {
 
     }
 
+    @Override
+    public void campRequestsHistory(Context context, int page, String tokenType, String token, IRepoCallBack<CampsWrapper> callBack) {
+
+    }
+
 
 }

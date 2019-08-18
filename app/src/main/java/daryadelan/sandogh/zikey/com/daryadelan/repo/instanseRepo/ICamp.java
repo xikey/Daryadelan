@@ -12,4 +12,6 @@ public interface ICamp {
     void allCamps(Context context, String tokenType, String token, IRepoCallBack<CampsWrapper> callBack);
 
     void requestCamp(Context context, Camp camp, String tokenType, String token, IRepoCallBack<CampsWrapper> callBack);
+
+    void campRequestsHistory(Context context, int page, String tokenType, String token, IRepoCallBack<CampsWrapper> callBack);
 }
