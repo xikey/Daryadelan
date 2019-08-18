@@ -154,7 +154,7 @@ public class CampReseptionFragment extends DialogFragment {
         lyPickCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                pickRelation();
             }
         });
 
@@ -174,7 +174,7 @@ public class CampReseptionFragment extends DialogFragment {
             edtName.setText(campReseption.getName());
             edtFamily.setText(campReseption.getFamily());
             edtNationalCode.setText("" + campReseption.getNationalCode());
-            edtRelation.setText("" + campReseption.getRelation());
+            edtRelation.setText("" + campReseption.getRelationShipName());
         } catch (Exception e) {
             e.printStackTrace();
         }
