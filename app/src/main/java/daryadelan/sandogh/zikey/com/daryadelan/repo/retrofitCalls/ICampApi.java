@@ -16,5 +16,9 @@ public interface ICampApi {
     @POST("api/CampRequests/insertCampRequest")
     Call<CampsWrapper> reauestCamp(Camp camp);
 
+    @GET("api/CampRequests/GetCampRequests")
+    Call<CampsWrapper> getAllCampRequests(@Query("page") int page);
+
+
 
 }

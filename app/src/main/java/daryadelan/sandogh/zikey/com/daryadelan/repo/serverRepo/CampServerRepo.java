@@ -98,6 +98,20 @@ public class CampServerRepo implements ICamp {
     @Override
     public void campRequestsHistory(Context context, int page, String tokenType, String token, IRepoCallBack<CampsWrapper> callBack) {
 
+        ICampApi campApi = ServerApiClient.getClientWithHeader(context, tokenType, token).create(ICampApi.class);
+        call = campApi.getAllCampRequests(page);
+        call.enqueue(new Callback<CampsWrapper>() {
+            @Override
+            public void onResponse(Call<CampsWrapper> call, Response<CampsWrapper> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<CampsWrapper> call, Throwable throwable) {
+
+            }
+        });
+
     }
 
 
