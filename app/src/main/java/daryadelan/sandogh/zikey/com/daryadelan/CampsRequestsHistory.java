@@ -80,11 +80,11 @@ public class CampsRequestsHistory extends AppCompatActivity {
                 if (answer.getCamps() == null || answer.getCamps().size() == 0)
                     return;
 
-                if (answer.getCamps().size()<10){
-                    hasMore=0;
+                if (answer.getCamps().size() < 10) {
+                    hasMore = 0;
 
-                }else {
-                    hasMore=1;
+                } else {
+                    hasMore = 1;
                 }
 
                 if (adapter != null)
@@ -133,7 +133,7 @@ public class CampsRequestsHistory extends AppCompatActivity {
     private void initRecycleView() {
 
         if (adapter == null)
-            adapter = new  ItemAdapter();
+            adapter = new ItemAdapter();
 
         if (rvItem == null)
             initViews();
@@ -152,8 +152,8 @@ public class CampsRequestsHistory extends AppCompatActivity {
                 if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
                     LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     int pos = layoutManager.findLastVisibleItemPosition();
-                    if (adapter!=null){
-                        if (adapter.getItemCount()-1==pos){
+                    if (adapter != null) {
+                        if (adapter.getItemCount() - 1 == pos) {
                             pageCount++;
                             getCamps();
                         }
@@ -211,7 +211,7 @@ public class CampsRequestsHistory extends AppCompatActivity {
             if (parent == null || parent.getContext() == null)
                 return null;
 
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_camps_item, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_camps_requests_history_item, parent, false);
             return new ItemAdapter.ItemHolder(view);
 
         }
@@ -234,7 +234,7 @@ public class CampsRequestsHistory extends AppCompatActivity {
                 String url = BuildConfig.IPAddress + "/" + camp.getImagePath();
                 holder.txtTitle.setText(camp.getCampName());
                 holder.txtRate.setText(camp.getStar() + "ستاره");
-                holder.txtDesc.setText(camp.getState() + "-"+camp.getCity());
+                holder.txtDesc.setText(camp.getState() + "-" + camp.getCity());
 
 
                 new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(holder.imgAvatar).load();
@@ -262,27 +262,27 @@ public class CampsRequestsHistory extends AppCompatActivity {
             TextView txtRate;
             TextView txtDetails;
             TextView txtDesc;
+            TextView txtDate;
+            TextView txtCount;
             ImageView imgAvatar;
             Camp camp;
-
-            CardView crdConfirmCamp;
 
 
             public ItemHolder(View v) {
                 super(v);
-
 
                 txtTitle = v.findViewById(R.id.txtTitle);
                 txtRate = v.findViewById(R.id.txtRate);
                 txtDetails = v.findViewById(R.id.txtDetails);
                 imgAvatar = v.findViewById(R.id.imgAvatar);
                 lyRoot = v.findViewById(R.id.lyRoot);
+                txtDate = v.findViewById(R.id.txtDate);
+                txtCount = v.findViewById(R.id.txtCount);
+
                 txtDesc = v.findViewById(R.id.txtDesc);
-                crdConfirmCamp = v.findViewById(R.id.crdConfirmCamp);
 
                 FontChanger.applyMainFont(lyRoot);
                 FontChanger.applyTitleFont(txtTitle);
-
 
                 lyRoot.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -292,18 +292,10 @@ public class CampsRequestsHistory extends AppCompatActivity {
                     }
                 });
 
-                crdConfirmCamp.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ConfirmCampActivity.start(CampsRequestsHistory.this,camp);
-                    }
-                });
-
 
             }
         }
     }
-
 
 
 }
