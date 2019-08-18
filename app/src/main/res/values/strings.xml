@@ -76,7 +76,7 @@
     <string name="camps">هتل ها و مکان های اقامتی</string>
     <string name="title_activity_camps">هتل ها و مکان های اقامتی</string>
     <string name="title_activity_camp">CampActivity</string>
-    <string name="title_activity_camps_requests_history">CampsRequestsHistory</string>
+    <string name="title_activity_camps_requests_history">درخواست های ثبت شده</string>
     <string name="title_activity_confirm_camp">ConfirmCampActivity</string>
     <string name="name_lbl">نام:</string>
     <string name="family_lbl">نام خانوادگی:</string>

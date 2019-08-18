@@ -128,28 +128,7 @@ public class CampsActivity extends AppCompatActivity {
         rvItem.setLayoutManager(new LinearLayoutManager(CampsActivity.this, LinearLayoutManager.VERTICAL, false));
         rvItem.setAdapter(adapter);
 
-//        rvItem.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//
-//                if (hasMore == 0)
-//                    return;
-//
-//                if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
-//                    LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-//                    int pos = layoutManager.findLastVisibleItemPosition();
-//                    if (adapter != null) {
-//                        if (adapter.getItemCount() - 1 == pos) {
-//                            pageCount++;
-//                            getNews();
-//                        }
-//
-//                    }
-//                }
-//
-//            }
-//        });
+
 
     }
 

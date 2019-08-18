@@ -261,7 +261,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
             public void onError(Throwable error) {
 
                 lyProgress.setVisibility(View.GONE);
-                
+
             }
 
             @Override

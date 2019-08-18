@@ -32,12 +32,12 @@ public class UserServerRepo implements IUser {
 
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
 
-        PersonCheck o=new PersonCheck();
-        o.mobile= user.getMobile();
-        o.mobileDeviceBrand=user.getMobileDeviceBrand();
-        o.mobileImei=user.getMobileImei();
-        o.osVersion=user.getOsVersion();
-        o.personalCode=user.getPersonalCode();
+        PersonCheck o = new PersonCheck();
+        o.mobile = user.getMobile();
+        o.mobileDeviceBrand = user.getMobileDeviceBrand();
+        o.mobileImei = user.getMobileImei();
+        o.osVersion = user.getOsVersion();
+        o.personalCode = user.getPersonalCode();
 
         userCall = userApi.checkPerson(o);
         userCall.enqueue(new Callback<User>() {
@@ -53,6 +53,10 @@ public class UserServerRepo implements IUser {
                     return;
                 }
 
+                if (  response.raw().code() == 500) {
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
                 if (response.errorBody() != null) {
 
                     Gson gson = new Gson();
@@ -90,9 +94,9 @@ public class UserServerRepo implements IUser {
     @Override
     public void checkSMSisValidate(Context context, User user, final IRepoCallBack<User> callBack) {
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
-        CheckActivationCode o=new CheckActivationCode();
-        o.activeCode=user.getActiveCode();
-        o.mobile=user.getMobile();
+        CheckActivationCode o = new CheckActivationCode();
+        o.activeCode = user.getActiveCode();
+        o.mobile = user.getMobile();
         userCall = userApi.checkSMSisValidate(o);
         userCall.enqueue(new Callback<User>() {
             @Override
@@ -104,6 +108,10 @@ public class UserServerRepo implements IUser {
                 }
 
                 if (response.raw() != null && response.raw().code() == 404) {
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
+                if (  response.raw().code() == 500) {
                     callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
                     return;
                 }
@@ -147,13 +155,13 @@ public class UserServerRepo implements IUser {
     public void createUser(Context context, User user, final IRepoCallBack<User> callBack) {
 
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
-        UserCreation o=new UserCreation();
-        o.acceptCode=user.getAcceptCode();
-        o.firstName=user.getFirstName();
-        o.lastName=user.getLastName();
-        o.mobile=user.getMobile();
-        o.password=user.getPassword();
-        o.personType=user.getPersonType();
+        UserCreation o = new UserCreation();
+        o.acceptCode = user.getAcceptCode();
+        o.firstName = user.getFirstName();
+        o.lastName = user.getLastName();
+        o.mobile = user.getMobile();
+        o.password = user.getPassword();
+        o.personType = user.getPersonType();
         userCall = userApi.createUser(o);
 
         userCall.enqueue(new Callback<User>() {
@@ -165,6 +173,10 @@ public class UserServerRepo implements IUser {
                 }
 
                 if (response.raw() != null && response.raw().code() == 404) {
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
+                if (  response.raw().code() == 500) {
                     callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
                     return;
                 }
@@ -208,7 +220,7 @@ public class UserServerRepo implements IUser {
     public void login(Context context, User user, final IRepoCallBack<User> callBack) {
         IUserApi userApi = ServerApiClient.getClient(context).create(IUserApi.class);
 //        userCall = userApi.login(user.getMobile(), user.getPassword(), user.getGrantType());
-        LoginDto obj=new LoginDto(user.getMobile(),user.getPassword(),"pass");
+        LoginDto obj = new LoginDto(user.getMobile(), user.getPassword(), "pass");
         userCall = userApi.login(obj);
         userCall.enqueue(new Callback<User>() {
             @Override
@@ -220,6 +232,10 @@ public class UserServerRepo implements IUser {
                 }
 
                 if (response.raw() != null && response.raw().code() == 404) {
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
+                if (  response.raw().code() == 500) {
                     callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
                     return;
                 }
@@ -293,6 +309,11 @@ public class UserServerRepo implements IUser {
                 }
 
                 if (response.raw() != null && response.raw().code() == 404) {
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
+
+                if (  response.raw().code() == 500) {
                     callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
                     return;
                 }
