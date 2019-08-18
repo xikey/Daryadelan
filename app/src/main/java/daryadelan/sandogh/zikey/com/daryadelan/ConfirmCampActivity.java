@@ -24,8 +24,14 @@ import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog;
 
 import java.util.ArrayList;
 
+import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Camp;
 import daryadelan.sandogh.zikey.com.daryadelan.model.CampReseption;
+import daryadelan.sandogh.zikey.com.daryadelan.model.User;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampsWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.ICamp;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.CampServerRepo;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CalendarWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
@@ -69,6 +75,11 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
     private ArrayList<CampReseption> campReseptions;
 
+    private ICamp campRepo;
+
+    private User user;
+    private LinearLayout lyProgress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +87,8 @@ public class ConfirmCampActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirm_camp);
 
         parseIntent();
+        initRepo();
+        getUserData();
         initViews();
         initClickListeners();
         initContent();
@@ -83,15 +96,31 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
     }
 
+
+    private void getUserData() {
+
+        user = UserInstance.getInstance().getUser();
+        if (user == null) {
+            Toasty.error(ConfirmCampActivity.this, "خطا در دریافت اطلاعات کاربری").show();
+            finish();
+        }
+    }
+
+
+    private void initRepo() {
+        if (campRepo == null)
+            campRepo = new CampServerRepo();
+    }
+
     private void initContent() {
 
         if (!TextUtils.isEmpty(date))
             txtDate.setText(date);
 
-        if (campReseptions==null){
+        if (campReseptions == null) {
             txtPersonsCount.setText("0 نفر");
-        }else {
-            txtPersonsCount.setText(campReseptions.size()+" نفر ");
+        } else {
+            txtPersonsCount.setText(campReseptions.size() + " نفر ");
         }
 
         txtDayCount.setText(dayCount + " روز ");
@@ -186,6 +215,66 @@ public class ConfirmCampActivity extends AppCompatActivity {
         });
 
 
+        lyAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (camp == null) {
+                    new CustomDialogBuilder().showAlert(ConfirmCampActivity.this, "اطلاعات ورودی کامل نمیباشد");
+                    return;
+                }
+
+                if (campReseptions == null || campReseptions.size() == 0) {
+                    new CustomDialogBuilder().showAlert(ConfirmCampActivity.this, "لیست افراد خالی میباشد");
+                    return;
+                }
+
+                if (dayCount == 0) {
+                    new CustomDialogBuilder().showAlert(ConfirmCampActivity.this, "تعداد روز مشخص نمیباشد");
+                    return;
+                }
+
+                camp.setCampReseptions(campReseptions);
+                camp.setDay(dayCount);
+                camp.setCount(campReseptions.size());
+                camp.setRequestDate(date);
+
+                sendData();
+            }
+        });
+
+
+    }
+
+    private void sendData() {
+        lyProgress.setVisibility(View.VISIBLE);
+
+        campRepo.requestCamp(getApplicationContext(), camp, user.getTokenType(), user.getToken(), new IRepoCallBack<CampsWrapper>() {
+            @Override
+            public void onAnswer(CampsWrapper answer) {
+
+                lyProgress.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onError(Throwable error) {
+
+                lyProgress.setVisibility(View.GONE);
+                
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
+
     }
 
     private void initViews() {
@@ -212,7 +301,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
         lyConstLayouts = (LinearLayout) findViewById(R.id.lyConstLayouts);
 
         rvItem = (RecyclerView) findViewById(R.id.rvItem);
-
+        lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
 
 
         try {
@@ -321,7 +410,6 @@ public class ConfirmCampActivity extends AppCompatActivity {
         rvItem.setVisibility(View.VISIBLE);
 
 
-
     }
 
     // slide the view from its current position to below itself
@@ -346,8 +434,6 @@ public class ConfirmCampActivity extends AppCompatActivity {
                 imgDropDown.setVisibility(View.GONE);
                 crdAddNewPerson.setVisibility(View.GONE);
                 rvItem.setVisibility(View.GONE);
-
-
 
 
             }
@@ -393,7 +479,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
                 holder.edtName.setText(cmp.getName());
                 holder.edtFamily.setText(cmp.getFamily());
-                holder.edtNationalCode.setText(""+(int) cmp.getNationalCode());
+                holder.edtNationalCode.setText("" + (int) cmp.getNationalCode());
                 holder.edtRelation.setText("" + cmp.getRelation());
             } catch (Exception ex) {
                 LogWrapper.loge("ItemAdapter_onBindViewHolder_Exception: ", ex);

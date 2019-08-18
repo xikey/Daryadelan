@@ -46,8 +46,15 @@ public class Camp implements Parcelable {
     private int star;
     @SerializedName("galleryname")
     private String galleryName;
-    @SerializedName("person")
+
+    @SerializedName("Count")
+    private long count;
+    @SerializedName("Day")
+    private long day;
+    @SerializedName("Person")
     private ArrayList<CampReseption> campReseptions;
+    @SerializedName("RequestDate")
+    private String requestDate;
 
     public long getCampID() {
         return campID;
@@ -71,6 +78,14 @@ public class Camp implements Parcelable {
 
     public void setCampName(String campName) {
         this.campName = campName;
+    }
+
+    public String getRequestDate() {
+        return requestDate;
+    }
+
+    public void setRequestDate(String requestDate) {
+        this.requestDate = requestDate;
     }
 
     public String getImagePath() {
@@ -155,6 +170,22 @@ public class Camp implements Parcelable {
 
     public ArrayList<CampReseption> getCampReseptions() {
         return campReseptions;
+    }
+
+    public long getCount() {
+        return count;
+    }
+
+    public void setCount(long count) {
+        this.count = count;
+    }
+
+    public long getDay() {
+        return day;
+    }
+
+    public void setDay(long day) {
+        this.day = day;
     }
 
     public void setCampReseptions(ArrayList<CampReseption> campReseptions) {

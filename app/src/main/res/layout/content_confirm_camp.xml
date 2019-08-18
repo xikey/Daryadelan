@@ -258,7 +258,10 @@
                 android:layout_height="1dp"
                 android:alpha="0.4"
                 android:background="@color/colorBlack" />
+
+
             <LinearLayout
+
                 android:id="@+id/lyAction"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -367,6 +370,8 @@
 
 
         </RelativeLayout>
+
+       <include layout="@layout/layout_progress_match_parent"/>
 
     </RelativeLayout>
 

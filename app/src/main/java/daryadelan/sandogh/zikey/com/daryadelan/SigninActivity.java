@@ -59,6 +59,10 @@ public class SigninActivity extends AppCompatActivity {
     private static final int KEY_REQUEST_CREATE_USER = 13;
 
 
+    private static final String KEY_MUST_CLEAR_DB = "MUST_CLEAR_DB";
+    boolean mustClearDB;
+
+
     private final int RESOLVE_HINT = 45;
     private CardView lySendSMS;
     GoogleApiClient apiClient;
@@ -96,6 +100,7 @@ public class SigninActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        parseIntent();
         requestGetMessagePermission();
         initRepo();
         isUserLoggedInBefore();
@@ -103,6 +108,13 @@ public class SigninActivity extends AppCompatActivity {
         initBroadCast();
 
 
+    }
+
+    private void parseIntent() {
+        Intent data = getIntent();
+
+        if (data.hasExtra(KEY_MUST_CLEAR_DB))
+            mustClearDB = data.getBooleanExtra(KEY_MUST_CLEAR_DB, false);
     }
 
     /**
@@ -113,7 +125,7 @@ public class SigninActivity extends AppCompatActivity {
         userSqliteRepo.getUserDatas(getApplicationContext(), new IRepoCallBack<User>() {
             @Override
             public void onAnswer(User answer) {
-                if (answer != null && !TextUtils.isEmpty(answer.getToken())) {
+                if (answer != null &&!mustClearDB&& !TextUtils.isEmpty(answer.getToken())) {
                     MainActivity.start(SigninActivity.this);
                     finish();
                 } else {
@@ -411,19 +423,19 @@ public class SigninActivity extends AppCompatActivity {
                 personel = user;
                 String tmp = "کد ارسالی به شماره موبایل " + user.getMobile() + " را وارد نمایید ";
 
-                smSvalidationDialogFullScreen=SMSvalidationDialogFullScreen.Show(SigninActivity.this, new SMSvalidationDialogFullScreen.IInputTextWatcher() {
+                smSvalidationDialogFullScreen = SMSvalidationDialogFullScreen.Show(SigninActivity.this, new SMSvalidationDialogFullScreen.IInputTextWatcher() {
                     @Override
                     public void onDone(String input) {
 
 
-                       try {
-                           personel.setActiveCode(input);
-                       }catch (Exception e){
-                           e.printStackTrace();
-                       }
+                        try {
+                            personel.setActiveCode(input);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                         checkActivateCodeValidation();
-                        if (smSvalidationDialogFullScreen!=null)
+                        if (smSvalidationDialogFullScreen != null)
                             smSvalidationDialogFullScreen.dismiss();
                     }
                 });
@@ -503,6 +515,13 @@ public class SigninActivity extends AppCompatActivity {
         Intent starter = new Intent(context, SigninActivity.class);
         context.startActivity(starter);
     }
+
+    public static void start_clearDB(Context context) {
+        Intent starter = new Intent(context, SigninActivity.class);
+        starter.putExtra(KEY_MUST_CLEAR_DB, true);
+        context.startActivity(starter);
+    }
+
 
     private void initViews() {
 
@@ -907,7 +926,6 @@ public class SigninActivity extends AppCompatActivity {
 
 
     }
-
 
 
 }

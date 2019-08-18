@@ -98,16 +98,13 @@ public class MainActivity extends AppCompatActivity
     private CardView crdRequestsList;
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }else {
+        } else {
             View decorView = getWindow().getDecorView();
 // Hide the status bar.
             int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -132,7 +129,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -142,7 +139,7 @@ public class MainActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }else {
+        } else {
             View decorView = getWindow().getDecorView();
 // Hide the status bar.
             int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -171,14 +168,14 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public void onClickCancel(DialogFragment fragment) {
                             fragment.dismiss();
-                            SigninActivity.start(MainActivity.this);
+                            SigninActivity.start_clearDB(MainActivity.this);
                             finish();
                         }
 
                         @Override
                         public void onClickOutside(DialogFragment fragment) {
                             fragment.dismiss();
-                            SigninActivity.start(MainActivity.this);
+                            SigninActivity.start_clearDB(MainActivity.this);
                             finish();
                         }
                     });
@@ -441,10 +438,9 @@ public class MainActivity extends AppCompatActivity
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
         lyProgress.setVisibility(View.VISIBLE);
         rvItem = (RecyclerView) findViewById(R.id.rtItem);
-        crdCamps= (CardView) findViewById(R.id.crdCamps);
-        crdRequestsList= (CardView) findViewById(R.id.crdRequestsList);
+        crdCamps = (CardView) findViewById(R.id.crdCamps);
+        crdRequestsList = (CardView) findViewById(R.id.crdRequestsList);
         lyNews.setVisibility(View.GONE);
-
 
 
         try {
@@ -651,41 +647,45 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initAdvertiseBox() {
+        try {
+            View advertiseHeaderBox = findViewById(R.id.advertiseHeaderBox);
+
+            int width = getResources().getDisplayMetrics().widthPixels;
+
+            int height = width / 2;
+            ViewGroup.LayoutParams mainParams = advertiseHeaderBox.getLayoutParams();
+            mainParams.height = height;
+            advertiseHeaderBox.setLayoutParams(mainParams);
+
+            final TabsPagerAdapter adapter = new TabsPagerAdapter(getSupportFragmentManager(), height);
+
+            pager = (ViewPager) findViewById(R.id.pager);
+            pager.setAdapter(adapter);
+            final Indicator indexBox = (Indicator) findViewById(R.id.indexBox);
+            indexBox.setViewPager(pager);
 
 
-        View advertiseHeaderBox = findViewById(R.id.advertiseHeaderBox);
+            pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        int width = getResources().getDisplayMetrics().widthPixels;
+                }
 
-        int height = width  /2;
-        ViewGroup.LayoutParams mainParams = advertiseHeaderBox.getLayoutParams();
-        mainParams.height = height;
-        advertiseHeaderBox.setLayoutParams(mainParams);
+                @Override
+                public void onPageSelected(int position) {
+                    pageChanged = true;
+                }
 
-        final TabsPagerAdapter adapter = new TabsPagerAdapter(getSupportFragmentManager(), height);
+                @Override
+                public void onPageScrollStateChanged(int state) {
 
-        pager = (ViewPager) findViewById(R.id.pager);
-        pager.setAdapter(adapter);
-        final Indicator indexBox = (Indicator) findViewById(R.id.indexBox);
-        indexBox.setViewPager(pager);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
-        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                pageChanged = true;
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     public class TabsPagerAdapter extends FragmentPagerAdapter {
@@ -710,7 +710,7 @@ public class MainActivity extends AppCompatActivity
 
     private void exitApp() {
 
-        SigninActivity.start(MainActivity.this);
+        SigninActivity.start_clearDB(MainActivity.this);
         finish();
     }
 
