@@ -411,6 +411,7 @@ public class MainActivity extends AppCompatActivity
         crdCamps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (checkUserPersmission())
                 CampsActivity.start(MainActivity.this);
             }
         });
@@ -418,6 +419,8 @@ public class MainActivity extends AppCompatActivity
         crdRequestsList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (checkUserPersmission())
+                    CampsRequestsHistory.start(MainActivity.this);
 
             }
         });
