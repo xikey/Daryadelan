@@ -55,7 +55,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
     private String date = CalendarWrapper.getCurrentPersianDate();
 
-    private int dayCount = 1;
+    private int dayCount = 0;
 
     private ImageView imgDropDown;
     private ImageView imgFullPhoto;

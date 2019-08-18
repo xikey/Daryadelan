@@ -21,6 +21,9 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
+
+import daryadelan.sandogh.zikey.com.daryadelan.model.Camp;
 import daryadelan.sandogh.zikey.com.daryadelan.model.CampReseption;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
@@ -398,6 +401,35 @@ public class CampReseptionFragment extends DialogFragment {
             new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "مقدار کد ملی نادرست میباشد");
             return false;
         }
+
+    }
+
+    private void pickRelation() {
+
+        CampReseption campReseption = new CampReseption();
+        ArrayList<CampReseption> availableRelations = campReseption.getAllAvailableRelations();
+
+        if (availableRelations == null)
+            return;
+
+        CharSequence items[] = new CharSequence[availableRelations.size()];
+
+        for (int i = 0; i < availableRelations.size(); i++) {
+            items[i] = availableRelations.get(i).getRelationShipName();
+        }
+
+        try {
+            new CustomDialogBuilder().showPickerDialog((AppCompatActivity) getActivity(), "انتخاب نسبت", items, new CustomDialogBuilder.OnPickerDialogListener() {
+                @Override
+                public void onPick(int position) {
+                    campReseption.setRelation(position);
+                    initContent();
+                }
+            });
+        } catch (Exception ex) {
+            LogWrapper.loge("ChequesActivity_onClick_Exception: ", ex);
+        }
+
 
     }
 
