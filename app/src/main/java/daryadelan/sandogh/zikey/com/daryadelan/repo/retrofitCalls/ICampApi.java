@@ -1,6 +1,7 @@
 package daryadelan.sandogh.zikey.com.daryadelan.repo.retrofitCalls;
 
 import daryadelan.sandogh.zikey.com.daryadelan.model.Camp;
+import daryadelan.sandogh.zikey.com.daryadelan.model.CampRequest;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampsWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.NewsWrapper;
 import retrofit2.Call;
@@ -14,7 +15,7 @@ public interface ICampApi {
     Call<CampsWrapper> allCamps();
 
     @POST("api/CampRequests/insertCampRequest")
-    Call<CampsWrapper> reauestCamp(Camp camp);
+    Call<CampsWrapper> reauestCamp(CampRequest camp);
 
     @GET("api/CampRequests/GetCampRequests")
     Call<CampsWrapper> getAllCampRequests(@Query("page") int page);

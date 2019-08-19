@@ -3,6 +3,8 @@ package daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo;
 import android.content.Context;
 
 import daryadelan.sandogh.zikey.com.daryadelan.model.Camp;
+import daryadelan.sandogh.zikey.com.daryadelan.model.CampRequest;
+import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampsWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.NewsWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.apiClient.ServerApiClient;
@@ -59,10 +61,19 @@ public class CampServerRepo implements ICamp {
     }
 
     @Override
-    public void requestCamp(Context context, Camp camp, String tokenType, String token, IRepoCallBack<CampsWrapper> callBack) {
+    public void requestCamp(Context context, Camp camp, String tokenType, String token, User user, IRepoCallBack<CampsWrapper> callBack) {
 
         ICampApi campApi = ServerApiClient.getClientWithHeader(context, tokenType, token).create(ICampApi.class);
-        call = campApi.reauestCamp(camp);
+        CampRequest crp = new CampRequest();
+        crp.setCampID(camp.getCampID());
+        crp.setCampReseptions(camp.getCampReseptions());
+        crp.setCount(camp.getCount());
+        crp.setDay(camp.getDay());
+        crp.setNationalCode(0);
+        crp.setPersonalCode(user.getPersonalCode());
+        crp.setRequestDate(camp.getRequestDate());
+
+        call = campApi.reauestCamp(crp);
         call.enqueue(new Callback<CampsWrapper>() {
             @Override
             public void onResponse(Call<CampsWrapper> call, Response<CampsWrapper> response) {
