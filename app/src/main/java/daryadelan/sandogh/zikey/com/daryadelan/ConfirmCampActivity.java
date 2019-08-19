@@ -249,7 +249,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
     private void sendData() {
         lyProgress.setVisibility(View.VISIBLE);
 
-        campRepo.requestCamp(getApplicationContext(), camp, user.getTokenType(), user.getToken(), new IRepoCallBack<CampsWrapper>() {
+        campRepo.requestCamp(getApplicationContext(), camp, user.getTokenType(), user.getToken(),user, new IRepoCallBack<CampsWrapper>() {
             @Override
             public void onAnswer(CampsWrapper answer) {
 
