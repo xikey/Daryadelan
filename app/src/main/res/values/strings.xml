@@ -83,5 +83,6 @@
     <string name="national_code_lbl">کد ملی:</string>
     <string name="relation_lbl">نسبت:</string>
     <string name="relation">نسبت</string>
+    <string name="persons_count">تعداد نفرات</string>
 
 </resources>
