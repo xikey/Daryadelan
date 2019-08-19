@@ -87,8 +87,8 @@
 
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     app:srcCompat="@drawable/ic_chevron_right_black_48dp" />
 
                 <LinearLayout
@@ -101,7 +101,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/persons_count"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/very_big_font_size" />
 
                     <TextView
@@ -119,8 +119,8 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     app:srcCompat="@drawable/ic_chevron_left_black_48dp" />
 
 
@@ -144,8 +144,8 @@
 
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     app:srcCompat="@drawable/ic_chevron_right_black_48dp" />
 
 
@@ -160,7 +160,7 @@
                         android:layout_weight="0.5"
                         android:gravity="center"
                         android:text="تاریخ درخواست"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/very_big_font_size" />
 
 
@@ -180,8 +180,8 @@
 
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     app:srcCompat="@drawable/ic_chevron_left_black_48dp" />
 
 
@@ -206,8 +206,8 @@
 
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     app:srcCompat="@drawable/ic_chevron_right_black_48dp" />
 
 
@@ -222,7 +222,7 @@
                         android:layout_weight="0.5"
                         android:gravity="center"
                         android:text="تعداد روز"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/very_big_font_size" />
 
                     <TextView
@@ -233,15 +233,15 @@
                         android:gravity="center"
                         android:paddingTop="5dp"
                         android:paddingRight="40dp"
-                        android:textColor="@color/colorBlack"
+                        android:textColor="@color/colorAccent"
                         android:textSize="@dimen/small_font_size" />
 
 
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     app:srcCompat="@drawable/ic_chevron_left_black_48dp" />
 
 
