@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView txtUserName;
     private TextView txtPassword;
     private CardView lyAction;
+    private CardView lySignin;
     private LinearLayout lyProgress;
 
     private IUser repo;
@@ -56,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }else {
+        } else {
             View decorView = getWindow().getDecorView();
 // Hide the status bar.
             int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -104,6 +105,14 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+        lySignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SigninActivity.start_clearDB(getApplicationContext());
+                finish();
             }
         });
     }
@@ -168,13 +177,13 @@ public class LoginActivity extends AppCompatActivity {
                 user.setTokenType(answer.getTokenType());
                 user.setTokenExpireDate(answer.getTokenExpireDate());
 
-                if (userSqliteRepo!=null)
+                if (userSqliteRepo != null)
                     userSqliteRepo.saveUserDatas(getApplicationContext(), user, new IRepoCallBack<User>() {
                         @Override
                         public void onAnswer(User answer) {
 
-                            if (answer==null||answer.getResultId()<0){
-                                new CustomDialogBuilder().showAlert(LoginActivity.this,"خطا در ذخیره سازی اطلاعات کاربر، لطفا مجددا تلاش نمایید!");
+                            if (answer == null || answer.getResultId() < 0) {
+                                new CustomDialogBuilder().showAlert(LoginActivity.this, "خطا در ذخیره سازی اطلاعات کاربر، لطفا مجددا تلاش نمایید!");
                                 return;
                             }
 
@@ -226,6 +235,7 @@ public class LoginActivity extends AppCompatActivity {
         txtUserName = (TextView) findViewById(R.id.txtUserName);
         txtPassword = (TextView) findViewById(R.id.txtPassword);
         lyAction = (CardView) findViewById(R.id.lyAction);
+        lySignin = (CardView) findViewById(R.id.lySignin);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
         crdContainer = (CardView) findViewById(R.id.crdContainer);
 
@@ -263,7 +273,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initHeaderSize() {
-
 
 
         try {
@@ -371,7 +380,7 @@ public class LoginActivity extends AppCompatActivity {
         setFix.playTogether(setFixX, setFixY);
 
         globalAnimate = new AnimatorSet();
-        globalAnimate.playSequentially(shirinkLogo,setGrow,setFix);
+        globalAnimate.playSequentially(shirinkLogo, setGrow, setFix);
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(globalAnimate);

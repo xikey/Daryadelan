@@ -158,6 +158,13 @@ public class CampReseptionFragment extends DialogFragment {
             }
         });
 
+        edtRelation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickRelation();
+            }
+        });
+
     }
 
 
@@ -170,7 +177,6 @@ public class CampReseptionFragment extends DialogFragment {
         }
 
         try {
-
             edtName.setText(campReseption.getName());
             edtFamily.setText(campReseption.getFamily());
             edtNationalCode.setText("" + campReseption.getNationalCode());
@@ -318,7 +324,7 @@ public class CampReseptionFragment extends DialogFragment {
             campReseption.setName(edtName.getText().toString());
             campReseption.setFamily(edtFamily.getText().toString());
             campReseption.setNationalCode(Long.parseLong(edtNationalCode.getText().toString()));
-            campReseption.setRelation(Integer.parseInt(edtRelation.getText().toString()));
+
 
             if (editMode) {
                 if (iSaveForm != null)
@@ -423,6 +429,7 @@ public class CampReseptionFragment extends DialogFragment {
                 @Override
                 public void onPick(int position) {
                     campReseption.setRelation(position);
+                    edtRelation.setText(campReseption.getRelationShipName());
                     initContent();
                 }
             });

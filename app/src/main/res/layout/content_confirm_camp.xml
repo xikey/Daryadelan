@@ -233,7 +233,7 @@
                         android:gravity="center"
                         android:paddingTop="5dp"
                         android:paddingRight="40dp"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/colorBlack"
                         android:textSize="@dimen/small_font_size" />
 
 
@@ -295,7 +295,7 @@
                     android:id="@+id/rvItem"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="60dp"
                     android:layout_weight="1">
 
                 </android.support.v7.widget.RecyclerView>
@@ -347,15 +347,24 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:orientation="vertical"
                 android:layout_height="wrap_content"
                 android:background="#FFFDE7">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/very_small_font_size"
+                    android:textColor="@color/colorBlack"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="جهت ادامه فرایند پیکان را لمس نمایید"
+                    android:layout_height="wrap_content" />
 
                 <ImageView
                     android:id="@+id/imgDropDown"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_centerHorizontal="true"
-
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     app:srcCompat="@drawable/ic_expand_more_black_48dp" />

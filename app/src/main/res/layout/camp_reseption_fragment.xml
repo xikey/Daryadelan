@@ -13,7 +13,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="50dp"
+        android:layout_margin="30dp"
         app:cardBackgroundColor="@color/colorWhite"
         app:cardCornerRadius="4dp"
         app:cardElevation="5dp"
@@ -136,6 +136,7 @@
 
                 <RelativeLayout
                     android:clickable="true"
+                    android:focusable="true"
                     android:id="@+id/lyPickCount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

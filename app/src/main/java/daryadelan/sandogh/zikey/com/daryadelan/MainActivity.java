@@ -168,14 +168,14 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public void onClickCancel(DialogFragment fragment) {
                             fragment.dismiss();
-                            SigninActivity.start_clearDB(MainActivity.this);
+                            LoginActivity.start(MainActivity.this);
                             finish();
                         }
 
                         @Override
                         public void onClickOutside(DialogFragment fragment) {
                             fragment.dismiss();
-                            SigninActivity.start_clearDB(MainActivity.this);
+                            LoginActivity.start(MainActivity.this);
                             finish();
                         }
                     });
@@ -713,7 +713,7 @@ public class MainActivity extends AppCompatActivity
 
     private void exitApp() {
 
-        SigninActivity.start_clearDB(MainActivity.this);
+        LoginActivity.start(MainActivity.this);
         finish();
     }
 
