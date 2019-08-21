@@ -408,7 +408,7 @@ public class CustomDialogBuilder {
         DatePickerDialog dialog = DatePickerDialog.newInstance(dateSetListener, calender.getPersianYear(), calender.getPersianMonth(),
                 calender.getPersianDay());
 
-        dialog.setThemeDark(false);
+        dialog.setThemeDark(true);
         dialog.show(context.getFragmentManager(), "DatePickerDialog");
 
     }

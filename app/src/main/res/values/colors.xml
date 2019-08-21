@@ -14,7 +14,6 @@
     <color name="colorGreenLight">#009688</color>
     <color name="colorGreenDark">#00695C</color>
     <color name="colorRed">#d50000</color>
-    <color name="mdtp_accent_color">#ff4081</color>
     <color name="update_button">#cc424242</color>
     <color name="complement_color">#3f51b5</color>
     <color name="color_blue">#00BCD4</color>
@@ -34,6 +33,9 @@
     <color name="coloraboutUs_top">#61747E</color>
     <color name="coloraboutUs_foot">#616161</color>
     <color name="coloraboutUs_foot_selected">#757575</color>
+
+    <color name="mdtp_accent_color">#2196F3</color>
+    <color name="mdtp_accent_color_dark">#1565C0</color>
 
 </resources>
 
