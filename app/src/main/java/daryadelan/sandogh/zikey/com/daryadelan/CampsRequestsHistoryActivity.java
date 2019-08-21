@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Camp;
 import daryadelan.sandogh.zikey.com.daryadelan.model.CampRequest;
+import daryadelan.sandogh.zikey.com.daryadelan.model.CampRequestHistory;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampsHistoryWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.ICamp;
@@ -184,9 +185,9 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
 
     class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
 
-        private ArrayList<CampRequest> items;
+        private ArrayList<CampRequestHistory> items;
 
-        public void setItems(ArrayList<CampRequest> in) {
+        public void setItems(ArrayList<CampRequestHistory> in) {
             if (items == null)
                 items = new ArrayList<>();
             items.addAll(in);
@@ -222,7 +223,7 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
                     return;
 
 
-                CampRequest campRequest = items.get(position);
+                CampRequestHistory campRequest = items.get(position);
 
                 if (campRequest == null)
                     return;
@@ -266,7 +267,7 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
             TextView txtDate;
             TextView txtCount;
             ImageView imgAvatar;
-            CampRequest campRequest;
+            CampRequestHistory campRequest;
 
 
             public ItemHolder(View v) {
