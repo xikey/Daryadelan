@@ -28,7 +28,9 @@ import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Camp;
 import daryadelan.sandogh.zikey.com.daryadelan.model.CampReseption;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampReseptionRequesWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampsWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.ICamp;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.CampServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
@@ -249,9 +251,9 @@ public class ConfirmCampActivity extends AppCompatActivity {
     private void sendData() {
         lyProgress.setVisibility(View.VISIBLE);
 
-        campRepo.requestCamp(getApplicationContext(), camp, user.getTokenType(), user.getToken(),user, new IRepoCallBack<CampsWrapper>() {
+        campRepo.requestCamp(getApplicationContext(), camp, user.getTokenType(), user.getToken(),user, new IRepoCallBack<CampReseptionRequesWrapper>() {
             @Override
-            public void onAnswer(CampsWrapper answer) {
+            public void onAnswer(CampReseptionRequesWrapper answer) {
 
                 lyProgress.setVisibility(View.GONE);
 

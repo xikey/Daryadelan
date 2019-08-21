@@ -5,8 +5,10 @@ import android.content.Context;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Camp;
 import daryadelan.sandogh.zikey.com.daryadelan.model.CampRequest;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampReseptionRequesWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampsWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.NewsWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.apiClient.ServerApiClient;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.ICamp;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.retrofitCalls.ICampApi;
@@ -20,6 +22,7 @@ public class CampServerRepo implements ICamp {
 
 
     Call<CampsWrapper> call;
+    Call<CampReseptionRequesWrapper> serverWrapperCall;
 
     @Override
     public void allCamps(Context context, String tokenType, String token, IRepoCallBack<CampsWrapper> callBack) {
@@ -61,7 +64,7 @@ public class CampServerRepo implements ICamp {
     }
 
     @Override
-    public void requestCamp(Context context, Camp camp, String tokenType, String token, User user, IRepoCallBack<CampsWrapper> callBack) {
+    public void requestCamp(Context context, Camp camp, String tokenType, String token, User user, IRepoCallBack<CampReseptionRequesWrapper> callBack) {
 
         ICampApi campApi = ServerApiClient.getClientWithHeader(context, tokenType, token).create(ICampApi.class);
         CampRequest crp = new CampRequest();
@@ -73,10 +76,10 @@ public class CampServerRepo implements ICamp {
         crp.setPersonalCode(user.getPersonalCode());
         crp.setRequestDate(camp.getRequestDate());
 
-        call = campApi.reauestCamp(crp);
-        call.enqueue(new Callback<CampsWrapper>() {
+        serverWrapperCall = campApi.reauestCamp(crp);
+        serverWrapperCall.enqueue(new Callback<CampReseptionRequesWrapper>() {
             @Override
-            public void onResponse(Call<CampsWrapper> call, Response<CampsWrapper> response) {
+            public void onResponse(Call<CampReseptionRequesWrapper> call, Response<CampReseptionRequesWrapper> response) {
 
                 if (response == null) {
                     callBack.onError(new Throwable("RP ERR 101  خطا در ثبت اطلاعات"));
@@ -99,7 +102,7 @@ public class CampServerRepo implements ICamp {
             }
 
             @Override
-            public void onFailure(Call<CampsWrapper> call, Throwable throwable) {
+            public void onFailure(Call<CampReseptionRequesWrapper> call, Throwable throwable) {
                 callBack.onError(new Throwable("RP ERR 103  خطا در ثبت اطلاعات"));
             }
         });
