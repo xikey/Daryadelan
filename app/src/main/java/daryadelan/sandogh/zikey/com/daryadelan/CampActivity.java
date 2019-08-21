@@ -158,7 +158,7 @@ public class CampActivity extends AppCompatActivity {
         if (camp == null)
             return;
 
-        txtDate.setText(camp.getCampName());
+        txtDate.setText(camp.getState() + "-"+camp.getCity()+"-"+camp.getStar() + "ستاره");
 
 
         String url = BuildConfig.IPAddress + "/" + camp.getImagePath();
