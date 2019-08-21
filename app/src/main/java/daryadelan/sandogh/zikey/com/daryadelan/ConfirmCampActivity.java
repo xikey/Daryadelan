@@ -1,5 +1,6 @@
 package daryadelan.sandogh.zikey.com.daryadelan;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -24,6 +25,7 @@ import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog;
 
 import java.util.ArrayList;
 
+import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Camp;
 import daryadelan.sandogh.zikey.com.daryadelan.model.CampReseption;
@@ -251,17 +253,36 @@ public class ConfirmCampActivity extends AppCompatActivity {
     private void sendData() {
         lyProgress.setVisibility(View.VISIBLE);
 
-        campRepo.requestCamp(getApplicationContext(), camp, user.getTokenType(), user.getToken(),user, new IRepoCallBack<CampReseptionRequesWrapper>() {
+        campRepo.requestCamp(getApplicationContext(), camp, user.getTokenType(), user.getToken(), user, new IRepoCallBack<CampReseptionRequesWrapper>() {
             @Override
             public void onAnswer(CampReseptionRequesWrapper answer) {
 
                 lyProgress.setVisibility(View.GONE);
 
+                if (!TextUtils.isEmpty(answer.getData())) {
+                    new CustomDialogBuilder().showAlert(ConfirmCampActivity.this, "درخواست شما با موفقیت ثبت گردید", new CustomAlertDialog.OnCancelClickListener() {
+                        @Override
+                        public void onClickCancel(DialogFragment fragment) {
+                            fragment.dismiss();
+                            finish();
+                        }
+
+                        @Override
+                        public void onClickOutside(DialogFragment fragment) {
+                            fragment.dismiss();
+                            finish();
+                        }
+                    });
+
+                } else {
+                    new CustomDialogBuilder().showAlert(ConfirmCampActivity.this, "خطا در ثبت اطلاعات");
+                }
+
             }
 
             @Override
             public void onError(Throwable error) {
-
+                new CustomDialogBuilder().showAlert(ConfirmCampActivity.this, error.getMessage());
                 lyProgress.setVisibility(View.GONE);
 
             }
