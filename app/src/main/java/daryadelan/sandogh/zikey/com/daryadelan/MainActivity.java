@@ -420,7 +420,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 if (checkUserPersmission())
-                    CampsRequestsHistory.start(MainActivity.this);
+                    CampsRequestsHistoryActivity.start(MainActivity.this);
 
             }
         });

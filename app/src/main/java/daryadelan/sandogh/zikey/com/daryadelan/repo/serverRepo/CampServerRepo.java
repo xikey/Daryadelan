@@ -6,6 +6,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.Camp;
 import daryadelan.sandogh.zikey.com.daryadelan.model.CampRequest;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampReseptionRequesWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampsHistoryWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampsWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.NewsWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper;
@@ -23,6 +24,7 @@ public class CampServerRepo implements ICamp {
 
     Call<CampsWrapper> call;
     Call<CampReseptionRequesWrapper> serverWrapperCall;
+    Call<CampsHistoryWrapper> campsHistoryWrapperCall;
 
     @Override
     public void allCamps(Context context, String tokenType, String token, IRepoCallBack<CampsWrapper> callBack) {
@@ -110,19 +112,35 @@ public class CampServerRepo implements ICamp {
     }
 
     @Override
-    public void campRequestsHistory(Context context, int page, String tokenType, String token, IRepoCallBack<CampsWrapper> callBack) {
+    public void campRequestsHistory(Context context, int page, String tokenType, String token, IRepoCallBack<CampsHistoryWrapper> callBack) {
 
         ICampApi campApi = ServerApiClient.getClientWithHeader(context, tokenType, token).create(ICampApi.class);
-        call = campApi.getAllCampRequests(page);
-        call.enqueue(new Callback<CampsWrapper>() {
+        campsHistoryWrapperCall = campApi.getAllCampRequests(page);
+        campsHistoryWrapperCall.enqueue(new Callback<CampsHistoryWrapper>() {
             @Override
-            public void onResponse(Call<CampsWrapper> call, Response<CampsWrapper> response) {
+            public void onResponse(Call<CampsHistoryWrapper> call, Response<CampsHistoryWrapper> response) {
+                if (response == null) {
+                    callBack.onError(new Throwable("RP ERR 101  خطا در دریافت اطلاعات"));
+                    return;
+                }
+
+                if (response.body() == null) {
+                    callBack.onError(new Throwable("RP ERR 102  خطا در دریافت اطلاعات"));
+                    return;
+                }
+
+                if (response.body().getResultId() < 0) {
+                    callBack.onError(new Throwable(response.body().getMessagee()));
+                    return;
+                }
+
+                callBack.onAnswer(response.body());
 
             }
 
             @Override
-            public void onFailure(Call<CampsWrapper> call, Throwable throwable) {
-
+            public void onFailure(Call<CampsHistoryWrapper> call, Throwable throwable) {
+                callBack.onError(new Throwable("RP ERR 103  خطا در ثبت اطلاعات"));
             }
         });
 

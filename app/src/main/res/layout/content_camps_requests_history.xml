@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:textDirection="rtl"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".CampsRequestsHistory"
+    tools:context=".CampsRequestsHistoryActivity"
     tools:showIn="@layout/activity_camps_requests_history">
 
     <LinearLayout
@@ -26,6 +26,18 @@
             app:SpinKit_Color="@color/colorAccent" />
 
     </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/rvItem"
+        android:paddingBottom="100dp"
+        android:clipToPadding="false"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
+
+
+    <include layout="@layout/layout_progress_match_parent"/>
+
 
 
 </RelativeLayout>

@@ -1,16 +1,11 @@
 package daryadelan.sandogh.zikey.com.daryadelan;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +18,9 @@ import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Camp;
+import daryadelan.sandogh.zikey.com.daryadelan.model.CampRequest;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
-import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampsWrapper;
-import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.NewsWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampsHistoryWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.ICamp;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.CampServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
@@ -35,7 +30,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ToolbarWrapper;
 import es.dmoral.toasty.Toasty;
 
-public class CampsRequestsHistory extends AppCompatActivity {
+public class CampsRequestsHistoryActivity extends AppCompatActivity {
 
 
     private RecyclerView rvItem;
@@ -68,27 +63,29 @@ public class CampsRequestsHistory extends AppCompatActivity {
             return;
 
         lyBottomProgress.setVisibility(View.VISIBLE);
-        campRepo.campRequestsHistory(getApplicationContext(), pageCount, user.getTokenType(), user.getToken(), new IRepoCallBack<CampsWrapper>() {
+        campRepo.campRequestsHistory(getApplicationContext(), pageCount, user.getTokenType(), user.getToken(), new IRepoCallBack<CampsHistoryWrapper>() {
             @Override
-            public void onAnswer(CampsWrapper answer) {
+            public void onAnswer(CampsHistoryWrapper answer) {
                 lyProgress.setVisibility(View.GONE);
                 lyBottomProgress.setVisibility(View.GONE);
                 if (answer == null) {
 
                     return;
                 }
-                if (answer.getCamps() == null || answer.getCamps().size() == 0)
+                if (answer.getCampRequests() == null || answer.getCampRequests().size() == 0)
                     return;
 
-                if (answer.getCamps().size() < 10) {
+                if (answer.getCampRequests().size() < 10) {
                     hasMore = 0;
 
                 } else {
                     hasMore = 1;
                 }
 
-                if (adapter != null)
-                    adapter.setItems(answer.getCamps());
+                if (adapter != null) {
+
+                }
+                adapter.setItems(answer.getCampRequests());
             }
 
             @Override
@@ -121,7 +118,7 @@ public class CampsRequestsHistory extends AppCompatActivity {
     }
 
     public static void start(FragmentActivity context) {
-        Intent starter = new Intent(context, CampsRequestsHistory.class);
+        Intent starter = new Intent(context, CampsRequestsHistoryActivity.class);
         context.startActivity(starter);
     }
 
@@ -179,7 +176,7 @@ public class CampsRequestsHistory extends AppCompatActivity {
 
         user = UserInstance.getInstance().getUser();
         if (user == null) {
-            Toasty.error(CampsRequestsHistory.this, "خطا در دریافت اطلاعات کاربری").show();
+            Toasty.error(CampsRequestsHistoryActivity.this, "خطا در دریافت اطلاعات کاربری").show();
             finish();
         }
     }
@@ -187,9 +184,9 @@ public class CampsRequestsHistory extends AppCompatActivity {
 
     class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
 
-        private ArrayList<Camp> items;
+        private ArrayList<CampRequest> items;
 
-        public void setItems(ArrayList<Camp> in) {
+        public void setItems(ArrayList<CampRequest> in) {
             if (items == null)
                 items = new ArrayList<>();
             items.addAll(in);
@@ -225,19 +222,23 @@ public class CampsRequestsHistory extends AppCompatActivity {
                     return;
 
 
-                Camp camp = items.get(position);
+                CampRequest campRequest = items.get(position);
 
-                if (camp == null)
+                if (campRequest == null)
                     return;
-                holder.camp = camp;
+                holder.campRequest = campRequest;
 
-                String url = BuildConfig.IPAddress + "/" + camp.getImagePath();
-                holder.txtTitle.setText(camp.getCampName());
-                holder.txtRate.setText(camp.getStar() + "ستاره");
-                holder.txtDesc.setText(camp.getState() + "-" + camp.getCity());
+                if (campRequest.getCamp() != null) {
 
+                    Camp camp = campRequest.getCamp();
 
-                new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(holder.imgAvatar).load();
+                    String url = BuildConfig.IPAddress + "/" + camp.getImagePath();
+                    holder.txtTitle.setText(camp.getCampName());
+                    holder.txtRate.setText(camp.getStar() + "ستاره");
+                    holder.txtDesc.setText(camp.getState() + "-" + camp.getCity());
+                    new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(holder.imgAvatar).load();
+
+                }
 
 
             } catch (Exception ex) {
@@ -265,7 +266,7 @@ public class CampsRequestsHistory extends AppCompatActivity {
             TextView txtDate;
             TextView txtCount;
             ImageView imgAvatar;
-            Camp camp;
+            CampRequest campRequest;
 
 
             public ItemHolder(View v) {
@@ -288,7 +289,7 @@ public class CampsRequestsHistory extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        CampActivity.start(CampsRequestsHistory.this, camp);
+
                     }
                 });
 

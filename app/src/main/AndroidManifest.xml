@@ -98,7 +98,7 @@
             android:label="@string/title_activity_camp"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".CampsRequestsHistory"
+            android:name=".CampsRequestsHistoryActivity"
             android:label="@string/title_activity_camps_requests_history"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

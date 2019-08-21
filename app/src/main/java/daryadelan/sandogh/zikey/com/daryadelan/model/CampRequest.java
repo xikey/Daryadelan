@@ -6,20 +6,39 @@ import java.util.ArrayList;
 
 public class CampRequest {
 
-    @SerializedName("PersonalCode")
+    @SerializedName("personalCode")
     private long PersonalCode;
-    @SerializedName("NationalCode")
+    @SerializedName("nationalCode")
     private long NationalCode;
-    @SerializedName("Count")
+    @SerializedName("count")
     private long count;
-    @SerializedName("Day")
+    @SerializedName("day")
     private long day;
-    @SerializedName("Person")
+    @SerializedName("subPersons")
     private ArrayList<CampReseption> campReseptions;
-    @SerializedName("RequestDate")
+    @SerializedName("createdat")
     private String requestDate;
     @SerializedName("campId")
     private long campID;
+    @SerializedName("campRequestId")
+    private long campRequestID;
+
+    @SerializedName("modifiedat")
+    private String modifieDate;
+
+    @SerializedName("requestState")
+    private int requestState;
+
+    @SerializedName("camp")
+    private Camp camp;
+
+    public int getRequestState() {
+        return requestState;
+    }
+
+    public void setRequestState(int requestState) {
+        this.requestState = requestState;
+    }
 
     public long getPersonalCode() {
         return PersonalCode;
@@ -31,6 +50,22 @@ public class CampRequest {
 
     public long getNationalCode() {
         return NationalCode;
+    }
+
+    public long getCampRequestID() {
+        return campRequestID;
+    }
+
+    public String getModifieDate() {
+        return modifieDate;
+    }
+
+    public void setModifieDate(String modifieDate) {
+        this.modifieDate = modifieDate;
+    }
+
+    public void setCampRequestID(long campRequestID) {
+        this.campRequestID = campRequestID;
     }
 
     public void setNationalCode(long nationalCode) {
@@ -51,6 +86,14 @@ public class CampRequest {
 
     public void setDay(long day) {
         this.day = day;
+    }
+
+    public Camp getCamp() {
+        return camp;
+    }
+
+    public void setCamp(Camp camp) {
+        this.camp = camp;
     }
 
     public ArrayList<CampReseption> getCampReseptions() {
