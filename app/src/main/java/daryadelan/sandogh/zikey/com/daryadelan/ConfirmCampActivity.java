@@ -2,6 +2,7 @@ package daryadelan.sandogh.zikey.com.daryadelan;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
@@ -88,6 +90,19 @@ public class ConfirmCampActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT < 16) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        } else {
+            View decorView = getWindow().getDecorView();
+// Hide the status bar.
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+
+        }
+
+
         setContentView(R.layout.activity_confirm_camp);
 
         parseIntent();
@@ -161,9 +176,10 @@ public class ConfirmCampActivity extends AppCompatActivity {
                 new CustomDialogBuilder().showInputTextDialog_NumbersOnly(ConfirmCampActivity.this, "تعداد روز", new CustomDialogBuilder.OnDialogListener() {
                     @Override
                     public void onOK(String input) {
-
-                        dayCount = Integer.parseInt(input);
-                        initContent();
+                        if (!TextUtils.isEmpty(input)){
+                            dayCount = Integer.parseInt(input);
+                            initContent();
+                        }
 
                     }
 

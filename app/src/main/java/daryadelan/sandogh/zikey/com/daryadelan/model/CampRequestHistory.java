@@ -16,8 +16,10 @@ public class CampRequestHistory {
     private long day;
     @SerializedName("subPersons")
     private ArrayList<CampReseption> campReseptions;
-    @SerializedName("createdat")
+    @SerializedName("requestDate")
     private String requestDate;
+    @SerializedName("createdat")
+    private String createDate;
     @SerializedName("campId")
     private long campID;
     @SerializedName("campRequestId")
@@ -31,6 +33,14 @@ public class CampRequestHistory {
 
     @SerializedName("camp")
     private Camp camp;
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
 
     public int getRequestState() {
         return requestState;

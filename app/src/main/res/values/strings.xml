@@ -84,5 +84,7 @@
     <string name="relation_lbl">نسبت:</string>
     <string name="relation">نسبت</string>
     <string name="persons_count">تعداد نفرات</string>
+    <string name="title_activity_confirmed_camp_history">ConfirmedCampHistoryActivity</string>
+    <string name="add_new_request">افزودن درخواست جدید</string>
 
 </resources>
