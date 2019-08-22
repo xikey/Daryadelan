@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog;
+import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendarUtils;
 
 import java.util.ArrayList;
 
@@ -60,6 +61,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
     private TextView txtDayCount;
 
     private String date = CalendarWrapper.getCurrentPersianDate();
+    private String gerorgianDate = "";
 
     private int dayCount = 0;
 
@@ -176,7 +178,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
                 new CustomDialogBuilder().showInputTextDialog_NumbersOnly(ConfirmCampActivity.this, "تعداد روز", new CustomDialogBuilder.OnDialogListener() {
                     @Override
                     public void onOK(String input) {
-                        if (!TextUtils.isEmpty(input)){
+                        if (!TextUtils.isEmpty(input)) {
                             dayCount = Integer.parseInt(input);
                             initContent();
                         }

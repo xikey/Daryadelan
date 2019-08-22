@@ -16,7 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
+import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendarUtils;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Camp;
@@ -30,6 +36,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.PersianDateConverter;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ToolbarWrapper;
 import es.dmoral.toasty.Toasty;
 
@@ -252,7 +259,25 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
                     holder.txtTitle.setText(camp.getCampName());
                     holder.txtRate.setText(camp.getStar() + "ستاره");
                     holder.txtDesc.setText(camp.getState() + "-" + camp.getCity());
-                    holder.txtDate.setText(campRequest.getRequestDate());
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = sdf.parse(campRequest.getCreateDate());
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(date);
+                    String yr = String.valueOf(cal.get(Calendar.YEAR));
+                    String mn = String.valueOf(cal.get(Calendar.MARCH));
+                    String dy = String.valueOf(cal.get(Calendar.DATE));
+                    long milis = cal.getTimeInMillis();
+                    PersianCalendar pc=new PersianCalendar();
+                    pc.setTimeInMillis(milis);
+                    String p= PersianDateConverter.toPersianFormat(pc.getPersianYear(),pc.getPersianMonth(),pc.getPersianDay());
+
+
+                    if (date != null) {
+                        holder.txtDate.setText(p);
+                    }
+
+
                     if (campRequest.getCampReseptions() != null && campRequest.getCampReseptions().size() != 0)
                         holder.txtCount.setText(campRequest.getCampReseptions().size() + " نفر ");
                     new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(holder.imgAvatar).load();
