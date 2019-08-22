@@ -1,11 +1,321 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ConfirmedCampHistoryActivity"
     tools:showIn="@layout/activity_confirmed_camp_history">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/lyFullPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:id="@+id/imgFullPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            android:scaleType="centerCrop">
+
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_shadow"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/txtCampName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/big_font_size"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txtCampDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/small_font_size" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+
+        <LinearLayout
+            android:id="@+id/lyConstLayouts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/lyAddPerson"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    app:srcCompat="@drawable/ic_chevron_right_black_48dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/persons_count"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/very_big_font_size" />
+
+                    <TextView
+                        android:id="@+id/txtPersonsCount"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingLeft="40dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="40dp"
+                        android:text="0 نفر"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/small_font_size" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    app:srcCompat="@drawable/ic_chevron_left_black_48dp" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:alpha="0.4"
+                android:background="@color/colorBlack" />
+
+            <LinearLayout
+                android:id="@+id/lyDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    app:srcCompat="@drawable/ic_chevron_right_black_48dp" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:gravity="center"
+                        android:text="تاریخ درخواست"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/very_big_font_size" />
+
+
+                    <TextView
+                        android:id="@+id/txtDate"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingLeft="40dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="40dp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/small_font_size" />
+
+
+                </LinearLayout>
+
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    app:srcCompat="@drawable/ic_chevron_left_black_48dp" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:alpha="0.4"
+                android:background="@color/colorBlack" />
+
+
+            <LinearLayout
+                android:id="@+id/lyDayCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:gravity="center"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    app:srcCompat="@drawable/ic_chevron_right_black_48dp" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="200dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:gravity="center"
+                        android:text="تعداد روز"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/very_big_font_size" />
+
+                    <TextView
+                        android:id="@+id/txtDayCount"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="40dp"
+                        android:gravity="center"
+                        android:paddingTop="5dp"
+                        android:paddingRight="40dp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/small_font_size" />
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    app:srcCompat="@drawable/ic_chevron_left_black_48dp" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:alpha="0.4"
+                android:background="@color/colorBlack" />
+
+
+
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+
+            android:id="@+id/lyAddPersonFloat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            android:visibility="gone">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="60dp"
+                    android:layout_weight="1">
+
+                </android.support.v7.widget.RecyclerView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:background="#FFFDE7">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/very_small_font_size"
+                    android:textColor="@color/colorBlack"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="جهت ادامه فرایند پیکان را لمس نمایید"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/imgDropDown"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    app:srcCompat="@drawable/ic_expand_more_black_48dp" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <include layout="@layout/layout_progress_match_parent" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

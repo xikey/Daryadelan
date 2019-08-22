@@ -1,10 +1,16 @@
 package daryadelan.sandogh.zikey.com.daryadelan.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.TextUtils;
+
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
 public class CampRequestHistory {
+
 
     @SerializedName("personalCode")
     private long PersonalCode;
@@ -14,7 +20,7 @@ public class CampRequestHistory {
     private long count;
     @SerializedName("day")
     private long day;
-    @SerializedName("subPersons")
+    @SerializedName("person")
     private ArrayList<CampReseption> campReseptions;
     @SerializedName("requestDate")
     private String requestDate;
@@ -129,4 +135,25 @@ public class CampRequestHistory {
     public void setCampID(long campID) {
         this.campID = campID;
     }
+
+
+    public String toJson() {
+        Gson gson = new Gson();
+        String json = gson.toJson(this);
+        return json;
+    }
+
+    public CampRequestHistory fromJson(String json) {
+
+        if (TextUtils.isEmpty(json))
+            return null;
+
+        Gson gson = new Gson();
+
+        CampRequestHistory campRequestHistory = gson.fromJson(json, CampRequestHistory.class);
+        return campRequestHistory;
+
+    }
+
+
 }

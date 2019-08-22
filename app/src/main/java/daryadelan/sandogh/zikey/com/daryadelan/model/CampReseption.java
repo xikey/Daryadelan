@@ -7,13 +7,13 @@ import java.util.ArrayList;
 public class CampReseption {
 
     private long id;
-    @SerializedName("FirstName")
+    @SerializedName("firstName")
     private String name;
-    @SerializedName("LastName")
+    @SerializedName("lastName")
     private String family;
-    @SerializedName("NationalCode")
+    @SerializedName("nationalCode")
     private long nationalCode;
-    @SerializedName("Nesbat")
+    @SerializedName("nesbat")
     private int relation;
 
 

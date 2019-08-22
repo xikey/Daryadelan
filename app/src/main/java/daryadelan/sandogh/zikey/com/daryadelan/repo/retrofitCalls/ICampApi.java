@@ -24,6 +24,7 @@ public interface ICampApi {
     @GET("api/CampRequests/GetCampRequests")
     Call<CampsHistoryWrapper> getAllCampRequests(@Query("page") int page);
 
-
+    @GET("api/CampRequests/GetCampRequestById")
+    Call<CampsHistoryWrapper> getCampRequestByID(@Query("id") long id);
 
 }

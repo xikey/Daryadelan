@@ -38,7 +38,7 @@ import es.dmoral.toasty.Toasty;
 
 public class ConfirmedCampHistoryActivity extends AppCompatActivity {
 
-    private static final String KEY_PARCABLE = "PARCABLE";
+    private static final String KEY_REQUEST_CAMP_JSON = "REQUEST_CAMP_JSON";
 
     private CampRequestHistory campRequestHistory;
     private LinearLayout lyAddPerson;
@@ -58,12 +58,10 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
     private TextView txtPersonsCount;
 
     private RelativeLayout lyFullPhoto;
-    private CardView crdAddNewPerson;
 
     private RecyclerView rvItem;
     private ItemAdapter adapter;
 
-    private LinearLayout lyAction;
     private LinearLayout lyConstLayouts;
 
     private ArrayList<CampReseption> campReseptions;
@@ -72,6 +70,7 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
 
     private User user;
     private LinearLayout lyProgress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +147,6 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
     private void initClickListeners() {
 
 
-
         lyAddPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,9 +183,7 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
 
         lyFullPhoto = (RelativeLayout) findViewById(R.id.lyFullPhoto);
 
-        crdAddNewPerson = (CardView) findViewById(R.id.crdAddNewPerson);
 
-        lyAction = (LinearLayout) findViewById(R.id.lyAction);
         lyConstLayouts = (LinearLayout) findViewById(R.id.lyConstLayouts);
 
         rvItem = (RecyclerView) findViewById(R.id.rvItem);
@@ -231,13 +227,21 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
         if (data == null)
             return;
 
+        if (data.hasExtra(KEY_REQUEST_CAMP_JSON)) {
+            CampRequestHistory cmp = new CampRequestHistory();
+            cmp = cmp.fromJson(data.getStringExtra(KEY_REQUEST_CAMP_JSON));
+            if (cmp!=null)
+                campRequestHistory=cmp;
+            campReseptions=cmp.getCampReseptions();
 
+        }
 
     }
 
 
-    public static void start(FragmentActivity context) {
+    public static void start(FragmentActivity context, String json) {
         Intent starter = new Intent(context, ConfirmedCampHistoryActivity.class);
+        starter.putExtra(KEY_REQUEST_CAMP_JSON, json);
         context.startActivity(starter);
     }
 
@@ -274,8 +278,7 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                lyAction.setVisibility(View.GONE);
-                lyAddPerson.setVisibility(View.GONE);
+                            lyAddPerson.setVisibility(View.GONE);
                 lyDayCount.setVisibility(View.GONE);
                 lyDate.setVisibility(View.GONE);
             }
@@ -288,7 +291,6 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
         view.startAnimation(animate);
         lyAddPersonFloat.setVisibility(View.VISIBLE);
         imgDropDown.setVisibility(View.VISIBLE);
-        crdAddNewPerson.setVisibility(View.VISIBLE);
         rvItem.setVisibility(View.VISIBLE);
 
 
@@ -313,7 +315,6 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
             public void onAnimationEnd(Animation animation) {
                 lyAddPersonFloat.setVisibility(View.GONE);
                 imgDropDown.setVisibility(View.GONE);
-                crdAddNewPerson.setVisibility(View.GONE);
                 rvItem.setVisibility(View.GONE);
 
 
@@ -325,7 +326,6 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
             }
         });
         view.startAnimation(animate);
-        lyAction.setVisibility(View.VISIBLE);
         lyAddPerson.setVisibility(View.VISIBLE);
         lyDayCount.setVisibility(View.VISIBLE);
         lyDate.setVisibility(View.VISIBLE);
@@ -428,7 +428,6 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
             }
         }
     }
-
 
 
 }

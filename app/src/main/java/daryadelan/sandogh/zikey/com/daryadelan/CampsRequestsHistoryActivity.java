@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,6 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
     private CardView lyAction;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +64,7 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
     }
 
     private void initClickListeners() {
-        if (lyAction!=null)
+        if (lyAction != null)
             lyAction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -128,7 +128,7 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
         rvItem = (RecyclerView) findViewById(R.id.rvItem);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
         lyBottomProgress = (LinearLayout) findViewById(R.id.lyBottomProgress);
-        lyAction= (CardView) findViewById(R.id.lyAction);
+        lyAction = (CardView) findViewById(R.id.lyAction);
         lyProgress.setVisibility(View.VISIBLE);
 
     }
@@ -253,8 +253,8 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
                     holder.txtRate.setText(camp.getStar() + "ستاره");
                     holder.txtDesc.setText(camp.getState() + "-" + camp.getCity());
                     holder.txtDate.setText(campRequest.getRequestDate());
-                    if (campRequest.getCampReseptions()!=null&&campRequest.getCampReseptions().size()!=0)
-                    holder.txtCount.setText(campRequest.getCampReseptions().size()+" نفر ");
+                    if (campRequest.getCampReseptions() != null && campRequest.getCampReseptions().size() != 0)
+                        holder.txtCount.setText(campRequest.getCampReseptions().size() + " نفر ");
                     new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(holder.imgAvatar).load();
 
                 }
@@ -309,11 +309,13 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
                 FontChanger.applyTitleFont(txtTitle);
 
 
-
                 crdShowDetails.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
+                        String json = campRequest.toJson();
+                        if (!TextUtils.isEmpty(json))
+                            ConfirmedCampHistoryActivity.start(CampsRequestsHistoryActivity.this, json);
 
                     }
                 });
