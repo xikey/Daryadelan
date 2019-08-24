@@ -140,11 +140,14 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
 
         if (campReseptions == null) {
-            txtPersonsCount.setText("0 نفر");
+            txtPersonsCount.setText("انتخاب افراد");
         } else {
             txtPersonsCount.setText(campReseptions.size() + " نفر ");
         }
 
+        if (dayCount==0){
+            txtDayCount.setText(" انتخاب تعداد روز ");
+        }else
         txtDayCount.setText(dayCount + " روز ");
 
         txtCampName.setText(camp.getCampName());
