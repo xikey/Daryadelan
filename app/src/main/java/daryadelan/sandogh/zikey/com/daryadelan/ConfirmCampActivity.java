@@ -23,10 +23,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog;
-import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendarUtils;
+import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
@@ -34,12 +34,9 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.Camp;
 import daryadelan.sandogh.zikey.com.daryadelan.model.CampReseption;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampReseptionRequesWrapper;
-import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampsWrapper;
-import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.ICamp;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.CampServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
-import daryadelan.sandogh.zikey.com.daryadelan.tools.CalendarWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
@@ -60,8 +57,8 @@ public class ConfirmCampActivity extends AppCompatActivity {
     private TextView txtDate;
     private TextView txtDayCount;
 
-    private String date = CalendarWrapper.getCurrentPersianDate();
-    private String gerorgianDate = "";
+    private String date = "";
+    private String originalDate = "";
 
     private int dayCount = 0;
 
@@ -137,6 +134,10 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(date))
             txtDate.setText(date);
+        else {
+            txtDate.setText("انتخاب تاریخ");
+        }
+
 
         if (campReseptions == null) {
             txtPersonsCount.setText("0 نفر");
@@ -159,18 +160,34 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
     private void initClickListeners() {
 
+
         lyDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new CustomDialogBuilder().showDatePicker(ConfirmCampActivity.this, new DatePickerDialog.OnDateSetListener() {
+                new CustomDialogBuilder().showDatePicker(ConfirmCampActivity.this, new CustomDialogBuilder.OnDatePickerListener() {
                     @Override
-                    public void onDateSet(DatePickerDialog datePickerDialog, int i, int i1, int i2) {
-                        date = PersianDateConverter.toPersianFormat(i, i1, i2);
+                    public void onDateSet(PersianCalendar calendar, int year, int month, int day) {
+                        date = PersianDateConverter.toPersianFormat(year, month, day);
+
+                        calendar.setPersianDate(year, month, day);
+
+                        Calendar orgCalendar = Calendar.getInstance();
+                        orgCalendar.setTimeInMillis(calendar.getTimeInMillis());
+
+                        int yr = (orgCalendar.get(Calendar.YEAR));
+                        int mn = (orgCalendar.get(Calendar.MARCH));
+                        int dy = (orgCalendar.get(Calendar.DATE));
+
+                        originalDate = PersianDateConverter.toPersianFormat(yr, mn, dy);
+
+                        Toasty.info(ConfirmCampActivity.this, "" + originalDate).show();
+
                         initContent();
                     }
                 });
             }
         });
+
 
         lyDayCount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,6 +268,11 @@ public class ConfirmCampActivity extends AppCompatActivity {
                     return;
                 }
 
+                if (TextUtils.isEmpty(originalDate)) {
+                    new CustomDialogBuilder().showAlert(ConfirmCampActivity.this, "تاریخ درخواست خالی میباشد");
+                    return;
+                }
+
                 if (dayCount == 0) {
                     new CustomDialogBuilder().showAlert(ConfirmCampActivity.this, "تعداد روز مشخص نمیباشد");
                     return;
@@ -259,7 +281,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
                 camp.setCampReseptions(campReseptions);
                 camp.setDay(dayCount);
                 camp.setCount(campReseptions.size());
-                camp.setRequestDate(date);
+                camp.setRequestDate(originalDate);
 
                 sendData();
             }
@@ -521,7 +543,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
                 holder.edtName.setText(cmp.getName());
                 holder.edtFamily.setText(cmp.getFamily());
                 holder.edtNationalCode.setText("" + (int) cmp.getNationalCode());
-                holder.edtRelation.setText("" + cmp.getRelation());
+                holder.edtRelation.setText("" + cmp.getRelationShipName());
             } catch (Exception ex) {
                 LogWrapper.loge("ItemAdapter_onBindViewHolder_Exception: ", ex);
             }

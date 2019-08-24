@@ -272,6 +272,7 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
                     pc.setTimeInMillis(milis);
                     String p= PersianDateConverter.toPersianFormat(pc.getPersianYear(),pc.getPersianMonth(),pc.getPersianDay());
 
+                    campRequest.setRequestDate(p);
 
                     if (date != null) {
                         holder.txtDate.setText(p);

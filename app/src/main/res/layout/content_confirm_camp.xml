@@ -89,6 +89,7 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
+                    android:alpha="0"
                     app:srcCompat="@drawable/ic_chevron_right_black_48dp" />
 
                 <LinearLayout
@@ -120,6 +121,7 @@
 
                 <ImageView
                     android:layout_width="35dp"
+                    android:alpha="0"
                     android:layout_height="35dp"
                     app:srcCompat="@drawable/ic_chevron_left_black_48dp" />
 
@@ -145,6 +147,7 @@
 
                 <ImageView
                     android:layout_width="35dp"
+                    android:alpha="0"
                     android:layout_height="35dp"
                     app:srcCompat="@drawable/ic_chevron_right_black_48dp" />
 
@@ -181,6 +184,7 @@
 
                 <ImageView
                     android:layout_width="35dp"
+                    android:alpha="0"
                     android:layout_height="35dp"
                     app:srcCompat="@drawable/ic_chevron_left_black_48dp" />
 
@@ -208,6 +212,7 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
+                    android:alpha="0"
                     app:srcCompat="@drawable/ic_chevron_right_black_48dp" />
 
 
@@ -242,6 +247,7 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
+                    android:alpha="0"
                     app:srcCompat="@drawable/ic_chevron_left_black_48dp" />
 
 

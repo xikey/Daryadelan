@@ -124,7 +124,7 @@ public class CustomDialogBuilder {
     }
 
 
-    public AlertDialog showInputTextDialog(AppCompatActivity context, String title,  final OnDialogListener onYesClickListener) {
+    public AlertDialog showInputTextDialog(AppCompatActivity context, String title, final OnDialogListener onYesClickListener) {
 
         String output = null;
 
@@ -171,7 +171,7 @@ public class CustomDialogBuilder {
     }
 
 
-    public AlertDialog showInputTextDialog_NumbersOnly(AppCompatActivity context, String title,  final OnDialogListener onYesClickListener) {
+    public AlertDialog showInputTextDialog_NumbersOnly(AppCompatActivity context, String title, final OnDialogListener onYesClickListener) {
 
         String output = null;
 
@@ -408,6 +408,32 @@ public class CustomDialogBuilder {
         DatePickerDialog dialog = DatePickerDialog.newInstance(dateSetListener, calender.getPersianYear(), calender.getPersianMonth(),
                 calender.getPersianDay());
 
+
+        dialog.setThemeDark(true);
+        dialog.show(context.getFragmentManager(), "DatePickerDialog");
+
+    }
+
+    public void showDatePicker(AppCompatActivity context, OnDatePickerListener dateSetListener) {
+        if (context == null)
+            return;
+
+        if (dateSetListener == null)
+            return;
+
+        PersianCalendar calender = new PersianCalendar();
+
+        DatePickerDialog dialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
+                                                                   @Override
+                                                                   public void onDateSet(DatePickerDialog datePickerDialog, int i, int i1, int i2) {
+                                                                       if (dateSetListener != null) {
+                                                                           dateSetListener.onDateSet(calender, i, i1, i2);
+                                                                       }
+                                                                   }
+                                                               }, calender.getPersianYear(), calender.getPersianMonth(),
+                calender.getPersianDay());
+
+
         dialog.setThemeDark(true);
         dialog.show(context.getFragmentManager(), "DatePickerDialog");
 
@@ -444,5 +470,9 @@ public class CustomDialogBuilder {
         void onPick(int position);
     }
 
+    public interface OnDatePickerListener {
+
+        void onDateSet(PersianCalendar calendar, int year, int month, int day);
+    }
 
 }

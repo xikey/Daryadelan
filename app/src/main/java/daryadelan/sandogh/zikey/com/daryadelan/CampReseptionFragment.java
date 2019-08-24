@@ -59,6 +59,7 @@ public class CampReseptionFragment extends DialogFragment {
     private int position;
 
     private boolean editMode;
+    int selectedRelationPos = -1;
 
     public void setiSaveForm(ISaveForm iSaveForm) {
         this.iSaveForm = iSaveForm;
@@ -324,6 +325,7 @@ public class CampReseptionFragment extends DialogFragment {
             campReseption.setName(edtName.getText().toString());
             campReseption.setFamily(edtFamily.getText().toString());
             campReseption.setNationalCode(Long.parseLong(edtNationalCode.getText().toString()));
+            campReseption.setRelation(selectedRelationPos);
 
 
             if (editMode) {
@@ -412,8 +414,8 @@ public class CampReseptionFragment extends DialogFragment {
 
     private void pickRelation() {
 
-        CampReseption campReseption = new CampReseption();
-        ArrayList<CampReseption> availableRelations = campReseption.getAllAvailableRelations();
+        CampReseption cmpr = new CampReseption();
+        ArrayList<CampReseption> availableRelations = cmpr.getAllAvailableRelations();
 
         if (availableRelations == null)
             return;
@@ -428,9 +430,19 @@ public class CampReseptionFragment extends DialogFragment {
             new CustomDialogBuilder().showPickerDialog((AppCompatActivity) getActivity(), "انتخاب نسبت", items, new CustomDialogBuilder.OnPickerDialogListener() {
                 @Override
                 public void onPick(int position) {
-                    campReseption.setRelation(position);
-                    edtRelation.setText(campReseption.getRelationShipName());
-                    initContent();
+                    if (editMode) {
+                        campReseption.setRelation(position);
+                        edtRelation.setText(campReseption.getRelationShipName());
+                        selectedRelationPos = position;
+                        initContent();
+                    } else {
+                        CampReseption cmpr=new CampReseption();
+                        cmpr.setRelation(position);
+                        edtRelation.setText(cmpr.getRelationShipName());
+                        selectedRelationPos = position;
+                        initContent();
+                    }
+
                 }
             });
         } catch (Exception ex) {

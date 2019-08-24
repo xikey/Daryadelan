@@ -398,31 +398,6 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
 
                 FontChanger.applyMainFont(lyRoot);
 
-                lyRoot.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        CampReseptionFragment.Show_EditableMode(ConfirmedCampHistoryActivity.this, new CampReseptionFragment.ISaveForm() {
-                            @Override
-                            public void onSaveForm(CampReseption campReseption) {
-
-                            }
-
-                            @Override
-                            public void onEdit(CampReseption campReseption, int pos) {
-                                campReseptions.set(pos, campReseption);
-                                adapter.notifyDataSetChanged();
-                                initContent();
-                            }
-
-                            @Override
-                            public void onRemove(int pos) {
-                                campReseptions.remove(pos);
-                                adapter.notifyDataSetChanged();
-                                initContent();
-                            }
-                        }, campReseption, pos);
-                    }
-                });
 
 
             }
