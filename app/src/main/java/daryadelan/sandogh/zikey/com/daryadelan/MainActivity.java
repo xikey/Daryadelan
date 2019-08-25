@@ -146,6 +146,11 @@ public class MainActivity extends AppCompatActivity
             public void onAnswer(AppInfoServerWrapper answer) {
                 if (answer != null && answer.getAppInfo() != null) {
 
+                    String url=BuildConfig.IPAddress+answer.getAppInfo().getAppPath();
+
+
+                    updateApp(url);
+
                 } else {
 
                 }
@@ -899,7 +904,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    private void updateApp() {
+    private void updateApp(String appUrl) {
 
         String qst1 = "نسخه جدید نرم افزار در دسترس میباشد.\n\nپس از دریافت فایل، نرم افزار به صورت خودکار اقدام به بروز رسانی نرم افزار مینماید.\n";
         String qst = "در صورتی که پس از دریافت کامل نرم افزار، عملیات نصب با خطا روبرو شد، میتوانید از مسیر زیر نرم افزار را مجددا نصب نمایید.\n\n" + "storage(حافظه داخلی دستگاه)" + "/daryadelan/Daryadelan/Daryadelan.Apk";
@@ -908,7 +913,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(DialogFragment fragment) {
                 fragment.dismiss();
-                new CustomDialogBuilder().showProgressDialog(MainActivity.this, "دریافت فایل", KEY_DOWNLOAD_URL, BuildConfig.FILES_DIRECTORI, KEY_APP_NAME, "apk", true, new DownloaderFragment.OnCancelClickListener() {
+                new CustomDialogBuilder().showProgressDialog(MainActivity.this, "دریافت فایل", appUrl, BuildConfig.FILES_DIRECTORI, KEY_APP_NAME, "apk", true, new DownloaderFragment.OnCancelClickListener() {
                     @Override
                     public void onClickCancel(DialogFragment fragment) {
                         fragment.dismiss();
