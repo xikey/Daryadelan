@@ -360,8 +360,8 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
 
                 holder.edtName.setText(cmp.getName());
                 holder.edtFamily.setText(cmp.getFamily());
-                holder.edtNationalCode.setText("" + (int) cmp.getNationalCode());
-                holder.edtRelation.setText("" + cmp.getRelation());
+                holder.edtNationalCode.setText("" +  cmp.getNationalCode());
+                holder.edtRelation.setText("" + cmp.getRelationShipName());
             } catch (Exception ex) {
                 LogWrapper.loge("ItemAdapter_onBindViewHolder_Exception: ", ex);
             }

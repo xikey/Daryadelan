@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
         lySignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SigninActivity.start_clearDB(getApplicationContext());
+                SigninActivity.start_clearDB(LoginActivity.this );
                 finish();
             }
         });

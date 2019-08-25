@@ -21,6 +21,7 @@ import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
 
 import daryadelan.sandogh.zikey.com.daryadelan.R;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
+import daryadelan.sandogh.zikey.com.daryadelan.customview.DownloaderFragment;
 
 
 /**
@@ -457,6 +458,15 @@ public class CustomDialogBuilder {
         dialog.show(context.getFragmentManager(), "DatePickerDialog");
 
     }
+
+
+    public DownloaderFragment showProgressDialog(FragmentActivity act, String title, String url, String filePath, String fileName, String fileExtension, boolean installAPK , DownloaderFragment.OnCancelClickListener onCancelClickListener) {
+
+        return DownloaderFragment.Show(act, title, "دریافت اطلاعات", null, url, filePath, fileName, fileExtension, installAPK, onCancelClickListener);
+
+    }
+
+
 
     public interface OnDialogListener {
 

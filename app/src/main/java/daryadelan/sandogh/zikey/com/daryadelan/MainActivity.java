@@ -35,6 +35,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
+import daryadelan.sandogh.zikey.com.daryadelan.customview.DownloaderFragment;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.Indicator;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.PageFragment;
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
@@ -61,6 +62,9 @@ import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private final String KEY_DOWNLOAD_URL = "http://";
+    private final String KEY_APP_NAME = "VisitApp";
 
     private final String KEY_NEWS_NAME = "news";
 
@@ -412,7 +416,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 if (checkUserPersmission())
-                CampsActivity.start(MainActivity.this);
+                    CampsActivity.start(MainActivity.this);
             }
         });
 
@@ -851,5 +855,42 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+
+
+    private void updateApp() {
+
+        String qst1 = "نسخه جدید نرم افزار در دسترس میباشد.\n\nپس از دریافت فایل، نرم افزار به صورت خودکار اقدام به بروز رسانی نرم افزار مینماید.\n";
+        String qst = "در صورتی که پس از دریافت کامل نرم افزار، عملیات نصب با خطا روبرو شد، میتوانید از مسیر زیر نرم افزار را مجددا نصب نمایید.\n\n" + "storage(حافظه داخلی دستگاه)" + "/daryadelan/Daryadelan/Daryadelan.Apk";
+
+        new CustomDialogBuilder().showYesNOCustomAlert(this, "دریافت نسخه نهایی", qst1 + qst, "دریافت فایل", null, new CustomAlertDialog.OnActionClickListener() {
+            @Override
+            public void onClick(DialogFragment fragment) {
+                fragment.dismiss();
+                new CustomDialogBuilder().showProgressDialog(MainActivity.this, "دریافت فایل", KEY_DOWNLOAD_URL, BuildConfig.FILES_DIRECTORI, KEY_APP_NAME, "apk", true, new DownloaderFragment.OnCancelClickListener() {
+                    @Override
+                    public void onClickCancel(DialogFragment fragment) {
+                        fragment.dismiss();
+                    }
+
+                    @Override
+                    public void onClickOutside(DialogFragment fragment) {
+
+                    }
+                });
+
+            }
+        }, new CustomAlertDialog.OnCancelClickListener() {
+            @Override
+            public void onClickCancel(DialogFragment fragment) {
+                fragment.dismiss();
+            }
+
+            @Override
+            public void onClickOutside(DialogFragment fragment) {
+                fragment.dismiss();
+            }
+        });
+    }
+
 
 }
