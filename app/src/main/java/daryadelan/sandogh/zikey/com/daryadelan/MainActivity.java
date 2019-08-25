@@ -44,11 +44,14 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.model.UrlBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.AdvertiseWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.AppInfoServerWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.NewsWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IAdvertise;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IAppInfo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.INews;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.AdvertiseServerRepo;
+import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.AppInfoServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.NewsServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.sqlite.UserSqliteRepo;
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity
 
     private IUser userRepo;
     private IUser userSqliteRepo;
-
+    private IAppInfo appInfoRepo;
     private User loadedUser;
     private LinearLayout lyProgress;
     private LinearLayout lyNews;
@@ -128,6 +131,41 @@ public class MainActivity extends AppCompatActivity
         initNavHeader();
 
 
+
+    }
+
+    private void checkForUpdates() {
+        if (appInfoRepo == null)
+            return;
+
+        if (loadedUser == null)
+            return;
+
+        appInfoRepo.appVersionChecker(getApplicationContext(), BuildConfig.VERSION_NAME, loadedUser.getTokenType(), loadedUser.getToken(), new IRepoCallBack<AppInfoServerWrapper>() {
+            @Override
+            public void onAnswer(AppInfoServerWrapper answer) {
+                if (answer != null && answer.getAppInfo() != null) {
+
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable error) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
     }
 
     @Override
@@ -344,6 +382,7 @@ public class MainActivity extends AppCompatActivity
 
         saveAdvertiseUrl();
         getUserExtraInfos();
+        checkForUpdates();
 
         try {
             if (!TextUtils.isEmpty(loadedUser.getPersonTypeName()))
@@ -372,6 +411,9 @@ public class MainActivity extends AppCompatActivity
 
         if (newsRepo == null)
             newsRepo = new NewsServerRepo();
+
+        if (appInfoRepo == null)
+            appInfoRepo = new AppInfoServerRepo();
     }
 
 
