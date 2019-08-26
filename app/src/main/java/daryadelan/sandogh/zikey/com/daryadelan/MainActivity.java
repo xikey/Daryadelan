@@ -1,16 +1,20 @@
 package daryadelan.sandogh.zikey.com.daryadelan;
 
+import android.Manifest;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -67,9 +71,12 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private final String KEY_DOWNLOAD_URL = "http://";
-    private final String KEY_APP_NAME = "VisitApp";
+    private final String KEY_APP_NAME = "Daryadelan";
 
     private final String KEY_NEWS_NAME = "news";
+
+
+    public final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 11;
 
     private IAdvertise advertiseRepo;
 
@@ -104,6 +111,9 @@ public class MainActivity extends AppCompatActivity
     private CardView crdCamps;
     private CardView crdRequestsList;
 
+    //for getting app from server if permission is first time
+    private String appUrl;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +141,6 @@ public class MainActivity extends AppCompatActivity
         initNavHeader();
 
 
-
     }
 
     private void checkForUpdates() {
@@ -146,7 +155,7 @@ public class MainActivity extends AppCompatActivity
             public void onAnswer(AppInfoServerWrapper answer) {
                 if (answer != null && answer.getAppInfo() != null) {
 
-                    String url=BuildConfig.IPAddress+answer.getAppInfo().getAppPath();
+                    String url = BuildConfig.IPAddress + answer.getAppInfo().getAppPath();
 
 
                     updateApp(url);
@@ -903,6 +912,35 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void initStgoragePermission(String url) {
+
+        int writeExternalStorage = ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        appUrl = url;
+
+        if (writeExternalStorage != 0) {
+            requestWriteExternalStoragePermission();
+        } else {
+            if (!TextUtils.isEmpty(url))
+                startDownloadingApp(url);
+        }
+    }
+
+    private void startDownloadingApp(String url) {
+
+        new CustomDialogBuilder().showProgressDialog(MainActivity.this, "دریافت فایل", url, BuildConfig.FILES_DIRECTORI, KEY_APP_NAME, "apk", true, new DownloaderFragment.OnCancelClickListener() {
+            @Override
+            public void onClickCancel(DialogFragment fragment) {
+                fragment.dismiss();
+            }
+
+            @Override
+            public void onClickOutside(DialogFragment fragment) {
+
+            }
+        });
+
+    }
 
     private void updateApp(String appUrl) {
 
@@ -913,17 +951,9 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(DialogFragment fragment) {
                 fragment.dismiss();
-                new CustomDialogBuilder().showProgressDialog(MainActivity.this, "دریافت فایل", appUrl, BuildConfig.FILES_DIRECTORI, KEY_APP_NAME, "apk", true, new DownloaderFragment.OnCancelClickListener() {
-                    @Override
-                    public void onClickCancel(DialogFragment fragment) {
-                        fragment.dismiss();
-                    }
 
-                    @Override
-                    public void onClickOutside(DialogFragment fragment) {
+                initStgoragePermission(appUrl);
 
-                    }
-                });
 
             }
         }, new CustomAlertDialog.OnCancelClickListener() {
@@ -939,5 +969,35 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+
+        switch (requestCode) {
+
+            case PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startDownloadingApp(appUrl);
+                }
+
+            }
+        }
+    }
+
+
+    private int requestWriteExternalStoragePermission() {
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+            }
+        }
+        return PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE;
+    }
 
 }

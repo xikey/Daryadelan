@@ -1,5 +1,6 @@
 package daryadelan.sandogh.zikey.com.daryadelan.customview;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
@@ -11,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +39,7 @@ import com.razanpardazesh.razanlibs.Tools.Convertor;
 
 import java.io.File;
 
+import daryadelan.sandogh.zikey.com.daryadelan.MainActivity;
 import daryadelan.sandogh.zikey.com.daryadelan.R;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FileAddressGenerator;
@@ -471,6 +474,7 @@ e.printStackTrace();
         void onClickOutside(DialogFragment fragment);
 
     }
+
 
 
 }
