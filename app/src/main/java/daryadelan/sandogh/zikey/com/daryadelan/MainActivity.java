@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity
                     String url = BuildConfig.IPAddress + answer.getAppInfo().getAppPath();
 
 
-                    updateApp(url);
+                    updateApp(url,answer.getAppInfo().getAppVersinDescription());
 
                 } else {
 
@@ -942,12 +942,13 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void updateApp(String appUrl) {
+    private void updateApp(String appUrl,String title) {
 
-        String qst1 = "نسخه جدید نرم افزار در دسترس میباشد.\n\nپس از دریافت فایل، نرم افزار به صورت خودکار اقدام به بروز رسانی نرم افزار مینماید.\n";
-        String qst = "در صورتی که پس از دریافت کامل نرم افزار، عملیات نصب با خطا روبرو شد، میتوانید از مسیر زیر نرم افزار را مجددا نصب نمایید.\n\n" + "storage(حافظه داخلی دستگاه)" + "/daryadelan/Daryadelan/Daryadelan.Apk";
+        String qst1 = "نسخه جدید نرم افزار در دسترس میباشد.\n\nپس از دریافت فایل، نرم افزار به صورت خودکار اقدام به بروز رسانی نرم افزار مینماید.\n\n";
+        String qst = "\n\n"+title;
 
-        new CustomDialogBuilder().showYesNOCustomAlert(this, "دریافت نسخه نهایی", qst1 + qst, "دریافت فایل", null, new CustomAlertDialog.OnActionClickListener() {
+
+        new CustomDialogBuilder().showYesNOCustomAlert_HTML(this, "دریافت نسخه نهایی", qst1 + qst, "دریافت فایل", null, new CustomAlertDialog.OnActionClickListener() {
             @Override
             public void onClick(DialogFragment fragment) {
                 fragment.dismiss();

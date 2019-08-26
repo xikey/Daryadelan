@@ -342,7 +342,7 @@ public class SigninActivity extends AppCompatActivity {
             }
         });
 
-        
+
     }
 
     private void sendSMS() {

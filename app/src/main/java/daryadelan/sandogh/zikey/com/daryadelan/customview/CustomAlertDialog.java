@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.res.ResourcesCompat;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,9 +56,15 @@ public class CustomAlertDialog extends DialogFragment {
     private String submitText;
     private String cancelText;
 
+    boolean htmlQuestionType = false;
 
     public CustomAlertDialog setOnOkActionClickListener(OnActionClickListener onOkActionClickListener) {
         this.onOkActionClickListener = onOkActionClickListener;
+        return this;
+    }
+
+    public CustomAlertDialog setHtmlQuestionType(boolean htmlQuestionType) {
+        this.htmlQuestionType = htmlQuestionType;
         return this;
     }
 
@@ -224,7 +231,13 @@ public class CustomAlertDialog extends DialogFragment {
         }
 
         if (!TextUtils.isEmpty(question)) {
-            txtComment.setText(question);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                txtComment.setText(Html.fromHtml(question, Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                txtComment.setText(Html.fromHtml(question));
+            }
+
         }
 
         if (!TextUtils.isEmpty(cancelText)) {
@@ -288,7 +301,7 @@ public class CustomAlertDialog extends DialogFragment {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 if (!act.isDestroyed())
                     fragment.show(act.getFragmentManager(), KEY_ALERT_DIALOG);
-            }else {
+            } else {
                 if (!act.isFinishing())
                     fragment.show(act.getFragmentManager(), KEY_ALERT_DIALOG);
             }
@@ -301,6 +314,38 @@ public class CustomAlertDialog extends DialogFragment {
         return null;
 
     }
+
+    public static CustomAlertDialog Show(FragmentActivity act, boolean htmlQuestionType, String title, String question, String submitText, String cancelText, OnActionClickListener onActionClickListener, OnCancelClickListener onCancelClickListener) {
+        try {
+
+            CustomAlertDialog fragment = new CustomAlertDialog();
+
+            fragment.setTitle(title)
+                    .setQuestion(question)
+                    .setSubmitText(submitText)
+                    .setCancelText(cancelText)
+                    .setOnOkActionClickListener(onActionClickListener)
+                    .setHtmlQuestionType(htmlQuestionType)
+                    .setDialog(fragment)
+                    .setOnCancleClickListener(onCancelClickListener);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                if (!act.isDestroyed())
+                    fragment.show(act.getFragmentManager(), KEY_ALERT_DIALOG);
+            } else {
+                if (!act.isFinishing())
+                    fragment.show(act.getFragmentManager(), KEY_ALERT_DIALOG);
+            }
+
+            return fragment;
+        } catch (Exception ex) {
+
+            LogWrapper.loge("VisitorsAlertDialog_Show_Exception: ", ex);
+        }
+        return null;
+
+    }
+
 
     @Override
     public void onDestroy() {

@@ -380,6 +380,13 @@ public class CustomDialogBuilder {
 
     }
 
+    public CustomAlertDialog showYesNOCustomAlert_HTML(AppCompatActivity context, String title, String question, String submitText, String cancelText, CustomAlertDialog.OnActionClickListener yesAction, CustomAlertDialog.OnCancelClickListener noAction) {
+
+        return CustomAlertDialog.Show(context,true, title, question, submitText, cancelText, yesAction, noAction);
+
+    }
+
+
 //    public CustomAlertDialog showProgressDialog(FragmentActivity act, String title, String url, String filePath, String fileName, String fileExtension, boolean installAPK , DownloaderFragment.OnCancelClickListener onCancelClickListener) {
 //
 //        return CustomAlertDialog.Show(act, title, "دریافت اطلاعات", null, url, filePath, fileName, fileExtension, installAPK, onCancelClickListener);
