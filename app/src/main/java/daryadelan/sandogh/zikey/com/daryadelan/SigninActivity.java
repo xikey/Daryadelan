@@ -336,24 +336,13 @@ public class SigninActivity extends AppCompatActivity {
         lyLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginActivity.start(SigninActivity.this, KEY_REQUEST_LOGIN);
+                LoginActivity.start(SigninActivity.this);
+                finish();
 
             }
         });
 
-//        swIAmGuest.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    isGuest = true;
-//                    lyPersonelCode.setVisibility(View.GONE);
-//
-//                } else {
-//                    isGuest = false;
-//                    lyPersonelCode.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
+        
     }
 
     private void sendSMS() {

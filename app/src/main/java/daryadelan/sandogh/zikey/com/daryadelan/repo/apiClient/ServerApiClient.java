@@ -39,10 +39,6 @@ public class ServerApiClient {
                         .build();
 
                 Response response = chain.proceed(request);
-                if (response.code() == 401) {
-                    LoginActivity.start(context);
-                    System.exit(0);
-                }
 
                 return response;
             }

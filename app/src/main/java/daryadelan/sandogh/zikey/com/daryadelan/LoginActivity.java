@@ -267,10 +267,6 @@ public class LoginActivity extends AppCompatActivity {
         context.startActivity(starter);
     }
 
-    public static void start(Context context) {
-        Intent starter = new Intent(context, LoginActivity.class);
-        context.startActivity(starter);
-    }
 
     private void initHeaderSize() {
 
