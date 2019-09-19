@@ -17,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // DATABASE
     private static final String DATABASE_NAME = "daryadel.db";
-    private static final int DATABASE_VERSION = BuildConfig.VERSION_CODE;
+    private static final int DATABASE_VERSION = 1;
 
 
     public DatabaseHelper(Context context) {

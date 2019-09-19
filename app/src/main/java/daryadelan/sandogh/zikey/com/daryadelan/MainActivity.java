@@ -226,6 +226,7 @@ public class MainActivity extends AppCompatActivity
                             fragment.dismiss();
                             LoginActivity.start(MainActivity.this);
                             finish();
+                            return;
                         }
 
                         @Override
@@ -233,8 +234,10 @@ public class MainActivity extends AppCompatActivity
                             fragment.dismiss();
                             LoginActivity.start(MainActivity.this);
                             finish();
+                            return;
                         }
                     });
+                    return;
                 }
                 loadedUser = answer;
                 initContent();

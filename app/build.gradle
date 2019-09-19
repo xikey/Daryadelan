@@ -13,7 +13,7 @@ android {
         targetSdkVersion 26
         vectorDrawables.useSupportLibrary = true
         versionCode 1
-        versionName "1.0"
+        versionName "1"
         multiDexEnabled true
         buildConfigField("String", "IPAddress", '"http://77.77.77.43"')
         buildConfigField("String", "FILES_DIRECTORI", '"Daryadelan"')
