@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-import daryadelan.sandogh.zikey.com.daryadelan.model.CampRequest;
 import daryadelan.sandogh.zikey.com.daryadelan.model.CampRequestHistory;
 
 public class CampsHistoryWrapper extends ServerWrapper {

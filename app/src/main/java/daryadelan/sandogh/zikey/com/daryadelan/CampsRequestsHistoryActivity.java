@@ -1,6 +1,9 @@
 package daryadelan.sandogh.zikey.com.daryadelan;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +36,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampsHistoryW
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.ICamp;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.CampServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
@@ -258,7 +262,7 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
                     String url = BuildConfig.IPAddress + "/" + camp.getImagePath();
                     holder.txtTitle.setText(camp.getCampName());
                     holder.txtRate.setText(camp.getStar() + "ستاره");
-                    holder.txtDesc.setText(camp.getState() + "-" + camp.getCity());
+//                    holder.txtDesc.setText(camp.getState() + "-" + camp.getCity());
 
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     Date date = sdf.parse(campRequest.getCreateDate());
@@ -268,9 +272,9 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
                     String mn = String.valueOf(cal.get(Calendar.MARCH));
                     String dy = String.valueOf(cal.get(Calendar.DATE));
                     long milis = cal.getTimeInMillis();
-                    PersianCalendar pc=new PersianCalendar();
+                    PersianCalendar pc = new PersianCalendar();
                     pc.setTimeInMillis(milis);
-                    String p= PersianDateConverter.toPersianFormat(pc.getPersianYear(),pc.getPersianMonth(),pc.getPersianDay());
+                    String p = PersianDateConverter.toPersianFormat(pc.getPersianYear(), pc.getPersianMonth(), pc.getPersianDay());
 
                     campRequest.setRequestDate(p);
 
@@ -281,7 +285,28 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
 
                     if (campRequest.getCampReseptions() != null && campRequest.getCampReseptions().size() != 0)
                         holder.txtCount.setText(campRequest.getCampReseptions().size() + " نفر ");
+
+
+                    ColorMatrix matrix = new ColorMatrix();
+                    if (campRequest.getRequestState() > 1) {
+                        matrix.setSaturation(0);
+                        holder.crdStatus.setCardBackgroundColor(Color.parseColor("#ef5350"));
+                        holder.txtState.setText("وضعیت: ابطال شده");
+                    } else if (campRequest.getRequestState() == 1) {
+                        holder.crdStatus.setCardBackgroundColor(Color.parseColor("#8BC34A"));
+                        matrix.setSaturation(2);
+                        holder.txtState.setText("وضعیت: تایید شده");
+                    }else {
+                        holder.crdStatus.setCardBackgroundColor(Color.parseColor("#9E9E9E"));
+                        matrix.setSaturation(2);
+                        holder.txtState.setText("وضعیت: در انتظار");
+                    }
+
+                    ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+                    holder.imgAvatar.setColorFilter(filter);
+
                     new ImageViewWrapper(getApplicationContext()).FromUrl(url).defaultImage(R.drawable.bg_product_avatar).into(holder.imgAvatar).load();
+
 
                 }
 
@@ -307,13 +332,15 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
             TextView txtTitle;
             TextView txtRate;
             TextView txtDetails;
-            TextView txtDesc;
+            TextView txtState;
+            //            TextView txtDesc;
             TextView txtDate;
             TextView txtRequestDate;
             TextView txtCount;
             ImageView imgAvatar;
             CampRequestHistory campRequest;
             CardView crdShowDetails;
+            CardView crdStatus;
 
 
             public ItemHolder(View v) {
@@ -321,6 +348,7 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
 
                 txtTitle = v.findViewById(R.id.txtTitle);
                 txtRate = v.findViewById(R.id.txtRate);
+                txtState = v.findViewById(R.id.txtState);
                 txtDetails = v.findViewById(R.id.txtDetails);
                 imgAvatar = v.findViewById(R.id.imgAvatar);
                 lyRoot = v.findViewById(R.id.lyRoot);
@@ -328,8 +356,9 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
                 txtRequestDate = v.findViewById(R.id.txtRequestDate);
                 txtCount = v.findViewById(R.id.txtCount);
                 crdShowDetails = v.findViewById(R.id.crdShowDetails);
+                crdStatus = v.findViewById(R.id.crdStatus);
 
-                txtDesc = v.findViewById(R.id.txtDesc);
+//                txtDesc = v.findViewById(R.id.txtDesc);
 
                 FontChanger.applyMainFont(lyRoot);
                 FontChanger.applyTitleFont(txtTitle);
@@ -342,6 +371,19 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
                         String json = campRequest.toJson();
                         if (!TextUtils.isEmpty(json))
                             ConfirmedCampHistoryActivity.start(CampsRequestsHistoryActivity.this, json);
+
+                    }
+                });
+
+                crdStatus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (!TextUtils.isEmpty(campRequest.getRequestStateAnswer())) {
+                            new CustomDialogBuilder().showAlert(CampsRequestsHistoryActivity.this, campRequest.getRequestStateAnswer());
+                        } else if (campRequest.getRequestState() == 0) {
+                            new CustomDialogBuilder().showAlert(CampsRequestsHistoryActivity.this, "در انتظار تایید...");
+                        }
 
                     }
                 });

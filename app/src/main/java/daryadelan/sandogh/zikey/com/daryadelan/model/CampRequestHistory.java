@@ -37,6 +37,9 @@ public class CampRequestHistory {
     @SerializedName("requestState")
     private int requestState;
 
+    @SerializedName("answer")
+    private String requestStateAnswer;
+
     @SerializedName("camp")
     private Camp camp;
 
@@ -136,6 +139,13 @@ public class CampRequestHistory {
         this.campID = campID;
     }
 
+    public String getRequestStateAnswer() {
+        return requestStateAnswer;
+    }
+
+    public void setRequestStateAnswer(String requestStateAnswer) {
+        this.requestStateAnswer = requestStateAnswer;
+    }
 
     public String toJson() {
         Gson gson = new Gson();
