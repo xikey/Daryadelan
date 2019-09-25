@@ -237,6 +237,9 @@ public class CampsActivity extends AppCompatActivity {
             CardView crdConfirmCamp;
 
 
+
+
+
             public ItemHolder(View v) {
                 super(v);
 
@@ -251,6 +254,12 @@ public class CampsActivity extends AppCompatActivity {
 
                 FontChanger.applyMainFont(lyRoot);
                 FontChanger.applyTitleFont(txtTitle);
+
+
+                int width = getResources().getDisplayMetrics().widthPixels;
+                final ViewGroup.LayoutParams params = lyRoot.getLayoutParams();
+                params.height = (int) (width * 0.6);
+                lyRoot.setLayoutParams(params);
 
 
                 lyRoot.setOnClickListener(new View.OnClickListener() {

@@ -358,6 +358,12 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
                 crdShowDetails = v.findViewById(R.id.crdShowDetails);
                 crdStatus = v.findViewById(R.id.crdStatus);
 
+
+                int width = getResources().getDisplayMetrics().widthPixels;
+                final ViewGroup.LayoutParams params = lyRoot.getLayoutParams();
+                params.height = (int) (width * 0.6);
+                lyRoot.setLayoutParams(params);
+
 //                txtDesc = v.findViewById(R.id.txtDesc);
 
                 FontChanger.applyMainFont(lyRoot);

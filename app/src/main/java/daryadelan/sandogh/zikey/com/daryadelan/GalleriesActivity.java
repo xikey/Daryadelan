@@ -225,6 +225,11 @@ public class GalleriesActivity extends AppCompatActivity {
 
                 FontChanger.applyMainFont(cardView);
 
+                int width = getResources().getDisplayMetrics().widthPixels;
+                final ViewGroup.LayoutParams params = cardView.getLayoutParams();
+                params.height = (int) (width * 0.6);
+                cardView.setLayoutParams(params);
+
 
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override

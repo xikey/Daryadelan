@@ -233,6 +233,11 @@ public class NewsActivity extends AppCompatActivity {
                 FontChanger.applyMainFont(cardView);
                 FontChanger.applyTitleFont(txtNumber);
 
+                int width = getResources().getDisplayMetrics().widthPixels;
+                final ViewGroup.LayoutParams params = cardView.getLayoutParams();
+                params.height = (int) (width * 0.6);
+                cardView.setLayoutParams(params);
+
 
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
