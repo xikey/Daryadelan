@@ -362,6 +362,8 @@ public class CampsRequestsHistoryActivity extends AppCompatActivity {
 
                 FontChanger.applyMainFont(lyRoot);
                 FontChanger.applyTitleFont(txtTitle);
+                FontChanger.applyTitleFont(crdShowDetails);
+                FontChanger.applyTitleFont(crdStatus);
 
 
                 crdShowDetails.setOnClickListener(new View.OnClickListener() {
