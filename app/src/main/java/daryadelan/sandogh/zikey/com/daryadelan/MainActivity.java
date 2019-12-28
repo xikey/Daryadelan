@@ -111,6 +111,8 @@ public class MainActivity extends AppCompatActivity
     private CardView crdCamps;
     private CardView crdRequestsList;
 
+    private LinearLayout lyRowOne;
+
     //for getting app from server if permission is first time
     private String appUrl;
 
@@ -158,7 +160,7 @@ public class MainActivity extends AppCompatActivity
                     String url = BuildConfig.IPAddress + answer.getAppInfo().getAppPath();
 
 
-                    updateApp(url,answer.getAppInfo().getAppVersinDescription());
+                    updateApp(url, answer.getAppInfo().getAppVersinDescription());
 
                 } else {
 
@@ -220,24 +222,28 @@ public class MainActivity extends AppCompatActivity
                 }
 
                 if (!answer.getLoginDate().equals(CalendarWrapper.getCurrentPersianDate())) {
-                    new CustomDialogBuilder().showAlert(MainActivity.this, "تاریخ انقضا استفاده از برنامه تمام شده است. لطفا عملیات ورود را مجددا انجام نمایید.", new CustomAlertDialog.OnCancelClickListener() {
-                        @Override
-                        public void onClickCancel(DialogFragment fragment) {
-                            fragment.dismiss();
-                            LoginActivity.start(MainActivity.this);
-                            finish();
-                            return;
-                        }
+//                    new CustomDialogBuilder().showAlert(MainActivity.this, "تاریخ انقضا استفاده از برنامه تمام شده است. لطفا عملیات ورود را مجددا انجام نمایید.", new CustomAlertDialog.OnCancelClickListener() {
+//                        @Override
+//                        public void onClickCancel(DialogFragment fragment) {
+//                            fragment.dismiss();
+//                            LoginActivity.start(MainActivity.this, answer.getMobile());
+//                            finish();
+//                            return;
+//                        }
+//
+//                        @Override
+//                        public void onClickOutside(DialogFragment fragment) {
+//                            fragment.dismiss();
+//                            LoginActivity.start(MainActivity.this,answer.getMobile());
+//                            finish();
+//                            return;
+//                        }
+//                    });
 
-                        @Override
-                        public void onClickOutside(DialogFragment fragment) {
-                            fragment.dismiss();
-                            LoginActivity.start(MainActivity.this);
-                            finish();
-                            return;
-                        }
-                    });
+                    LoginActivity.start(MainActivity.this, answer.getMobile());
+                    finish();
                     return;
+
                 }
                 loadedUser = answer;
                 initContent();
@@ -506,6 +512,7 @@ public class MainActivity extends AppCompatActivity
         rvItem = (RecyclerView) findViewById(R.id.rtItem);
         crdCamps = (CardView) findViewById(R.id.crdCamps);
         crdRequestsList = (CardView) findViewById(R.id.crdRequestsList);
+        lyRowOne = (LinearLayout) findViewById(R.id.lyRowOne);
         lyNews.setVisibility(View.GONE);
 
 
@@ -517,6 +524,19 @@ public class MainActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        try {
+            ViewGroup.LayoutParams layoutParams = lyRowOne.getLayoutParams();
+            int width = getResources().getDisplayMetrics().widthPixels;
+            int height = (int) (width * (0.39));
+            layoutParams.height = height;
+            lyRowOne.setLayoutParams(layoutParams);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void initNewsRecycleView() {
@@ -776,7 +796,7 @@ public class MainActivity extends AppCompatActivity
 
     private void exitApp() {
 
-        LoginActivity.start(MainActivity.this);
+        LoginActivity.start(MainActivity.this, loadedUser.getMobile());
         finish();
     }
 
@@ -945,10 +965,10 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void updateApp(String appUrl,String title) {
+    private void updateApp(String appUrl, String title) {
 
         String qst1 = "نسخه جدید نرم افزار در دسترس میباشد.\n\nپس از دریافت فایل، نرم افزار به صورت خودکار اقدام به بروز رسانی نرم افزار مینماید.\n\n";
-        String qst = "\n\n"+title;
+        String qst = "\n\n" + title;
 
 
         new CustomDialogBuilder().showYesNOCustomAlert_HTML(this, "دریافت نسخه نهایی", qst1 + qst, "دریافت فایل", null, new CustomAlertDialog.OnActionClickListener() {

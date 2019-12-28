@@ -34,6 +34,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String KEY_MOBILE = "MOBILE";
 
     private TextView txtUserName;
     private TextView txtPassword;
@@ -68,8 +69,22 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_2);
 
         initViews();
+        parseIntent();
         initListeners();
         initRepo();
+
+
+    }
+
+    private void parseIntent() {
+
+        Intent intent = getIntent();
+        String mobile = "";
+        if (intent.hasExtra(KEY_MOBILE))
+            mobile = intent.getStringExtra(KEY_MOBILE);
+
+        if (txtUserName != null)
+            txtUserName.setText(mobile);
 
 
     }
@@ -111,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
         lySignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SigninActivity.start_clearDB(LoginActivity.this );
+                SigninActivity.start_clearDB(LoginActivity.this);
                 finish();
             }
         });
@@ -264,6 +279,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public static void start(FragmentActivity context) {
         Intent starter = new Intent(context, LoginActivity.class);
+        context.startActivity(starter);
+    }
+
+    public static void start(FragmentActivity context, String mobile) {
+        Intent starter = new Intent(context, LoginActivity.class);
+        starter.putExtra(KEY_MOBILE, mobile);
         context.startActivity(starter);
     }
 

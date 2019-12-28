@@ -48,26 +48,31 @@ public class UserServerRepo implements IUser {
                     return;
                 }
 
-                if (response.raw() != null && response.raw().code() == 404) {
-                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
-                    return;
-                }
-
-                if (  response.raw().code() == 500) {
-                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
-                    return;
-                }
                 if (response.errorBody() != null) {
 
                     Gson gson = new Gson();
                     try {
                         User user = gson.fromJson(response.errorBody().string(), User.class);
-                        callBack.onError(new Throwable(user.getError_description()));
+                        if (TextUtils.isEmpty(user.getError_description()))
+                            callBack.onError(new Throwable(user.getMessagee()));
+                        else
+                            callBack.onError(new Throwable(user.getError_description()));
                         return;
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
+                }
+
+
+                if (response.raw() != null && response.raw().code() == 404) {
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
+
+                if (response.raw().code() == 500) {
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
                 }
 
                 if (response.body() == null) {
@@ -107,27 +112,32 @@ public class UserServerRepo implements IUser {
                     return;
                 }
 
-                if (response.raw() != null && response.raw().code() == 404) {
-                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
-                    return;
-                }
-                if (  response.raw().code() == 500) {
-                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
-                    return;
-                }
-
                 if (response.errorBody() != null) {
 
                     Gson gson = new Gson();
                     try {
                         User user = gson.fromJson(response.errorBody().string(), User.class);
-                        callBack.onError(new Throwable(user.getError_description()));
+                        if (TextUtils.isEmpty(user.getError_description()))
+                            callBack.onError(new Throwable(user.getMessagee()));
+                        else
+                            callBack.onError(new Throwable(user.getError_description()));
                         return;
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
                 }
+
+
+                if (response.raw() != null && response.raw().code() == 404) {
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
+                if (response.raw().code() == 500) {
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
+
 
                 if (response.body() == null) {
                     callBack.onError(new Throwable("RP ERR 102  response body is null"));
@@ -172,27 +182,32 @@ public class UserServerRepo implements IUser {
                     return;
                 }
 
-                if (response.raw() != null && response.raw().code() == 404) {
-                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
-                    return;
-                }
-                if (  response.raw().code() == 500) {
-                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
-                    return;
-                }
-
                 if (response.errorBody() != null) {
 
                     Gson gson = new Gson();
                     try {
                         User user = gson.fromJson(response.errorBody().string(), User.class);
-                        callBack.onError(new Throwable(user.getError_description()));
+                        if (TextUtils.isEmpty(user.getError_description()))
+                            callBack.onError(new Throwable(user.getMessagee()));
+                        else
+                            callBack.onError(new Throwable(user.getError_description()));
                         return;
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
                 }
+
+
+                if (response.raw() != null && response.raw().code() == 404) {
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
+                if (response.raw().code() == 500) {
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
+
                 if (response.body() == null) {
                     callBack.onError(new Throwable("RP ERR 102  response body is null"));
                     return;
@@ -231,27 +246,33 @@ public class UserServerRepo implements IUser {
                     return;
                 }
 
-                if (response.raw() != null && response.raw().code() == 404) {
-                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
-                    return;
-                }
-                if (  response.raw().code() == 500) {
-                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
-                    return;
-                }
 
                 if (response.errorBody() != null) {
 
                     Gson gson = new Gson();
                     try {
                         User user = gson.fromJson(response.errorBody().string(), User.class);
-                        callBack.onError(new Throwable(user.getError_description()));
+                        if (TextUtils.isEmpty(user.getError_description()))
+                            callBack.onError(new Throwable(user.getMessagee()));
+                        else
+                            callBack.onError(new Throwable(user.getError_description()));
                         return;
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
                 }
+
+
+                if (response.raw() != null && response.raw().code() == 404) {
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
+                if (response.raw().code() == 500) {
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
+
 
                 if (response.body() == null) {
                     callBack.onError(new Throwable("خطا در ورود به برنامه"));
@@ -308,28 +329,33 @@ public class UserServerRepo implements IUser {
                     return;
                 }
 
-                if (response.raw() != null && response.raw().code() == 404) {
-                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
-                    return;
-                }
-
-                if (  response.raw().code() == 500) {
-                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
-                    return;
-                }
-
                 if (response.errorBody() != null) {
 
                     Gson gson = new Gson();
                     try {
                         User user = gson.fromJson(response.errorBody().string(), User.class);
-                        callBack.onError(new Throwable(user.getError_description()));
+                        if (TextUtils.isEmpty(user.getError_description()))
+                            callBack.onError(new Throwable(user.getMessagee()));
+                        else
+                            callBack.onError(new Throwable(user.getError_description()));
                         return;
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
                 }
+
+
+                if (response.raw() != null && response.raw().code() == 404) {
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
+
+                if (response.raw().code() == 500) {
+                    callBack.onError(new Throwable("متاسفانه خطایی در دریافت اطلاعات رخ داده است. لطفا مجددا تلاش نمایید"));
+                    return;
+                }
+
                 if (response.body() == null) {
                     callBack.onError(new Throwable("خطا در ورود به برنامه"));
                     return;
