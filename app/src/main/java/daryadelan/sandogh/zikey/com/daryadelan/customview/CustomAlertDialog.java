@@ -103,6 +103,8 @@ public class CustomAlertDialog extends DialogFragment {
 
         setStyle(android.support.v4.app.DialogFragment.STYLE_NO_FRAME,
                 android.R.style.Theme_Black_NoTitleBar);
+
+
         super.onCreate(savedInstanceState);
     }
 
@@ -115,21 +117,15 @@ public class CustomAlertDialog extends DialogFragment {
                 new ColorDrawable(Color.TRANSPARENT));
         dialog.setCanceledOnTouchOutside(false);
 //        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-            dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            dialog.getWindow().setStatusBarColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimaryDark, null));
+      //     dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+      //     dialog.getWindow().setStatusBarColor(ResourcesCompat.getColor(getResources(), R.color.colorPrimaryDark, null));
 
-        }
+      // }
 
+        hideStatusBar();
         dialog.setCancelable(false);
-//        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-//            @Override
-//            public void onDismiss(DialogInterface dialog) {
-//                if (onCancleClickListener!=null)
-//                    onCancleClickListener.onClickCancel(CustomAlertDialog.this);
-//            }
-//        });
 
         return dialog;
     }
@@ -138,6 +134,9 @@ public class CustomAlertDialog extends DialogFragment {
     public void onDismiss(DialogInterface dialog) {
         if (onCancleClickListener != null)
             onCancleClickListener.onClickOutside(CustomAlertDialog.this);
+
+        hideStatusBar();
+
         super.onDismiss(dialog);
     }
 
@@ -154,6 +153,7 @@ public class CustomAlertDialog extends DialogFragment {
         initContent();
         initClickListeners();
 
+        hideStatusBar();
 
         return root;
 
@@ -376,5 +376,31 @@ public class CustomAlertDialog extends DialogFragment {
 
     }
 
+    private void hideStatusBar() {
+
+        try {
+
+            if (Build.VERSION.SDK_INT < 16) {
+                getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            } else {
+                View decorView = getActivity().getWindow().getDecorView();
+                decorView.setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_IMMERSIVE
+                                // Set the content to appear under the system bars so that the
+                                // content doesn't resize when the system bars hide and show.
+                                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                // Hide the nav bar and status bar
+                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_FULLSCREEN);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

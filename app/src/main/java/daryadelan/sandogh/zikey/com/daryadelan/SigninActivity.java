@@ -101,6 +101,17 @@ public class SigninActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (Build.VERSION.SDK_INT < 16) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        } else {
+            View decorView = getWindow().getDecorView();
+// Hide the status bar.
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+
+        }
+
         parseIntent();
         requestGetMessagePermission();
         initRepo();
@@ -131,30 +142,10 @@ public class SigninActivity extends AppCompatActivity {
                     finish();
                 } else {
 
-                    if (Build.VERSION.SDK_INT < 16) {
-                        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                    } else {
-                        View decorView = getWindow().getDecorView();
-// Hide the status bar.
-                        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-                        decorView.setSystemUiVisibility(uiOptions);
 
 
-                    }
 
 
-                    if (Build.VERSION.SDK_INT < 16) {
-                        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                    } else {
-                        View decorView = getWindow().getDecorView();
-// Hide the status bar.
-                        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-                        decorView.setSystemUiVisibility(uiOptions);
-
-
-                    }
                     setContentView(R.layout.activity_signin_2);
                     initViews();
                     initHeaderSize();
@@ -250,6 +241,21 @@ public class SigninActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        if (Build.VERSION.SDK_INT < 16) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        } else {
+            View decorView = getWindow().getDecorView();
+// Hide the status bar.
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+
+        }
+        super.onResume();
+    }
+
     private void initApiClient() {
 
         apiClient = new GoogleApiClient.Builder(getApplicationContext(), new GoogleApiClient.ConnectionCallbacks() {
@@ -309,6 +315,7 @@ public class SigninActivity extends AppCompatActivity {
                         public void onClickCancel(DialogFragment fragment) {
 
                             fragment.dismiss();
+
                         }
 
                         @Override
@@ -919,9 +926,8 @@ public class SigninActivity extends AppCompatActivity {
         animatorSet.play(globalAnimate);
         animatorSet.setStartDelay(50);
         animatorSet.start();
-
-
     }
 
 
-}
+ }
+
