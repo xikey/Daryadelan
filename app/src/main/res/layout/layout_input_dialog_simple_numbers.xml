@@ -6,7 +6,7 @@
     android:background="@color/colorGray"
     android:layoutDirection="rtl"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="10dp">
 
 
     <LinearLayout
@@ -18,8 +18,9 @@
         <TextView
             android:id="@+id/dialogTitle"
             android:layout_width="wrap_content"
+            android:paddingRight="10dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textSize="@dimen/normal_font_size" />
 
         <TextView
             android:id="@+id/txtQuestion"
@@ -34,8 +35,6 @@
             android:id="@+id/lyPickYear"
             android:layout_width="match_parent"
             android:layout_height="65dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardBackgroundColor="@color/colorWhite"

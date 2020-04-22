@@ -114,6 +114,11 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
             campRepo = new CampServerRepo();
     }
 
+    @Override
+    public void onBackPressed() {
+
+        showHideListOnBackPress();
+    }
 
     private void initContent() {
 
@@ -230,9 +235,9 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
         if (data.hasExtra(KEY_REQUEST_CAMP_JSON)) {
             CampRequestHistory cmp = new CampRequestHistory();
             cmp = cmp.fromJson(data.getStringExtra(KEY_REQUEST_CAMP_JSON));
-            if (cmp!=null)
-                campRequestHistory=cmp;
-            campReseptions=cmp.getCampReseptions();
+            if (cmp != null)
+                campRequestHistory = cmp;
+            campReseptions = cmp.getCampReseptions();
 
         }
 
@@ -260,6 +265,22 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
     }
 
 
+    private void showHideListOnBackPress() {
+
+        if (lyAddPersonFloat == null)
+            finish();
+
+        if (lyAddPersonFloat.getVisibility() == View.VISIBLE) {
+            slideDown(lyAddPersonFloat);
+
+        } else {
+            finish();
+        }
+
+
+    }
+
+
     public void slideUp(View view) {
 
         TranslateAnimation animate = new TranslateAnimation(
@@ -278,7 +299,7 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                            lyAddPerson.setVisibility(View.GONE);
+                lyAddPerson.setVisibility(View.GONE);
                 lyDayCount.setVisibility(View.GONE);
                 lyDate.setVisibility(View.GONE);
             }
@@ -360,7 +381,7 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
 
                 holder.edtName.setText(cmp.getName());
                 holder.edtFamily.setText(cmp.getFamily());
-                holder.edtNationalCode.setText("" +  cmp.getNationalCode());
+                holder.edtNationalCode.setText("" + cmp.getNationalCode());
                 holder.edtRelation.setText("" + cmp.getRelationShipName());
             } catch (Exception ex) {
                 LogWrapper.loge("ItemAdapter_onBindViewHolder_Exception: ", ex);
@@ -397,7 +418,6 @@ public class ConfirmedCampHistoryActivity extends AppCompatActivity {
                 edtRelation = v.findViewById(R.id.edtRelation);
 
                 FontChanger.applyMainFont(lyRoot);
-
 
 
             }

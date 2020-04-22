@@ -125,6 +125,11 @@ public class ConfirmCampActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        showHideListOnBackPress();
+    }
+
     private void initRepo() {
         if (campRepo == null)
             campRepo = new CampServerRepo();
@@ -145,10 +150,10 @@ public class ConfirmCampActivity extends AppCompatActivity {
             txtPersonsCount.setText(campReseptions.size() + " نفر ");
         }
 
-        if (dayCount==0){
+        if (dayCount == 0) {
             txtDayCount.setText(" انتخاب تعداد روز ");
-        }else
-        txtDayCount.setText(dayCount + " روز ");
+        } else
+            txtDayCount.setText(dayCount + " روز ");
 
         txtCampName.setText(camp.getCampName());
         txtCampDetail.setText(camp.getState() + " - " + camp.getCity() + " - " + camp.getStar() + " ستاره");
@@ -429,6 +434,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
         if (lyAddPersonFloat == null)
             return;
+
         if (lyAddPersonFloat.getVisibility() == View.VISIBLE) {
             slideDown(lyAddPersonFloat);
 
@@ -438,6 +444,23 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
 
     }
+
+
+    private void showHideListOnBackPress() {
+
+        if (lyAddPersonFloat == null)
+            finish();
+
+        if (lyAddPersonFloat.getVisibility() == View.VISIBLE) {
+            slideDown(lyAddPersonFloat);
+
+        } else {
+            finish();
+        }
+
+
+    }
+
 
     // slide the view from below itself to the current position
     public void slideUp(View view) {
@@ -545,7 +568,7 @@ public class ConfirmCampActivity extends AppCompatActivity {
 
                 holder.edtName.setText(cmp.getName());
                 holder.edtFamily.setText(cmp.getFamily());
-                holder.edtNationalCode.setText("" +  cmp.getNationalCode());
+                holder.edtNationalCode.setText("" + cmp.getNationalCode());
                 holder.edtRelation.setText("" + cmp.getRelationShipName());
             } catch (Exception ex) {
                 LogWrapper.loge("ItemAdapter_onBindViewHolder_Exception: ", ex);

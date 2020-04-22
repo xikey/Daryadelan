@@ -294,7 +294,7 @@ public class AhkamHeaderActivity extends AppCompatActivity {
 
     private void changePersonelCode() {
 
-        new CustomDialogBuilder().showInputTextDialog(AhkamHeaderActivity.this, "کد پرسنلی", new CustomDialogBuilder.OnDialogListener() {
+        new CustomDialogBuilder().showInputTextDialog_NumbersOnly(AhkamHeaderActivity.this, "کد پرسنلی", new CustomDialogBuilder.OnDialogListener() {
             @Override
             public void onOK(String input) {
                 try {

@@ -75,6 +75,7 @@ public class PayrollHeaderActivity extends AppCompatActivity {
     }
 
     private void initListeners() {
+
         lyPickYear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -355,7 +356,7 @@ public class PayrollHeaderActivity extends AppCompatActivity {
     }
 
     private void changePersonelCode() {
-        new CustomDialogBuilder().showInputTextDialog(PayrollHeaderActivity.this, "کد پرسنلی", new CustomDialogBuilder.OnDialogListener() {
+        new CustomDialogBuilder().showInputTextDialog_NumbersOnly(PayrollHeaderActivity.this, "کد پرسنلی", new CustomDialogBuilder.OnDialogListener() {
             @Override
             public void onOK(String input) {
                 try {

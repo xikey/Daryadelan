@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lyRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/lyRoot"
     android:layout_marginLeft="10dp"
     android:layout_marginTop="10dp"
     android:layout_marginRight="10dp"
-    android:background="@color/colorGray"
-    android:foreground="?android:attr/selectableItemBackground"
+  app:cardBackgroundColor="#f8f8f8"
     android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     android:layoutDirection="rtl"
     android:orientation="vertical"
     android:paddingTop="5dp"
     android:paddingBottom="5dp"
-    app:cardCornerRadius="3dp"
+    app:cardCornerRadius="5dp"
     app:cardElevation="5dp"
     app:cardUseCompatPadding="true">
 
@@ -25,6 +25,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:paddingTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -32,22 +33,23 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:padding="5dp"
+                android:alpha="0.8"
+                android:padding="3dp"
                 app:srcCompat="@drawable/ic_person_black_24dp" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:paddingRight="10dp"
+                android:paddingRight="5dp"
                 android:text="@string/name_lbl"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/very_small_font_size" />
 
             <TextView
+                android:id="@+id/edtName"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:id="@+id/edtName"
                 android:layout_weight="1"
                 android:gravity="center_vertical|right"
                 android:textColor="@color/colorBlack"
@@ -58,12 +60,10 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="50dp"
+            android:layout_height="2dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="50dp"
-            android:alpha="0.4"
-            android:background="@color/colorBlack" />
+            android:alpha="0.8"
+            android:background="@color/colorWhite" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,14 +74,15 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:padding="5dp"
+                android:alpha="0.8"
+                android:padding="3dp"
                 app:srcCompat="@drawable/ic_person_black_24dp" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:paddingRight="10dp"
+                android:paddingRight="5dp"
                 android:text="@string/family_lbl"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/very_small_font_size" />
@@ -100,12 +101,10 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="50dp"
+            android:layout_height="2dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="50dp"
-            android:alpha="0.4"
-            android:background="@color/colorBlack" />
+            android:alpha="0.8"
+            android:background="@color/colorWhite" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -116,23 +115,24 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:padding="5dp"
+                android:alpha="0.8"
+                android:padding="3dp"
                 app:srcCompat="@drawable/ic_credit_card_black_24dp" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:paddingRight="10dp"
+                android:paddingRight="5dp"
                 android:text="@string/national_code_lbl"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/very_small_font_size" />
 
             <TextView
+                android:id="@+id/edtNationalCode"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:id="@+id/edtNationalCode"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/very_small_font_size" />
@@ -142,15 +142,14 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="50dp"
+            android:layout_height="2dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="50dp"
-            android:alpha="0.4"
-            android:background="@color/colorBlack" />
+            android:alpha="0.8"
+            android:background="@color/colorWhite" />
 
 
         <LinearLayout
+            android:paddingBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -159,23 +158,24 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:padding="5dp"
+                android:alpha="0.8"
+                android:padding="3dp"
                 app:srcCompat="@drawable/ic_supervisor_account_black_24dp" />
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:paddingRight="10dp"
+                android:paddingRight="5dp"
                 android:text="@string/relation_lbl"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/very_small_font_size" />
 
             <TextView
+                android:id="@+id/edtRelation"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:id="@+id/edtRelation"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/very_small_font_size" />

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.mohamadamin.persianmaterialdatetimepicker.date.DatePickerDialog;
 import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
+import com.razanpardazesh.razanlibs.Tools.FontApplier;
 
 import daryadelan.sandogh.zikey.com.daryadelan.R;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
@@ -187,6 +188,7 @@ public class CustomDialogBuilder {
         if (!TextUtils.isEmpty(title))
             dialogTitle.setText(title);
 
+        FontApplier.applyMainFont(mView);
 
         alertDialogBuilderUserInput
                 .setCancelable(false)
