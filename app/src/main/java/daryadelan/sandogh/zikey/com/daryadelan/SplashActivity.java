@@ -20,6 +20,7 @@ public class SplashActivity extends AwesomeSplash {
 
     @Override
     public void initSplash(ConfigSplash configSplash) {
+
         configSplash.setBackgroundColor(R.color.colorPrimaryDark); //any color you want form colors.xml
         configSplash.setAnimCircularRevealDuration(800); //int ms
         configSplash.setRevealFlagX(Flags.REVEAL_TOP);  //or Flags.REVEAL_LEFT

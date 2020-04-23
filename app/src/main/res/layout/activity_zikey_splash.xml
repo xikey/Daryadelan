@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_animation"
+    tools:context=".ZikeySplashActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_daryadelan_splash" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtName"
+                android:layout_marginTop="15dp"
+                android:maxLines="2"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/sandogh_full_name"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/very_small_font_size" />
+
+
+        </LinearLayout>
+
+c
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:paddingBottom="20dp"
+            android:alpha="0.8"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/spin_kit"
+            style="@style/SpinKitView.ThreeBounce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:SpinKit_Color="@color/colorWhite" />
+
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

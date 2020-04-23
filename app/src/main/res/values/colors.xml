@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#1565C0</color>
     <color name="colorPrimary_light">#C5CAE9</color>
     <color name="colorAccent">#FFC107</color>
+    <color name="colorTransparent">#00FFFFFF</color>
     <color name="primary_text_color">#212121</color>
     <color name="secondary_text_color">#727272</color>
     <color name="icons_color">#FFFFFF</color>
@@ -36,6 +37,12 @@
 
     <color name="mdtp_accent_color">#2196F3</color>
     <color name="mdtp_accent_color_dark">#1565C0</color>
+
+
+
+    <color name="colorGradientStart">#192D59</color>
+    <color name="colorGradientCenter">#1565C0</color>
+    <color name="colorGradientEnd">#FFC107</color>
 
 </resources>
 
