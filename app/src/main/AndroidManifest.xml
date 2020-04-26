@@ -86,11 +86,11 @@
         <activity
             android:name=".OpenedNewsActivity"
             android:label="@string/title_activity_opened_news"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
         <activity
             android:name=".NewsActivity"
             android:label="@string/title_activity_news"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
         <activity
             android:name=".GalleriesActivity"
             android:label="@string/title_activity_galleries"
@@ -106,7 +106,7 @@
         <activity
             android:name=".CampActivity"
             android:label="@string/title_activity_camp"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
         <activity
             android:name=".CampsRequestsHistoryActivity"
             android:label="@string/title_activity_camps_requests_history"
