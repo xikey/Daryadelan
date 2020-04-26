@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.DialogFragment;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -19,6 +20,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -137,14 +139,10 @@ public class SigninActivity extends AppCompatActivity {
         userSqliteRepo.getUserDatas(getApplicationContext(), new IRepoCallBack<User>() {
             @Override
             public void onAnswer(User answer) {
-                if (answer != null &&!mustClearDB&& !TextUtils.isEmpty(answer.getToken())) {
+                if (answer != null && !mustClearDB && !TextUtils.isEmpty(answer.getToken())) {
                     MainActivity.start(SigninActivity.this);
                     finish();
                 } else {
-
-
-
-
 
                     setContentView(R.layout.activity_signin_2);
                     initViews();
@@ -243,6 +241,7 @@ public class SigninActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -285,6 +284,7 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     private void hideKeyBoard() {
+
         try {
             if (getCurrentFocus() != null) {
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -553,6 +553,20 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     private void requestHint() throws IntentSender.SendIntentException {
+
+        TelephonyManager tMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        String mPhoneNumber = tMgr.getLine1Number();
+
         HintRequest hintRequest = new HintRequest.Builder()
                 .setPhoneNumberIdentifierSupported(true)
                 .build();
@@ -929,5 +943,5 @@ public class SigninActivity extends AppCompatActivity {
     }
 
 
- }
+}
 

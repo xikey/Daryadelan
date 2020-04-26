@@ -124,10 +124,15 @@ public class MainActivity extends AppCompatActivity
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         } else {
-            View decorView = getWindow().getDecorView();
-// Hide the status bar.
-            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
+            View decorView =  getWindow().getDecorView();
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_IMMERSIVE
+                            // Set the content to appear under the system bars so that the
+                            // content doesn't resize when the system bars hide and show.
+                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            // Hide the nav bar and status bar
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN);
 
         }
         setContentView(R.layout.activity_main);
@@ -141,6 +146,7 @@ public class MainActivity extends AppCompatActivity
         initSlideAutoChanger();
         initListeners();
         initNavHeader();
+
 
 
     }
@@ -197,11 +203,16 @@ public class MainActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        } else {
-            View decorView = getWindow().getDecorView();
-// Hide the status bar.
-            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
+        } else  {
+            View decorView =  getWindow().getDecorView();
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_IMMERSIVE
+                            // Set the content to appear under the system bars so that the
+                            // content doesn't resize when the system bars hide and show.
+                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            // Hide the nav bar and status bar
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN);
 
         }
 
