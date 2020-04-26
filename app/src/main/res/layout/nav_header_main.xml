@@ -9,12 +9,12 @@
 
     <ImageView
         android:scaleType="centerCrop"
-        android:src="@drawable/bg_login_shadow"
+        android:src="@drawable/gradient_start"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <LinearLayout
-        android:alpha="0.8"
+        android:alpha="0.9"
         android:layout_margin="15dp"
         android:layout_centerHorizontal="true"
         android:gravity="center"
@@ -38,11 +38,13 @@
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             android:paddingLeft="10dp"
             android:id="@+id/txtUserFullName"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="@string/sandogh_title"
-            android:alpha="0.7"
+            android:alpha="0.9"
             android:visibility="visible"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textSize="@dimen/very_small_font_size" />
 
         <TextView
             android:id="@+id/textView"
