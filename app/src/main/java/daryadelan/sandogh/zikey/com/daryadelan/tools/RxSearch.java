@@ -1,8 +1,8 @@
 package daryadelan.sandogh.zikey.com.daryadelan.tools;
 
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.SearchView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 
 import rx.subjects.BehaviorSubject;
 

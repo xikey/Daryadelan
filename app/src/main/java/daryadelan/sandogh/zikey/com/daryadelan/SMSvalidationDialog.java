@@ -8,9 +8,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.res.ResourcesCompat;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
+import androidx.core.content.res.ResourcesCompat;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -110,7 +110,7 @@ public class SMSvalidationDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        setStyle(android.support.v4.app.DialogFragment.STYLE_NO_FRAME,
+        setStyle(androidx.fragment.app.DialogFragment.STYLE_NO_FRAME,
                 android.R.style.Theme_Black_NoTitleBar);
         super.onCreate(savedInstanceState);
     }

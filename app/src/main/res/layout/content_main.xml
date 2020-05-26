@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -66,7 +66,7 @@
             </LinearLayout>
 
 
-            <android.support.v7.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -87,7 +87,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.5">
 
-                    <android.support.v7.widget.CardView
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:id="@+id/crdPayrolls"
                         android:clickable="true"
@@ -121,7 +121,7 @@
 
                         </LinearLayout>
 
-                    </android.support.v7.widget.CardView>
+                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
 
@@ -132,7 +132,7 @@
                     android:gravity="center"
                     android:layout_weight="0.5">
 
-                    <android.support.v7.widget.CardView
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/lyAhkam"
                         android:clickable="true"
                         android:foreground="?android:attr/selectableItemBackground"
@@ -168,7 +168,7 @@
                         </LinearLayout>
 
 
-                    </android.support.v7.widget.CardView>
+                    </androidx.cardview.widget.CardView>
 
 
                 </LinearLayout>
@@ -178,7 +178,7 @@
         </RelativeLayout>
 
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             app:cardCornerRadius="10dp"
             app:cardElevation="5dp"
@@ -197,7 +197,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
 
         <LinearLayout
@@ -212,7 +212,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5">
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:id="@+id/crdGallery"
                     android:clickable="true"
@@ -247,7 +247,7 @@
 
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
 
@@ -258,7 +258,7 @@
                 android:gravity="center"
                 android:layout_weight="0.5">
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/crdNews"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
@@ -294,7 +294,7 @@
                     </LinearLayout>
 
 
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
 
             </LinearLayout>
@@ -315,7 +315,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5">
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:clickable="true"
                     android:id="@+id/crdCamps"
@@ -351,7 +351,7 @@
 
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
 
@@ -362,7 +362,7 @@
                 android:gravity="center"
                 android:layout_weight="0.5">
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:clickable="true"
                     android:id="@+id/crdRequestsList"
                     android:foreground="?android:attr/selectableItemBackground"
@@ -399,7 +399,7 @@
                     </LinearLayout>
 
 
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
 
             </LinearLayout>
@@ -437,4 +437,4 @@
     </LinearLayout>
 
 
-</android.support.v4.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>

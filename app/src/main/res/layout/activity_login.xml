@@ -79,7 +79,7 @@
                     android:padding="4dp"
                     app:srcCompat="@drawable/ic_phone_android_black_24dp" />
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
                         android:textSize="@dimen/small_font_size"
                         app:counterMaxLength="13" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
             </LinearLayout>
@@ -125,7 +125,7 @@
                     android:padding="4dp"
                     app:srcCompat="@drawable/ic_lock_outline_black_24dp" />
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
                         android:textSize="@dimen/small_font_size"
                         app:counterMaxLength="13" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
             </LinearLayout>

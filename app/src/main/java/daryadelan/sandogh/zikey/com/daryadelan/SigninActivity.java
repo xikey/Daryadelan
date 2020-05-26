@@ -4,7 +4,6 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.app.DialogFragment;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -13,17 +12,15 @@ import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import android.telephony.TelephonyManager;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +32,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.credentials.Credential;
@@ -94,6 +91,8 @@ public class SigninActivity extends AppCompatActivity {
     private AnimatorSet shirinkLogo;
     private AnimatorSet globalAnimate;
     private CardView crdContainer;
+
+    private TextView txtVersion;
 
     private boolean isGuest = false;
 
@@ -355,6 +354,15 @@ public class SigninActivity extends AppCompatActivity {
     private void sendSMS() {
 
 
+        int permission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_PHONE_STATE);
+
+        if (permission != 0) {
+            requestReadPhoneStatePermission();
+            return;
+        }
+
+
         if (TextUtils.isEmpty(txtUserName.getText())) {
             new CustomDialogBuilder().showAlert(SigninActivity.this, "شماره موبایل وارد شده نادرست میباشد");
             return;
@@ -370,13 +378,6 @@ public class SigninActivity extends AppCompatActivity {
             return;
 
 
-        int permission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_PHONE_STATE);
-
-        if (permission != 0) {
-            requestReadPhoneStatePermission();
-            return;
-        }
 
         DeviceHelper deviceHelper = new DeviceHelper();
         final User user = new User();
@@ -390,8 +391,9 @@ public class SigninActivity extends AppCompatActivity {
         user.setOsVersion(deviceHelper.getOSversion(getApplicationContext()));
 
         if (TextUtils.isEmpty(user.getMobileImei())) {
-            new CustomDialogBuilder().showAlert(SigninActivity.this, "گوشی هوشمند نامعتبر!\nدر صورتی که از شبیه ساز یا دستگاه نامعتبر استفاده نمایید، امکان ورود به نرم افزار نخواهد بود!");
-            return;
+            user.setMobileImei("000000");
+//            new CustomDialogBuilder().showAlert(SigninActivity.this, "گوشی هوشمند نامعتبر!\nدر صورتی که از شبیه ساز یا دستگاه نامعتبر استفاده نمایید، امکان ورود به نرم افزار نخواهد بود!");
+//            return;
         }
         if (TextUtils.isEmpty(user.getMobileDeviceBrand())) {
             new CustomDialogBuilder().showAlert(SigninActivity.this, "گوشی هوشمند نامعتبر!\nدر صورتی که از شبیه ساز یا دستگاه نامعتبر استفاده نمایید، امکان ورود به نرم افزار نخواهد بود!");
@@ -539,6 +541,8 @@ public class SigninActivity extends AppCompatActivity {
         lyPersonelCode = (CardView) findViewById(R.id.lyPersonelCode);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
         crdContainer = (CardView) findViewById(R.id.crdContainer);
+        txtVersion=findViewById(R.id.txtVersion);
+        txtVersion.setText("Version: "+BuildConfig.VERSION_NAME);
 //        swIAmGuest = (Switch) findViewById(R.id.swIAmGuest);
 
 

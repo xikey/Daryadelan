@@ -1,7 +1,7 @@
 package daryadelan.sandogh.zikey.com.daryadelan.repo.retrofitCalls;
 
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import daryadelan.sandogh.zikey.com.daryadelan.model.CheckActivationCode;
 import daryadelan.sandogh.zikey.com.daryadelan.model.LoginDto;
@@ -10,11 +10,8 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.UserCreation;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 /**
  * Created by Zikey on 19/09/2017.

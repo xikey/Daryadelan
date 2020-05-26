@@ -3,10 +3,10 @@ package daryadelan.sandogh.zikey.com.daryadelan.tools;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.CountDownTimer;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +41,7 @@ public class CustomDialogBuilder {
 
         Snackbar s = Snackbar.make(viewGroup, message, Snackbar.LENGTH_LONG);
         View sbView = s.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = (TextView) sbView.findViewById(R.id.snackbar_text);
         textView.setMaxLines(5);
         textView.setTextColor(Color.parseColor("#FFFFFF"));
         s.show();
@@ -54,7 +54,7 @@ public class CustomDialogBuilder {
 
         Snackbar s = Snackbar.make(viewGroup, message, Snackbar.LENGTH_LONG);
         View sbView = s.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = (TextView) sbView.findViewById(R.id.snackbar_text);
         textView.setMaxLines(5);
         textView.setTextColor(Color.parseColor("#FFFFFF"));
         if (!TextUtils.isEmpty(actionName) && action != null)
@@ -68,7 +68,7 @@ public class CustomDialogBuilder {
 
         Snackbar s = Snackbar.make(viewGroup, message, Snackbar.LENGTH_SHORT);
         View sbView = s.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = (TextView) sbView.findViewById(R.id.snackbar_text);
         textView.setMaxLines(5);
         textView.setTextColor(Color.parseColor("#FFFFFF"));
         s.show();

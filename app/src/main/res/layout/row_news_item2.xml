@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="190dp"
@@ -29,7 +29,7 @@
             android:background="@color/colorWhite"
             android:scaleType="centerCrop" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
         android:paddingTop="10dp"
         android:layout_toLeftOf="@+id/imgAvatar">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="50dp"
             app:cardCornerRadius="4dp"
             android:id="@+id/lyDate"
@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_toLeftOf="@id/lyDate"

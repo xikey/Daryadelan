@@ -7,12 +7,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +23,6 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-import daryadelan.sandogh.zikey.com.daryadelan.model.Camp;
 import daryadelan.sandogh.zikey.com.daryadelan.model.CampReseption;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
@@ -80,7 +79,7 @@ public class CampReseptionFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        setStyle(android.support.v4.app.DialogFragment.STYLE_NO_FRAME,
+        setStyle(androidx.fragment.app.DialogFragment.STYLE_NO_FRAME,
                 android.R.style.Theme_Black_NoTitleBar);
         super.onCreate(savedInstanceState);
     }

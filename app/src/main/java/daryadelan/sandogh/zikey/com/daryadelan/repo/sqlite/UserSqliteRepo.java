@@ -10,6 +10,7 @@ import com.razanpardazesh.razanlibs.Tools.AsyncWrapper;
 
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserData;
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
+import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.apiClient.ServerApiClient;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
@@ -95,11 +96,12 @@ public class UserSqliteRepo implements IUser {
         }
 
 
-        SqlAsyncWrapper  asyncWrapper = new SqlAsyncWrapper();
+        SqlAsyncWrapper asyncWrapper = new SqlAsyncWrapper();
 
         asyncWrapper.setDoOnBackground(new AsyncWrapper.Callback() {
             @Override
             public Object call(Object o) {
+                SessionManagement.getInstance(context).setIsUserLoggedInBefore(1);
                 return saveUserDatasAsynchronized(asyncWrapper.getContext(), user);
 
             }
@@ -152,7 +154,7 @@ public class UserSqliteRepo implements IUser {
         }
 
 
-        SqlAsyncWrapper    asyncWrapper = new SqlAsyncWrapper();
+        SqlAsyncWrapper asyncWrapper = new SqlAsyncWrapper();
 
         asyncWrapper.setDoOnBackground(new AsyncWrapper.Callback() {
             @Override
@@ -197,7 +199,7 @@ public class UserSqliteRepo implements IUser {
         if (context == null)
             return;
 
-        SqlAsyncWrapper   asyncWrapper = new SqlAsyncWrapper();
+        SqlAsyncWrapper asyncWrapper = new SqlAsyncWrapper();
 
         asyncWrapper.setDoOnBackground(new AsyncWrapper.Callback() {
             @Override

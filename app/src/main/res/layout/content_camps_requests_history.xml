@@ -9,7 +9,7 @@
     tools:context=".CampsRequestsHistoryActivity"
     tools:showIn="@layout/activity_camps_requests_history">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:id="@+id/lyAction"
         android:foreground="?android:attr/selectableItemBackground"
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
     <RelativeLayout
         android:layout_above="@+id/lyAction"
@@ -51,14 +51,14 @@
 
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:id="@+id/rvItem"
             android:background="@color/transparent"
             android:paddingBottom="100dp"
             android:clipToPadding="false"
             android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
      <View
          android:layout_alignParentBottom="true"

@@ -43,6 +43,8 @@
                     android:orientation="vertical"
                     android:paddingTop="20dp">
 
+
+
                     <ImageView
                         android:id="@+id/imgMap"
                         android:layout_width="80dp"
@@ -116,7 +118,7 @@
 
     </ScrollView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:id="@+id/crdContainer"
         android:layout_height="wrap_content"
@@ -146,6 +148,17 @@
                     android:layout_marginTop="20dp"
                     android:padding="5dp"
                     android:src="@drawable/ic_cyrcle_user" />
+
+                <TextView
+                    android:alpha="0.5"
+                    android:layout_centerInParent="true"
+                    android:textSize="@dimen/very_small_8"
+                    android:gravity="center"
+                    android:textColor="@color/colorBlack"
+                    android:id="@+id/txtVersion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
 
 
                 <RelativeLayout
@@ -232,7 +245,7 @@
                     android:orientation="vertical"
                     android:paddingBottom="20dp">
 
-                    <android.support.v7.widget.CardView
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/lyAction"
                         android:layout_width="wrap_content"
                         android:layout_height="55dp"
@@ -253,9 +266,9 @@
                             android:text="@string/login"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/very_small_font_size" />
-                    </android.support.v7.widget.CardView>
+                    </androidx.cardview.widget.CardView>
 
-                    <android.support.v7.widget.CardView
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/lySignin"
                         android:layout_width="wrap_content"
                         android:layout_height="55dp"
@@ -279,7 +292,7 @@
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/very_small_10" />
 
-                    </android.support.v7.widget.CardView>
+                    </androidx.cardview.widget.CardView>
 
 
 
@@ -292,9 +305,11 @@
         </ScrollView>
 
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
     <include layout="@layout/layout_progress_match_parent" />
+
+
 
 </RelativeLayout>

@@ -12,7 +12,7 @@
         android:orientation="horizontal"
         android:padding="20dp">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="150dp"
             app:cardUseCompatPadding="true"
@@ -46,13 +46,13 @@
                     app:srcCompat="@drawable/ic_receipt_white_96dp" />
             </RelativeLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
         <View
             android:layout_width="20dp"
             android:layout_height="match_parent"/>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/lyAhkam"
             android:layout_width="match_parent"
             android:layout_height="150dp"
@@ -86,7 +86,7 @@
                     app:srcCompat="@drawable/ic_description_white_96dp" />
             </RelativeLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
 
     </LinearLayout>
@@ -99,7 +99,7 @@
         android:paddingRight="20dp"
         android:paddingBottom="20dp">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="150dp"
             app:cardUseCompatPadding="true"
@@ -132,13 +132,13 @@
                     app:srcCompat="@drawable/ic_record_voice_over_white_76dp" />
             </RelativeLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
         <View
             android:layout_width="20dp"
             android:layout_height="match_parent"/>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_weight="0.5"
@@ -171,7 +171,7 @@
                     app:srcCompat="@drawable/ic_photo_library_white_76dp" />
             </RelativeLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
 
     </LinearLayout>

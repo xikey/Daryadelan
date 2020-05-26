@@ -3,14 +3,15 @@ package daryadelan.sandogh.zikey.com.daryadelan;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Handler;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.razanpardazesh.razanlibs.Tools.FontApplier;
-
+import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 
 public class ZikeySplashActivity extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class ZikeySplashActivity extends AppCompatActivity {
      * Duration of wait
      **/
     private final int SPLASH_DISPLAY_LENGTH = 4000;
+    private int isUserLoggedinBefore = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +29,15 @@ public class ZikeySplashActivity extends AppCompatActivity {
         hideStatusBar();
         setContentView(R.layout.activity_zikey_splash);
 
+        initUserLoggedinHistory();
         initViews();
         initAnimation();
         runHandler();
 
+    }
 
+    private void initUserLoggedinHistory() {
+        isUserLoggedinBefore   = SessionManagement.getInstance(getApplicationContext()).getIsUserLoggedInBefore();
     }
 
     //جهت تعیین زمان نمایش صفحه خوشامدگویی
@@ -41,7 +47,11 @@ public class ZikeySplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                SigninActivity.start(ZikeySplashActivity.this);
+                if (isUserLoggedinBefore == 0)
+                    SigninActivity.start(ZikeySplashActivity.this);
+                else {
+                    LoginActivity.start(ZikeySplashActivity.this);
+                }
                 finish();
 
             }

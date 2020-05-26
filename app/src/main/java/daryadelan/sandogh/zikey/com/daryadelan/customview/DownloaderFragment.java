@@ -1,6 +1,5 @@
 package daryadelan.sandogh.zikey.com.daryadelan.customview;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
@@ -10,12 +9,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +38,6 @@ import com.razanpardazesh.razanlibs.Tools.Convertor;
 
 import java.io.File;
 
-import daryadelan.sandogh.zikey.com.daryadelan.MainActivity;
 import daryadelan.sandogh.zikey.com.daryadelan.R;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FileAddressGenerator;
@@ -148,7 +146,7 @@ public class DownloaderFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        setStyle(android.support.v4.app.DialogFragment.STYLE_NO_FRAME,
+        setStyle(androidx.fragment.app.DialogFragment.STYLE_NO_FRAME,
                 android.R.style.Theme_Black_NoTitleBar);
         super.onCreate(savedInstanceState);
     }

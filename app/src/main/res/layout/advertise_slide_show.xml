@@ -7,14 +7,14 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite">
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">
-    </android.support.v4.view.ViewPager>
+    </androidx.viewpager.widget.ViewPager>
 
 
     <daryadelan.sandogh.zikey.com.daryadelan.customview.Indicator

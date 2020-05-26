@@ -2,13 +2,9 @@ package daryadelan.sandogh.zikey.com.daryadelan.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-
-import com.razanpardazesh.razanlibs.CustomView.DialogBuilder;
+import androidx.appcompat.app.AppCompatActivity;
 
 import daryadelan.sandogh.zikey.com.daryadelan.BuildConfig;
-import daryadelan.sandogh.zikey.com.daryadelan.R;
 
 
 /**
@@ -30,6 +26,8 @@ public class SessionManagement {
     private final String KEY_ADVERTISE_4_URI = "ADVERTISE_4_URI";
     private final String KEY_ADVERTISE_5 = "ADVERTISE_5";
     private final String KEY_ADVERTISE_5_URI = "ADVERTISE_5_URI";
+
+    private final String KEY_IS_USER_LOGGED_IN_BEFORE = "IS_USER_LOGGED_IN_BEFORE";
 
 
 
@@ -199,6 +197,23 @@ public class SessionManagement {
             return;
 
         this.preferences.edit().putString(KEY_ADVERTISE_5_URI, url).commit();
+    }
+
+
+    public int getIsUserLoggedInBefore() {
+
+        if (this.preferences == null)
+            return 0;
+
+        return this.preferences.getInt(KEY_IS_USER_LOGGED_IN_BEFORE, 0);
+    }
+
+    public void setIsUserLoggedInBefore(int isUserLoggedInBefore) {
+        if (this.preferences == null)
+            return;
+
+        this.preferences.edit().putInt(KEY_IS_USER_LOGGED_IN_BEFORE, 1).apply();
+        this.preferences.edit().putInt(KEY_IS_USER_LOGGED_IN_BEFORE, 1).commit();
     }
 
 

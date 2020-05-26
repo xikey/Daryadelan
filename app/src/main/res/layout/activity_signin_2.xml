@@ -124,7 +124,7 @@
 
         </ScrollView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/crdContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -158,6 +158,8 @@
                             android:padding="5dp"
                             android:src="@drawable/ic_cyrcle_user" />
 
+
+
                         <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
                             android:id="@+id/spin_kit"
                             style="@style/SpinKitView.Small.Circle"
@@ -170,6 +172,17 @@
 
 
                     </RelativeLayout>
+
+                    <TextView
+                        android:alpha="0.5"
+                        android:layout_centerInParent="true"
+                        android:textSize="@dimen/very_small_8"
+                        android:gravity="center"
+                        android:textColor="@color/colorBlack"
+                        android:id="@+id/txtVersion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
 
 
                     <RelativeLayout
@@ -266,7 +279,7 @@
                         android:orientation="vertical"
                         android:paddingBottom="10dp">
 
-                        <android.support.v7.widget.CardView
+                        <androidx.cardview.widget.CardView
                             android:id="@+id/lySendSMS"
                             android:layout_width="wrap_content"
                             android:layout_height="55dp"
@@ -289,10 +302,10 @@
                                 android:text="@string/send_sms"
                                 android:textColor="@color/colorBlack"
                                 android:textSize="@dimen/very_small_10" />
-                        </android.support.v7.widget.CardView>
+                        </androidx.cardview.widget.CardView>
 
 
-                        <android.support.v7.widget.CardView
+                        <androidx.cardview.widget.CardView
                             android:id="@+id/lyLogin"
                             android:layout_width="wrap_content"
                             android:layout_height="55dp"
@@ -315,7 +328,7 @@
                                 android:text="@string/login_member"
                                 android:textColor="@color/colorBlack"
                                 android:textSize="@dimen/very_small_10" />
-                        </android.support.v7.widget.CardView>
+                        </androidx.cardview.widget.CardView>
 
 
                     </LinearLayout>
@@ -325,7 +338,7 @@
             </ScrollView>
 
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
 
     </RelativeLayout>

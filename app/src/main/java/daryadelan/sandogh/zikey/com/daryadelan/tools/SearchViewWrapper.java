@@ -2,9 +2,9 @@ package daryadelan.sandogh.zikey.com.daryadelan.tools;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 

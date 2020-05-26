@@ -2,15 +2,14 @@ package daryadelan.sandogh.zikey.com.daryadelan;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.res.ResourcesCompat;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
+import androidx.core.content.res.ResourcesCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,7 +89,7 @@ public class SMSvalidationDialogFullScreen extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        setStyle(android.support.v4.app.DialogFragment.STYLE_NO_FRAME,
+        setStyle(androidx.fragment.app.DialogFragment.STYLE_NO_FRAME,
                 android.R.style.Theme_Black_NoTitleBar);
         super.onCreate(savedInstanceState);
     }

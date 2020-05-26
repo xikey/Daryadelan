@@ -4,13 +4,12 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.BounceInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView txtUserName;
     private TextView txtPassword;
+    private TextView txtVersion;
     private CardView lyAction;
     private CardView lySignin;
     private LinearLayout lyProgress;
@@ -253,6 +252,9 @@ public class LoginActivity extends AppCompatActivity {
         lySignin = (CardView) findViewById(R.id.lySignin);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
         crdContainer = (CardView) findViewById(R.id.crdContainer);
+        txtVersion = (TextView) findViewById(R.id.txtVersion);
+
+        txtVersion.setText("Version: "+BuildConfig.VERSION_NAME);
 
         try {
             FontChanger.applyMainFont(findViewById(R.id.lyContent));

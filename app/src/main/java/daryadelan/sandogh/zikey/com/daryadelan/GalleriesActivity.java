@@ -1,16 +1,14 @@
 package daryadelan.sandogh.zikey.com.daryadelan;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
+import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +19,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
-import daryadelan.sandogh.zikey.com.daryadelan.model.News;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Photo;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.PhotosWrapper;
-import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IAdvertise;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IPhotos;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.PhotosServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
