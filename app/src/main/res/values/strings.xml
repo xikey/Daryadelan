@@ -87,6 +87,7 @@
     <string name="title_activity_confirmed_camp_history">ConfirmedCampHistoryActivity</string>
     <string name="add_new_request">افزودن درخواست جدید</string>
     <string name="sandogh_full_name">صندوق بازنشستگی و وظیفه مستخدمین سازمان بنادر و دریانوردی</string>
+    <string name="title_activity_conversation_header">ConversationHeaderActivity</string>
 
 
 </resources>

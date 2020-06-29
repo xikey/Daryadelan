@@ -18,14 +18,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ConversationHeaderActivity"
+            android:label="@string/title_activity_conversation_header"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".ZikeySplashActivity"
             android:theme="@style/Transparent">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ConfirmedCampHistoryActivity"
@@ -38,9 +41,7 @@
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".LoginGuestActivity"
             android:theme="@style/AppTheme.NoActionBar"
