@@ -12,6 +12,7 @@ import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -19,6 +20,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -42,6 +44,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import daryadelan.sandogh.zikey.com.daryadelan.broadcasts.SMSBroadcastReceiver;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
+import daryadelan.sandogh.zikey.com.daryadelan.model.SessionManagement;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IUser;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.UserServerRepo;
@@ -143,24 +146,42 @@ public class SigninActivity extends AppCompatActivity {
                     finish();
                 } else {
 
-                    setContentView(R.layout.activity_signin_2);
-                    initViews();
-                    initHeaderSize();
-                    initListeners();
-                    hideKeyBoard();
-                    clearSession();
+                    //خواسته شد پس از اولین بار لاگین دیگر هرگز این صفحه پیش فرض باز نشود
+                    if (SessionManagement.getInstance(getApplicationContext()).getIsUserLoggedInBefore() == 1) {
+                        LoginActivity.start(SigninActivity.this);
+                        finish();
+                    } else {
+
+                        setContentView(R.layout.activity_signin_2);
+                        initViews();
+                        initHeaderSize();
+                        initListeners();
+                        hideKeyBoard();
+                        clearSession();
+                    }
+
 
                 }
             }
 
             @Override
             public void onError(Throwable error) {
-                setContentView(R.layout.activity_signin_2);
-                initViews();
-                initHeaderSize();
-                initListeners();
-                hideKeyBoard();
-                clearSession();
+
+                //خواسته شد پس از اولین بار لاگین دیگر هرگز این صفحه پیش فرض باز نشود
+                if (SessionManagement.getInstance(getApplicationContext()).getIsUserLoggedInBefore() == 1&&!mustClearDB) {
+                    LoginActivity.start(SigninActivity.this);
+                    finish();
+                }
+                else {
+                    setContentView(R.layout.activity_signin_2);
+                    initViews();
+                    initHeaderSize();
+                    initListeners();
+                    hideKeyBoard();
+                    clearSession();
+                }
+
+
 
             }
 
@@ -378,7 +399,6 @@ public class SigninActivity extends AppCompatActivity {
             return;
 
 
-
         DeviceHelper deviceHelper = new DeviceHelper();
         final User user = new User();
 
@@ -541,8 +561,8 @@ public class SigninActivity extends AppCompatActivity {
         lyPersonelCode = (CardView) findViewById(R.id.lyPersonelCode);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
         crdContainer = (CardView) findViewById(R.id.crdContainer);
-        txtVersion=findViewById(R.id.txtVersion);
-        txtVersion.setText("Version: "+BuildConfig.VERSION_NAME);
+        txtVersion = findViewById(R.id.txtVersion);
+        txtVersion.setText("Version: " + BuildConfig.VERSION_NAME);
 //        swIAmGuest = (Switch) findViewById(R.id.swIAmGuest);
 
 

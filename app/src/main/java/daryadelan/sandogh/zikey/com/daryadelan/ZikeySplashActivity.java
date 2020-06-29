@@ -37,7 +37,7 @@ public class ZikeySplashActivity extends AppCompatActivity {
     }
 
     private void initUserLoggedinHistory() {
-        isUserLoggedinBefore   = SessionManagement.getInstance(getApplicationContext()).getIsUserLoggedInBefore();
+        isUserLoggedinBefore = SessionManagement.getInstance(getApplicationContext()).getIsUserLoggedInBefore();
     }
 
     //جهت تعیین زمان نمایش صفحه خوشامدگویی
@@ -47,11 +47,8 @@ public class ZikeySplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (isUserLoggedinBefore == 0)
-                    SigninActivity.start(ZikeySplashActivity.this);
-                else {
-                    LoginActivity.start(ZikeySplashActivity.this);
-                }
+
+                SigninActivity.start(ZikeySplashActivity.this);
                 finish();
 
             }

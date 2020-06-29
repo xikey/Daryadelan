@@ -35,6 +35,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
@@ -391,6 +393,8 @@ public class PayrollFooterActivity extends AppCompatActivity {
 
 
     private void MappingDate(ArrayList<Payroll> inputs) {
+
+        Collections.sort(inputs,Sorting);
 
         ArrayList<Payroll> payrolls = new ArrayList<>();
         ArrayList<Payroll> negativePayroll = new ArrayList<>();
@@ -778,5 +782,21 @@ public class PayrollFooterActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    public  Comparator<Payroll> Sorting = new Comparator<Payroll>() {
+
+        public int compare(Payroll pay1, Payroll pay2) {
+
+            int rollno1 = (int) pay1.getDescCode();
+            int rollno2 = (int) pay2.getDescCode();
+
+            /*For ascending order*/
+            return rollno1-rollno2;
+
+            /*For descending order*/
+            //rollno2-rollno1;
+        }};
+
 
 }
