@@ -20,7 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
+import daryadelan.sandogh.zikey.com.daryadelan.model.CampReseption;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Conversation;
+import daryadelan.sandogh.zikey.com.daryadelan.model.ConversationTopic;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IConversation;
@@ -54,8 +56,36 @@ public class ConversationHeaderActivity extends AppCompatActivity {
         initViews();
         initRecycleView();
         getData();
+        initListeners();
 
 
+    }
+
+    private void initListeners() {
+
+        if (crdNewConversation != null)
+            crdNewConversation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    NewConversationFragment.Show(ConversationHeaderActivity.this, new NewConversationFragment.ISaveForm() {
+                        @Override
+                        public void onSaveForm(ConversationTopic conversationTopic) {
+
+                        }
+
+                        @Override
+                        public void onEdit(ConversationTopic conversationTopic, int pos) {
+
+                        }
+
+                        @Override
+                        public void onRemove(int pos) {
+
+                        }
+                    }, user);
+                }
+            });
     }
 
     private void getData() {

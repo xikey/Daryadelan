@@ -4,6 +4,7 @@ import android.content.Context;
 
 import daryadelan.sandogh.zikey.com.daryadelan.model.ConversationTopic;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampsWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationTopicWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.apiClient.ServerApiClient;
@@ -18,6 +19,7 @@ import retrofit2.Response;
 public class ConversationServerRepo implements IConversation {
 
     Call<ConversationWrapper> call;
+    Call<ConversationTopicWrapper> topicCall;
 
     @Override
     public void getAllConversationsTopics(Context context, String tokenType, String token, IRepoCallBack<ConversationWrapper> callBack) {
@@ -61,7 +63,37 @@ public class ConversationServerRepo implements IConversation {
     }
 
     @Override
-    public void insertConversationTopic(Context context, String tokenType, String token, ConversationTopic conversationTopic, IRepoCallBack<ServerWrapper> callBack) {
+    public void insertConversationTopic(Context context, String tokenType, String token, ConversationTopic conversationTopic, IRepoCallBack<ConversationTopicWrapper> callBack) {
+
+        IConversationApi campApi = ServerApiClient.getClientWithHeader(context, tokenType, token).create(IConversationApi.class);
+        topicCall = campApi.insertConversation(conversationTopic);
+        topicCall.enqueue(new Callback<ConversationTopicWrapper>() {
+            @Override
+            public void onResponse(Call<ConversationTopicWrapper> call, Response<ConversationTopicWrapper> response) {
+
+                if (response == null) {
+                    callBack.onError(new Throwable("خطا در ثبت اطلاعات"));
+                    return;
+                }
+
+                if (response.body() == null) {
+                    callBack.onError(new Throwable("خطا در ثبت اطلاعات"));
+                    return;
+                }
+
+                if (response.body().getData() == 0) {
+                    callBack.onError(new Throwable("خطا در ثبت اطلاعات"));
+                    return;
+                }
+
+                callBack.onAnswer(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ConversationTopicWrapper> call, Throwable throwable) {
+                callBack.onError(new Throwable("خطا در ثبت اطلاعات"));
+            }
+        });
 
     }
 }
