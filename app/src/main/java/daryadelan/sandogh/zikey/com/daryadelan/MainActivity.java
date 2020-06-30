@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity
     private CardView crdGallery;
     private CardView crdCamps;
     private CardView crdRequestsList;
+    private CardView crdNewConversation;
 
     private LinearLayout lyRowOne;
 
@@ -504,7 +505,12 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
+        crdNewConversation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ConversationHeaderActivity.start(MainActivity.this);
+            }
+        });
 
     }
 
@@ -513,6 +519,7 @@ public class MainActivity extends AppCompatActivity
         lyAhkam = (CardView) findViewById(R.id.lyAhkam);
         crdNews = (CardView) findViewById(R.id.crdNews);
         crdGallery = (CardView) findViewById(R.id.crdGallery);
+        crdNewConversation = (CardView) findViewById(R.id.crdNewConversation);
 
         txtUserType = (TextView) findViewById(R.id.txtUserType);
         txtUserName = (TextView) findViewById(R.id.txtUserName);

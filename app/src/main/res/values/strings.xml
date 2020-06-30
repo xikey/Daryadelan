@@ -74,6 +74,7 @@
     <string name="photo_album">آلبوم تصاویر</string>
     <string name="news">اخبار و اطلاعیه ها</string>
     <string name="camps">هتل ها و مکان های اقامتی</string>
+    <string name="connect_to_sandogh">ارتباط با صندوق</string>
     <string name="title_activity_camps">هتل ها و مکان های اقامتی</string>
     <string name="title_activity_camp">CampActivity</string>
     <string name="title_activity_camps_requests_history">درخواست های ثبت شده</string>
@@ -87,7 +88,7 @@
     <string name="title_activity_confirmed_camp_history">ConfirmedCampHistoryActivity</string>
     <string name="add_new_request">افزودن درخواست جدید</string>
     <string name="sandogh_full_name">صندوق بازنشستگی و وظیفه مستخدمین سازمان بنادر و دریانوردی</string>
-    <string name="title_activity_conversation_header">ConversationHeaderActivity</string>
+    <string name="title_activity_conversation_header">مدیریت پیام ها</string>
 
 
 </resources>

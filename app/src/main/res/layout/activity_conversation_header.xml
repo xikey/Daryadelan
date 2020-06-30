@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layoutDirection="rtl"
     android:layout_height="match_parent"
+    android:layoutDirection="rtl"
     tools:context=".ConversationHeaderActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layoutDirection="rtl"
         android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
@@ -24,12 +24,47 @@
 
     <include layout="@layout/content_conversation_header" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
+        android:id="@+id/crdNewConversation"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/colorAccent"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="11dp"
+        app:cardUseCompatPadding="false">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:alpha="0.8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:textColor="@color/colorBlack"
+                android:paddingRight="20dp"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@drawable/ic_baseline_mail_outline_24"
+                android:paddingBottom="10dp"
+                android:text="پیام/سوال جدید"
+                android:textSize="@dimen/small_font_size">
+
+            </TextView>
+
+
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
