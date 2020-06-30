@@ -3,10 +3,13 @@ package daryadelan.sandogh.zikey.com.daryadelan.tools;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.CountDownTimer;
+
 import com.google.android.material.snackbar.Snackbar;
+
 import androidx.fragment.app.FragmentActivity;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +25,7 @@ import com.razanpardazesh.razanlibs.Tools.FontApplier;
 
 import daryadelan.sandogh.zikey.com.daryadelan.R;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
+import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomFullscreenLoader;
 import daryadelan.sandogh.zikey.com.daryadelan.customview.DownloaderFragment;
 
 
@@ -382,9 +386,15 @@ public class CustomDialogBuilder {
 
     }
 
+    public CustomFullscreenLoader loader(AppCompatActivity context) {
+
+        return CustomFullscreenLoader.Show(context);
+
+    }
+
     public CustomAlertDialog showYesNOCustomAlert_HTML(AppCompatActivity context, String title, String question, String submitText, String cancelText, CustomAlertDialog.OnActionClickListener yesAction, CustomAlertDialog.OnCancelClickListener noAction) {
 
-        return CustomAlertDialog.Show(context,true, title, question, submitText, cancelText, yesAction, noAction);
+        return CustomAlertDialog.Show(context, true, title, question, submitText, cancelText, yesAction, noAction);
 
     }
 
@@ -469,12 +479,11 @@ public class CustomDialogBuilder {
     }
 
 
-    public DownloaderFragment showProgressDialog(FragmentActivity act, String title, String url, String filePath, String fileName, String fileExtension, boolean installAPK , DownloaderFragment.OnCancelClickListener onCancelClickListener) {
+    public DownloaderFragment showProgressDialog(FragmentActivity act, String title, String url, String filePath, String fileName, String fileExtension, boolean installAPK, DownloaderFragment.OnCancelClickListener onCancelClickListener) {
 
         return DownloaderFragment.Show(act, title, "دریافت اطلاعات", null, url, filePath, fileName, fileExtension, installAPK, onCancelClickListener);
 
     }
-
 
 
     public interface OnDialogListener {

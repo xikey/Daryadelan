@@ -22,10 +22,10 @@ public class ConversationServerRepo implements IConversation {
     Call<ConversationTopicWrapper> topicCall;
 
     @Override
-    public void getAllConversationsTopics(Context context, String tokenType, String token, IRepoCallBack<ConversationWrapper> callBack) {
+    public void getAllConversationsTopics(Context context, String tokenType, String token,int page, IRepoCallBack<ConversationWrapper> callBack) {
 
         IConversationApi campApi = ServerApiClient.getClientWithHeader(context, tokenType, token).create(IConversationApi.class);
-        call = campApi.getConversation();
+        call = campApi.getConversation(page);
         call.enqueue(new Callback<ConversationWrapper>() {
             @Override
             public void onResponse(Call<ConversationWrapper> call, Response<ConversationWrapper> response) {

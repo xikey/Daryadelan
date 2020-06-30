@@ -11,9 +11,9 @@ import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 
 public interface IConversation {
 
-    void getAllConversationsTopics(Context context, String tokenType, String token, IRepoCallBack<ConversationWrapper> callBack);
+    void getAllConversationsTopics(Context context, String tokenType, String token,int page, IRepoCallBack<ConversationWrapper> callBack);
 
-    void insertConversationTopic(Context context, String tokenType, String token, ConversationTopic conversationTopic, IRepoCallBack<ConversationTopicWrapper> callBack);
+    void insertConversationTopic(Context context, String tokenType, String token, ConversationTopic conversationTopic,  IRepoCallBack<ConversationTopicWrapper> callBack);
 
 
 }

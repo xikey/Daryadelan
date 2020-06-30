@@ -10,11 +10,12 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface IConversationApi {
 
     @GET("api/Conversation/getConversation")
-    Call<ConversationWrapper> getConversation();
+    Call<ConversationWrapper> getConversation(@Query("page") int page);
 
     @POST("api/Conversation/insertConversation")
     Call<ConversationTopicWrapper> insertConversation(@Body ConversationTopic conversationTopic);

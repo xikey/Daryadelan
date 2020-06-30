@@ -43,6 +43,8 @@ public class ConversationHeaderActivity extends AppCompatActivity {
     private User user;
     private ImageView imgBackground;
     private CardView crdNewConversation;
+    private int page=0;
+    private int hasMore = 0;
 
 
     @Override
@@ -98,15 +100,28 @@ public class ConversationHeaderActivity extends AppCompatActivity {
         if (conversationRepo == null)
             return;
 
+        if (page==0)
         lyProgress.setVisibility(View.VISIBLE);
 
-        conversationRepo.getAllConversationsTopics(getApplicationContext(), user.getTokenType(), user.getToken(), new IRepoCallBack<ConversationWrapper>() {
+        conversationRepo.getAllConversationsTopics(getApplicationContext(), user.getTokenType(), user.getToken(),page, new IRepoCallBack<ConversationWrapper>() {
             @Override
             public void onAnswer(ConversationWrapper answer) {
                 lyProgress.setVisibility(View.GONE);
                 if (answer != null && answer.getData() != null && answer.getData().size() != 0) {
+
+                    if (answer.getData().size()<10){
+                        hasMore=0;
+
+                    }else {
+                        hasMore=1;
+                    }
+
                     adapter.setItems(answer.getData());
+
+
+
                 } else {
+                    if (page==0)
                     Toasty.info(ConversationHeaderActivity.this, "گفتگویی ایجاد نشده است، جهت ثبت گفتگوی جدید دکمه زیر صفحه را لمس نمایید").show();
                 }
             }
@@ -114,6 +129,7 @@ public class ConversationHeaderActivity extends AppCompatActivity {
             @Override
             public void onError(Throwable error) {
                 lyProgress.setVisibility(View.GONE);
+                if (page==0)
                 Toasty.info(ConversationHeaderActivity.this, "گفتگویی ایجاد نشده است، جهت ثبت گفتگوی جدید دکمه زیر صفحه را لمس نمایید").show();
             }
 
@@ -160,6 +176,30 @@ public class ConversationHeaderActivity extends AppCompatActivity {
 
         rvItem.setLayoutManager(new LinearLayoutManager(ConversationHeaderActivity.this, LinearLayoutManager.VERTICAL, false));
         rvItem.setAdapter(adapter);
+
+        rvItem.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (hasMore == 0)
+                    return;
+
+                if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+                    LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    int pos = layoutManager.findLastVisibleItemPosition();
+                    if (adapter!=null){
+                        if (adapter.getItemCount()-1==pos){
+                            page++;
+                            getData();
+                        }
+
+                    }
+                }
+
+            }
+        });
+
 
 
     }

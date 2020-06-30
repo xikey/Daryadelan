@@ -28,6 +28,7 @@ import com.razanpardazesh.razanlibs.CustomView.DialogBuilder;
 import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
+import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomFullscreenLoader;
 import daryadelan.sandogh.zikey.com.daryadelan.model.CampReseption;
 import daryadelan.sandogh.zikey.com.daryadelan.model.ConversationTopic;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
@@ -69,7 +70,6 @@ public class NewConversationFragment extends DialogFragment {
     private ConversationTopic conversationTopic;
     private int position;
 
-    private LinearLayout lyProgress;
 
     private boolean editMode;
     int selectedRelationPos = -1;
@@ -213,7 +213,6 @@ public class NewConversationFragment extends DialogFragment {
         crdSaveFrom = root.findViewById(R.id.crdSaveFrom);
         crdDelete = root.findViewById(R.id.crdRemove);
 
-        lyProgress = (LinearLayout) root.findViewById(R.id.lyProgress);
 
         tlb.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -344,14 +343,16 @@ public class NewConversationFragment extends DialogFragment {
         if (conversationTopic == null)
             return;
 
-        lyProgress.setVisibility(View.VISIBLE);
+        CustomFullscreenLoader customFullscreenLoader = new CustomDialogBuilder().loader((AppCompatActivity) getActivity());
 
 
         conversationRepo.insertConversationTopic(getActivity().getApplicationContext(), user.getTokenType(), user.getToken(), conversationTopic, new IRepoCallBack<ConversationTopicWrapper>() {
             @Override
             public void onAnswer(ConversationTopicWrapper answer) {
 
-                lyProgress.setVisibility(View.GONE);
+                if (customFullscreenLoader!=null)
+                    customFullscreenLoader.dismiss();
+
                 if (answer != null && answer.getData() != 0) {
                     Toasty.success((AppCompatActivity) getActivity(), "پیام شما با موفقیت ارسال شد").show();
                     if (iSaveForm != null)
@@ -365,7 +366,8 @@ public class NewConversationFragment extends DialogFragment {
 
             @Override
             public void onError(Throwable error) {
-                lyProgress.setVisibility(View.GONE);
+                if (customFullscreenLoader!=null)
+                    customFullscreenLoader.dismiss();
                 Toasty.success((AppCompatActivity) getActivity(), "خطا در ارسال اطلاعات، لطفا مجددا تلاش نمایید").show();
             }
 

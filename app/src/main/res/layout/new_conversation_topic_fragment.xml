@@ -10,6 +10,8 @@
     android:orientation="vertical"
     app:theme="@style/AppTheme">
 
+    <include layout="@layout/layout_progress_match_parent"/>
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -214,6 +216,6 @@
     </androidx.cardview.widget.CardView>
 
 
-    <include layout="@layout/layout_progress_match_parent"/>
+
 
 </RelativeLayout>
