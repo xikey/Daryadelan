@@ -39,6 +39,7 @@ public class ConversationHeaderActivity extends AppCompatActivity {
     private RecyclerView rvItem;
     private ItemAdapter adapter;
     private LinearLayout lyProgress;
+    private LinearLayout lyBottomProgress;
     private IConversation conversationRepo;
     private User user;
     private ImageView imgBackground;
@@ -103,9 +104,14 @@ public class ConversationHeaderActivity extends AppCompatActivity {
         if (page==0)
         lyProgress.setVisibility(View.VISIBLE);
 
+        lyBottomProgress.setVisibility(View.VISIBLE);
+
         conversationRepo.getAllConversationsTopics(getApplicationContext(), user.getTokenType(), user.getToken(),page, new IRepoCallBack<ConversationWrapper>() {
             @Override
             public void onAnswer(ConversationWrapper answer) {
+
+                lyBottomProgress.setVisibility(View.GONE);
+
                 lyProgress.setVisibility(View.GONE);
                 if (answer != null && answer.getData() != null && answer.getData().size() != 0) {
 
@@ -128,6 +134,7 @@ public class ConversationHeaderActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable error) {
+                lyBottomProgress.setVisibility(View.GONE);
                 lyProgress.setVisibility(View.GONE);
                 if (page==0)
                 Toasty.info(ConversationHeaderActivity.this, "گفتگویی ایجاد نشده است، جهت ثبت گفتگوی جدید دکمه زیر صفحه را لمس نمایید").show();
@@ -151,6 +158,7 @@ public class ConversationHeaderActivity extends AppCompatActivity {
 
         rvItem = (RecyclerView) findViewById(R.id.rvItem);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
+        lyBottomProgress = (LinearLayout) findViewById(R.id.lyBottomProgress);
         lyProgress.setVisibility(View.VISIBLE);
         imgBackground = findViewById(R.id.imgBackground);
         crdNewConversation = findViewById(R.id.crdNewConversation);
