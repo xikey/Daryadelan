@@ -24,6 +24,7 @@ public class Conversation {
     private String modifyDate;
 
 
+
     public long getConversationID() {
         return conversationID;
     }

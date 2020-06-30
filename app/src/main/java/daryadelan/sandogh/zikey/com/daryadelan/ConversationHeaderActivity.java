@@ -197,6 +197,9 @@ public class ConversationHeaderActivity extends AppCompatActivity {
 
                 Conversation conversation = items.get(position);
                 holder.txtSubject.setText(conversation.getSubject());
+//                holder.txtMessage.setText(conversation.get);
+                holder.txtState.setText(conversation.getStatusPersianName());
+                holder.txtDate.setText(conversation.getCreateDate());
 
             } catch (Exception ex) {
                 LogWrapper.loge("ItemAdapter_onBindViewHolder_Exception: ", ex);
