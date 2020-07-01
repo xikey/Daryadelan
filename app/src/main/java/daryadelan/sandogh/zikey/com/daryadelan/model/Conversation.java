@@ -4,8 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper;
-
 public class Conversation {
 
     @SerializedName("cid")
@@ -24,7 +22,7 @@ public class Conversation {
     private String createDate;
     @SerializedName("modf")
     private String modifyDate;
-    @SerializedName("modf")
+    @SerializedName("mess")
     private ArrayList<Message> messages;
 
 

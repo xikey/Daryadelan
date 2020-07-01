@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Conversation;
 import daryadelan.sandogh.zikey.com.daryadelan.model.ConversationTopic;
+import daryadelan.sandogh.zikey.com.daryadelan.model.Message;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IConversation;
@@ -43,6 +44,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
     private static int TYPE_SEND = 1;
     private static int TYPE_RECEIVE = 2;
 
+    private long headerID;
     private RecyclerView rvItem;
     private ItemAdapter adapter;
     private LinearLayout lyProgress;
@@ -59,6 +61,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_conversation_footer);
 
         initRepo();
+        parseIntent();
         initToolbar();
         getUserData();
         initViews();
@@ -66,6 +69,12 @@ public class ConversationFooterActivity extends AppCompatActivity {
         getData();
         initListeners();
 
+    }
+
+    private void parseIntent() {
+        Intent data = getIntent();
+        if (data.hasExtra(KEY_HEADER_ID))
+            headerID = data.getLongExtra(KEY_HEADER_ID, 0);
     }
 
     public static void start(Context context, long messageID) {
@@ -93,7 +102,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
 
         lyBottomProgress.setVisibility(View.VISIBLE);
 
-        conversationRepo.getAllConversationsTopics(getApplicationContext(), user.getTokenType(), user.getToken(), page, new IRepoCallBack<ConversationWrapper>() {
+        conversationRepo.getAllConversationsByID(getApplicationContext(), user.getTokenType(), user.getToken(), headerID, new IRepoCallBack<ConversationWrapper>() {
             @Override
             public void onAnswer(ConversationWrapper answer) {
 
@@ -109,7 +118,12 @@ public class ConversationFooterActivity extends AppCompatActivity {
                         hasMore = 1;
                     }
 
-                    adapter.setItems(answer.getData());
+                    try {
+                        adapter.setItems(answer.getData().get(0).getMessages());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
 
 
                 } else {
@@ -211,9 +225,9 @@ public class ConversationFooterActivity extends AppCompatActivity {
 
     class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        private ArrayList<Conversation> items;
+        private ArrayList<Message> items;
 
-        public void setItems(ArrayList<Conversation> in) {
+        public void setItems(ArrayList<Message> in) {
             if (items == null)
                 items = new ArrayList<>();
             items.addAll(in);
@@ -272,9 +286,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
         @Override
         public int getItemCount() {
 
-            return 50;
-
-          //  return (items == null || items.size() == 0) ? 0 : items.size();
+            return (items == null || items.size() == 0) ? 0 : items.size();
 
         }
 

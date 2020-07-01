@@ -63,6 +63,45 @@ public class ConversationServerRepo implements IConversation {
     }
 
     @Override
+    public void getAllConversationsByID(Context context, String tokenType, String token, long id, IRepoCallBack<ConversationWrapper> callBack) {
+        IConversationApi campApi = ServerApiClient.getClientWithHeader(context, tokenType, token).create(IConversationApi.class);
+        call = campApi.getConversationById(id);
+        call.enqueue(new Callback<ConversationWrapper>() {
+            @Override
+            public void onResponse(Call<ConversationWrapper> call, Response<ConversationWrapper> response) {
+
+                if (response == null) {
+                    callBack.onError(new Throwable("RP ERR 101  خطا در دریافت اطلاعات"));
+                    return;
+                }
+
+                if (response.body() == null) {
+                    callBack.onError(new Throwable("اطلاعات جهت نمایش وجود ندارد"));
+                    return;
+                }
+
+                if (response.body().getResultId() < 0) {
+                    callBack.onError(new Throwable(response.body().getMessagee()));
+                    return;
+                }
+
+                if (response.body().getData() == null || response.body().getData().size() == 0) {
+                    callBack.onError(new Throwable("اطلاعات جهت نمایش وجود ندارد"));
+                    return;
+                }
+
+                callBack.onAnswer(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ConversationWrapper> call, Throwable throwable) {
+                callBack.onError(new Throwable("خطا در دریافت اطلاعات، لطفا مجددا تلاش نمایید."));
+                return;
+            }
+        });
+    }
+
+    @Override
     public void insertConversationTopic(Context context, String tokenType, String token, ConversationTopic conversationTopic, IRepoCallBack<ConversationTopicWrapper> callBack) {
 
         IConversationApi campApi = ServerApiClient.getClientWithHeader(context, tokenType, token).create(IConversationApi.class);

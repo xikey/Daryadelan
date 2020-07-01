@@ -13,6 +13,8 @@ public interface IConversation {
 
     void getAllConversationsTopics(Context context, String tokenType, String token,int page, IRepoCallBack<ConversationWrapper> callBack);
 
+    void getAllConversationsByID(Context context, String tokenType, String token,long id, IRepoCallBack<ConversationWrapper> callBack);
+
     void insertConversationTopic(Context context, String tokenType, String token, ConversationTopic conversationTopic,  IRepoCallBack<ConversationTopicWrapper> callBack);
 
 
