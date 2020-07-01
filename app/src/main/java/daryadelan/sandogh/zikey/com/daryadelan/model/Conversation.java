@@ -2,6 +2,8 @@ package daryadelan.sandogh.zikey.com.daryadelan.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper;
 
 public class Conversation {
@@ -22,6 +24,8 @@ public class Conversation {
     private String createDate;
     @SerializedName("modf")
     private String modifyDate;
+    @SerializedName("modf")
+    private ArrayList<Message> messages;
 
 
 
@@ -89,4 +93,11 @@ public class Conversation {
         this.modifyDate = modifyDate;
     }
 
+    public ArrayList<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(ArrayList<Message> messages) {
+        this.messages = messages;
+    }
 }

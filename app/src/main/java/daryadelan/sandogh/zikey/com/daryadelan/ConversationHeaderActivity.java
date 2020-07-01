@@ -44,7 +44,7 @@ public class ConversationHeaderActivity extends AppCompatActivity {
     private User user;
     private ImageView imgBackground;
     private CardView crdNewConversation;
-    private int page=0;
+    private int page = 0;
     private int hasMore = 0;
 
 
@@ -101,12 +101,12 @@ public class ConversationHeaderActivity extends AppCompatActivity {
         if (conversationRepo == null)
             return;
 
-        if (page==0)
-        lyProgress.setVisibility(View.VISIBLE);
+        if (page == 0)
+            lyProgress.setVisibility(View.VISIBLE);
 
         lyBottomProgress.setVisibility(View.VISIBLE);
 
-        conversationRepo.getAllConversationsTopics(getApplicationContext(), user.getTokenType(), user.getToken(),page, new IRepoCallBack<ConversationWrapper>() {
+        conversationRepo.getAllConversationsTopics(getApplicationContext(), user.getTokenType(), user.getToken(), page, new IRepoCallBack<ConversationWrapper>() {
             @Override
             public void onAnswer(ConversationWrapper answer) {
 
@@ -115,20 +115,19 @@ public class ConversationHeaderActivity extends AppCompatActivity {
                 lyProgress.setVisibility(View.GONE);
                 if (answer != null && answer.getData() != null && answer.getData().size() != 0) {
 
-                    if (answer.getData().size()<10){
-                        hasMore=0;
+                    if (answer.getData().size() < 10) {
+                        hasMore = 0;
 
-                    }else {
-                        hasMore=1;
+                    } else {
+                        hasMore = 1;
                     }
 
                     adapter.setItems(answer.getData());
 
 
-
                 } else {
-                    if (page==0)
-                    Toasty.info(ConversationHeaderActivity.this, "گفتگویی ایجاد نشده است، جهت ثبت گفتگوی جدید دکمه زیر صفحه را لمس نمایید").show();
+                    if (page == 0)
+                        Toasty.info(ConversationHeaderActivity.this, "گفتگویی ایجاد نشده است، جهت ثبت گفتگوی جدید دکمه زیر صفحه را لمس نمایید").show();
                 }
             }
 
@@ -136,8 +135,8 @@ public class ConversationHeaderActivity extends AppCompatActivity {
             public void onError(Throwable error) {
                 lyBottomProgress.setVisibility(View.GONE);
                 lyProgress.setVisibility(View.GONE);
-                if (page==0)
-                Toasty.info(ConversationHeaderActivity.this, "گفتگویی ایجاد نشده است، جهت ثبت گفتگوی جدید دکمه زیر صفحه را لمس نمایید").show();
+                if (page == 0)
+                    Toasty.info(ConversationHeaderActivity.this, "گفتگویی ایجاد نشده است، جهت ثبت گفتگوی جدید دکمه زیر صفحه را لمس نمایید").show();
             }
 
             @Override
@@ -196,8 +195,8 @@ public class ConversationHeaderActivity extends AppCompatActivity {
                 if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
                     LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     int pos = layoutManager.findLastVisibleItemPosition();
-                    if (adapter!=null){
-                        if (adapter.getItemCount()-1==pos){
+                    if (adapter != null) {
+                        if (adapter.getItemCount() - 1 == pos) {
                             page++;
                             getData();
                         }
@@ -207,7 +206,6 @@ public class ConversationHeaderActivity extends AppCompatActivity {
 
             }
         });
-
 
 
     }
@@ -274,6 +272,7 @@ public class ConversationHeaderActivity extends AppCompatActivity {
 
 
                 Conversation conversation = items.get(position);
+                holder.conversation = conversation;
                 holder.txtSubject.setText(conversation.getSubject());
 //                holder.txtMessage.setText(conversation.get);
                 holder.txtState.setText(conversation.getStatusPersianName());
@@ -301,6 +300,8 @@ public class ConversationHeaderActivity extends AppCompatActivity {
             TextView txtDate;
             TextView txtState;
 
+            Conversation conversation;
+
 
             public ItemHolder(View v) {
                 super(v);
@@ -313,9 +314,19 @@ public class ConversationHeaderActivity extends AppCompatActivity {
                 lyRoot = v.findViewById(R.id.lyRoot);
                 FontChanger.applyMainFont(lyRoot);
 
+
+                lyRoot.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ConversationFooterActivity.start(ConversationHeaderActivity.this, conversation.getConversationID());
+                    }
+                });
+
             }
         }
     }
+
+
 
 
 }

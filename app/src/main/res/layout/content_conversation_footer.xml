@@ -3,15 +3,95 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:layoutDirection="rtl"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
+
     <LinearLayout
-        android:id="@+id/lyFooter"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:id="@+id/lyBottomProgress"
+        android:layout_height="70dp">
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/spin_kit"
+            style="@style/SpinKitView.Circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:SpinKit_Color="@color/colorAccent" />
 
     </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/rvItem"
+        android:paddingBottom="100dp"
+        android:clipToPadding="false"
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+    <include layout="@layout/layout_progress_match_parent"/>
+
+
+    <LinearLayout
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:id="@+id/lyFooter"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorGray"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:padding="1dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_send_message_multicolor"
+                android:layout_marginRight="5dp"
+                android:layout_width="50dp"
+                android:layout_height="match_parent" />
+
+            <EditText
+                android:padding="10dp"
+                android:hint="متن پیام"
+                android:textSize="@dimen/small_font_size"
+                android:textColor="@color/colorBlack"
+                android:background="@drawable/edittext_border_dark_circle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp" />
+
+
+    </LinearLayout>
+
 
 </RelativeLayout>

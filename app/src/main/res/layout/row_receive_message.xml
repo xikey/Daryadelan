@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:layoutDirection="rtl"
+    android:orientation="vertical">
+
+
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="100dp"
+            android:background="@drawable/message_receiver_bac_bubble"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:textSize="@dimen/small_font_size"
+                android:gravity="right"
+                android:padding="10dp"
+                android:text="ممنون شما خوب هستین ؟"
+                android:layout_width="match_parent"
+                android:textColor="@color/colorBlack"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+
+
+            <TextView
+                android:padding="10dp"
+                android:text="1399/04/02"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/very_small_8"
+                android:gravity="right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+
+        </LinearLayout>
+
+
+
+</LinearLayout>

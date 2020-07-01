@@ -44,5 +44,8 @@
     <color name="colorGradientCenter">#1565C0</color>
     <color name="colorGradientEnd">#FFC107</color>
 
+    <color name="colorSenderChatBack">#198afe</color>
+    <color name="colorReceiverChatBack">#E0E0E0</color>
+
 </resources>
 
