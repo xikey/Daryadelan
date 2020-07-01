@@ -18,9 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ConversationFooterActivity"
+            android:label="@string/title_activity_conversation_footer"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".ConversationHeaderActivity"
             android:label="@string/title_activity_conversation_header"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ZikeySplashActivity"
             android:theme="@style/Transparent">
@@ -41,7 +45,7 @@
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginGuestActivity"
             android:theme="@style/AppTheme.NoActionBar"
