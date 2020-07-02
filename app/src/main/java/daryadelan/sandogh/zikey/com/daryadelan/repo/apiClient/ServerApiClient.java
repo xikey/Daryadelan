@@ -14,6 +14,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * Created by Zikey on 03/06/2017.
@@ -72,6 +73,7 @@ public class ServerApiClient {
 
                 retrofitWithHeader = new Retrofit.Builder()
                         .baseUrl(BuildConfig.IPAddress)
+                        .addConverterFactory(ScalarsConverterFactory.create())
                         .addConverterFactory(GsonConverterFactory.create(new GsonBuilder() .setLenient() .create()))
                         .client(initHeader(context,tokenType,token).build())
                         .build();

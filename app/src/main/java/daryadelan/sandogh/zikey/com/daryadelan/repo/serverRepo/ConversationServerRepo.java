@@ -3,13 +3,11 @@ package daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo;
 import android.content.Context;
 
 import daryadelan.sandogh.zikey.com.daryadelan.model.ConversationTopic;
-import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampsWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.model.SendMessage;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationTopicWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationWrapper;
-import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.apiClient.ServerApiClient;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IConversation;
-import daryadelan.sandogh.zikey.com.daryadelan.repo.retrofitCalls.ICampApi;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.retrofitCalls.IConversationApi;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import retrofit2.Call;
@@ -22,7 +20,7 @@ public class ConversationServerRepo implements IConversation {
     Call<ConversationTopicWrapper> topicCall;
 
     @Override
-    public void getAllConversationsTopics(Context context, String tokenType, String token,int page, IRepoCallBack<ConversationWrapper> callBack) {
+    public void getAllConversationsTopics(Context context, String tokenType, String token, int page, IRepoCallBack<ConversationWrapper> callBack) {
 
         IConversationApi campApi = ServerApiClient.getClientWithHeader(context, tokenType, token).create(IConversationApi.class);
         call = campApi.getConversation(page);
@@ -105,6 +103,7 @@ public class ConversationServerRepo implements IConversation {
     public void insertConversationTopic(Context context, String tokenType, String token, ConversationTopic conversationTopic, IRepoCallBack<ConversationTopicWrapper> callBack) {
 
         IConversationApi campApi = ServerApiClient.getClientWithHeader(context, tokenType, token).create(IConversationApi.class);
+
         topicCall = campApi.insertConversation(conversationTopic);
         topicCall.enqueue(new Callback<ConversationTopicWrapper>() {
             @Override
@@ -130,6 +129,41 @@ public class ConversationServerRepo implements IConversation {
 
             @Override
             public void onFailure(Call<ConversationTopicWrapper> call, Throwable throwable) {
+                callBack.onError(new Throwable("خطا در ثبت اطلاعات"));
+            }
+        });
+
+    }
+
+    @Override
+    public void insertMessage(Context context, String tokenType, String token, String message, long conversationHeaderId, String file, IRepoCallBack<ConversationTopicWrapper> callBack) {
+
+        IConversationApi campApi = ServerApiClient.getClientWithHeader(context, tokenType, token).create(IConversationApi.class);
+        SendMessage msg = new SendMessage();
+        msg.setConversationId(conversationHeaderId);
+//        msg.setFilesData("0");
+       msg.setMessageText(message);
+        topicCall = campApi.insertMessage(msg);
+        topicCall.enqueue(new Callback<ConversationTopicWrapper>() {
+            @Override
+            public void onResponse(Call<ConversationTopicWrapper> call, Response<ConversationTopicWrapper> response) {
+
+                if (response == null) {
+                    callBack.onError(new Throwable("خطا در ثبت اطلاعات"));
+                    return;
+                }
+
+                if (response.body() == null) {
+                    callBack.onError(new Throwable("خطا در ثبت اطلاعات"));
+                    return;
+                }
+
+
+                callBack.onAnswer(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ConversationTopicWrapper> call, Throwable t) {
                 callBack.onError(new Throwable("خطا در ثبت اطلاعات"));
             }
         });

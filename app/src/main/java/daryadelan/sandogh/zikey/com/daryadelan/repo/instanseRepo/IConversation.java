@@ -17,5 +17,7 @@ public interface IConversation {
 
     void insertConversationTopic(Context context, String tokenType, String token, ConversationTopic conversationTopic,  IRepoCallBack<ConversationTopicWrapper> callBack);
 
+    void insertMessage(Context context, String tokenType, String token, String message,long conversationHeaderId,String file,  IRepoCallBack<ConversationTopicWrapper> callBack);
+
 
 }

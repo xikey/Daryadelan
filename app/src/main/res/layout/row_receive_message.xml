@@ -21,8 +21,8 @@
             <TextView
                 android:textSize="@dimen/small_font_size"
                 android:gravity="right"
+                android:id="@+id/txtMessage"
                 android:padding="10dp"
-                android:text="ممنون شما خوب هستین ؟"
                 android:layout_width="match_parent"
                 android:textColor="@color/colorBlack"
                 android:layout_height="wrap_content">
@@ -33,7 +33,7 @@
 
             <TextView
                 android:padding="10dp"
-                android:text="1399/04/02"
+                android:id="@+id/txtDate"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/very_small_8"
                 android:gravity="right"

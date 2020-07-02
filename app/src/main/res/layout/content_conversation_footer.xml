@@ -7,8 +7,6 @@
     android:layoutDirection="rtl"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-
     <LinearLayout
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
@@ -60,6 +58,7 @@
                 android:padding="1dp"
                 android:clickable="true"
                 android:focusable="true"
+                android:id="@+id/imgSend"
                 android:background="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_send_message_multicolor"
                 android:layout_marginRight="5dp"
@@ -70,6 +69,7 @@
                 android:padding="10dp"
                 android:hint="متن پیام"
                 android:textSize="@dimen/small_font_size"
+                android:id="@+id/edtMessage"
                 android:textColor="@color/colorBlack"
                 android:background="@drawable/edittext_border_dark_circle"
                 android:layout_width="0dp"

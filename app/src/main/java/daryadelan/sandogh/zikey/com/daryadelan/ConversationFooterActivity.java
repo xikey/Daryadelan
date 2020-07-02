@@ -1,5 +1,6 @@
 package daryadelan.sandogh.zikey.com.daryadelan;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,24 +14,29 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Conversation;
 import daryadelan.sandogh.zikey.com.daryadelan.model.ConversationTopic;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Message;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationTopicWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IConversation;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.ConversationServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
@@ -53,6 +59,8 @@ public class ConversationFooterActivity extends AppCompatActivity {
     private User user;
     private int page = 0;
     private int hasMore = 0;
+    private ImageView imgSend;
+    private EditText edtMessage;
 
 
     @Override
@@ -69,6 +77,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
         getData();
         initListeners();
 
+
     }
 
     private void parseIntent() {
@@ -84,6 +93,30 @@ public class ConversationFooterActivity extends AppCompatActivity {
     }
 
     private void initListeners() {
+        imgSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CustomDialogBuilder().showYesNOCustomAlert(ConversationFooterActivity.this, "ارسال پیام", "مایل به ارسال پیام میباشید؟", "ارسال",
+                        null, new CustomAlertDialog.OnActionClickListener() {
+                            @Override
+                            public void onClick(DialogFragment fragment) {
+                                fragment.dismiss();
+                                saveMessage();
+                            }
+                        }, null);
+            }
+        });
+    }
+
+    private void saveMessage() {
+
+        if (TextUtils.isEmpty(edtMessage.getText())) {
+            new CustomDialogBuilder().showAlert(ConversationFooterActivity.this, "متن پیام را وارد نمایید");
+            return;
+        }
+
+        insertFakeMessage();
+
 
     }
 
@@ -120,10 +153,9 @@ public class ConversationFooterActivity extends AppCompatActivity {
 
                     try {
                         adapter.setItems(answer.getData().get(0).getMessages());
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
-
 
 
                 } else {
@@ -158,7 +190,9 @@ public class ConversationFooterActivity extends AppCompatActivity {
 
         rvItem = (RecyclerView) findViewById(R.id.rvItem);
         lyProgress = (LinearLayout) findViewById(R.id.lyProgress);
+        imgSend = (ImageView) findViewById(R.id.imgSend);
         lyBottomProgress = (LinearLayout) findViewById(R.id.lyBottomProgress);
+        edtMessage = (EditText) findViewById(R.id.edtMessage);
         lyProgress.setVisibility(View.VISIBLE);
 
 
@@ -175,28 +209,28 @@ public class ConversationFooterActivity extends AppCompatActivity {
         rvItem.setLayoutManager(new LinearLayoutManager(ConversationFooterActivity.this, LinearLayoutManager.VERTICAL, false));
         rvItem.setAdapter(adapter);
 
-        rvItem.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (hasMore == 0)
-                    return;
-
-                if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
-                    LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                    int pos = layoutManager.findLastVisibleItemPosition();
-                    if (adapter != null) {
-                        if (adapter.getItemCount() - 1 == pos) {
-                            page++;
-                            getData();
-                        }
-
-                    }
-                }
-
-            }
-        });
+//        rvItem.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//
+//                if (hasMore == 0)
+//                    return;
+//
+//                if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+//                    LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+//                    int pos = layoutManager.findLastVisibleItemPosition();
+//                    if (adapter != null) {
+//                        if (adapter.getItemCount() - 1 == pos) {
+//                            page++;
+//                            getData();
+//                        }
+//
+//                    }
+//                }
+//
+//            }
+//        });
 
 
     }
@@ -240,6 +274,8 @@ public class ConversationFooterActivity extends AppCompatActivity {
             if (items != null)
                 items.clear();
 
+            items = null;
+
             notifyDataSetChanged();
         }
 
@@ -262,7 +298,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
 
         @Override
         public int getItemViewType(int position) {
-            if (position % 2 == 0)
+            if (items.get(position).isFromUser())
                 return TYPE_SEND;
             else return TYPE_RECEIVE;
         }
@@ -274,6 +310,11 @@ public class ConversationFooterActivity extends AppCompatActivity {
             try {
                 if (holder == null)
                     return;
+                Message message = items.get(position);
+                ItemHolder hld = (ItemHolder) holder;
+
+                hld.txtMessage.setText(message.getMessageText());
+                hld.txtDate.setText(message.getMessageCreateAt());
 
 
             } catch (Exception ex) {
@@ -293,10 +334,10 @@ public class ConversationFooterActivity extends AppCompatActivity {
         public class ItemHolder extends RecyclerView.ViewHolder {
 
             CardView lyRoot;
-            TextView txtSubject;
+
             TextView txtMessage;
             TextView txtDate;
-            TextView txtState;
+
 
             Conversation conversation;
 
@@ -304,10 +345,8 @@ public class ConversationFooterActivity extends AppCompatActivity {
             public ItemHolder(View v) {
                 super(v);
 
-                txtSubject = v.findViewById(R.id.txtSubject);
                 txtMessage = v.findViewById(R.id.txtMessage);
                 txtDate = v.findViewById(R.id.txtDate);
-                txtState = v.findViewById(R.id.txtState);
 
                 lyRoot = v.findViewById(R.id.lyRoot);
                 FontChanger.applyMainFont(lyRoot);
@@ -315,6 +354,36 @@ public class ConversationFooterActivity extends AppCompatActivity {
 
             }
         }
+    }
+
+    void insertFakeMessage() {
+
+        if (conversationRepo == null)
+            return;
+
+        conversationRepo.insertMessage(getApplicationContext(), user.getTokenType(), user.getToken(), edtMessage.getText().toString(), headerID, "0", new IRepoCallBack<ConversationTopicWrapper>() {
+            @Override
+            public void onAnswer(ConversationTopicWrapper answer) {
+                edtMessage.getText().clear();
+                adapter.clearAdapter();
+                getData();
+            }
+
+            @Override
+            public void onError(Throwable error) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onProgress(int p) {
+
+            }
+        });
     }
 
 

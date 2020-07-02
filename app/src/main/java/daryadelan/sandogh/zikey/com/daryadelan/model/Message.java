@@ -17,11 +17,12 @@ public class Message {
     @SerializedName("messtxt")
     private String messageText;
     @SerializedName("fus")
-    private boolean fus;
+    private boolean fromUser;
     @SerializedName("pmid")
-    private long pmid;
+    private long parentID;
     @SerializedName("rd")
     private boolean read;
+
 
     public long getMessageID() {
         return messageID;
@@ -71,20 +72,20 @@ public class Message {
         this.messageText = messageText;
     }
 
-    public boolean isFus() {
-        return fus;
+    public boolean isFromUser() {
+        return fromUser;
     }
 
-    public void setFus(boolean fus) {
-        this.fus = fus;
+    public void setFromUser(boolean fromUser) {
+        this.fromUser = fromUser;
     }
 
-    public long getPmid() {
-        return pmid;
+    public long getParentID() {
+        return parentID;
     }
 
-    public void setPmid(long pmid) {
-        this.pmid = pmid;
+    public void setParentID(long parentID) {
+        this.parentID = parentID;
     }
 
     public boolean isRead() {
@@ -94,4 +95,6 @@ public class Message {
     public void setRead(boolean read) {
         this.read = read;
     }
+
+
 }
