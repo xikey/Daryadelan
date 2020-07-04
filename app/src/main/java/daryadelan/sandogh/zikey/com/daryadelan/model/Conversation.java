@@ -24,6 +24,10 @@ public class Conversation {
     private String modifyDate;
     @SerializedName("mess")
     private ArrayList<Message> messages;
+    @SerializedName("mbrief")
+    private ConversationResponseSummary response;
+
+
 
 
 
@@ -97,5 +101,13 @@ public class Conversation {
 
     public void setMessages(ArrayList<Message> messages) {
         this.messages = messages;
+    }
+
+    public ConversationResponseSummary getResponse() {
+        return response;
+    }
+
+    public void setResponse(ConversationResponseSummary response) {
+        this.response = response;
     }
 }

@@ -3,6 +3,7 @@ package daryadelan.sandogh.zikey.com.daryadelan;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationW
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IConversation;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.ConversationServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
@@ -282,7 +284,8 @@ public class ConversationHeaderActivity extends AppCompatActivity {
                 Conversation conversation = items.get(position);
                 holder.conversation = conversation;
                 holder.txtSubject.setText(conversation.getSubject());
-//                holder.txtMessage.setText(conversation.get);
+                if (conversation.getResponse()!=null&&!TextUtils.isEmpty(conversation.getResponse().getMessageText()))
+                holder.txtMessage.setText(conversation.getResponse().getMessageText());
                 holder.txtState.setText(conversation.getStatusPersianName());
                 holder.txtDate.setText(conversation.getCreateDate());
 
