@@ -75,6 +75,9 @@ public class ConversationHeaderActivity extends AppCompatActivity {
                         @Override
                         public void onSaveForm(ConversationTopic conversationTopic) {
 
+                            if (adapter != null)
+                                adapter.clearAdapter();
+                            getData();
                         }
 
                         @Override
@@ -248,6 +251,11 @@ public class ConversationHeaderActivity extends AppCompatActivity {
             if (items != null)
                 items.clear();
 
+            page = 0;
+            hasMore = 0;
+
+            items = null;
+
             notifyDataSetChanged();
         }
 
@@ -325,8 +333,6 @@ public class ConversationHeaderActivity extends AppCompatActivity {
             }
         }
     }
-
-
 
 
 }

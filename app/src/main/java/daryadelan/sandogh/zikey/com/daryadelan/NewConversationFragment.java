@@ -316,7 +316,7 @@ public class NewConversationFragment extends DialogFragment {
         try {
             conversationTopic = new ConversationTopic();
             conversationTopic.setSubject(edtSubject.getText().toString());
-            conversationTopic.setMessagee(edtMessage.getText().toString());
+            conversationTopic.setMessageText(edtMessage.getText().toString());
 
             new CustomDialogBuilder().showYesNOCustomAlert((AppCompatActivity) getActivity(), "ارسال پیام", "مایل به ارسال پیام میباشید؟", "ارسال", "انصراف",false, new CustomAlertDialog.OnActionClickListener() {
                 @Override

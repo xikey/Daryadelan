@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper;
 
-public class ConversationTopic extends ServerWrapper {
+public class ConversationTopic  {
 
     @SerializedName("Subject")
     private String subject;

@@ -29,7 +29,7 @@ public interface IConversationApi {
 
 
     @POST("api/Conversation/insertMessage")
-    Call<ConversationTopicWrapper> insertMessage( @Body SendMessage message );
+    Call<ConversationTopicWrapper> insertMessage(@Body SendMessage message);
 
     @GET("api/Conversation/{id}")
     Call<ConversationWrapper> getConversationById(@Path("id") long id);
