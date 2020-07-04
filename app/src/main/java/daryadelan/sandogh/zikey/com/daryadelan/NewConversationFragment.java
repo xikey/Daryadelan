@@ -303,12 +303,12 @@ public class NewConversationFragment extends DialogFragment {
     private void saveForm() {
 
         if (TextUtils.isEmpty(edtSubject.getText())) {
-            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "فیلد موضوع خالی میباشد!");
+            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "فیلد موضوع خالی میباشد!",false);
             return;
         }
 
         if (TextUtils.isEmpty(edtMessage.getText())) {
-            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "فیلد پیام خالی میباشد!");
+            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "فیلد پیام خالی میباشد!",false);
             return;
         }
 
@@ -318,7 +318,7 @@ public class NewConversationFragment extends DialogFragment {
             conversationTopic.setSubject(edtSubject.getText().toString());
             conversationTopic.setMessagee(edtMessage.getText().toString());
 
-            new CustomDialogBuilder().showYesNOCustomAlert((AppCompatActivity) getActivity(), "ارسال پیام", "مایل به ارسال پیام میباشید؟", "ارسال", "انصراف", new CustomAlertDialog.OnActionClickListener() {
+            new CustomDialogBuilder().showYesNOCustomAlert((AppCompatActivity) getActivity(), "ارسال پیام", "مایل به ارسال پیام میباشید؟", "ارسال", "انصراف",false, new CustomAlertDialog.OnActionClickListener() {
                 @Override
                 public void onClick(DialogFragment fragment) {
                     sendData();
@@ -328,7 +328,7 @@ public class NewConversationFragment extends DialogFragment {
 
 
         } catch (Exception e) {
-            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "خطا در ذخیره سازی اطلاعات. لطفا فیلد های ورودی را مجددا بررسی نمایید");
+            new CustomDialogBuilder().showAlert((AppCompatActivity) getActivity(), "خطا در ذخیره سازی اطلاعات. لطفا فیلد های ورودی را مجددا بررسی نمایید",false);
             e.printStackTrace();
         }
 

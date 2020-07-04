@@ -369,6 +369,11 @@ public class CustomDialogBuilder {
         return CustomAlertDialog.Show(context, "توجه", message, null, "بستن", null, null);
     }
 
+    public CustomAlertDialog showAlert(AppCompatActivity context, String message,boolean hideStatusbar) {
+        return CustomAlertDialog.Show(context, "توجه", message, null, "بستن",hideStatusbar, null, null);
+    }
+
+
     public CustomAlertDialog showAlert(AppCompatActivity context, Throwable error) {
         String err = "";
         if (error == null || error.getMessage() == null)
@@ -385,6 +390,13 @@ public class CustomDialogBuilder {
         return CustomAlertDialog.Show(context, title, question, submitText, cancelText, yesAction, noAction);
 
     }
+
+    public CustomAlertDialog showYesNOCustomAlert(AppCompatActivity context, String title, String question, String submitText, String cancelText,boolean hideStatusbar, CustomAlertDialog.OnActionClickListener yesAction, CustomAlertDialog.OnCancelClickListener noAction) {
+
+        return CustomAlertDialog.Show(context, title, question, submitText, cancelText,hideStatusbar, yesAction, noAction);
+
+    }
+
 
     public CustomFullscreenLoader loader(AppCompatActivity context) {
 

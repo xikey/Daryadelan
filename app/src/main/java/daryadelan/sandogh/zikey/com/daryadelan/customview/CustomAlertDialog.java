@@ -56,6 +56,13 @@ public class CustomAlertDialog extends DialogFragment {
     private String submitText;
     private String cancelText;
 
+    private boolean hideStatusbar=true;
+
+    public CustomAlertDialog setHideStatusbar(boolean hideStatusbar) {
+        this.hideStatusbar = hideStatusbar;
+        return this;
+    }
+
     boolean htmlQuestionType = false;
 
     public CustomAlertDialog setOnOkActionClickListener(OnActionClickListener onOkActionClickListener) {
@@ -315,6 +322,42 @@ public class CustomAlertDialog extends DialogFragment {
 
     }
 
+
+
+
+
+    public static CustomAlertDialog Show(FragmentActivity act, String title, String question, String submitText, String cancelText,boolean hideStatusbar, OnActionClickListener onActionClickListener, OnCancelClickListener onCancelClickListener) {
+        try {
+
+            CustomAlertDialog fragment = new CustomAlertDialog();
+
+            fragment.setTitle(title)
+                    .setQuestion(question)
+                    .setSubmitText(submitText)
+                    .setCancelText(cancelText)
+                    .setHideStatusbar(hideStatusbar)
+                    .setOnOkActionClickListener(onActionClickListener)
+                    .setDialog(fragment)
+                    .setOnCancleClickListener(onCancelClickListener);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                if (!act.isDestroyed())
+                    fragment.show(act.getFragmentManager(), KEY_ALERT_DIALOG);
+            } else {
+                if (!act.isFinishing())
+                    fragment.show(act.getFragmentManager(), KEY_ALERT_DIALOG);
+            }
+
+            return fragment;
+        } catch (Exception ex) {
+
+            LogWrapper.loge("VisitorsAlertDialog_Show_Exception: ", ex);
+        }
+        return null;
+
+    }
+
+
     public static CustomAlertDialog Show(FragmentActivity act, boolean htmlQuestionType, String title, String question, String submitText, String cancelText, OnActionClickListener onActionClickListener, OnCancelClickListener onCancelClickListener) {
         try {
 
@@ -377,6 +420,9 @@ public class CustomAlertDialog extends DialogFragment {
     }
 
     private void hideStatusBar() {
+
+        if (!hideStatusbar)
+            return;
 
         try {
 
