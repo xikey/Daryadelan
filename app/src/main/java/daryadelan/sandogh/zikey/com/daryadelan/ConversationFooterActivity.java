@@ -492,7 +492,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
 
 
         if (!file.exists()) {
-            file.mkdirs();
+           
             return null;
         }
 
