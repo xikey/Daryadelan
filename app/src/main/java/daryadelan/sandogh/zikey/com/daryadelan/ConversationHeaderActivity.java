@@ -60,11 +60,20 @@ public class ConversationHeaderActivity extends AppCompatActivity {
         getUserData();
         initViews();
         initRecycleView();
-        getData();
         initListeners();
 
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adapter != null)
+            adapter.clearAdapter();
+        getData();
+
+    }
+
 
     private void initListeners() {
 

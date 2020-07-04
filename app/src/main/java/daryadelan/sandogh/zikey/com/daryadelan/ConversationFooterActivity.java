@@ -74,11 +74,22 @@ public class ConversationFooterActivity extends AppCompatActivity {
         getUserData();
         initViews();
         initRecycleView();
-        getData();
+
         initListeners();
 
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adapter != null)
+            adapter.clearAdapter();
+        getData();
+
+    }
+
+
 
     private void parseIntent() {
         Intent data = getIntent();
@@ -97,7 +108,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new CustomDialogBuilder().showYesNOCustomAlert(ConversationFooterActivity.this, "ارسال پیام", "مایل به ارسال پیام میباشید؟", "ارسال",
-                        null,false, new CustomAlertDialog.OnActionClickListener() {
+                        null, false, new CustomAlertDialog.OnActionClickListener() {
                             @Override
                             public void onClick(DialogFragment fragment) {
                                 fragment.dismiss();
@@ -111,7 +122,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
     private void saveMessage() {
 
         if (TextUtils.isEmpty(edtMessage.getText())) {
-            new CustomDialogBuilder().showAlert(ConversationFooterActivity.this, "متن پیام را وارد نمایید",false);
+            new CustomDialogBuilder().showAlert(ConversationFooterActivity.this, "متن پیام را وارد نمایید", false);
             return;
         }
 
@@ -385,7 +396,6 @@ public class ConversationFooterActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
 }
