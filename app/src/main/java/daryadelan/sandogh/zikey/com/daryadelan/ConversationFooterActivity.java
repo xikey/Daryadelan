@@ -4,29 +4,13 @@ import android.Manifest;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.DialogOnDeniedPermissionListener;
-import com.karumi.dexter.listener.single.PermissionListener;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.text.TextUtils;
-import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,17 +19,30 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
+import android.util.Base64;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.DialogOnDeniedPermissionListener;
+import com.karumi.dexter.listener.single.PermissionListener;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
 import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Conversation;
-import daryadelan.sandogh.zikey.com.daryadelan.model.ConversationTopic;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Message;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationTopicWrapper;
@@ -55,7 +52,6 @@ import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.ConversationServe
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
-import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ToolbarWrapper;
 import es.dmoral.toasty.Toasty;
@@ -192,6 +188,11 @@ public class ConversationFooterActivity extends AppCompatActivity {
             case KEY_OPEN_REQUEST_CODE:
                 if (resultCode == -1) {
 
+                    String filepath = data.getData().getPath();
+                    filepath = filepath.substring(filepath.indexOf(":") + 1);
+
+
+                    encodeToBase(filepath);
                 }
 
                 break;
@@ -208,7 +209,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
             return;
         }
 
-        insertFakeMessage();
+        insertMessage();
 
 
     }
@@ -450,7 +451,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
         }
     }
 
-    void insertFakeMessage() {
+    void insertMessage() {
 
         if (conversationRepo == null)
             return;
@@ -481,7 +482,81 @@ public class ConversationFooterActivity extends AppCompatActivity {
     }
 
 
+    private String encodeToBase(String filePath) {
 
+        if (TextUtils.isEmpty(filePath))
+            return null;
+        String path = Environment.getExternalStorageDirectory().getPath();
+        path = path + "/"+filePath;
+        File file = new File(path);
+
+
+        if (!file.exists()) {
+            file.mkdirs();
+            return null;
+        }
+
+        byte[] bytesArray = new byte[(int) file.length()];
+
+
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            fis.read(bytesArray); //read file into bytes[]
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String encodedString = Base64.encodeToString(bytesArray, Base64.DEFAULT);
+
+        return encodedString;
+
+    }
+
+    private String getFileNameFromUri(Uri uri) {
+
+        String displayName = null;
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null, null);
+
+        try {
+
+            if (cursor != null && cursor.moveToFirst()) {
+
+                displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return displayName;
+    }
+
+    public String getPath(Uri uri) {
+
+        String path = null;
+        String[] projection = {MediaStore.Files.FileColumns.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+
+        if (cursor == null) {
+            path = uri.getPath();
+        } else {
+            cursor.moveToFirst();
+            int column_index = cursor.getColumnIndexOrThrow(projection[0]);
+            path = cursor.getString(column_index);
+            cursor.close();
+        }
+
+        return ((path == null || path.isEmpty()) ? (uri.getPath()) : path);
+    }
 
 
 }
