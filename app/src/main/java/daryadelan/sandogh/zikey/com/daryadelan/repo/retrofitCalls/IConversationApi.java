@@ -5,6 +5,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.Message;
 import daryadelan.sandogh.zikey.com.daryadelan.model.SendMessage;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationTopicWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.MessageWrapper;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -29,7 +30,8 @@ public interface IConversationApi {
 
 
     @POST("api/Conversation/insertMessage")
-    Call<ConversationTopicWrapper> insertMessage(@Body SendMessage message);
+    Call<MessageWrapper> insertMessage(@Body SendMessage message);
+
 
     @GET("api/Conversation/{id}")
     Call<ConversationWrapper> getConversationById(@Path("id") long id);

@@ -6,6 +6,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.ConversationTopic;
 import daryadelan.sandogh.zikey.com.daryadelan.model.SendMessage;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationTopicWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.MessageWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.apiClient.ServerApiClient;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IConversation;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.retrofitCalls.IConversationApi;
@@ -18,6 +19,8 @@ public class ConversationServerRepo implements IConversation {
 
     Call<ConversationWrapper> call;
     Call<ConversationTopicWrapper> topicCall;
+    Call<MessageWrapper>  messageCall;
+
 
     @Override
     public void getAllConversationsTopics(Context context, String tokenType, String token, int page, IRepoCallBack<ConversationWrapper> callBack) {
@@ -136,17 +139,17 @@ public class ConversationServerRepo implements IConversation {
     }
 
     @Override
-    public void insertMessage(Context context, String tokenType, String token, String message, long conversationHeaderId, String file, IRepoCallBack<ConversationTopicWrapper> callBack) {
+    public void insertMessage(Context context, String tokenType, String token, String message, long conversationHeaderId, String file, IRepoCallBack<MessageWrapper> callBack) {
 
         IConversationApi campApi = ServerApiClient.getClientWithHeader(context, tokenType, token).create(IConversationApi.class);
         SendMessage msg = new SendMessage();
         msg.setConversationId(conversationHeaderId);
        msg.setFilesData(file);
        msg.setMessageText(message);
-        topicCall = campApi.insertMessage(msg);
-        topicCall.enqueue(new Callback<ConversationTopicWrapper>() {
+        messageCall = campApi.insertMessage(msg);
+        messageCall.enqueue(new Callback<MessageWrapper>() {
             @Override
-            public void onResponse(Call<ConversationTopicWrapper> call, Response<ConversationTopicWrapper> response) {
+            public void onResponse(Call<MessageWrapper> call, Response<MessageWrapper> response) {
 
                 if (response == null) {
                     callBack.onError(new Throwable("خطا در ثبت اطلاعات"));
@@ -163,7 +166,7 @@ public class ConversationServerRepo implements IConversation {
             }
 
             @Override
-            public void onFailure(Call<ConversationTopicWrapper> call, Throwable t) {
+            public void onFailure(Call<MessageWrapper> call, Throwable t) {
                 callBack.onError(new Throwable("خطا در ثبت اطلاعات"));
             }
         });

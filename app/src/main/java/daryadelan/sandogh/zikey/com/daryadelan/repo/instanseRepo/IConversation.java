@@ -6,6 +6,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.ConversationTopic;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.CampsWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationTopicWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.MessageWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ServerWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 
@@ -17,7 +18,7 @@ public interface IConversation {
 
     void insertConversationTopic(Context context, String tokenType, String token, ConversationTopic conversationTopic,  IRepoCallBack<ConversationTopicWrapper> callBack);
 
-    void insertMessage(Context context, String tokenType, String token, String message,long conversationHeaderId,String file,  IRepoCallBack<ConversationTopicWrapper> callBack);
+    void insertMessage(Context context, String tokenType, String token, String message,long conversationHeaderId,String file,  IRepoCallBack<MessageWrapper> callBack);
 
 
 }
