@@ -77,6 +77,8 @@ public class ConversationFooterActivity extends AppCompatActivity {
     private ImageView imgAttach;
     private EditText edtMessage;
 
+    private String selectedFileAddress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,7 +194,8 @@ public class ConversationFooterActivity extends AppCompatActivity {
                     filepath = filepath.substring(filepath.indexOf(":") + 1);
 
 
-                    encodeToBase(filepath);
+                    selectedFileAddress = encodeToBase(filepath);
+
                 }
 
                 break;
@@ -456,7 +459,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
         if (conversationRepo == null)
             return;
 
-        conversationRepo.insertMessage(getApplicationContext(), user.getTokenType(), user.getToken(), edtMessage.getText().toString(), headerID, "0", new IRepoCallBack<ConversationTopicWrapper>() {
+        conversationRepo.insertMessage(getApplicationContext(), user.getTokenType(), user.getToken(), edtMessage.getText().toString(), headerID, selectedFileAddress, new IRepoCallBack<ConversationTopicWrapper>() {
             @Override
             public void onAnswer(ConversationTopicWrapper answer) {
                 edtMessage.getText().clear();
@@ -487,12 +490,12 @@ public class ConversationFooterActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(filePath))
             return null;
         String path = Environment.getExternalStorageDirectory().getPath();
-        path = path + "/"+filePath;
+        path = path + "/" + filePath;
         File file = new File(path);
 
 
         if (!file.exists()) {
-           
+
             return null;
         }
 
@@ -518,44 +521,12 @@ public class ConversationFooterActivity extends AppCompatActivity {
 
         String encodedString = Base64.encodeToString(bytesArray, Base64.DEFAULT);
 
-        return encodedString;
 
-    }
+        String extension = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".")).replace(".","");
+        String FullName = "data:@file/" + extension + ";base64," + encodedString;
 
-    private String getFileNameFromUri(Uri uri) {
+        return FullName;
 
-        String displayName = null;
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null, null);
-
-        try {
-
-            if (cursor != null && cursor.moveToFirst()) {
-
-                displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-            }
-        } finally {
-            cursor.close();
-        }
-
-        return displayName;
-    }
-
-    public String getPath(Uri uri) {
-
-        String path = null;
-        String[] projection = {MediaStore.Files.FileColumns.DATA};
-        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-
-        if (cursor == null) {
-            path = uri.getPath();
-        } else {
-            cursor.moveToFirst();
-            int column_index = cursor.getColumnIndexOrThrow(projection[0]);
-            path = cursor.getString(column_index);
-            cursor.close();
-        }
-
-        return ((path == null || path.isEmpty()) ? (uri.getPath()) : path);
     }
 
 

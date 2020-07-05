@@ -19,7 +19,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:textSize="@dimen/small_font_size"
+                android:textSize="@dimen/normal_font_size"
                 android:gravity="right"
                 android:id="@+id/txtMessage"
                 android:padding="10dp"
@@ -35,7 +35,7 @@
                 android:padding="10dp"
                 android:id="@+id/txtDate"
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/very_small_8"
+                android:textSize="@dimen/very_small_10"
                 android:gravity="right"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

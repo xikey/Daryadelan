@@ -141,7 +141,7 @@ public class ConversationServerRepo implements IConversation {
         IConversationApi campApi = ServerApiClient.getClientWithHeader(context, tokenType, token).create(IConversationApi.class);
         SendMessage msg = new SendMessage();
         msg.setConversationId(conversationHeaderId);
-//        msg.setFilesData("0");
+       msg.setFilesData(file);
        msg.setMessageText(message);
         topicCall = campApi.insertMessage(msg);
         topicCall.enqueue(new Callback<ConversationTopicWrapper>() {
