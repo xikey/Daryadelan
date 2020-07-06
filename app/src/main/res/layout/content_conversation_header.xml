@@ -13,6 +13,9 @@
 
     <ImageView
         android:id="@+id/imgBackground"
+        android:alpha="0.3"
+        android:scaleType="centerCrop"
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

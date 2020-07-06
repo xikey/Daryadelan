@@ -55,6 +55,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.ConversationServe
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.ImageViewWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.RealPathUtil;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ToolbarWrapper;
@@ -80,8 +81,8 @@ public class ConversationFooterActivity extends AppCompatActivity {
     private ImageView imgSend;
     private ImageView imgAttach;
     private EditText edtMessage;
+    private ImageView imgBackground;
 
-    private String selectedFileAddress;
 
 
     @Override
@@ -95,18 +96,18 @@ public class ConversationFooterActivity extends AppCompatActivity {
         getUserData();
         initViews();
         initRecycleView();
-
         initListeners();
 
+        if (adapter != null)
+            adapter.clearAdapter();
+        getData();
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (adapter != null)
-            adapter.clearAdapter();
-        getData();
+
 
     }
 
@@ -132,7 +133,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogFragment fragment) {
                                 fragment.dismiss();
-                                saveMessage();
+                                saveMessage(false,null);
                             }
                         }, null);
             }
@@ -179,6 +180,8 @@ public class ConversationFooterActivity extends AppCompatActivity {
 //        intent.setType("*/*");
 //        startActivityForResult(intent, KEY_OPEN_REQUEST_CODE);
 
+
+
         Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
         chooseFile.setType("*/*");
         chooseFile = Intent.createChooser(chooseFile, "Choose a file");
@@ -194,12 +197,9 @@ public class ConversationFooterActivity extends AppCompatActivity {
             case KEY_OPEN_REQUEST_CODE:
                 if (resultCode == -1) {
 
-                    String filepath = data.getData().getPath();
-                    filepath = filepath.substring(filepath.indexOf(":") + 1);
-
                     String real = RealPathUtil.getRealPath(getApplicationContext(), data.getData());
 
-                    selectedFileAddress = encodeToBase(real);
+               encodeToBase(real);
 
                 }
 
@@ -210,14 +210,18 @@ public class ConversationFooterActivity extends AppCompatActivity {
 
     }
 
-    private void saveMessage() {
+    private void saveMessage(boolean sendFile,String encodedFile) {
 
         if (TextUtils.isEmpty(edtMessage.getText())) {
-            new CustomDialogBuilder().showAlert(ConversationFooterActivity.this, "متن پیام را وارد نمایید", false);
-            return;
+            if (sendFile)
+                edtMessage.setText("فایل پیوست");
+            else {
+                new CustomDialogBuilder().showAlert(ConversationFooterActivity.this, "متن پیام را وارد نمایید", false);
+                return;
+            }
         }
 
-        insertMessage();
+        insertMessage(encodedFile);
 
 
     }
@@ -297,7 +301,8 @@ public class ConversationFooterActivity extends AppCompatActivity {
         lyBottomProgress = (LinearLayout) findViewById(R.id.lyBottomProgress);
         edtMessage = (EditText) findViewById(R.id.edtMessage);
         lyProgress.setVisibility(View.VISIBLE);
-
+        imgBackground = findViewById(R.id.imgBackground);
+        new ImageViewWrapper(getApplicationContext()).into(imgBackground).loadBlur(R.drawable.bg_login_shadow);
 
     }
 
@@ -474,14 +479,17 @@ public class ConversationFooterActivity extends AppCompatActivity {
         }
     }
 
-    void insertMessage() {
+    void insertMessage(String encodedFile) {
+
+        lyProgress.setVisibility(View.VISIBLE);
 
         if (conversationRepo == null)
             return;
 
-        conversationRepo.insertMessage(getApplicationContext(), user.getTokenType(), user.getToken(), edtMessage.getText().toString(), headerID, selectedFileAddress, new IRepoCallBack<MessageWrapper>() {
+        conversationRepo.insertMessage(getApplicationContext(), user.getTokenType(), user.getToken(), edtMessage.getText().toString(), headerID, encodedFile, new IRepoCallBack<MessageWrapper>() {
             @Override
             public void onAnswer(MessageWrapper answer) {
+                lyProgress.setVisibility(View.GONE);
                 edtMessage.getText().clear();
                 adapter.clearAdapter();
                 getData();
@@ -505,11 +513,13 @@ public class ConversationFooterActivity extends AppCompatActivity {
     }
 
 
-    private String encodeToBase(String filePath) {
+    private void encodeToBase(String filePath) {
+        lyProgress.setVisibility(View.VISIBLE);
 
         if (TextUtils.isEmpty(filePath)){
             new CustomDialogBuilder().showAlert(ConversationFooterActivity.this, "امکان دسترسی به فایل مورد نظر وجود ندارد", false);
-            return null;
+            lyProgress.setVisibility(View.GONE);
+            return ;
         }
 
 //        String path = Environment.getExternalStorageDirectory().getPath();
@@ -519,13 +529,13 @@ public class ConversationFooterActivity extends AppCompatActivity {
 
         if (!file.exists()) {
             new CustomDialogBuilder().showAlert(ConversationFooterActivity.this, "امکان دسترسی به فایل مورد نظر وجود ندارد", false);
-            return null;
+            return ;
 
         }
         int file_size = Integer.parseInt(String.valueOf(file.length() / 1024));
         if (file_size > 5000) {
             new CustomDialogBuilder().showAlert(ConversationFooterActivity.this, "حجم فایل بیشتر از حد مجاز تعیین شده میباشد.\nحد اکثر سایز پنج مگابایت میباشد.", false);
-            return null;
+            return ;
         }
 
         byte[] bytesArray = new byte[(int) file.length()];
@@ -554,7 +564,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
         String extension = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".")).replace(".", "");
         String FullName = "data:@file/" + extension + ";base64," + encodedString;
 
-        return FullName;
+      saveMessage(true,FullName);
 
     }
 

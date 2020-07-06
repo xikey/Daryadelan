@@ -7,6 +7,16 @@
     android:layoutDirection="rtl"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+    <ImageView
+        android:alpha="0.3"
+        android:scaleType="centerCrop"
+        android:id="@+id/imgBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ImageView>
+
+
     <LinearLayout
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"

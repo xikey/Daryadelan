@@ -177,7 +177,7 @@ public class ConversationHeaderActivity extends AppCompatActivity {
         crdNewConversation = findViewById(R.id.crdNewConversation);
         FontChanger.applyTitleFont(crdNewConversation);
 
-        new ImageViewWrapper(getApplicationContext()).into(imgBackground).loadBlur(R.drawable.bg_message_full_screen);
+        new ImageViewWrapper(getApplicationContext()).into(imgBackground).loadBlur(R.drawable.bg_login_shadow);
 
     }
 
