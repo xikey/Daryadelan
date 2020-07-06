@@ -47,6 +47,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.model.Message;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationTopicWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.MessageWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IConversation;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.serverRepo.ConversationServerRepo;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
@@ -435,6 +436,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
 
             TextView txtMessage;
             TextView txtDate;
+            TextView txtFile;
 
 
             Conversation conversation;
@@ -445,6 +447,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
 
                 txtMessage = v.findViewById(R.id.txtMessage);
                 txtDate = v.findViewById(R.id.txtDate);
+                txtFile = v.findViewById(R.id.txtFile);
 
                 lyRoot = v.findViewById(R.id.lyRoot);
                 FontChanger.applyMainFont(lyRoot);
@@ -459,9 +462,9 @@ public class ConversationFooterActivity extends AppCompatActivity {
         if (conversationRepo == null)
             return;
 
-        conversationRepo.insertMessage(getApplicationContext(), user.getTokenType(), user.getToken(), edtMessage.getText().toString(), headerID, selectedFileAddress, new IRepoCallBack<ConversationTopicWrapper>() {
+        conversationRepo.insertMessage(getApplicationContext(), user.getTokenType(), user.getToken(), edtMessage.getText().toString(), headerID, selectedFileAddress, new IRepoCallBack<MessageWrapper>() {
             @Override
-            public void onAnswer(ConversationTopicWrapper answer) {
+            public void onAnswer(MessageWrapper answer) {
                 edtMessage.getText().clear();
                 adapter.clearAdapter();
                 getData();
@@ -469,7 +472,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable error) {
-
+                Toasty.error(ConversationFooterActivity.this, error.getMessage()).show();
             }
 
             @Override
@@ -522,7 +525,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
         String encodedString = Base64.encodeToString(bytesArray, Base64.DEFAULT);
 
 
-        String extension = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".")).replace(".","");
+        String extension = file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".")).replace(".", "");
         String FullName = "data:@file/" + extension + ";base64," + encodedString;
 
         return FullName;

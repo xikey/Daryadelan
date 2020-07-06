@@ -161,7 +161,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio4/plugins/android/lib/android.jar!/images/material/icons/materialicons/attach_file/baseline_attach_file_24.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio4/plugins/android/lib/android.jar!/images/material/icons/materialicons/attachment/baseline_attachment_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -171,7 +171,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_baseline_attach_file_24" />
+                            <entry key="color" value="ffffff" />
+                            <entry key="outputName" value="ic_baseline_attachment_24_white" />
                             <entry key="sourceFile" value="C:\Users\Zikey" />
                           </map>
                         </option>

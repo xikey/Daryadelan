@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="@dimen/very_small_10"
         android:background="@drawable/message_sender_bac_bubble"
         android:orientation="vertical">
@@ -25,7 +25,6 @@
             android:padding="10dp"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/normal_font_size">
-
         </TextView>
 
 
@@ -38,8 +37,35 @@
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/very_small_10" />
 
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="@dimen/very_small_10"
+        android:background="@drawable/file_sender_bac_bubble"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtFile"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/ic_baseline_attachment_24_white"
+            android:text="نمایش فایل پیوست"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:padding="10dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/normal_font_size">
+        </TextView>
+
+
 
     </LinearLayout>
+
 
 
 </LinearLayout>
