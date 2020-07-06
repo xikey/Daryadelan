@@ -38,6 +38,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
@@ -54,6 +56,7 @@ import daryadelan.sandogh.zikey.com.daryadelan.repo.tools.IRepoCallBack;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.CustomDialogBuilder;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.FontChanger;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.LogWrapper;
+import daryadelan.sandogh.zikey.com.daryadelan.tools.RealPathUtil;
 import daryadelan.sandogh.zikey.com.daryadelan.tools.ToolbarWrapper;
 import es.dmoral.toasty.Toasty;
 
@@ -194,8 +197,9 @@ public class ConversationFooterActivity extends AppCompatActivity {
                     String filepath = data.getData().getPath();
                     filepath = filepath.substring(filepath.indexOf(":") + 1);
 
+                    String real = RealPathUtil.getRealPath(getApplicationContext(), data.getData());
 
-                    selectedFileAddress = encodeToBase(filepath);
+                    selectedFileAddress = encodeToBase(real);
 
                 }
 
@@ -503,15 +507,24 @@ public class ConversationFooterActivity extends AppCompatActivity {
 
     private String encodeToBase(String filePath) {
 
-        if (TextUtils.isEmpty(filePath))
+        if (TextUtils.isEmpty(filePath)){
+            new CustomDialogBuilder().showAlert(ConversationFooterActivity.this, "امکان دسترسی به فایل مورد نظر وجود ندارد", false);
             return null;
-        String path = Environment.getExternalStorageDirectory().getPath();
-        path = path + "/" + filePath;
-        File file = new File(path);
+        }
+
+//        String path = Environment.getExternalStorageDirectory().getPath();
+//        path = path + "/" + filePath;
+        File file = new File(filePath);
 
 
         if (!file.exists()) {
+            new CustomDialogBuilder().showAlert(ConversationFooterActivity.this, "امکان دسترسی به فایل مورد نظر وجود ندارد", false);
+            return null;
 
+        }
+        int file_size = Integer.parseInt(String.valueOf(file.length() / 1024));
+        if (file_size > 5000) {
+            new CustomDialogBuilder().showAlert(ConversationFooterActivity.this, "حجم فایل بیشتر از حد مجاز تعیین شده میباشد.\nحد اکثر سایز پنج مگابایت میباشد.", false);
             return null;
         }
 
