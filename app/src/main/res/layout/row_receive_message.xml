@@ -3,14 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="left"
     android:layout_marginBottom="5dp"
     android:layoutDirection="rtl"
     android:orientation="vertical">
 
-
-
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="100dp"
             android:background="@drawable/message_receiver_bac_bubble"
@@ -43,6 +42,36 @@
 
 
         </LinearLayout>
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/lyAttachedFile"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="100dp"
+        android:background="@drawable/file_receiver_bac_bubble"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtFile"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/ic_baseline_attachment_24_white"
+            android:text="نمایش فایل پیوست"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:padding="10dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/normal_font_size">
+        </TextView>
+
+
+
+    </LinearLayout>
+
 
 
 

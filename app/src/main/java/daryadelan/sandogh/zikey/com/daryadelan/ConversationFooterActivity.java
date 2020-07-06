@@ -409,8 +409,13 @@ public class ConversationFooterActivity extends AppCompatActivity {
             try {
                 if (holder == null)
                     return;
+
                 Message message = items.get(position);
                 ItemHolder hld = (ItemHolder) holder;
+
+                if (TextUtils.isEmpty(message.getMessageFilePath()))
+                    hld.lyAttachedFile.setVisibility(View.GONE);
+                else hld.lyAttachedFile.setVisibility(View.VISIBLE);
 
                 hld.txtMessage.setText(message.getMessageText());
                 hld.txtDate.setText(message.getMessageCreateAt());
@@ -438,7 +443,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
             TextView txtDate;
             TextView txtFile;
 
-
+            LinearLayout lyAttachedFile;
             Conversation conversation;
 
 
@@ -448,9 +453,17 @@ public class ConversationFooterActivity extends AppCompatActivity {
                 txtMessage = v.findViewById(R.id.txtMessage);
                 txtDate = v.findViewById(R.id.txtDate);
                 txtFile = v.findViewById(R.id.txtFile);
+                lyAttachedFile = v.findViewById(R.id.lyAttachedFile);
 
                 lyRoot = v.findViewById(R.id.lyRoot);
                 FontChanger.applyMainFont(lyRoot);
+
+                lyAttachedFile.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
 
 
             }

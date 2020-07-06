@@ -171,9 +171,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_baseline_attachment_24_white" />
-                            <entry key="sourceFile" value="C:\Users\Zikey" />
+                            <entry key="outputName" value="ic_attach_file_svg" />
+                            <entry key="sourceFile" value="C:\Users\Zikey\Desktop\ic_attach_file_svg.svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -47,6 +47,7 @@
     <color name="colorSenderChatBack">#35cc5b</color>
     <color name="colorSenderChatBackFile">#FF5722</color>
     <color name="colorReceiverChatBack">#E0E0E0</color>
+    <color name="colorReceiverChatBackFile">#FFEE58</color>
 
 </resources>
 
