@@ -84,11 +84,13 @@ public class ConversationHeaderActivity extends AppCompatActivity {
 
                     NewConversationFragment.Show(ConversationHeaderActivity.this, new NewConversationFragment.ISaveForm() {
                         @Override
-                        public void onSaveForm(ConversationTopic conversationTopic) {
+                        public void onSaveForm(ConversationTopic conversationTopic,long id) {
 
                             if (adapter != null)
                                 adapter.clearAdapter();
                             getData();
+                            ConversationFooterActivity.start(ConversationHeaderActivity.this,id);
+
                         }
 
                         @Override

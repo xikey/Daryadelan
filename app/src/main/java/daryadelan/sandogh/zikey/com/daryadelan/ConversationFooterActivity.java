@@ -4,13 +4,9 @@ import android.Manifest;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.provider.OpenableColumns;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import android.util.Base64;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -38,8 +32,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 import daryadelan.sandogh.zikey.com.daryadelan.customview.CustomAlertDialog;
@@ -47,7 +39,6 @@ import daryadelan.sandogh.zikey.com.daryadelan.data.UserInstance;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Conversation;
 import daryadelan.sandogh.zikey.com.daryadelan.model.Message;
 import daryadelan.sandogh.zikey.com.daryadelan.model.User;
-import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationTopicWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.ConversationWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.model.serverWrapper.MessageWrapper;
 import daryadelan.sandogh.zikey.com.daryadelan.repo.instanseRepo.IConversation;
@@ -302,7 +293,7 @@ public class ConversationFooterActivity extends AppCompatActivity {
         edtMessage = (EditText) findViewById(R.id.edtMessage);
         lyProgress.setVisibility(View.VISIBLE);
         imgBackground = findViewById(R.id.imgBackground);
-        new ImageViewWrapper(getApplicationContext()).into(imgBackground).loadBlur(R.drawable.bg_login_shadow);
+//        new ImageViewWrapper(getApplicationContext()).into(imgBackground).loadBlur(R.drawable.bg_login_shadow);
 
     }
 
@@ -466,6 +457,8 @@ public class ConversationFooterActivity extends AppCompatActivity {
 
                 lyRoot = v.findViewById(R.id.lyRoot);
                 FontChanger.applyMainFont(lyRoot);
+                FontChanger.applyTitleFont(txtFile);
+
 
                 lyAttachedFile.setOnClickListener(new View.OnClickListener() {
                     @Override

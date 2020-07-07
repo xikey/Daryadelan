@@ -291,7 +291,7 @@ public class NewConversationFragment extends DialogFragment {
 
     public interface ISaveForm {
 
-        public void onSaveForm(ConversationTopic conversationTopic);
+        public void onSaveForm(ConversationTopic conversationTopic,long messageID);
 
         void onEdit(ConversationTopic conversationTopic, int pos);
 
@@ -356,7 +356,7 @@ public class NewConversationFragment extends DialogFragment {
                 if (answer != null && answer.getData() != 0) {
                     Toasty.success((AppCompatActivity) getActivity(), "پیام شما با موفقیت ارسال شد").show();
                     if (iSaveForm != null)
-                        iSaveForm.onSaveForm(conversationTopic);
+                        iSaveForm.onSaveForm(conversationTopic,answer.getData());
                     dismiss();
                 } else {
                     Toasty.success((AppCompatActivity) getActivity(), "خطا در ارسال اطلاعات، لطفا مجددا تلاش نمایید").show();
